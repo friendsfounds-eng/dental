@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment configuration & secrets
+.env
+.env.*
+!.env.example
+server/data/.vault_master_key
+
+# Uploaded patient encrypted medical vault assets
+server/data/vault/*
+!server/data/vault/.gitkeep
+
+# Build outputs
+client/dist/
+dist/
+
+# Logs & debugging
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

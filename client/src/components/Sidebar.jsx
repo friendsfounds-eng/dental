@@ -1,0 +1,246 @@
+import React from 'react';
+import AnayaCraftLogo from './Common/AnayaCraftLogo';
+import {
+  LayoutDashboard,
+  Activity,
+  Users,
+  Calendar,
+  Sparkles,
+  MessageSquare,
+  Receipt,
+  Pill,
+  Settings,
+  ShieldAlert,
+  Server,
+  Building,
+  Globe,
+  Key,
+  CreditCard,
+  ShieldCheck,
+  Stethoscope,
+  UserCheck,
+  Boxes,
+  UserCog,
+  Package,
+  DollarSign,
+  Scan,
+  X
+} from 'lucide-react';
+
+export default function Sidebar({
+  activeTab,
+  onTabChange,
+  currentUser,
+  activeTenant,
+  patientCount = 0,
+  appointmentCount = 0,
+  isOpen = false,
+  onClose
+}) {
+  const role = currentUser?.role || 'DOCTOR';
+  const isPlatformAdmin = currentUser?.globalRole === 'PLATFORM_ADMIN';
+  const isPharmacyEnabled = activeTenant?.modules?.pharmacy !== false;
+  const isFinanceEnabled = activeTenant?.modules?.finance !== false;
+
+  // Role-specific navigation menus
+  let menuItems = [];
+
+  if (isPlatformAdmin) {
+    menuItems = [
+      { id: 'platform', label: 'Developer Console', icon: Server, highlight: true },
+      { id: 'dashboard', label: 'Clinic Admin View', icon: LayoutDashboard },
+      ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy & Stock POS', icon: Boxes }] : []),
+      ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance & Revenue', icon: DollarSign }] : []),
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan },
+      { id: 'orders', label: 'Dental Lab Orders', icon: Package },
+      { id: 'appointments', label: 'Appointments & Chairs', icon: Calendar, badge: appointmentCount },
+      { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
+      { id: 'settings', label: 'Clinic Settings', icon: Settings },
+      { id: 'staff', label: 'Staff Management', icon: UserCog }
+    ];
+  } else if (role === 'CLINIC_ADMIN') {
+    menuItems = [
+      { id: 'dashboard', label: 'Super Admin Overview', icon: LayoutDashboard, highlight: true },
+      { id: 'chart', label: 'Dental Chart (Odontogram)', icon: Activity, badge: 'Interactive' },
+      { id: 'prescriptions', label: 'Prescription Pad (Rx)', icon: Pill },
+      ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy & Stock POS', icon: Boxes, highlight: true }] : []),
+      ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance & Ledger', icon: DollarSign, highlightGreen: true }] : []),
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan },
+      { id: 'orders', label: 'Dental Lab Orders', icon: Package },
+      { id: 'appointments', label: 'Appointments & Chairs', icon: Calendar, badge: appointmentCount },
+      { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
+      { id: 'ai', label: 'AI Clinical Assistant', icon: Sparkles },
+      { id: 'whatsapp', label: 'WhatsApp Automation', icon: MessageSquare, highlightGreen: true },
+      { id: 'settings', label: 'Clinic Configuration', icon: Settings },
+      { id: 'staff', label: 'Staff Management', icon: UserCog, highlightBlue: true },
+      { id: 'subscription', label: 'Subscription & Plan', icon: CreditCard }
+    ];
+  } else if (role === 'ACCOUNTANT') {
+    menuItems = [
+      ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance & Ledger', icon: DollarSign, highlightGreen: true }] : []),
+      { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan },
+      { id: 'orders', label: 'Dental Lab Orders', icon: Package },
+      ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy POS & Stock', icon: Boxes }] : []),
+      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+    ];
+  } else if (role === 'PHARMACIST') {
+    menuItems = [
+      { id: 'pharmacy', label: 'Pharmacy POS & Stock', icon: Boxes, highlight: true },
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan },
+      { id: 'orders', label: 'Dental Lab Orders', icon: Package },
+      { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
+      { id: 'whatsapp', label: 'WhatsApp Patient CRM', icon: MessageSquare, highlightGreen: true },
+      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+    ];
+  } else if (role === 'DOCTOR') {
+    menuItems = [
+      { id: 'doctor-dashboard', label: "Today's Clinical Queue", icon: Stethoscope, highlight: true },
+      { id: 'chart', label: 'Dental Chart (Odontogram)', icon: Activity, badge: 'Interactive' },
+      { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan, highlightBlue: true },
+      { id: 'orders', label: 'Lab & Custom Orders', icon: Package },
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'appointments', label: 'Chair Schedule', icon: Calendar, badge: appointmentCount },
+      { id: 'prescriptions', label: 'Prescription Pad (Rx)', icon: Pill },
+      ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy Stock & Form', icon: Boxes }] : []),
+      ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance & Ledger', icon: DollarSign }] : []),
+      { id: 'ai', label: 'AI Clinical Assistant', icon: Sparkles },
+      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+    ];
+  } else if (role === 'RECEPTIONIST') {
+    menuItems = [
+      { id: 'reception-dashboard', label: 'Front Desk Queue', icon: UserCheck, highlight: true },
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'xray', label: 'Dental X-Rays', icon: Scan },
+      { id: 'orders', label: 'Lab Orders & Delivery', icon: Package },
+      { id: 'appointments', label: 'Appointment Calendar', icon: Calendar, badge: appointmentCount },
+      ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy Sales POS', icon: Boxes }] : []),
+      { id: 'billing', label: 'Payment Collection', icon: Receipt },
+      ...(isFinanceEnabled ? [{ id: 'finance', label: 'Patient Finances', icon: DollarSign }] : []),
+      { id: 'whatsapp', label: 'WhatsApp Patient CRM', icon: MessageSquare, highlightGreen: true },
+      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+    ];
+  } else {
+    // Default fallback
+    menuItems = [
+      { id: 'doctor-dashboard', label: 'Dashboard', icon: LayoutDashboard },
+      { id: 'chart', label: 'Dental Chart', icon: Activity },
+      { id: 'xray', label: 'Dental X-Ray & Imaging', icon: Scan },
+      { id: 'orders', label: 'Dental Lab Orders', icon: Package },
+      ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy', icon: Boxes }] : []),
+      ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance', icon: DollarSign }] : []),
+      { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
+      { id: 'appointments', label: 'Appointments', icon: Calendar },
+      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+    ];
+  }
+
+  return (
+    <>
+      {/* Mobile & Tablet Backdrop Overlay - Anchored beneath the sticky header, never overlapping it */}
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed top-14 sm:top-16 inset-x-0 bottom-0 bg-slate-900/60 backdrop-blur-xs z-30 lg:hidden animate-fadeIn"
+          title="Click to close menu"
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Main Navigation Sidebar (Responsive Slide-in Drawer on Mobile/Tablet below header, Static Rail on Desktop) */}
+      <aside
+        className={`
+          fixed top-14 sm:top-16 bottom-0 left-0 z-40 w-72 sm:w-80 bg-white border-r border-slate-200 flex flex-col justify-between p-4 select-none no-print overflow-y-auto transition-transform duration-300 ease-in-out
+          lg:static lg:top-auto lg:bottom-auto lg:z-auto lg:w-64 lg:h-[calc(100vh-4rem)] lg:translate-x-0
+          ${isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'}
+        `}
+      >
+        <div className="space-y-1">
+          {/* Mobile Drawer Header with Close Button */}
+          <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 lg:hidden">
+            <div className="flex items-center space-x-2.5">
+              <span className="text-2xl">🦷</span>
+              <div>
+                <span className="font-bold text-xs text-slate-900 block leading-tight">
+                  {activeTenant?.name || 'Nepal Dental ERP'}
+                </span>
+                <span className="text-[10px] text-slate-500 font-mono">Navigation Menu</span>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+              title="Close menu"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="px-3 py-2 text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <span>{isPlatformAdmin ? 'Platform Management' : `${role} Navigation`}</span>
+            <span className="font-mono text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-bold">
+              RBAC
+            </span>
+          </div>
+
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  onTabChange(item.id);
+                  if (onClose) onClose();
+                }}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <Icon
+                    className={`w-4 h-4 ${
+                      isActive
+                        ? 'text-white'
+                        : item.highlight
+                        ? 'text-blue-600'
+                        : item.highlightGreen
+                        ? 'text-emerald-600'
+                        : 'text-slate-500'
+                    }`}
+                  />
+                  <span className="truncate">{item.label}</span>
+                </div>
+
+                {item.badge !== undefined && (
+                  <span
+                    className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                      isActive
+                        ? 'bg-white/20 text-white'
+                        : 'bg-slate-100 text-slate-600'
+                    }`}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="pt-2 mt-auto border-t border-slate-100 flex-shrink-0">
+          {/* Anaya Craft Official Branding (Vector-sharp with 100% visible text) */}
+          <AnayaCraftLogo variant="brand-card" size="md" />
+        </div>
+      </aside>
+    </>
+  );
+}

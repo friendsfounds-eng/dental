@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240">
+  <defs>
+    <linearGradient id="toothShade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="40%" stop-color="#fef3c7" />
+      <stop offset="85%" stop-color="#fde68a" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="bgCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+
+  <rect width="320" height="240" rx="16" fill="url(#bgCard)" />
+  <rect x="2" y="2" width="316" height="236" rx="14" fill="none" stroke="#334155" stroke-width="2" />
+
+  <text x="160" y="28" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#94a3b8" text-anchor="middle" letter-spacing="1">CLINICAL SHADE VERIFICATION GUIDE</text>
+  <text x="160" y="46" font-family="system-ui, sans-serif" font-size="13" font-weight="900" fill="#38bdf8" text-anchor="middle">VITA Classical • A2 (Standard Natural)</text>
+
+  <!-- Tooth Silhouette Graphic -->
+  <path d="M 120 75 C 120 60, 140 55, 160 55 C 180 55, 200 60, 200 75 C 205 105, 205 135, 195 155 C 185 175, 175 190, 168 200 C 164 205, 156 205, 152 200 C 145 190, 135 175, 125 155 C 115 135, 115 105, 120 75 Z" fill="url(#toothShade)" stroke="#f59e0b" stroke-width="2.5" />
+
+  <!-- Enamel Highlight -->
+  <path d="M 135 75 C 135 68, 145 65, 155 65 C 158 65, 158 75, 150 78 C 142 80, 135 82, 135 75 Z" fill="#ffffff" opacity="0.7" />
+
+  <!-- FDI Notation Badge -->
+  <rect x="22" y="75" width="80" height="42" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="62" y="93" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">Tooth Site</text>
+  <text x="62" y="110" font-family="system-ui, sans-serif" font-size="13" font-weight="900" fill="#f8fafc" text-anchor="middle">#16 FDI</text>
+
+  <!-- Lab Spec Badge -->
+  <rect x="218" y="75" width="80" height="42" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="258" y="93" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">Material</text>
+  <text x="258" y="110" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#10b981" text-anchor="middle">Zirconia ML</text>
+
+  <!-- Margin Prep Info -->
+  <rect x="22" y="130" width="80" height="42" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="62" y="148" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">Margin</text>
+  <text x="62" y="165" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#f8fafc" text-anchor="middle">Deep Chamfer</text>
+
+  <!-- Occlusal Clearance Info -->
+  <rect x="218" y="130" width="80" height="42" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="258" y="148" font-family="system-ui, sans-serif" font-size="10" font-weight="600" fill="#94a3b8" text-anchor="middle">Clearance</text>
+  <text x="258" y="165" font-family="system-ui, sans-serif" font-size="11" font-weight="900" fill="#38bdf8" text-anchor="middle">1.5 mm</text>
+
+  <!-- Bottom Certificate Bar -->
+  <rect x="22" y="190" width="276" height="34" rx="8" fill="#0369a1" />
+  <text x="160" y="211" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#ffffff" text-anchor="middle">APPROVED DIGITAL WORK ORDER • READY FOR FIT</text>
+</svg>

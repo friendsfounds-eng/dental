@@ -1,0 +1,28 @@
+{
+  "name": "apex-dental-clinic-erp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Advanced Dental Clinic Management Software with Anatomical Dental Chart, WhatsApp & AI",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "prod": "node server/server.js",
+    "build": "npm --prefix client install && npm --prefix client run build && npm --prefix server install",
+    "postinstall": "npm --prefix client install && npm --prefix server install",
+    "dev": "node run.js",
+    "server": "node server/server.js",
+    "client": "npm run dev --prefix client"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "multer": "^2.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": ["dental", "odontogram", "dentobees", "clinic-erp", "ehr"],
+  "author": "Apex Dental Technologies",
+  "license": "MIT"
+}
