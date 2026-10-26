@@ -14,6 +14,7 @@ import ReceptionistDashboard from './components/Dashboard/ReceptionistDashboard'
 import SuperAdminDashboard from './components/Dashboard/SuperAdminDashboard';
 import DeveloperControlPanel from './components/Developer/DeveloperControlPanel';
 import LoginModal from './components/Auth/LoginModal';
+import SettingsHub from './components/Settings/SettingsHub';
 import ClinicSettings from './components/Settings/ClinicSettings';
 import PharmacyManager from './components/Pharmacy/PharmacyManager';
 import StaffManagement from './components/Staff/StaffManagement';
@@ -32,12 +33,14 @@ import {
 } from 'lucide-react';
 import { openWhatsAppAutoLink } from './utils/whatsapp';
 import AnayaCraftLogo from './components/Common/AnayaCraftLogo';
+import DoctorAllocationModal from './components/Appointments/DoctorAllocationModal';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('doctor-dashboard'); // Default directly to Dr. Mukesh Kushwaha's Clinical Queue
   const [loading, setLoading] = useState(true);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [allocatedDoctorModal, setAllocatedDoctorModal] = useState(null);
 
   // Authentication & Tenant State
   const [currentUser, setCurrentUser] = useState(() => {
@@ -77,6 +80,7 @@ export default function App() {
   const [chairs, setChairs] = useState([]);
   const [treatmentCatalog, setTreatmentCatalog] = useState([]);
   const [medicineFormulary, setMedicineFormulary] = useState([]);
+  const [pharmacyCatalog, setPharmacyCatalog] = useState([]);
   const [whatsappTemplates, setWhatsappTemplates] = useState([]);
   const [patients, setPatients] = useState([]);
   const [selectedPatientId, setSelectedPatientId] = useState(null);
@@ -153,6 +157,7 @@ export default function App() {
         resChairs,
         resTrt,
         resMeds,
+        resPharmMeds,
         resTpls,
         resPts,
         resApts
@@ -162,6 +167,7 @@ export default function App() {
         fetch('/api/chairs', { headers: reqHeaders }).then(r => r.json()),
         fetch('/api/treatment-catalog', { headers: reqHeaders }).then(r => r.json()),
         fetch('/api/medicine-formulary', { headers: reqHeaders }).then(r => r.json()),
+        fetch('/api/pharmacy/available-medicines', { headers: reqHeaders }).then(r => r.json()).catch(() => []),
         fetch('/api/whatsapp-templates', { headers: reqHeaders }).then(r => r.json()),
         fetch('/api/patients', { headers: reqHeaders }).then(r => r.json()),
         fetch('/api/appointments', { headers: reqHeaders }).then(r => r.json())
@@ -172,6 +178,7 @@ export default function App() {
       setChairs(Array.isArray(resChairs) ? resChairs : []);
       setTreatmentCatalog(Array.isArray(resTrt) ? resTrt : []);
       setMedicineFormulary(Array.isArray(resMeds) ? resMeds : []);
+      setPharmacyCatalog(Array.isArray(resPharmMeds) ? resPharmMeds : []);
       setWhatsappTemplates(Array.isArray(resTpls) ? resTpls : []);
 
       const validPts = Array.isArray(resPts) ? resPts : [];
@@ -426,12 +433,19 @@ export default function App() {
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         alert(`[RBAC Notice] ${err.message || 'Could not create appointment.'}`);
-        return;
+        return null;
       }
       const created = await res.json();
       setAppointments(prev => [created, ...prev]);
+
+      // Pop-up message for allocated doctor when appointment is confirmed
+      if (created.status === 'Confirmed') {
+        setAllocatedDoctorModal(created);
+      }
+      return created;
     } catch (err) {
       console.error('Error adding appointment:', err);
+      return null;
     }
   };
 
@@ -446,12 +460,19 @@ export default function App() {
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         alert(`[RBAC Notice] ${err.message || 'Could not update appointment.'}`);
-        return;
+        return null;
       }
       const updated = await res.json();
       setAppointments(prev => prev.map(a => a.id === id ? updated : a));
+
+      // Pop-up message for allocated doctor when status is updated to Confirmed
+      if (status === 'Confirmed') {
+        setAllocatedDoctorModal(updated);
+      }
+      return updated;
     } catch (err) {
       console.error('Error updating appointment:', err);
+      return null;
     }
   };
 
@@ -724,6 +745,21 @@ export default function App() {
   const handleOpenWhatsApp = (phone, text) => {
     if (!phone) return;
     openWhatsAppAutoLink(phone, text);
+  };
+
+  // Re-fetch live pharmacy stock & catalog for prescription pad
+  const fetchPharmacyCatalog = async () => {
+    try {
+      const res = await fetch('/api/pharmacy/available-medicines', { headers: getHeaders() });
+      if (res.ok) {
+        const data = await res.json();
+        setPharmacyCatalog(Array.isArray(data) ? data : []);
+        return data;
+      }
+    } catch (e) {
+      console.warn('Failed to refresh pharmacy catalog:', e);
+    }
+    return [];
   };
 
   if (loading) {
@@ -1042,6 +1078,7 @@ export default function App() {
               clinicProfile={clinicProfile}
               onSelectPatient={(p) => setSelectedPatientId(p?.id || p)}
               onNavigate={setActiveTab}
+              onViewDoctorAllocation={(apt) => setAllocatedDoctorModal(apt)}
             />
           )}
 
@@ -1052,16 +1089,6 @@ export default function App() {
               doctors={doctors}
               onSaveSoapNote={handleSaveSoapNote}
               onOpenWhatsApp={handleOpenWhatsApp}
-            />
-          )}
-
-          {/* WhatsApp CRM */}
-          {activeTab === 'whatsapp' && (
-            <WhatsAppCRM
-              patients={patients}
-              appointments={appointments}
-              templates={whatsappTemplates}
-              clinicProfile={clinicProfile}
             />
           )}
 
@@ -1110,18 +1137,30 @@ export default function App() {
               doctors={doctors}
               clinicProfile={clinicProfile}
               medicineFormulary={medicineFormulary}
+              pharmacyCatalog={pharmacyCatalog}
+              onRefreshPharmacyCatalog={fetchPharmacyCatalog}
+              onUpdateClinicProfile={handleUpdateClinicProfile}
               onAddPrescription={handleAddPrescription}
               onOpenWhatsApp={handleOpenWhatsApp}
             />
           )}
 
-          {/* Clinic Settings */}
-          {activeTab === 'settings' && (
-            <ClinicSettings
+          {/* Clinic Settings Hub (Central Settings Folder: Clinic Config, Staff Management, WhatsApp Automation & Subscription) */}
+          {['settings', 'staff', 'whatsapp', 'subscription'].includes(activeTab) && (
+            <SettingsHub
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              currentUser={currentUser}
+              activeTenant={activeTenant}
+              authToken={authToken}
               clinicProfile={clinicProfile}
               doctors={doctors}
               chairs={chairs}
               treatmentCatalog={treatmentCatalog}
+              pharmacyCatalog={pharmacyCatalog}
+              patients={patients}
+              appointments={appointments}
+              whatsappTemplates={whatsappTemplates}
               onUpdateClinicProfile={handleUpdateClinicProfile}
               onAddDoctor={handleAddDoctor}
               onUpdateDoctor={handleUpdateDoctor}
@@ -1131,26 +1170,6 @@ export default function App() {
               onAddTreatment={handleAddTreatment}
               onUpdateTreatment={handleUpdateTreatment}
               onDeleteTreatment={handleDeleteTreatment}
-            />
-          )}
-
-          {/* Staff Management Section */}
-          {activeTab === 'staff' && (
-            <StaffManagement
-              authToken={authToken}
-              activeTenant={activeTenant}
-              currentUser={currentUser}
-            />
-          )}
-
-          {/* Subscription & Account Licensing Section */}
-          {activeTab === 'subscription' && (
-            <AccountAndSubscription
-              currentUser={currentUser}
-              activeTenant={activeTenant}
-              clinicProfile={clinicProfile}
-              authToken={authToken}
-              onNavigate={setActiveTab}
             />
           )}
           </ErrorBoundary>
@@ -1229,6 +1248,18 @@ export default function App() {
         activeTenant={activeTenant}
         onLoginSuccess={handleLoginSuccess}
         onLogout={handleLogout}
+      />
+
+      {/* Pop-up Message for Allocated Doctor */}
+      <DoctorAllocationModal
+        isOpen={!!allocatedDoctorModal}
+        onClose={() => setAllocatedDoctorModal(null)}
+        appointment={allocatedDoctorModal}
+        doctors={doctors}
+        patients={patients}
+        clinicProfile={clinicProfile}
+        onNavigate={setActiveTab}
+        onOpenWhatsApp={handleOpenWhatsApp}
       />
     </div>
   );

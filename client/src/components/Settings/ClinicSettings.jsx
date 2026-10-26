@@ -20,14 +20,25 @@ import {
   ImageIcon,
   Armchair,
   Ticket,
-  CheckCircle2
+  CheckCircle2,
+  Pill,
+  Sparkles,
+  PackageCheck,
+  AlertCircle,
+  Palette,
+  Sun,
+  Moon,
+  HeartPulse,
+  Flame
 } from 'lucide-react';
+import { THEMES, applyTheme, getCurrentTheme } from '../../utils/themeManager';
 
 export default function ClinicSettings({
   clinicProfile = {},
   doctors = [],
   chairs = [],
   treatmentCatalog = [],
+  pharmacyCatalog = [],
   onUpdateClinicProfile,
   onAddDoctor,
   onUpdateDoctor,
@@ -44,12 +55,63 @@ export default function ClinicSettings({
   const [chairActionMsg, setChairActionMsg] = useState(null);
   const logoInputRef = useRef(null);
 
+  // Pharmacy & Prescription Integration Settings State
+  const [rxSettings, setRxSettings] = useState({
+    syncPharmacyStock: true,
+    defaultRxBankView: 'pharmacy-in-stock',
+    outOfStockWarning: true,
+    hideOutOfStock: false,
+    autoFillDosage: true,
+    showStockBadges: true,
+    allowExternalMedicines: true,
+    ...(clinicProfile?.prescriptionSettings || {})
+  });
+  const [rxSaved, setRxSaved] = useState(false);
+
+  // Clinic UI Theme State
+  const [currentThemeId, setCurrentThemeId] = useState(() => getCurrentTheme().id);
+
+  useEffect(() => {
+    const handleThemeChange = (e) => {
+      if (e.detail) {
+        setCurrentThemeId(e.detail);
+      }
+    };
+    window.addEventListener('dental-theme-changed', handleThemeChange);
+    return () => window.removeEventListener('dental-theme-changed', handleThemeChange);
+  }, []);
+
+  const handleSelectTheme = (themeId) => {
+    applyTheme(themeId);
+    setCurrentThemeId(themeId);
+  };
+
   // Sync state when clinicProfile updates
   useEffect(() => {
     if (clinicProfile && Object.keys(clinicProfile).length > 0) {
       setProfile(clinicProfile);
+      if (clinicProfile.prescriptionSettings) {
+        setRxSettings((prev) => ({
+          ...prev,
+          ...clinicProfile.prescriptionSettings
+        }));
+      }
     }
   }, [clinicProfile]);
+
+  const handleSaveRxSettings = (e) => {
+    if (e) e.preventDefault();
+    const updatedProfile = {
+      ...profile,
+      prescriptionSettings: rxSettings
+    };
+    setProfile(updatedProfile);
+    if (onUpdateClinicProfile) {
+      onUpdateClinicProfile(updatedProfile);
+    }
+    setRxSaved(true);
+    setTimeout(() => setRxSaved(false), 3000);
+  };
 
   // Logo file upload handler
   const handleLogoFileChange = (e) => {
@@ -896,6 +958,345 @@ export default function ClinicSettings({
               )}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* 5. PHARMACY & PRESCRIPTION INTEGRATION SETTINGS */}
+      <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4 text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-2.5">
+            <div className="p-2 bg-gradient-to-tr from-purple-600 to-indigo-600 text-white rounded-xl shadow-xs">
+              <Pill className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span>Pharmacy & Prescription Pad Integration</span>
+                <span className="text-[10px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full border border-purple-200">
+                  Live Stock Sync
+                </span>
+              </h3>
+              <p className="text-[11px] text-slate-500">
+                Configure how clinic pharmacy inventory connects to doctors' prescription writing pad.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            {rxSaved && (
+              <span className="text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 flex items-center gap-1 animate-fadeIn">
+                <Check className="w-3.5 h-3.5" />
+                <span>Saved!</span>
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={handleSaveRxSettings}
+              className="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-2 rounded-xl shadow-xs flex items-center space-x-1.5 transition"
+            >
+              <Save className="w-3.5 h-3.5" />
+              <span>Save Rx Settings</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Integration Options Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
+          {/* 1. Sync Pharmacy Stock Toggle */}
+          <div className="p-3.5 bg-white rounded-xl border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="flex items-start justify-between">
+              <div>
+                <label className="font-bold text-slate-800 text-xs block">
+                  Sync Live Pharmacy Stock to Prescription Pad
+                </label>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Display real-time clinic pharmacy inventory in the prescription medicine selection list.
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={rxSettings.syncPharmacyStock}
+                onChange={(e) => setRxSettings({ ...rxSettings, syncPharmacyStock: e.target.checked })}
+                className="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-500 mt-1 cursor-pointer"
+              />
+            </div>
+            {rxSettings.syncPharmacyStock && (
+              <div className="text-[10px] bg-purple-50 text-purple-800 font-bold px-2 py-1 rounded-lg border border-purple-200 flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3 text-purple-600" />
+                <span>Connected: {pharmacyCatalog.length || '8+'} pharmacy items ready for doctors.</span>
+              </div>
+            )}
+          </div>
+
+          {/* 2. Default Rx Bank Source Dropdown */}
+          <div className="p-3.5 bg-white rounded-xl border border-slate-200/90 shadow-2xs space-y-2">
+            <label className="font-bold text-slate-800 text-xs block">
+              Default Medicine Bank Source on Prescription Pad
+            </label>
+            <p className="text-[11px] text-slate-500">
+              Initial view shown when doctors open the "Select from Medicine Bank" tab.
+            </p>
+            <select
+              value={rxSettings.defaultRxBankView}
+              onChange={(e) => setRxSettings({ ...rxSettings, defaultRxBankView: e.target.value })}
+              className="w-full p-2 rounded-lg border border-slate-300 bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+            >
+              <option value="pharmacy-in-stock">🏥 Live In-Stock Pharmacy Inventory (Recommended)</option>
+              <option value="pharmacy-all">📋 Full Clinic Pharmacy Catalog (All registered medicines)</option>
+              <option value="standard-dental">📚 Standard Dental Formulary (General guidelines)</option>
+            </select>
+          </div>
+
+          {/* 3. Out of Stock Warning Toggle */}
+          <div className="p-3.5 bg-white rounded-xl border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="flex items-start justify-between">
+              <div>
+                <label className="font-bold text-slate-800 text-xs block">
+                  Out-of-Stock Warning when Prescribing
+                </label>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Warn the doctor if a selected pharmacy medicine currently has 0 units in stock.
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={rxSettings.outOfStockWarning}
+                onChange={(e) => setRxSettings({ ...rxSettings, outOfStockWarning: e.target.checked })}
+                className="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-500 mt-1 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          {/* 4. Hide Out-of-Stock Medicines Toggle */}
+          <div className="p-3.5 bg-white rounded-xl border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="flex items-start justify-between">
+              <div>
+                <label className="font-bold text-slate-800 text-xs block">
+                  Filter Out Depleted Medicines
+                </label>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Only show medicines with active, unexpired inventory in the quick prescription list.
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={rxSettings.hideOutOfStock}
+                onChange={(e) => setRxSettings({ ...rxSettings, hideOutOfStock: e.target.checked })}
+                className="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-500 mt-1 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          {/* 5. Auto-Fill Typical Dental Dosages */}
+          <div className="p-3.5 bg-white rounded-xl border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="flex items-start justify-between">
+              <div>
+                <label className="font-bold text-slate-800 text-xs block">
+                  Intelligent Auto-Fill of Dental Dosages
+                </label>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Pre-populate standard frequency & instructions (e.g. 1-0-1 after food for antibiotics, SOS for NSAIDs).
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={rxSettings.autoFillDosage}
+                onChange={(e) => setRxSettings({ ...rxSettings, autoFillDosage: e.target.checked })}
+                className="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-500 mt-1 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          {/* 6. Display Real-Time Stock Count Badges */}
+          <div className="p-3.5 bg-white rounded-xl border border-slate-200/90 shadow-2xs space-y-2">
+            <div className="flex items-start justify-between">
+              <div>
+                <label className="font-bold text-slate-800 text-xs block">
+                  Display Stock Badges on Doctor Pad
+                </label>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Show inventory status badges (🟢 In Stock / 🟡 Low Stock / 🔴 Out of Stock) on each medicine card.
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={rxSettings.showStockBadges}
+                onChange={(e) => setRxSettings({ ...rxSettings, showStockBadges: e.target.checked })}
+                className="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-500 mt-1 cursor-pointer"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 6. CLINIC APPEARANCE & UI THEME CUSTOMIZER */}
+      <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4 text-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center space-x-2.5">
+            <div className="p-2 bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 text-white rounded-xl shadow-xs">
+              <Palette className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span>Clinic Appearance & UI Theme</span>
+                <span className="text-[10px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-full border border-blue-200">
+                  5 Visual Modes
+                </span>
+              </h3>
+              <p className="text-[11px] text-slate-500">
+                Choose the primary visual theme for your clinic operatory. Automatically synchronizes across all navigation, patient charts, prescriptions, and billing panels.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <span className="text-[11px] font-semibold text-slate-500">
+              Active Theme: <strong className="text-slate-800">{THEMES.find(t => t.id === currentThemeId)?.name || 'Clean Light'}</strong>
+            </span>
+          </div>
+        </div>
+
+        {/* Theme Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 pt-1">
+          {THEMES.map((theme) => {
+            const isSelected = currentThemeId === theme.id;
+            const ThemeIcon = theme.id === 'light' ? Sun :
+              theme.id === 'dark' ? Moon :
+              theme.id === 'midnight' ? Sparkles :
+              theme.id === 'teal' ? HeartPulse : Flame;
+
+            return (
+              <button
+                key={theme.id}
+                type="button"
+                onClick={() => handleSelectTheme(theme.id)}
+                className={`relative p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between group overflow-hidden ${
+                  isSelected
+                    ? 'ring-2 ring-blue-500 shadow-md border-blue-400 bg-white'
+                    : 'border-slate-200 hover:border-slate-300 hover:shadow-xs bg-white'
+                }`}
+              >
+                {/* Active Indicator Top Pill */}
+                {isSelected && (
+                  <div className="absolute top-2 right-2 flex items-center space-x-1 bg-blue-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-xs">
+                    <Check className="w-2.5 h-2.5" />
+                    <span>ACTIVE</span>
+                  </div>
+                )}
+
+                <div className="space-y-2.5">
+                  {/* Visual Preview Box */}
+                  <div
+                    className="w-full h-20 rounded-xl p-2.5 flex flex-col justify-between border shadow-inner relative overflow-hidden"
+                    style={{
+                      backgroundColor: theme.bgPreview,
+                      borderColor: isSelected ? theme.accentColor : 'rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      {/* Mini Mock Navbar */}
+                      <div
+                        className="px-2 py-0.5 rounded-md text-[9px] font-bold flex items-center space-x-1 shadow-2xs"
+                        style={{
+                          backgroundColor: theme.cardPreview,
+                          color: theme.textColor
+                        }}
+                      >
+                        <ThemeIcon className="w-3 h-3" style={{ color: theme.accentColor }} />
+                        <span>Dental ERP</span>
+                      </div>
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: theme.accentColor }}
+                      />
+                    </div>
+
+                    {/* Mini Mock Cards Row */}
+                    <div className="flex items-center gap-1.5">
+                      <div
+                        className="flex-1 h-5 rounded-md flex items-center px-1.5 text-[8px] font-semibold"
+                        style={{
+                          backgroundColor: theme.cardPreview,
+                          color: theme.textColor
+                        }}
+                      >
+                        Patient OPD
+                      </div>
+                      <div
+                        className="w-5 h-5 rounded-md flex items-center justify-center font-bold text-[8px]"
+                        style={{
+                          backgroundColor: theme.accentColor,
+                          color: '#ffffff'
+                        }}
+                      >
+                        Rx
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Title & Badge */}
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                        <ThemeIcon className="w-3.5 h-3.5" style={{ color: theme.accentColor }} />
+                        <span>{theme.name}</span>
+                      </h4>
+                      <span
+                        className="text-[9px] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider"
+                        style={{
+                          backgroundColor: `${theme.accentColor}18`,
+                          color: theme.accentColor
+                        }}
+                      >
+                        {theme.badge}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-1 leading-snug">
+                      {theme.subtitle}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Color Swatch Dots & Action Button */}
+                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center space-x-1.5">
+                    <span
+                      className="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs"
+                      style={{ backgroundColor: theme.bgPreview }}
+                      title="Background Canvas"
+                    />
+                    <span
+                      className="w-3.5 h-3.5 rounded-full border border-black/10 shadow-2xs"
+                      style={{ backgroundColor: theme.cardPreview }}
+                      title="Card & Surface"
+                    />
+                    <span
+                      className="w-3.5 h-3.5 rounded-full shadow-2xs"
+                      style={{ backgroundColor: theme.accentColor }}
+                      title="Accent Color"
+                    />
+                  </div>
+
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-md transition ${
+                      isSelected
+                        ? 'text-blue-700 bg-blue-50 font-black'
+                        : 'text-slate-500 group-hover:text-blue-600'
+                    }`}
+                  >
+                    {isSelected ? 'Applied ✓' : 'Select'}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Informative Print Note */}
+        <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center gap-2.5 text-[11px] text-slate-600">
+          <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />
+          <span>
+            <strong>Pure Print Guarantee:</strong> All official printable documents (Prescriptions, Billing Invoices, OPD Tickets, Receipts) are isolated from theme styles and will always print on paper with 100% crisp black & white contrast for patient distribution.
+          </span>
         </div>
       </div>
 

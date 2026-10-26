@@ -19,37 +19,21 @@ import {
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(cors());
 // 60MB limit to accommodate high-resolution 50MB radiograph scans (.dcm, .png, .jpeg, .tiff)
 app.use(express.json({ limit: '60mb' }));
 app.use(express.urlencoded({ extended: true, limit: '60mb' }));
 
-// Health Check Endpoints (for cloud orchestrators, load balancers, Render, Railway, K8s, Docker)
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    uptime: Math.floor(process.uptime()),
-    timestamp: new Date().toISOString(),
-    service: 'apex-dental-clinic-erp'
-  });
-});
-
-app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    uptime: Math.floor(process.uptime()),
-    timestamp: new Date().toISOString(),
-    service: 'apex-dental-clinic-erp'
-  });
-});
-
 // Request Logger
 app.use((req, res, next) => {
-  if (req.url === '/health' || req.url === '/api/health') return next();
   console.log(`[${new Date().toLocaleTimeString()}] ${req.method} ${req.url} (Tenant: ${req.headers['x-tenant-id'] || 'default'})`);
   next();
+});
+
+// Health check endpoint for Render / cloud deployment monitoring
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString() });
 });
 
 // ============================================================================
@@ -594,12 +578,60 @@ app.post('/api/platform/support-grant', authenticate, requireRole('PLATFORM_ADMI
 // 3. CLINIC SUPER ADMIN APIS (Staff, Security, Financial Policies, Reports)
 // ============================================================================
 
+const ALL_SYSTEM_MODULES = [
+  'chart',
+  'prescriptions',
+  'pharmacy',
+  'finance',
+  'patients',
+  'xray',
+  'orders',
+  'appointments',
+  'billing',
+  'ai',
+  'settings'
+];
+
+function getDefaultModulesForRoles(roles = []) {
+  const roleList = Array.isArray(roles) && roles.length > 0 ? roles : ['DOCTOR'];
+  if (roleList.includes('CLINIC_ADMIN')) {
+    return [...ALL_SYSTEM_MODULES];
+  }
+  const set = new Set();
+  roleList.forEach(r => {
+    switch (r) {
+      case 'DOCTOR':
+        ['chart', 'prescriptions', 'pharmacy', 'finance', 'patients', 'xray', 'orders', 'appointments', 'ai', 'settings'].forEach(m => set.add(m));
+        break;
+      case 'RECEPTIONIST':
+        ['patients', 'appointments', 'billing', 'orders', 'pharmacy', 'finance', 'settings'].forEach(m => set.add(m));
+        break;
+      case 'PHARMACIST':
+        ['pharmacy', 'patients', 'billing', 'orders', 'settings'].forEach(m => set.add(m));
+        break;
+      case 'NURSE':
+        ['patients', 'appointments', 'chart', 'xray', 'orders', 'settings'].forEach(m => set.add(m));
+        break;
+      case 'ACCOUNTANT':
+        ['finance', 'billing', 'patients', 'orders', 'pharmacy', 'settings'].forEach(m => set.add(m));
+        break;
+      default:
+        ['patients', 'appointments'].forEach(m => set.add(m));
+        break;
+    }
+  });
+  return Array.from(set);
+}
+
 // List Clinic Staff
 app.get('/api/admin/staff', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
   const tenantMemberships = multiTenantDb.platform.memberships.filter(m => m.tenantId === req.tenantId);
   const staffList = tenantMemberships.map(m => {
     const user = multiTenantDb.platform.users.find(u => u.id === m.userId);
     const assignedRoles = Array.isArray(m.roles) && m.roles.length > 0 ? m.roles : [m.role];
+    const userModules = Array.isArray(m.allowedModules) && m.allowedModules.length > 0
+      ? m.allowedModules
+      : getDefaultModulesForRoles(assignedRoles);
     return {
       id: user ? user.id : m.userId,
       email: user ? user.email : 'unknown',
@@ -607,6 +639,7 @@ app.get('/api/admin/staff', authenticate, resolveTenant, requirePermission('mana
       phone: user ? user.phone : '',
       role: m.role,
       roles: assignedRoles,
+      allowedModules: userModules,
       status: user ? user.status : 'active',
       createdAt: user ? user.createdAt : ''
     };
@@ -616,7 +649,7 @@ app.get('/api/admin/staff', authenticate, resolveTenant, requirePermission('mana
 
 // Provision Staff Account (Supports Multiple Roles: Doctor, Receptionist, Pharmacist, Nurse, Admin)
 app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
-  const { email, name, phone, role, roles, password } = req.body;
+  const { email, name, phone, role, roles, allowedModules, password } = req.body;
   if (!email || !name) {
     return res.status(400).json({ error: 'Email and name are required.' });
   }
@@ -659,9 +692,14 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
 
   // Check if already a member
   let membership = multiTenantDb.platform.memberships.find(m => m.tenantId === req.tenantId && m.userId === user.id);
+  const computedModules = Array.isArray(allowedModules) && allowedModules.length > 0
+    ? allowedModules
+    : getDefaultModulesForRoles(selectedRoles);
+
   if (membership) {
     membership.role = primaryRole;
     membership.roles = selectedRoles;
+    membership.allowedModules = computedModules;
     membership.isActive = true;
   } else {
     membership = {
@@ -670,6 +708,7 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
       userId: user.id,
       role: primaryRole,
       roles: selectedRoles,
+      allowedModules: computedModules,
       isActive: true
     };
     multiTenantDb.platform.memberships.push(membership);
@@ -716,7 +755,7 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
 // Update Staff Member Role or Details (Supports Multiple Roles)
 app.put('/api/admin/staff/:id/role', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
   const staffUserId = req.params.id;
-  const { role, roles } = req.body;
+  const { role, roles, allowedModules } = req.body;
 
   const selectedRoles = Array.isArray(roles) && roles.length > 0
     ? roles
@@ -747,6 +786,11 @@ app.put('/api/admin/staff/:id/role', authenticate, resolveTenant, requirePermiss
 
   membership.role = primaryRole;
   membership.roles = selectedRoles;
+  if (Array.isArray(allowedModules)) {
+    membership.allowedModules = allowedModules;
+  } else if (!membership.allowedModules) {
+    membership.allowedModules = getDefaultModulesForRoles(selectedRoles);
+  }
 
   // If Doctor role was added, sync with doctors roster
   if (selectedRoles.includes('DOCTOR')) {
@@ -783,7 +827,12 @@ app.put('/api/admin/staff/:id/role', authenticate, resolveTenant, requirePermiss
     details: { oldRoles, newRoles: selectedRoles }
   });
 
-  res.json({ success: true, message: `Staff roles updated to ${selectedRoles.join(', ')}.`, roles: selectedRoles });
+  res.json({
+    success: true,
+    message: `Staff roles & module permissions updated.`,
+    roles: selectedRoles,
+    allowedModules: membership.allowedModules
+  });
 });
 
 // Remove / Delete Staff Member from Clinic
@@ -1111,6 +1160,40 @@ app.delete('/api/treatment-catalog/:id', authenticate, resolveTenant, requirePer
 app.get('/api/medicine-formulary', optionalAuth, resolveTenant, (req, res) => {
   const tData = multiTenantDb.getTenantData(req.tenantId);
   res.json(tData ? tData.medicineFormulary || [] : []);
+});
+
+// GET /api/pharmacy/available-medicines - Live pharmacy stock & catalog for prescription integration
+app.get('/api/pharmacy/available-medicines', optionalAuth, resolveTenant, (req, res) => {
+  const tData = multiTenantDb.getTenantData(req.tenantId);
+  if (!tData) return res.json([]);
+
+  const catalog = tData.pharmacyCatalog || [];
+  const batches = tData.pharmacyBatches || [];
+  const now = new Date();
+
+  const available = catalog.map((med) => {
+    const medBatches = batches.filter((b) => b.medicineId === med.id);
+    const activeBatches = medBatches.filter((b) => new Date(b.expiryDate) >= now);
+    const totalStock = activeBatches.reduce((acc, b) => acc + Number(b.quantity || 0), 0);
+    const isLowStock = totalStock <= Number(med.reorderThreshold || 20);
+
+    return {
+      id: med.id,
+      name: med.name,
+      genericName: med.genericName,
+      brand: med.brand,
+      category: med.category,
+      strength: med.strength,
+      dosageForm: med.dosageForm,
+      sellingPrice: med.sellingPrice,
+      totalStock,
+      isLowStock,
+      inStock: totalStock > 0,
+      storageLocation: med.storageLocation
+    };
+  });
+
+  res.json(available);
 });
 
 app.get('/api/whatsapp-templates', optionalAuth, resolveTenant, (req, res) => {
@@ -3267,47 +3350,19 @@ const clientDistPath = path.join(__dirname, '../client/dist');
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
   app.get('*', (req, res, next) => {
-    if (req.url.startsWith('/api') || req.url === '/health') return next();
+    if (req.url.startsWith('/api')) return next();
     res.sendFile(path.join(clientDistPath, 'index.html'));
-  });
-} else {
-  app.get('/', (req, res) => {
-    res.status(200).json({
-      message: 'Apex Dental Clinic ERP API Server is active.',
-      hint: 'Frontend build not found. Run "npm run build" to compile production UI.'
-    });
   });
 }
 
-// 404 Handler for undefined API routes
-app.use('/api', (req, res) => {
-  res.status(404).json({ error: 'API_ENDPOINT_NOT_FOUND', path: req.originalUrl });
-});
-
 // START SERVER
-const server = app.listen(PORT, HOST, () => {
+app.listen(PORT, () => {
   console.log(`=======================================================`);
   console.log(`Anaya Craft Multi-Tenant Dental SaaS API Server`);
   console.log(`Primary Clinic: Nepal Dental and Healthcare Wellness Centre`);
   console.log(`Named Doctor: Dr. Mukesh Kushwaha`);
-  console.log(`Server running at: http://${HOST}:${PORT}`);
+  console.log(`Server running at: http://localhost:${PORT}`);
   console.log(`=======================================================`);
 });
-
-// Graceful shutdown handling for container and cloud environments
-const shutdown = (signal) => {
-  console.log(`\nReceived ${signal}. Gracefully shutting down Dental ERP server...`);
-  server.close(() => {
-    console.log('HTTP server closed. Exiting process.');
-    process.exit(0);
-  });
-  setTimeout(() => {
-    console.error('Forcefully terminating server.');
-    process.exit(1);
-  }, 10000).unref();
-};
-
-process.on('SIGTERM', () => shutdown('SIGTERM'));
-process.on('SIGINT', () => shutdown('SIGINT'));
 
 export default app;

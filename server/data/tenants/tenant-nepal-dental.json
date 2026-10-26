@@ -15,7 +15,16 @@
     "enableTicketCharge": true,
     "ticketFee": 200,
     "visitValidityDays": 7,
-    "ticketName": "Registration & OPD Consultation Fee"
+    "ticketName": "Registration & OPD Consultation Fee",
+    "prescriptionSettings": {
+      "syncPharmacyStock": true,
+      "defaultRxBankView": "pharmacy-in-stock",
+      "outOfStockWarning": true,
+      "hideOutOfStock": true,
+      "autoFillDosage": false,
+      "showStockBadges": true,
+      "allowExternalMedicines": true
+    }
   },
   "doctors": [
     {
@@ -201,6 +210,345 @@
       "treatmentPlans": [],
       "notes": [],
       "prescriptions": [
+        {
+          "id": "RX-8182",
+          "date": "2026-10-25",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "isFinalized": true,
+          "reviewTimeline": "In 5 days or SOS",
+          "instructions": "Avoid hard foods and maintain good oral hygiene.",
+          "medicines": [
+            {
+              "name": "Amoxicillin 500mg",
+              "instructions": "Take after food",
+              "duration": "5 days",
+              "genericName": "Amoxicillin",
+              "frequency": "1 capsule thrice daily (1-1-1)",
+              "dosage": "500 mg"
+            },
+            {
+              "name": "Zerodol-SP",
+              "instructions": "Take after food for pain and swelling",
+              "duration": "3 days",
+              "genericName": "Aceclofenac + Paracetamol + Serratiopeptidase",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "dosage": "100/325/15 mg"
+            }
+          ],
+          "doctorId": "DOC-1",
+          "diagnosis": "Acute Pulpitis & Dental Pain"
+        },
+        {
+          "id": "RX-0422",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0198",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0027",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9821",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9629",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-8885",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-7540",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-6525",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-2775",
+          "date": "2026-10-25",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "isFinalized": true,
+          "instructions": "Complete entire course",
+          "medicines": [
+            {
+              "frequency": "TDS (Every 8 hours)",
+              "dosage": "1 capsule",
+              "instructions": "Take after food",
+              "name": "Amoxicillin 500mg",
+              "duration": "5 days"
+            }
+          ],
+          "reviewTimeline": "In 5 days",
+          "diagnosis": "Post-op Review & Maintenance"
+        },
+        {
+          "id": "RX-5430",
+          "date": "2026-10-25",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "isFinalized": true,
+          "diagnosis": "Dental Pain",
+          "medicines": [
+            {
+              "name": "Amoxicillin 500mg"
+            }
+          ],
+          "instructions": "Take after food"
+        },
         {
           "id": "RX-2026-1012",
           "date": "2026-10-23",
@@ -463,7 +811,948 @@
       "dentalChart": {},
       "treatmentPlans": [],
       "notes": [],
-      "prescriptions": [],
+      "prescriptions": [
+        {
+          "id": "RX-9690",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9404",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-8944",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4618",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4401",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4184",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3977",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3751",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3539",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3334",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3142",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-2956",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-2472",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3838",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3623",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3442",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0804",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9249",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0691",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9191",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "10 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-833661",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-744675",
+              "sellingPrice": 24
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        }
+      ],
       "invoices": [
         {
           "id": "INV-4621",
@@ -564,7 +1853,540 @@
       "dentalChart": {},
       "treatmentPlans": [],
       "notes": [],
-      "prescriptions": [],
+      "prescriptions": [
+        {
+          "id": "RX-1366",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0936",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0532",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-0110",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9691",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-9302",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-8879",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-8400",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-7504",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-5262",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-5040",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4852",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4663",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4472",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4282",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-4090",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3882",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-3192",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        },
+        {
+          "id": "RX-2109",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "doctorId": "DOC-NEPAL-2",
+          "diagnosis": "General Dental Examination",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping."
+            }
+          ],
+          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
+          "reviewTimeline": "In 5 days or SOS"
+        }
+      ],
       "invoices": [],
       "createdAt": "2026-10-23T12:58:17.541Z",
       "id": "RS-1006",
@@ -692,6 +2514,65 @@
         }
       ],
       "prescriptions": [
+        {
+          "id": "RX-6954",
+          "date": "2026-10-25",
+          "doctor": "Dr. S. K. Shrestha",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-474231",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 88,
+              "pharmacyMedId": "PHARM-MED-076680",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Cefixime 200mg (Cefixime Trihydrate)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 87,
+              "pharmacyMedId": "PHARM-MED-397759",
+              "sellingPrice": 24
+            },
+            {
+              "name": "Hexidine Mouthwash 160ml (Chlorhexidine Gluconate 0.2% w/v)",
+              "genericName": "Chlorhexidine Gluconate 0.2% w/v",
+              "dosage": "10 ml",
+              "frequency": "Twice daily morning & night",
+              "duration": "10 days",
+              "instructions": "Rinse vigorously for 1 minute then spit. Do not swallow or eat for 20 mins.",
+              "inPharmacyStock": true,
+              "stockCount": 24,
+              "pharmacyMedId": "PHARM-MED-6",
+              "sellingPrice": 165
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        },
         {
           "id": "RX-6050",
           "date": "2026-10-23",
@@ -1326,6 +3207,21 @@
   ],
   "appointments": [
     {
+      "id": "APT-5757",
+      "status": "Confirmed",
+      "createdAt": "2026-10-26T10:06:25.757Z",
+      "patientId": "PT-1001",
+      "patientName": "Rupesh Jha",
+      "patientPhone": "+977 98011 97710",
+      "doctorName": "Dr. Mukesh Kushwaha",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-10-26",
+      "time": "02:30 PM",
+      "durationMinutes": 45,
+      "treatmentType": "Root Canal Therapy (RCT Sitting 2)",
+      "notes": "Patient requested painless local anaesthesia"
+    },
+    {
       "id": "APT-1012-A",
       "patientId": "AS-1012",
       "patientName": "Anaya singh",
@@ -1610,6 +3506,904 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "tlog-1792924597943-491",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_REMOVED",
+      "resource": "staff",
+      "resourceId": "user-597748",
+      "details": {
+        "removedUserId": "user-597748",
+        "previousRole": "DOCTOR"
+      },
+      "timestamp": "2026-10-25T10:36:37.943Z"
+    },
+    {
+      "id": "tlog-1792924597845-236",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ROLE_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-597748",
+      "details": {
+        "oldRoles": [
+          "RECEPTIONIST",
+          "PHARMACIST"
+        ],
+        "newRoles": [
+          "DOCTOR"
+        ]
+      },
+      "timestamp": "2026-10-25T10:36:37.845Z"
+    },
+    {
+      "id": "tlog-1792924597770-622",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_PROVISIONED",
+      "resource": "staff",
+      "resourceId": "user-597748",
+      "details": {
+        "name": "Bikash Adhikari",
+        "email": "bikash.test@nepaldental.com.np"
+      },
+      "timestamp": "2026-10-25T10:36:37.770Z"
+    },
+    {
+      "id": "tlog-1792924316966-545",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-6954",
+      "details": {
+        "patientId": "PT-2001",
+        "diagnosis": "",
+        "medicinesCount": 4
+      },
+      "timestamp": "2026-10-25T10:31:56.966Z"
+    },
+    {
+      "id": "tlog-1792924302949-861",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "name": "Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.",
+        "tagline": "Premier Advanced Dental Hospital in Kathmandu",
+        "doctorInCharge": "Dr. Mukesh Kushwaha, BDS,  (Dental Surgon)",
+        "regNo": "NMC-67890",
+        "phone": "+977 98012 34567",
+        "whatsappPhone": "9779801234567",
+        "email": "nepaldental@gmail.com",
+        "address": "Gaushala-12 Mahottari Nepal",
+        "panVat": "",
+        "gstin": "",
+        "currency": "Rs.",
+        "enableTicketCharge": true,
+        "ticketFee": 200,
+        "visitValidityDays": 7,
+        "ticketName": "Registration & OPD Consultation Fee",
+        "prescriptionSettings": {
+          "syncPharmacyStock": true,
+          "defaultRxBankView": "pharmacy-in-stock",
+          "outOfStockWarning": true,
+          "hideOutOfStock": true,
+          "autoFillDosage": false,
+          "showStockBadges": true,
+          "allowExternalMedicines": true
+        }
+      },
+      "timestamp": "2026-10-25T10:31:42.949Z"
+    },
+    {
+      "id": "tlog-1792917991372-215",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-1366",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:31.372Z"
+    },
+    {
+      "id": "tlog-1792917990944-713",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0936",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:30.944Z"
+    },
+    {
+      "id": "tlog-1792917990540-647",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0532",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:30.540Z"
+    },
+    {
+      "id": "tlog-1792917990118-344",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0110",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:30.118Z"
+    },
+    {
+      "id": "tlog-1792917989698-534",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9691",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:29.698Z"
+    },
+    {
+      "id": "tlog-1792917989311-358",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9302",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:29.311Z"
+    },
+    {
+      "id": "tlog-1792917988887-275",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-8879",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:28.887Z"
+    },
+    {
+      "id": "tlog-1792917988407-18",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-8400",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:28.407Z"
+    },
+    {
+      "id": "tlog-1792917987511-234",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-7504",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:27.511Z"
+    },
+    {
+      "id": "tlog-1792917985271-341",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-5262",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:25.271Z"
+    },
+    {
+      "id": "tlog-1792917985047-958",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-5040",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:25.047Z"
+    },
+    {
+      "id": "tlog-1792917984861-961",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4852",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:24.861Z"
+    },
+    {
+      "id": "tlog-1792917984668-92",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4663",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:24.668Z"
+    },
+    {
+      "id": "tlog-1792917984478-895",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4472",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:24.478Z"
+    },
+    {
+      "id": "tlog-1792917984288-321",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4282",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:24.288Z"
+    },
+    {
+      "id": "tlog-1792917984096-628",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4090",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:24.096Z"
+    },
+    {
+      "id": "tlog-1792917983888-168",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3882",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:23.888Z"
+    },
+    {
+      "id": "tlog-1792917983201-775",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3192",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:23.201Z"
+    },
+    {
+      "id": "tlog-1792917982115-794",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-2109",
+      "details": {
+        "patientId": "RS-1006",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:46:22.115Z"
+    },
+    {
+      "id": "tlog-1792917218185-803",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-8182",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "Acute Pulpitis & Dental Pain",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:33:38.185Z"
+    },
+    {
+      "id": "tlog-1792916530432-244",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0422",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:10.432Z"
+    },
+    {
+      "id": "tlog-1792916530206-923",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0198",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:10.206Z"
+    },
+    {
+      "id": "tlog-1792916530034-271",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0027",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:10.034Z"
+    },
+    {
+      "id": "tlog-1792916529828-213",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9821",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:09.828Z"
+    },
+    {
+      "id": "tlog-1792916529637-222",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9629",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:09.637Z"
+    },
+    {
+      "id": "tlog-1792916528892-170",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-8885",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:08.892Z"
+    },
+    {
+      "id": "tlog-1792916527547-903",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-7540",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:07.547Z"
+    },
+    {
+      "id": "tlog-1792916526532-623",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-6525",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "General Dental Examination",
+        "medicinesCount": 2
+      },
+      "timestamp": "2026-10-25T08:22:06.532Z"
+    },
+    {
+      "id": "tlog-1792916452778-272",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-2775",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "Post-op Review & Maintenance",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-25T08:20:52.778Z"
+    },
+    {
+      "id": "tlog-1792916145434-646",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-5430",
+      "details": {
+        "patientId": "AS-1012",
+        "diagnosis": "Dental Pain",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-25T08:15:45.434Z"
+    },
+    {
+      "id": "tlog-1792916079694-533",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9690",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:14:39.694Z"
+    },
+    {
+      "id": "tlog-1792915969408-537",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9404",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:49.408Z"
+    },
+    {
+      "id": "tlog-1792915968949-789",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-8944",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:48.949Z"
+    },
+    {
+      "id": "tlog-1792915934625-731",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4618",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:14.625Z"
+    },
+    {
+      "id": "tlog-1792915934408-579",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4401",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:14.408Z"
+    },
+    {
+      "id": "tlog-1792915934190-959",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4184",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:14.190Z"
+    },
+    {
+      "id": "tlog-1792915933984-711",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3977",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:13.984Z"
+    },
+    {
+      "id": "tlog-1792915933757-508",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3751",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:13.757Z"
+    },
+    {
+      "id": "tlog-1792915933545-242",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3539",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:13.545Z"
+    },
+    {
+      "id": "tlog-1792915933340-199",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3334",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:13.340Z"
+    },
+    {
+      "id": "tlog-1792915933148-297",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3142",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:13.148Z"
+    },
+    {
+      "id": "tlog-1792915932961-786",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-2956",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:12.961Z"
+    },
+    {
+      "id": "tlog-1792915932479-703",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-2472",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:12.479Z"
+    },
+    {
+      "id": "tlog-1792915923845-77",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3838",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:03.845Z"
+    },
+    {
+      "id": "tlog-1792915923631-58",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3623",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:03.631Z"
+    },
+    {
+      "id": "tlog-1792915923449-399",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3442",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:03.449Z"
+    },
+    {
+      "id": "tlog-1792915920812-882",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0804",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:12:00.812Z"
+    },
+    {
+      "id": "tlog-1792915919256-399",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9249",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:11:59.256Z"
+    },
+    {
+      "id": "tlog-1792915910699-260",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-0691",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:11:50.699Z"
+    },
+    {
+      "id": "tlog-1792915909198-283",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-9191",
+      "details": {
+        "patientId": "DKJ-1011",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-25T08:11:49.198Z"
+    },
+    {
+      "id": "tlog-1792915195347-578",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "name": "Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.",
+        "tagline": "Premier Advanced Dental Hospital in Kathmandu",
+        "doctorInCharge": "Dr. Mukesh Kushwaha, BDS,  (Dental Surgon)",
+        "regNo": "NMC-67890",
+        "phone": "+977 98012 34567",
+        "whatsappPhone": "9779801234567",
+        "email": "nepaldental@gmail.com",
+        "address": "Gaushala-12 Mahottari Nepal",
+        "panVat": "",
+        "gstin": "",
+        "currency": "Rs.",
+        "enableTicketCharge": true,
+        "ticketFee": 200,
+        "visitValidityDays": 7,
+        "ticketName": "Registration & OPD Consultation Fee",
+        "prescriptionSettings": {
+          "syncPharmacyStock": true,
+          "defaultRxBankView": "pharmacy-in-stock",
+          "outOfStockWarning": true,
+          "hideOutOfStock": false,
+          "autoFillDosage": false,
+          "showStockBadges": true,
+          "allowExternalMedicines": true
+        }
+      },
+      "timestamp": "2026-10-25T07:59:55.347Z"
+    },
+    {
+      "id": "tlog-1792912615004-874",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "PHARMACY_STOCK_RECEIVED",
+      "resource": "pharmacy_purchases",
+      "resourceId": "PO-1792912614998",
+      "details": {
+        "supplier": "Cefixime",
+        "invoice": "INV-4053",
+        "totalCost": 725,
+        "itemsCount": 1
+      },
+      "timestamp": "2026-10-25T07:16:55.004Z"
+    },
     {
       "id": "tlog-1792835092852-292",
       "userId": "user-nepal-admin",
@@ -8106,6 +10900,19 @@
   ],
   "pharmacyBatches": [
     {
+      "id": "BATCH-614998-623",
+      "medicineId": "PHARM-MED-546826",
+      "batchNumber": "26A",
+      "quantity": 50,
+      "initialQuantity": 50,
+      "purchasePrice": 14.5,
+      "sellingPrice": 24,
+      "expiryDate": "2026-10-25",
+      "storageLocation": "Shelf A-1",
+      "supplierInvoice": "INV-4053",
+      "receivedDate": "2026-10-25"
+    },
+    {
       "id": "BATCH-076692-788",
       "medicineId": "PHARM-MED-076680",
       "batchNumber": "CFX-26A",
@@ -8435,6 +11242,28 @@
     }
   ],
   "pharmacyPurchases": [
+    {
+      "id": "PO-1792912614998",
+      "supplier": "Cefixime",
+      "supplierInvoice": "INV-4053",
+      "purchaseDate": "2026-10-25",
+      "receivedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "totalCost": 725,
+      "items": [
+        {
+          "medicineId": "PHARM-MED-546826",
+          "medicineName": "Cefixime 200mg",
+          "batchNumber": "26A",
+          "expiryDate": "2026-10-25",
+          "quantity": 50,
+          "purchasePrice": 14.5,
+          "sellingPrice": 24,
+          "total": 725
+        }
+      ],
+      "status": "RECEIVED",
+      "createdAt": "2026-10-25T07:16:54.998Z"
+    },
     {
       "id": "PO-1792654076692",
       "supplier": "Omni Healthcare Logistics",

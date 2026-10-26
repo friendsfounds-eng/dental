@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ThemeSwitcher from './Common/ThemeSwitcher';
 import {
   Activity,
   User,
@@ -229,8 +230,11 @@ export default function Navbar({
           )}
         </div>
 
-        {/* Right Actions: User Profile & Session */}
-        <div className="flex items-center space-x-2.5 flex-shrink-0">
+        {/* Right Actions: User Profile, Theme Switcher & Session */}
+        <div className="flex items-center space-x-2 sm:space-x-2.5 flex-shrink-0">
+          {/* UI Theme Switcher */}
+          <ThemeSwitcher />
+
           {/* Quick Subscription & Renewal Shortcut */}
           {onOpenSubscription && (
             <button

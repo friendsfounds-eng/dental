@@ -1,5 +1,4 @@
-import React from 'react';
-import AnayaCraftLogo from './Common/AnayaCraftLogo';
+import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard,
   Activity,
@@ -24,7 +23,10 @@ import {
   Package,
   DollarSign,
   Scan,
-  X
+  X,
+  ChevronDown,
+  ChevronRight,
+  FolderCog
 } from 'lucide-react';
 
 export default function Sidebar({
@@ -42,7 +44,19 @@ export default function Sidebar({
   const isPharmacyEnabled = activeTenant?.modules?.pharmacy !== false;
   const isFinanceEnabled = activeTenant?.modules?.finance !== false;
 
-  // Role-specific navigation menus
+  // Track Settings active tab state and expand Settings folder automatically
+  const isSettingsActive = ['settings', 'staff', 'whatsapp', 'subscription'].includes(activeTab);
+  const [openFolders, setOpenFolders] = useState({
+    'settings-folder': true
+  });
+
+  useEffect(() => {
+    if (isSettingsActive) {
+      setOpenFolders((prev) => ({ ...prev, 'settings-folder': true }));
+    }
+  }, [isSettingsActive]);
+
+  // Role-specific navigation menus with Settings Folder
   let menuItems = [];
 
   if (isPlatformAdmin) {
@@ -56,8 +70,17 @@ export default function Sidebar({
       { id: 'orders', label: 'Dental Lab Orders', icon: Package },
       { id: 'appointments', label: 'Appointments & Chairs', icon: Calendar, badge: appointmentCount },
       { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
-      { id: 'settings', label: 'Clinic Settings', icon: Settings },
-      { id: 'staff', label: 'Staff Management', icon: UserCog }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'settings', label: 'Clinic Configuration', icon: Building },
+          { id: 'staff', label: 'Staff Management', icon: UserCog },
+          { id: 'whatsapp', label: 'WhatsApp Automation', icon: MessageSquare }
+        ]
+      }
     ];
   } else if (role === 'CLINIC_ADMIN') {
     menuItems = [
@@ -72,10 +95,18 @@ export default function Sidebar({
       { id: 'appointments', label: 'Appointments & Chairs', icon: Calendar, badge: appointmentCount },
       { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
       { id: 'ai', label: 'AI Clinical Assistant', icon: Sparkles },
-      { id: 'whatsapp', label: 'WhatsApp Automation', icon: MessageSquare, highlightGreen: true },
-      { id: 'settings', label: 'Clinic Configuration', icon: Settings },
-      { id: 'staff', label: 'Staff Management', icon: UserCog, highlightBlue: true },
-      { id: 'subscription', label: 'Subscription & Plan', icon: CreditCard }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'settings', label: 'Clinic Configuration', icon: Building },
+          { id: 'staff', label: 'Staff Management', icon: UserCog },
+          { id: 'whatsapp', label: 'WhatsApp Automation', icon: MessageSquare },
+          { id: 'subscription', label: 'Subscription & Plan', icon: CreditCard }
+        ]
+      }
     ];
   } else if (role === 'ACCOUNTANT') {
     menuItems = [
@@ -85,7 +116,15 @@ export default function Sidebar({
       { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan },
       { id: 'orders', label: 'Dental Lab Orders', icon: Package },
       ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy POS & Stock', icon: Boxes }] : []),
-      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+        ]
+      }
     ];
   } else if (role === 'PHARMACIST') {
     menuItems = [
@@ -94,8 +133,16 @@ export default function Sidebar({
       { id: 'xray', label: 'Dental X-Ray & PACS', icon: Scan },
       { id: 'orders', label: 'Dental Lab Orders', icon: Package },
       { id: 'billing', label: 'Billing & Invoices', icon: Receipt },
-      { id: 'whatsapp', label: 'WhatsApp Patient CRM', icon: MessageSquare, highlightGreen: true },
-      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'whatsapp', label: 'WhatsApp Patient CRM', icon: MessageSquare },
+          { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+        ]
+      }
     ];
   } else if (role === 'DOCTOR') {
     menuItems = [
@@ -109,7 +156,16 @@ export default function Sidebar({
       ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy Stock & Form', icon: Boxes }] : []),
       ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance & Ledger', icon: DollarSign }] : []),
       { id: 'ai', label: 'AI Clinical Assistant', icon: Sparkles },
-      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'settings', label: 'Clinic Configuration', icon: Building },
+          { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+        ]
+      }
     ];
   } else if (role === 'RECEPTIONIST') {
     menuItems = [
@@ -121,8 +177,16 @@ export default function Sidebar({
       ...(isPharmacyEnabled ? [{ id: 'pharmacy', label: 'Pharmacy Sales POS', icon: Boxes }] : []),
       { id: 'billing', label: 'Payment Collection', icon: Receipt },
       ...(isFinanceEnabled ? [{ id: 'finance', label: 'Patient Finances', icon: DollarSign }] : []),
-      { id: 'whatsapp', label: 'WhatsApp Patient CRM', icon: MessageSquare, highlightGreen: true },
-      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'whatsapp', label: 'WhatsApp Patient CRM', icon: MessageSquare },
+          { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+        ]
+      }
     ];
   } else {
     // Default fallback
@@ -135,8 +199,30 @@ export default function Sidebar({
       ...(isFinanceEnabled ? [{ id: 'finance', label: 'Finance', icon: DollarSign }] : []),
       { id: 'patients', label: 'Patients (EHR)', icon: Users, badge: patientCount },
       { id: 'appointments', label: 'Appointments', icon: Calendar },
-      { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+      {
+        id: 'settings-folder',
+        label: 'Settings',
+        icon: Settings,
+        isFolder: true,
+        children: [
+          { id: 'subscription', label: 'Account & Plan', icon: CreditCard }
+        ]
+      }
     ];
+  }
+
+  // Filter menu items if user has custom allowed modules configured
+  if (!isPlatformAdmin && Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.length > 0) {
+    const allowed = new Set(currentUser.allowedModules);
+    menuItems = menuItems.filter((item) => {
+      if (item.id === 'dashboard' || item.id === 'doctor-dashboard' || item.id === 'reception-dashboard') {
+        return true; // Keep landing dashboard
+      }
+      if (item.isFolder) {
+        return allowed.has('settings') || allowed.has('settings-folder');
+      }
+      return allowed.has(item.id);
+    });
   }
 
   return (
@@ -189,6 +275,113 @@ export default function Sidebar({
           </div>
 
           {menuItems.map((item) => {
+            if (item.isFolder) {
+              const isFolderOpen = !!openFolders[item.id];
+              const isChildActive = item.children?.some((child) => activeTab === child.id);
+              const FolderIcon = item.icon || Settings;
+
+              return (
+                <div key={item.id} className="pt-1.5 space-y-1">
+                  {/* Folder Group Header Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpenFolders((prev) => {
+                        const nextState = !prev[item.id];
+                        // If opening and not currently on any child tab, navigate to first child
+                        if (nextState && !isChildActive && item.children.length > 0) {
+                          onTabChange(item.children[0].id);
+                          if (onClose) onClose();
+                        }
+                        return { ...prev, [item.id]: nextState };
+                      });
+                    }}
+                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition group ${
+                      isChildActive
+                        ? 'bg-blue-50/90 text-blue-900 border border-blue-200 shadow-2xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                    title={`${item.label} (Click to ${isFolderOpen ? 'collapse' : 'expand'})`}
+                  >
+                    <div className="flex items-center space-x-2.5 min-w-0">
+                      <div
+                        className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 transition ${
+                          isChildActive
+                            ? 'bg-blue-600 text-white shadow-2xs'
+                            : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200 group-hover:text-slate-700'
+                        }`}
+                      >
+                        <FolderIcon className="w-3.5 h-3.5" />
+                      </div>
+                      <span className="truncate">{item.label}</span>
+                    </div>
+
+                    <div className="flex items-center space-x-1.5 flex-shrink-0">
+                      <span
+                        className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold ${
+                          isChildActive ? 'bg-blue-200 text-blue-900' : 'bg-slate-100 text-slate-500'
+                        }`}
+                      >
+                        {item.children.length}
+                      </span>
+                      {isFolderOpen ? (
+                        <ChevronDown className={`w-3.5 h-3.5 transition ${isChildActive ? 'text-blue-700' : 'text-slate-400'}`} />
+                      ) : (
+                        <ChevronRight className={`w-3.5 h-3.5 transition ${isChildActive ? 'text-blue-700' : 'text-slate-400'}`} />
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Folder Children List */}
+                  {isFolderOpen && (
+                    <div className="ml-3 pl-2.5 border-l-2 border-slate-200 space-y-1 py-0.5 animate-fadeIn">
+                      {item.children.map((child) => {
+                        const ChildIcon = child.icon;
+                        const isChildActiveTab = activeTab === child.id;
+
+                        return (
+                          <button
+                            key={child.id}
+                            type="button"
+                            onClick={() => {
+                              onTabChange(child.id);
+                              if (onClose) onClose();
+                            }}
+                            className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                              isChildActiveTab
+                                ? 'bg-blue-600 text-white font-bold shadow-xs shadow-blue-500/20'
+                                : 'text-slate-600 hover:text-blue-700 hover:bg-blue-50/70'
+                            }`}
+                          >
+                            <div className="flex items-center space-x-2 truncate">
+                              <ChildIcon
+                                className={`w-3.5 h-3.5 flex-shrink-0 ${
+                                  isChildActiveTab ? 'text-white' : 'text-slate-400'
+                                }`}
+                              />
+                              <span className="truncate">{child.label}</span>
+                            </div>
+
+                            {child.badge !== undefined && (
+                              <span
+                                className={`text-[9px] px-1.5 py-0.2 rounded font-bold ${
+                                  isChildActiveTab
+                                    ? 'bg-white/20 text-white'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}
+                              >
+                                {child.badge}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             const Icon = item.icon;
             const isActive = activeTab === item.id;
 
@@ -234,11 +427,6 @@ export default function Sidebar({
               </button>
             );
           })}
-        </div>
-
-        <div className="pt-2 mt-auto border-t border-slate-100 flex-shrink-0">
-          {/* Anaya Craft Official Branding (Vector-sharp with 100% visible text) */}
-          <AnayaCraftLogo variant="brand-card" size="md" />
         </div>
       </aside>
     </>

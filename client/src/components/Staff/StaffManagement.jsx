@@ -20,8 +20,142 @@ import {
   Check,
   CheckSquare,
   Square,
-  Shield
+  Shield,
+  Activity,
+  Pill,
+  DollarSign,
+  Scan,
+  Package,
+  Calendar,
+  Receipt,
+  Sparkles,
+  Settings,
+  Sliders,
+  CheckCheck,
+  FolderCog,
+  Building,
+  UserCog,
+  MessageSquare,
+  CreditCard
 } from 'lucide-react';
+
+export const SYSTEM_MODULES = [
+  {
+    id: 'chart',
+    label: 'Dental Chart (Odontogram)',
+    badgeText: 'Interactive',
+    description: 'Tooth surface charting, restorative procedures & perio diagnosis',
+    icon: Activity,
+    color: 'emerald',
+    defaultRoles: ['DOCTOR', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'prescriptions',
+    label: 'Prescription Pad (Rx)',
+    badgeText: 'Digital Rx',
+    description: 'Medication formulary, dosage calculators & prescription printing',
+    icon: Pill,
+    color: 'blue',
+    defaultRoles: ['DOCTOR', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'pharmacy',
+    label: 'Pharmacy & Stock POS',
+    badgeText: 'Inventory',
+    description: 'Drug inventory, POS dispensing, batch numbers & stock alerts',
+    icon: Boxes,
+    color: 'purple',
+    defaultRoles: ['PHARMACIST', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'finance',
+    label: 'Finance & Ledger',
+    badgeText: 'Accounts',
+    description: 'Financial ledger, revenue analysis, staff payroll & expenses',
+    icon: DollarSign,
+    color: 'emerald',
+    defaultRoles: ['ACCOUNTANT', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'patients',
+    label: 'Patients (EHR)',
+    badgeText: 'Records',
+    description: 'Electronic health records, patient registration & medical tags',
+    icon: Users,
+    color: 'indigo',
+    defaultRoles: ['DOCTOR', 'RECEPTIONIST', 'NURSE', 'ACCOUNTANT', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'xray',
+    label: 'Dental X-Ray & PACS',
+    badgeText: 'DICOM',
+    description: 'Digital radiograph viewer, contrast enhancement & imaging',
+    icon: Scan,
+    color: 'cyan',
+    defaultRoles: ['DOCTOR', 'NURSE', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'orders',
+    label: 'Dental Lab Orders',
+    badgeText: 'Prosthetics',
+    description: 'Crown, bridge & denture orders, shade tracking & delivery',
+    icon: Package,
+    color: 'amber',
+    defaultRoles: ['DOCTOR', 'RECEPTIONIST', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'appointments',
+    label: 'Appointments & Chairs',
+    badgeText: 'Scheduler',
+    description: 'Multi-chair calendar, doctor schedules & patient queue',
+    icon: Calendar,
+    color: 'rose',
+    defaultRoles: ['DOCTOR', 'RECEPTIONIST', 'NURSE', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'billing',
+    label: 'Billing & Invoices',
+    badgeText: 'Invoicing',
+    description: 'Invoice generation, itemized fee billing & payment collection',
+    icon: Receipt,
+    color: 'teal',
+    defaultRoles: ['RECEPTIONIST', 'ACCOUNTANT', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'ai',
+    label: 'AI Clinical Assistant',
+    badgeText: 'AI Diagnostics',
+    description: 'Smart clinical diagnostic insights & radiographic analysis',
+    icon: Sparkles,
+    color: 'violet',
+    defaultRoles: ['DOCTOR', 'CLINIC_ADMIN']
+  },
+  {
+    id: 'settings',
+    label: 'Settings',
+    badgeText: 'Admin Config',
+    description: 'Clinic configuration, staff management, WhatsApp CRM & plan',
+    icon: Settings,
+    color: 'slate',
+    defaultRoles: ['CLINIC_ADMIN']
+  }
+];
+
+export const getDefaultModulesForRoles = (roles = []) => {
+  const roleList = Array.isArray(roles) && roles.length > 0 ? roles : ['DOCTOR'];
+  if (roleList.includes('CLINIC_ADMIN')) {
+    return SYSTEM_MODULES.map(m => m.id);
+  }
+  const set = new Set();
+  roleList.forEach(r => {
+    SYSTEM_MODULES.forEach(mod => {
+      if (mod.defaultRoles.includes(r)) {
+        set.add(mod.id);
+      }
+    });
+  });
+  return Array.from(set);
+};
 
 const ROLE_OPTIONS = [
   {
@@ -97,6 +231,7 @@ export default function StaffManagement({
     email: '',
     phone: '',
     roles: ['DOCTOR'],
+    allowedModules: getDefaultModulesForRoles(['DOCTOR']),
     specialization: 'General Dental Surgeon',
     password: ''
   });
@@ -151,8 +286,23 @@ export default function StaffManagement({
       return {
         ...prev,
         roles: updated,
-        role: updated.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : updated[0]
+        role: updated.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : updated[0],
+        allowedModules: getDefaultModulesForRoles(updated)
       };
+    });
+  };
+
+  // Toggle navigation module permission in new staff
+  const handleToggleNewStaffModule = (moduleId) => {
+    setNewStaff(prev => {
+      const current = Array.isArray(prev.allowedModules) ? prev.allowedModules : [];
+      let updated;
+      if (current.includes(moduleId)) {
+        updated = current.filter(m => m !== moduleId);
+      } else {
+        updated = [...current, moduleId];
+      }
+      return { ...prev, allowedModules: updated };
     });
   };
 
@@ -160,6 +310,10 @@ export default function StaffManagement({
   const handleAddStaffSubmit = async (e) => {
     e.preventDefault();
     const assignedRoles = Array.isArray(newStaff.roles) && newStaff.roles.length > 0 ? newStaff.roles : ['DOCTOR'];
+    const assignedModules = Array.isArray(newStaff.allowedModules) && newStaff.allowedModules.length > 0
+      ? newStaff.allowedModules
+      : getDefaultModulesForRoles(assignedRoles);
+
     const payload = {
       name: newStaff.name,
       email: newStaff.email,
@@ -167,7 +321,8 @@ export default function StaffManagement({
       password: newStaff.password,
       specialization: newStaff.specialization,
       roles: assignedRoles,
-      role: assignedRoles.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : assignedRoles[0]
+      role: assignedRoles.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : assignedRoles[0],
+      allowedModules: assignedModules
     };
 
     try {
@@ -179,13 +334,14 @@ export default function StaffManagement({
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || data.error || 'Failed to add staff member.');
 
-      showToast(`Staff account for "${newStaff.name}" added successfully with ${assignedRoles.length} role(s)!`);
+      showToast(`Staff account for "${newStaff.name}" added successfully with ${assignedRoles.length} role(s) & ${assignedModules.length} module permissions!`);
       setAddModalOpen(false);
       setNewStaff({
         name: '',
         email: '',
         phone: '',
         roles: ['DOCTOR'],
+        allowedModules: getDefaultModulesForRoles(['DOCTOR']),
         specialization: 'General Dental Surgeon',
         password: ''
       });
@@ -249,30 +405,50 @@ export default function StaffManagement({
     }
   };
 
-  // Handle Save Edited Roles (Multiple Roles Support)
-  const handleSaveEditedRoles = async (staffId, rolesToSave) => {
+  // Handle Save Edited Roles & Module Access (Multiple Roles & Granular Privileges)
+  const handleSaveEditedRoles = async (staffId, rolesToSave, modulesToSave) => {
     if (!rolesToSave || rolesToSave.length === 0) {
       alert('At least one role must remain selected.');
       return;
     }
+    const finalModules = Array.isArray(modulesToSave) && modulesToSave.length > 0
+      ? modulesToSave
+      : getDefaultModulesForRoles(rolesToSave);
+
     try {
       const res = await fetch(`/api/admin/staff/${staffId}/role`, {
         method: 'PUT',
         headers: getHeaders(),
         body: JSON.stringify({
           roles: rolesToSave,
-          role: rolesToSave.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : rolesToSave[0]
+          role: rolesToSave.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : rolesToSave[0],
+          allowedModules: finalModules
         })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to update roles.');
 
-      showToast(`Roles updated to: ${rolesToSave.join(', ')}.`);
+      showToast(`Roles & module permissions updated successfully (${finalModules.length} modules granted).`);
       setEditingRoleStaff(null);
       fetchStaff();
     } catch (err) {
       alert(`[Role Update Error] ${err.message}`);
     }
+  };
+
+  // Toggle module in edit modal
+  const handleToggleEditStaffModule = (moduleId) => {
+    setEditingRoleStaff(prev => {
+      if (!prev) return null;
+      const current = Array.isArray(prev.allowedModules) ? prev.allowedModules : [];
+      let updated;
+      if (current.includes(moduleId)) {
+        updated = current.filter(m => m !== moduleId);
+      } else {
+        updated = [...current, moduleId];
+      }
+      return { ...prev, allowedModules: updated };
+    });
   };
 
   // Role metadata helper
@@ -365,7 +541,18 @@ export default function StaffManagement({
         </div>
 
         <button
-          onClick={() => setAddModalOpen(true)}
+          onClick={() => {
+            setNewStaff({
+              name: '',
+              email: '',
+              phone: '',
+              roles: ['DOCTOR'],
+              allowedModules: getDefaultModulesForRoles(['DOCTOR']),
+              specialization: 'General Dental Surgeon',
+              password: ''
+            });
+            setAddModalOpen(true);
+          }}
           className="flex items-center space-x-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-400 text-white rounded-2xl text-xs font-black transition shadow-lg shadow-blue-500/20 flex-shrink-0"
         >
           <UserPlus className="w-4 h-4" />
@@ -500,6 +687,7 @@ export default function StaffManagement({
                 <tr>
                   <th className="p-3.5">Staff Member</th>
                   <th className="p-3.5">Assigned Role</th>
+                  <th className="p-3.5">Permitted Modules (Menu Options)</th>
                   <th className="p-3.5">Contact Details</th>
                   <th className="p-3.5">Account Status</th>
                   <th className="p-3.5 text-right">Actions</th>
@@ -510,6 +698,9 @@ export default function StaffManagement({
                   const roleMeta = getRoleBadge(s.role);
                   const RoleIcon = roleMeta.icon;
                   const isSelf = currentUser?.id === s.id;
+                  const staffModules = Array.isArray(s.allowedModules) && s.allowedModules.length > 0
+                    ? s.allowedModules
+                    : getDefaultModulesForRoles(Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : [s.role]);
 
                   return (
                     <tr key={s.id} className="hover:bg-slate-50/70 transition">
@@ -555,13 +746,55 @@ export default function StaffManagement({
                           <button
                             onClick={() => {
                               const existingRoles = Array.isArray(s.roles) && s.roles.length > 0 ? [...s.roles] : [s.role];
-                              setEditingRoleStaff({ ...s, roles: existingRoles });
+                              const existingModules = Array.isArray(s.allowedModules) && s.allowedModules.length > 0
+                                ? [...s.allowedModules]
+                                : getDefaultModulesForRoles(existingRoles);
+                              setEditingRoleStaff({
+                                ...s,
+                                roles: existingRoles,
+                                allowedModules: existingModules
+                              });
                             }}
                             className="text-[10px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg px-2 py-0.5 font-bold transition flex items-center gap-0.5 ml-1"
-                            title="Edit roles & authorities"
+                            title="Edit roles & module authorities"
                           >
                             <span>Edit</span>
                           </button>
+                        </div>
+                      </td>
+
+                      {/* Permitted Modules (Menu Options) */}
+                      <td className="p-3.5">
+                        <div className="space-y-1 max-w-[280px]">
+                          <div className="flex items-center space-x-1.5">
+                            <span className="font-bold text-slate-800 text-[11px]">
+                              {staffModules.length} of {SYSTEM_MODULES.length} Allowed
+                            </span>
+                            {staffModules.length === SYSTEM_MODULES.length ? (
+                              <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded-full">
+                                Full Access
+                              </span>
+                            ) : (
+                              <span className="text-[9px] bg-blue-100 text-blue-800 font-bold px-1.5 py-0.2 rounded-full">
+                                Customized
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {SYSTEM_MODULES.filter(m => staffModules.includes(m.id)).map(m => {
+                              const MIcon = m.icon;
+                              return (
+                                <span
+                                  key={m.id}
+                                  title={`${m.label}: ${m.description}`}
+                                  className="inline-flex items-center space-x-1 px-1.5 py-0.5 rounded-md text-[9px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium transition cursor-help"
+                                >
+                                  <MIcon className="w-2.5 h-2.5 text-blue-600 flex-shrink-0" />
+                                  <span className="truncate max-w-[70px]">{m.label.split(' ')[0]}</span>
+                                </span>
+                              );
+                            })}
+                          </div>
                         </div>
                       </td>
 
@@ -802,6 +1035,103 @@ export default function StaffManagement({
                 </div>
               )}
 
+              {/* Navigation Menu & Module Access Privileges (11 Options from Sidebar) */}
+              <div className="space-y-2 pt-3 border-t border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="block font-bold text-slate-800 uppercase text-xs">
+                      Navigation Menu & Module Access Privileges *
+                    </label>
+                    <p className="text-[11px] text-slate-500">
+                      Toggle which sections this staff member can access from the navigation sidebar
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                    {(newStaff.allowedModules || []).length} / {SYSTEM_MODULES.length} Permitted
+                  </span>
+                </div>
+
+                {/* Quick Selection Buttons */}
+                <div className="flex flex-wrap items-center gap-1.5 pb-1">
+                  <span className="text-[10px] font-semibold text-slate-400">Quick Select:</span>
+                  <button
+                    type="button"
+                    onClick={() => setNewStaff(prev => ({ ...prev, allowedModules: SYSTEM_MODULES.map(m => m.id) }))}
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-bold transition"
+                  >
+                    Select All (11 Modules)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setNewStaff(prev => ({ ...prev, allowedModules: [] }))}
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium transition"
+                  >
+                    Deselect All
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const defs = getDefaultModulesForRoles(newStaff.roles || ['DOCTOR']);
+                      setNewStaff(prev => ({ ...prev, allowedModules: defs }));
+                    }}
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold transition"
+                  >
+                    Reset to Role Defaults
+                  </button>
+                </div>
+
+                {/* Modules Grid (All 11 from the Sidebar) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-2 border border-slate-200 rounded-2xl bg-slate-50/70">
+                  {SYSTEM_MODULES.map((mod) => {
+                    const isChecked = (newStaff.allowedModules || []).includes(mod.id);
+                    const ModIcon = mod.icon;
+                    return (
+                      <div
+                        key={mod.id}
+                        onClick={() => handleToggleNewStaffModule(mod.id)}
+                        className={`flex items-start space-x-2.5 p-2.5 rounded-xl border cursor-pointer transition select-none ${
+                          isChecked
+                            ? 'border-blue-500 bg-white ring-1 ring-blue-500/30 shadow-xs'
+                            : 'border-slate-200 bg-white/70 hover:bg-white hover:border-slate-300'
+                        }`}
+                      >
+                        <div className="pt-0.5 flex-shrink-0">
+                          <div
+                            className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors ${
+                              isChecked
+                                ? 'bg-blue-600 border-blue-600 text-white shadow-2xs'
+                                : 'border-slate-300 bg-white'
+                            }`}
+                          >
+                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                        </div>
+                        <div
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                            isChecked ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500'
+                          }`}
+                        >
+                          <ModIcon className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <span className={`text-[11px] font-bold truncate ${isChecked ? 'text-slate-900' : 'text-slate-600'}`}>
+                              {mod.label}
+                            </span>
+                            {mod.badgeText && (
+                              <span className="text-[9px] bg-slate-100 text-slate-500 font-mono font-bold px-1 rounded ml-1">
+                                {mod.badgeText}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">{mod.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Phone & Password Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
@@ -1023,13 +1353,111 @@ export default function StaffManagement({
                 })}
               </div>
 
+              {/* Navigation Menu & Module Access Privileges (11 Options from Sidebar) */}
+              <div className="space-y-2 pt-3 border-t border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="block font-bold text-slate-800 uppercase text-xs">
+                      Permitted Navigation Menu & Modules *
+                    </label>
+                    <p className="text-[11px] text-slate-500">
+                      Grant or revoke individual sidebar module access for this account
+                    </p>
+                  </div>
+                  <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                    {(editingRoleStaff.allowedModules || []).length} / {SYSTEM_MODULES.length} Permitted
+                  </span>
+                </div>
+
+                {/* Quick Selection Presets */}
+                <div className="flex flex-wrap items-center gap-1.5 pb-1">
+                  <span className="text-[10px] font-semibold text-slate-400">Quick Select:</span>
+                  <button
+                    type="button"
+                    onClick={() => setEditingRoleStaff(prev => ({ ...prev, allowedModules: SYSTEM_MODULES.map(m => m.id) }))}
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-bold transition"
+                  >
+                    Select All (11 Modules)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditingRoleStaff(prev => ({ ...prev, allowedModules: [] }))}
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-medium transition"
+                  >
+                    Deselect All
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentRoles = Array.isArray(editingRoleStaff.roles) ? editingRoleStaff.roles : [editingRoleStaff.role];
+                      const defs = getDefaultModulesForRoles(currentRoles);
+                      setEditingRoleStaff(prev => ({ ...prev, allowedModules: defs }));
+                    }}
+                    className="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold transition"
+                  >
+                    Apply Role Defaults
+                  </button>
+                </div>
+
+                {/* Modules Grid (All 11 from the Sidebar) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-2 border border-slate-200 rounded-2xl bg-slate-50/70">
+                  {SYSTEM_MODULES.map((mod) => {
+                    const isChecked = (editingRoleStaff.allowedModules || []).includes(mod.id);
+                    const ModIcon = mod.icon;
+                    return (
+                      <div
+                        key={mod.id}
+                        onClick={() => handleToggleEditStaffModule(mod.id)}
+                        className={`flex items-start space-x-2.5 p-2.5 rounded-xl border cursor-pointer transition select-none ${
+                          isChecked
+                            ? 'border-blue-500 bg-white ring-1 ring-blue-500/30 shadow-xs'
+                            : 'border-slate-200 bg-white/70 hover:bg-white hover:border-slate-300'
+                        }`}
+                      >
+                        <div className="pt-0.5 flex-shrink-0">
+                          <div
+                            className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors ${
+                              isChecked
+                                ? 'bg-blue-600 border-blue-600 text-white shadow-2xs'
+                                : 'border-slate-300 bg-white'
+                            }`}
+                          >
+                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                        </div>
+                        <div
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                            isChecked ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500'
+                          }`}
+                        >
+                          <ModIcon className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <span className={`text-[11px] font-bold truncate ${isChecked ? 'text-slate-900' : 'text-slate-600'}`}>
+                              {mod.label}
+                            </span>
+                            {mod.badgeText && (
+                              <span className="text-[9px] bg-slate-100 text-slate-500 font-mono font-bold px-1 rounded ml-1">
+                                {mod.badgeText}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">{mod.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-[11px] space-y-1">
                 <div className="font-bold flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
                   Session Enforcement
                 </div>
                 <p>
-                  Active logins for this staff member will automatically adopt these new roles on their next API request or when they re-login.
+                  Active logins for this staff member will automatically adopt these new roles & module permissions on their next API request or when they re-login.
                 </p>
               </div>
 
@@ -1043,10 +1471,10 @@ export default function StaffManagement({
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSaveEditedRoles(editingRoleStaff.id, editingRoleStaff.roles)}
+                  onClick={() => handleSaveEditedRoles(editingRoleStaff.id, editingRoleStaff.roles, editingRoleStaff.allowedModules)}
                   className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-md transition"
                 >
-                  Save Role Changes
+                  Save Role & Permissions
                 </button>
               </div>
             </div>

@@ -13,10 +13,3 @@ services:
         value: production
       - key: PORT
         value: 10000
-      - key: CLINIC_VAULT_ENCRYPTION_KEY
-        generateValue: true
-    # Persistent disk for paid plans (Free tier keeps data in server/data ephemeral)
-    disk:
-      name: dental-data
-      mountPath: /opt/render/project/src/server/data
-      sizeGB: 10

@@ -98,44 +98,38 @@
 
 ---
 
-## 🚀 Running & Hosting the Application
+## 🚀 How to Run Locally
 
-### 🧑‍💻 Development Mode
-To run with live hot-reloading (Vite on port 3000 + API on port 5000):
-```bash
-npm run dev
-# OR double-click start-dental-app.bat on Windows
+### Option 1: One-Click Windows Batch File (Easiest)
+Double-click:
+```bat
+start-dental-app.bat
 ```
+This script checks for Node.js, starts the backend server (Port 5000), launches the frontend (Port 3000), and automatically opens your web browser!
 
 ---
 
-### 🌐 Production Mode (Local Server or LAN)
-To build and run the optimized production bundle on a single port (5000):
+### Option 2: Command Line (npm start)
+Open a terminal in `d:\Yugal\Dental` and run:
 ```bash
-# 1. Build client and prepare server
-npm run build
-
-# 2. Start production server
 npm start
-# OR double-click start-production.bat on Windows
 ```
-Visit: 👉 **http://localhost:5000** (or `http://YOUR_LOCAL_IP:5000` from any device on your clinic Wi-Fi).
+The application will launch and open at:
+👉 **http://localhost:3000**
 
 ---
 
-### ☁️ Production Hosting (Cloud / VPS / Docker)
-The application is pre-configured and ready for hosting across all major platforms:
-
-- **1-Click Cloud PaaS:** Ready for [Render](https://render.com) (via included `render.yaml`) and [Railway](https://railway.app).
-- **Docker & Containers:** Run `docker compose up -d` (via included `Dockerfile` and `docker-compose.yml`).
-- **Linux VPS (Ubuntu/Debian):** Nginx reverse proxy template (`nginx.conf`) and PM2 process management (`ecosystem.config.cjs`).
-- **Health Checks:** Pre-configured endpoints at `/health` and `/api/health`.
-
-📖 For complete, step-by-step instructions for each hosting method, see the [Deployment Guide](DEPLOYMENT.md).
+### Option 3: Unified Single-Server Mode
+You can also run the built production app on port 5000:
+```bash
+node server/server.js
+```
+Then visit:
+👉 **http://localhost:5000**
 
 ---
 
-## 🗄️ Database & Multi-Tenant Data Persistence
-- All clinic records, multi-tenant databases, charts, prescriptions, financial ledgers, and AES-256 encrypted DICOM vaults are stored in:
-  `server/data/`
-- Automatic self-initialization on first boot. When hosting with Docker or cloud platforms, mount `server/data` to a persistent volume.
+## 🗄️ Database & Local Persistence
+- All patient files, dental charts, appointments, prescriptions, and invoices are persistently saved in:
+  `server/data/clinic_data.json`
+- Changes made in the web software are saved automatically to disk. No external database or cloud subscription is required!

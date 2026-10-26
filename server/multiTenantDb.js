@@ -2231,6 +2231,7 @@ class MultiTenantDatabase {
     let activeTenant = null;
     let activeRole = user.globalRole || 'GUEST';
     let activeRoles = user.globalRole ? [user.globalRole] : ['GUEST'];
+    let activeModules = null;
 
     if (user.globalRole === 'PLATFORM_ADMIN') {
       // Platform admin can inspect any tenant or operate globally
@@ -2253,6 +2254,9 @@ class MultiTenantDatabase {
       activeTenant = this.getTenantById(chosenMembership.tenantId);
       activeRole = chosenMembership.role;
       activeRoles = chosenMembership.roles || (chosenMembership.role ? [chosenMembership.role] : []);
+      activeModules = chosenMembership.allowedModules || (activeRole === 'CLINIC_ADMIN' ? [
+        'chart', 'prescriptions', 'pharmacy', 'finance', 'patients', 'xray', 'orders', 'appointments', 'billing', 'ai', 'settings'
+      ] : null);
     }
 
     const token = Buffer.from(JSON.stringify({
@@ -2261,6 +2265,7 @@ class MultiTenantDatabase {
       globalRole: user.globalRole,
       role: activeRole,
       roles: activeRoles,
+      allowedModules: activeModules,
       tenantId: activeTenant ? activeTenant.id : null,
       tokenVersion: user.tokenVersion || 1,
       exp: Date.now() + 24 * 60 * 60 * 1000
@@ -2275,7 +2280,8 @@ class MultiTenantDatabase {
         phone: user.phone,
         globalRole: user.globalRole,
         role: activeRole,
-        roles: activeRoles
+        roles: activeRoles,
+        allowedModules: activeModules
       },
       activeTenant,
       memberships: userMemberships.map(m => {

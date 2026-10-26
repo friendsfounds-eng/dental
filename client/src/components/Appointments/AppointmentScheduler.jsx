@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { assessTicketValidity } from '../../utils/ticketValidity';
+import DoctorAllocationModal from './DoctorAllocationModal';
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -26,21 +27,28 @@ export default function AppointmentScheduler({
   onOpenWhatsApp,
   clinicProfile = {},
   onSelectPatient,
-  onNavigate
+  onNavigate,
+  onViewDoctorAllocation
 }) {
+  const todayStr = new Date().toISOString().split('T')[0];
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('2026-10-21');
+  const [selectedDate, setSelectedDate] = useState(todayStr);
   const [selectedChair, setSelectedChair] = useState('all');
+
+  // Doctor Allocation Popup Modal State
+  const [allocatedApt, setAllocatedApt] = useState(null);
+  const [doctorModalOpen, setDoctorModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     patientId: patients[0]?.id || '',
-    doctorName: doctors[0]?.name || 'Dr. Yugal Sharma',
+    doctorName: doctors[0]?.name || 'Dr. Mukesh Kushwaha',
     chair: chairs[0] || 'Chair 1 (Main Operatory)',
-    date: '2026-10-21',
+    date: todayStr,
     time: '11:00 AM',
     durationMinutes: 45,
     treatmentType: 'Consultation & Examination',
-    notes: ''
+    notes: '',
+    status: 'Confirmed'
   });
 
   const filtered = appointments.filter(a => {
@@ -49,16 +57,46 @@ export default function AppointmentScheduler({
     return matchDate && matchChair;
   });
 
-  const handleCreateAppointment = (e) => {
+  const handleCreateAppointment = async (e) => {
     e.preventDefault();
     const patient = patients.find(p => p.id === formData.patientId) || patients[0];
-    onAddAppointment({
+    const newApt = {
       ...formData,
       patientName: patient?.name || 'Walk-in Patient',
-      patientPhone: patient?.phone || '+91 98765 00000',
-      status: 'Scheduled'
-    });
+      patientPhone: patient?.phone || '+977 98012 34567',
+      status: formData.status || 'Confirmed'
+    };
+
     setModalOpen(false);
+
+    if (onAddAppointment) {
+      const created = await onAddAppointment(newApt);
+      // If confirmed, trigger popup message for allocated doctor
+      if (newApt.status === 'Confirmed') {
+        if (onViewDoctorAllocation) {
+          onViewDoctorAllocation(created || newApt);
+        } else {
+          setAllocatedApt(created || newApt);
+          setDoctorModalOpen(true);
+        }
+      }
+    }
+  };
+
+  const handleStatusChange = (apt, newStatus) => {
+    if (onUpdateStatus) {
+      onUpdateStatus(apt.id, newStatus);
+    }
+    // If status is changed to Confirmed, trigger popup message for allocated doctor
+    if (newStatus === 'Confirmed') {
+      const updated = { ...apt, status: 'Confirmed' };
+      if (onViewDoctorAllocation) {
+        onViewDoctorAllocation(updated);
+      } else {
+        setAllocatedApt(updated);
+        setDoctorModalOpen(true);
+      }
+    }
   };
 
   const getStatusBadge = (status) => {
@@ -114,7 +152,7 @@ export default function AppointmentScheduler({
             className="text-xs font-bold py-1.5 px-3 rounded-lg border border-slate-300 bg-white text-slate-800"
           />
           <button
-            onClick={() => setSelectedDate('2026-10-21')}
+            onClick={() => setSelectedDate(todayStr)}
             className="text-xs font-semibold text-blue-600 hover:underline px-2"
           >
             Today
@@ -204,7 +242,7 @@ export default function AppointmentScheduler({
                   {/* Status Dropdown */}
                   <select
                     value={apt.status}
-                    onChange={(e) => onUpdateStatus && onUpdateStatus(apt.id, e.target.value)}
+                    onChange={(e) => handleStatusChange(apt, e.target.value)}
                     className={`text-xs font-bold py-1.5 px-3 rounded-lg border ${getStatusBadge(apt.status)}`}
                   >
                     <option value="Scheduled">Scheduled</option>
@@ -235,22 +273,40 @@ export default function AppointmentScheduler({
                     </button>
                   )}
 
-                {/* WhatsApp button with Auto Link */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!onOpenWhatsApp) return;
-                    const apptAutoLink = `${window.location.origin}/?patientId=${apt.patientId}`;
-                    const msg = `Hello *${apt.patientName}*,\n\nYour dental visit at *${clinicProfile.name || 'Apex Dental'}* is confirmed for *${apt.date}* at *${apt.time}* with *${apt.doctorName}* (${apt.chair || 'Operatory Chair'}).\n\n🔗 *Appointment Auto Link:* ${apptAutoLink}\n\nPlease arrive 10 minutes before your slot. For assistance, call ${clinicProfile.phone || '+977 98012 34567'}.\n\nWarm regards,\n*${clinicProfile.name || 'Apex Dental'}*`;
-                    onOpenWhatsApp(apt.patientPhone, msg);
-                  }}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition shadow-sm"
-                  title="Send WhatsApp confirmation with auto link"
-                >
-                  <MessageSquare className="w-3.5 h-3.5" />
-                  <span>WhatsApp Link</span>
-                </button>
-              </div>
+                  {/* WhatsApp button with Auto Link */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!onOpenWhatsApp) return;
+                      const apptAutoLink = `${window.location.origin}/?patientId=${apt.patientId}`;
+                      const msg = `Hello *${apt.patientName}*,\n\nYour dental visit at *${clinicProfile.name || 'Apex Dental'}* is confirmed for *${apt.date}* at *${apt.time}* with *${apt.doctorName}* (${apt.chair || 'Operatory Chair'}).\n\n🔗 *Appointment Auto Link:* ${apptAutoLink}\n\nPlease arrive 10 minutes before your slot. For assistance, call ${clinicProfile.phone || '+977 98012 34567'}.\n\nWarm regards,\n*${clinicProfile.name || 'Apex Dental'}*`;
+                      onOpenWhatsApp(apt.patientPhone, msg);
+                    }}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition shadow-sm"
+                    title="Send WhatsApp confirmation with auto link"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>WhatsApp Link</span>
+                  </button>
+
+                  {/* Allocated Doctor Info Card Trigger Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (onViewDoctorAllocation) {
+                        onViewDoctorAllocation(apt);
+                      } else {
+                        setAllocatedApt(apt);
+                        setDoctorModalOpen(true);
+                      }
+                    }}
+                    className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold px-2.5 py-1.5 rounded-lg flex items-center space-x-1 transition shadow-2xs"
+                    title="View Allocated Doctor Details"
+                  >
+                    <Stethoscope className="w-3.5 h-3.5 text-blue-600" />
+                    <span className="hidden sm:inline">Doctor Info</span>
+                  </button>
+                </div>
             </div>
           );
         })
@@ -386,6 +442,56 @@ export default function AppointmentScheduler({
                 />
               </div>
 
+              {/* Appointment Booking Status */}
+              <div>
+                <label className="block font-bold text-slate-700 uppercase mb-1">
+                  Appointment Allocation Status
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <label
+                    className={`p-2.5 rounded-xl border flex items-center space-x-2 cursor-pointer transition ${
+                      formData.status === 'Confirmed'
+                        ? 'border-blue-500 bg-blue-50/80 text-blue-900 font-bold'
+                        : 'border-slate-200 bg-white text-slate-700'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="bookingStatus"
+                      value="Confirmed"
+                      checked={formData.status === 'Confirmed'}
+                      onChange={() => setFormData({ ...formData, status: 'Confirmed' })}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <div className="text-xs">
+                      <span className="block font-bold text-blue-950">Confirmed ✓</span>
+                      <span className="text-[10px] text-blue-700/80">Allocates & alerts doctor</span>
+                    </div>
+                  </label>
+
+                  <label
+                    className={`p-2.5 rounded-xl border flex items-center space-x-2 cursor-pointer transition ${
+                      formData.status === 'Scheduled'
+                        ? 'border-amber-500 bg-amber-50/80 text-amber-900 font-bold'
+                        : 'border-slate-200 bg-white text-slate-700'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="bookingStatus"
+                      value="Scheduled"
+                      checked={formData.status === 'Scheduled'}
+                      onChange={() => setFormData({ ...formData, status: 'Scheduled' })}
+                      className="text-amber-600 focus:ring-amber-500"
+                    />
+                    <div className="text-xs">
+                      <span className="block font-bold text-slate-800">Scheduled</span>
+                      <span className="text-[10px] text-slate-500">Tentative slot</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <div className="pt-3 border-t border-slate-200 flex justify-end space-x-2">
                 <button
                   type="button"
@@ -396,14 +502,29 @@ export default function AppointmentScheduler({
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-lg shadow-sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2 rounded-lg shadow-sm flex items-center space-x-1.5"
                 >
-                  Save & Confirm Booking
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Save & Confirm Booking</span>
                 </button>
               </div>
             </form>
           </div>
         </div>
+      )}
+
+      {/* Pop-up Message for Allocated Doctor (Fallback if not handled globally) */}
+      {!onViewDoctorAllocation && (
+        <DoctorAllocationModal
+          isOpen={doctorModalOpen}
+          onClose={() => setDoctorModalOpen(false)}
+          appointment={allocatedApt}
+          doctors={doctors}
+          patients={patients}
+          clinicProfile={clinicProfile}
+          onNavigate={onNavigate}
+          onOpenWhatsApp={onOpenWhatsApp}
+        />
       )}
     </div>
   );
