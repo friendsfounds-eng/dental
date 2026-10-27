@@ -1,22 +1,24 @@
 {
   "tenantId": "tenant-smile-dental-and-wellness-centre-0795",
   "clinicProfile": {
-    "name": "Smile Dental and Wellness Centre",
-    "tagline": "Modern Digital Dentistry & Oral Healthcare",
+    "name": "Nepal Dental and Health Clinic",
+    "tagline": "Smile it raises your face value",
     "doctorInCharge": "Dental Surgeon",
-    "regNo": "NMC-PENDING",
-    "phone": "+977 98000 00000",
+    "regNo": "15561",
+    "phone": "+977 9844033335",
     "whatsappPhone": "9779800000000",
     "email": "adminsmiledental@anacraft.com",
     "address": "Nepal",
-    "panVat": "",
-    "currency": "Rs."
+    "panVat": "604334000",
+    "currency": "Rs.",
+    "gstin": "604334000",
+    "visitValidityDays": 10
   },
   "doctors": [
     {
-      "id": "doc-4615",
-      "name": "Aayush Aacharya",
-      "email": "drsmiledental@anacraft.com",
+      "id": "doc-8908",
+      "name": "Smile Dental and Wellness Centre Admin",
+      "email": "adminsmiledental@anacraft.com",
       "phone": "",
       "specialization": "Dental Surgeon",
       "status": "Active"
@@ -42,7 +44,55 @@
       "dentalChart": {},
       "treatmentPlans": [],
       "notes": [],
-      "prescriptions": [],
+      "prescriptions": [
+        {
+          "id": "RX-3325",
+          "date": "2026-10-27",
+          "doctor": "Aayush Aacharya",
+          "isFinalized": true,
+          "diagnosis": "",
+          "medicines": [
+            {
+              "name": "Ketorol DT 10mg (Ketorolac Tromethamine)",
+              "genericName": "Ketorolac Tromethamine",
+              "dosage": "10 mg Dispersible",
+              "frequency": "1 tablet SOS (when pain is severe)",
+              "duration": "2-3 days",
+              "instructions": "Disperse in 1/2 glass of water. Maximum 40mg daily.",
+              "inPharmacyStock": true,
+              "stockCount": 8,
+              "pharmacyMedId": "PHARM-MED-3",
+              "sellingPrice": 14
+            },
+            {
+              "name": "Metrogyl 400mg (Metronidazole)",
+              "genericName": "Metronidazole",
+              "dosage": "400 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
+              "inPharmacyStock": true,
+              "stockCount": 140,
+              "pharmacyMedId": "PHARM-MED-4",
+              "sellingPrice": 7.5
+            },
+            {
+              "name": "Hexidine Mouthwash 160ml (Chlorhexidine Gluconate 0.2% w/v)",
+              "genericName": "Chlorhexidine Gluconate 0.2% w/v",
+              "dosage": "10 ml",
+              "frequency": "Twice daily morning & night",
+              "duration": "10 days",
+              "instructions": "Rinse vigorously for 1 minute then spit. Do not swallow or eat for 20 mins.",
+              "inPharmacyStock": true,
+              "stockCount": 24,
+              "pharmacyMedId": "PHARM-MED-6",
+              "sellingPrice": 165
+            }
+          ],
+          "instructions": "",
+          "reviewTimeline": "In 5 days or SOS"
+        }
+      ],
       "invoices": [
         {
           "id": "INV-2078",
@@ -301,6 +351,79 @@
   },
   "refundRequests": [],
   "auditLogs": [
+    {
+      "id": "tlog-1793122068968-941",
+      "userId": "user-920796",
+      "userEmail": "adminsmiledental@anacraft.com",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ROLE_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-920796",
+      "details": {
+        "oldRoles": [
+          "CLINIC_ADMIN"
+        ],
+        "newRoles": [
+          "RECEPTIONIST",
+          "PHARMACIST",
+          "NURSE",
+          "DOCTOR"
+        ]
+      },
+      "timestamp": "2026-10-27T17:27:48.968Z"
+    },
+    {
+      "id": "tlog-1793122014102-408",
+      "userId": "user-920796",
+      "userEmail": "adminsmiledental@anacraft.com",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_REMOVED",
+      "resource": "staff",
+      "resourceId": "user-044615",
+      "details": {
+        "removedUserId": "user-044615",
+        "previousRole": "CLINIC_ADMIN"
+      },
+      "timestamp": "2026-10-27T17:26:54.103Z"
+    },
+    {
+      "id": "tlog-1793121852429-930",
+      "userId": "user-920796",
+      "userEmail": "adminsmiledental@anacraft.com",
+      "userRole": "CLINIC_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "name": "Nepal Dental and Health Clinic",
+        "tagline": "Smile it raises your face value",
+        "doctorInCharge": "Dental Surgeon",
+        "regNo": "15561",
+        "phone": "+977 9844033335",
+        "whatsappPhone": "9779800000000",
+        "email": "adminsmiledental@anacraft.com",
+        "address": "Nepal",
+        "panVat": "604334000",
+        "currency": "Rs.",
+        "gstin": "604334000",
+        "visitValidityDays": 10
+      },
+      "timestamp": "2026-10-27T17:24:12.429Z"
+    },
+    {
+      "id": "tlog-1793118293329-612",
+      "userId": "user-920796",
+      "userEmail": "adminsmiledental@anacraft.com",
+      "userRole": "CLINIC_ADMIN",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3325",
+      "details": {
+        "patientId": "PT-7372",
+        "diagnosis": "",
+        "medicinesCount": 3
+      },
+      "timestamp": "2026-10-27T16:24:53.329Z"
+    },
     {
       "id": "tlog-1792761411275-841",
       "userId": "user-044615",
@@ -1944,5 +2067,148 @@
       "Dental Lab Services Markup"
     ],
     "notes": "Registered under Inland Revenue Department (IRD) Nepal as VAT taxable health wellness establishment."
-  }
+  },
+  "financeStaffAdvances": [
+    {
+      "id": "ADV-2026-001",
+      "advanceNumber": "ADV-2026-001",
+      "staffId": "usr-anjali-nurse",
+      "staffName": "Anjali Maharjan",
+      "role": "Chairside Dental Assistant & Nurse",
+      "amount": 15000,
+      "balanceRemaining": 5000,
+      "recoveredAmount": 10000,
+      "reason": "Family medical emergency & Dashain festival advance",
+      "disbursedDate": "2026-09-15",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 5000,
+      "totalInstallments": 3,
+      "installmentsDeducted": 2,
+      "status": "Active",
+      "recoveryHistory": [
+        {
+          "date": "2026-09-25",
+          "amountDeducted": 5000,
+          "payrollPaymentId": "PAY-2026-09-04",
+          "payrollPeriod": "September 2026",
+          "voucherNumber": "SAL-2026-09-04"
+        },
+        {
+          "date": "2026-10-25",
+          "amountDeducted": 5000,
+          "payrollPaymentId": "PAY-2026-10-04",
+          "payrollPeriod": "October 2026",
+          "voucherNumber": "SAL-2026-10-04"
+        }
+      ],
+      "notes": "Approved by Dr. Mukesh. Rs 5,000 deducted monthly across 3 payrolls.",
+      "createdAt": "2026-09-15T09:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-002",
+      "advanceNumber": "ADV-2026-002",
+      "staffId": "usr-bikash-tech",
+      "staffName": "Bikash Shrestha",
+      "role": "In-House CAD/CAM Milling Technician",
+      "amount": 10000,
+      "balanceRemaining": 10000,
+      "recoveredAmount": 0,
+      "reason": "Personal two-wheeler repair and commute expenses",
+      "disbursedDate": "2026-10-18",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Cash",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 5000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 0,
+      "status": "Active",
+      "recoveryHistory": [],
+      "notes": "To be deducted starting from November and December payrolls.",
+      "createdAt": "2026-10-18T11:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-003",
+      "advanceNumber": "ADV-2026-003",
+      "staffId": "usr-sita-recep",
+      "staffName": "Sita Thapa",
+      "role": "Front Desk & Receptionist Manager",
+      "amount": 8000,
+      "balanceRemaining": 0,
+      "recoveredAmount": 8000,
+      "reason": "Advance for home relocation expenses",
+      "disbursedDate": "2026-08-10",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "LUMP_SUM",
+      "installmentAmount": 8000,
+      "totalInstallments": 1,
+      "installmentsDeducted": 1,
+      "status": "Fully Recovered",
+      "recoveryHistory": [
+        {
+          "date": "2026-08-25",
+          "amountDeducted": 8000,
+          "payrollPaymentId": "PAY-2026-08-03",
+          "payrollPeriod": "August 2026",
+          "voucherNumber": "SAL-2026-08-03"
+        }
+      ],
+      "notes": "Fully recovered in August 2026 payroll.",
+      "createdAt": "2026-08-10T08:30:00.000Z"
+    },
+    {
+      "id": "ADV-2026-004",
+      "advanceNumber": "ADV-2026-004",
+      "staffId": "usr-ramesh-pharma",
+      "staffName": "Ramesh Adhikari",
+      "role": "Clinical Pharmacist & Inventory",
+      "amount": 12000,
+      "balanceRemaining": 6000,
+      "recoveredAmount": 6000,
+      "reason": "Emergency family medical support",
+      "disbursedDate": "2026-09-20",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 6000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 1,
+      "status": "Active",
+      "recoveryHistory": [
+        {
+          "date": "2026-10-25",
+          "amountDeducted": 6000,
+          "payrollPaymentId": "PAY-2026-10-06",
+          "payrollPeriod": "October 2026",
+          "voucherNumber": "SAL-2026-10-06"
+        }
+      ],
+      "notes": "50% recovered in October. Remaining Rs 6,000 scheduled for November payroll.",
+      "createdAt": "2026-09-20T10:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-005",
+      "advanceNumber": "ADV-2026-005",
+      "staffId": "usr-dr-anita",
+      "staffName": "Dr. Anita Sharma",
+      "role": "Consultant Orthodontist",
+      "amount": 20000,
+      "balanceRemaining": 20000,
+      "recoveredAmount": 0,
+      "reason": "National Dental Orthodontic Conference travel & registration fees",
+      "disbursedDate": "2026-10-24",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 10000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 0,
+      "status": "Pending Approval",
+      "recoveryHistory": [],
+      "notes": "Awaiting board sign-off for educational conference sponsorship advance.",
+      "createdAt": "2026-10-24T08:30:00.000Z"
+    }
+  ]
 }

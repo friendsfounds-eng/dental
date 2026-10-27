@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { assessTicketValidity } from '../../utils/ticketValidity';
-import { getGeneratedTime, getRegistrationTime } from '../../utils/timeFormat';
 import {
   X,
   User,
@@ -193,12 +192,8 @@ export default function PatientViewModal({
                     Blood: {patient.bloodGroup || 'N/A'}
                   </span>
                   <span>•</span>
-                  <span className="text-slate-300 inline-flex items-center space-x-1.5 bg-white/10 px-2 py-0.5 rounded-lg border border-white/15">
-                    <Calendar className="w-3.5 h-3.5 text-blue-300 flex-shrink-0" />
-                    <span>Registered: {formatDate(patient.createdAt || patient.registrationDate)}</span>
-                    <span className="text-slate-400">•</span>
-                    <Clock className="w-3.5 h-3.5 text-blue-300 flex-shrink-0" />
-                    <span className="font-mono text-blue-200 font-semibold">{getRegistrationTime(patient)}</span>
+                  <span className="text-slate-300">
+                    Registered: {formatDate(patient.createdAt)}
                   </span>
                 </div>
               </div>
@@ -607,16 +602,10 @@ export default function PatientViewModal({
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Registration Date & Time</span>
-                    <div className="flex items-center space-x-2 mt-1 flex-wrap gap-y-1">
-                      <span className="font-semibold text-slate-800">
-                        {formatDate(patient.createdAt || patient.registrationDate)}
-                      </span>
-                      <span className="inline-flex items-center space-x-1 font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-200 text-xs shadow-2xs">
-                        <Clock className="w-3 h-3 text-blue-500" />
-                        <span>{getRegistrationTime(patient)}</span>
-                      </span>
-                    </div>
+                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Registration Date</span>
+                    <span className="font-medium text-slate-700 mt-1 block">
+                      {formatDate(patient.createdAt)}
+                    </span>
                   </div>
                 </div>
 
@@ -796,11 +785,7 @@ export default function PatientViewModal({
                                 {inv.invoiceNumber || inv.id || `INV-${idx + 1}`}
                               </td>
                               <td className="py-3 px-4 text-slate-600 font-medium">
-                                <div>{formatDate(inv.date)}</div>
-                                <div className="text-[10px] text-blue-600 font-mono flex items-center gap-1 mt-0.5">
-                                  <Clock className="w-2.5 h-2.5" />
-                                  <span>{getGeneratedTime(inv)}</span>
-                                </div>
+                                {formatDate(inv.date)}
                               </td>
                               <td className="py-3 px-4 max-w-xs truncate text-slate-800" title={itemsSummary}>
                                 <div className="font-semibold truncate">{itemsSummary}</div>

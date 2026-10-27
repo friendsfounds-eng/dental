@@ -186,13 +186,54 @@
   ],
   "patients": [
     {
+      "id": "PT-1001",
+      "name": "Aarav Sharma",
+      "phone": "9841234567",
+      "email": "aarav.sharma@gmail.com",
+      "age": 32,
+      "gender": "Male",
+      "bloodGroup": "O+",
+      "address": "House #45, Shanti Marga, New Baneshwor, Ward 10, Kathmandu, Bagmati Province",
+      "province": "Bagmati Province",
+      "district": "Kathmandu",
+      "municipality": "Kathmandu Metropolitan City",
+      "ward": "Ward 10",
+      "tole": "New Baneshwor",
+      "emergencyContact": "9801987654 (Sunita Sharma - Spouse)",
+      "allergies": [
+        "Penicillin (Urticaria/Rash)"
+      ],
+      "medicalHistory": [
+        "Mild Bronchial Asthma",
+        "Occasional Acid Reflux (GERD)"
+      ],
+      "advanceCreditBalance": 1500,
+      "createdAt": "2026-10-24T09:30:00.000Z",
       "dentalChart": {
         "16": {
-          "toothId": "16",
-          "condition": "crown",
+          "condition": "root_canal",
+          "surfaces": {
+            "occlusal": "cavity_deep",
+            "mesial": "filling_sound",
+            "distal": "cavity_moderate",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 3,
+            "l": 3,
+            "m": 3,
+            "d": 3
+          },
+          "mobility": 0,
+          "notes": "Working length determined: MB 21mm, DB 20.5mm, Palatal 22mm. Biomechanical prep completed."
+        },
+        "26": {
+          "toothId": "26",
+          "condition": "restoration",
           "surfaces": {
             "occlusal": "filling_composite",
-            "mesial": "filling_amalgam",
+            "mesial": "healthy",
             "distal": "healthy",
             "buccal": "healthy",
             "lingual": "healthy"
@@ -204,3214 +245,1010 @@
             "d": 2
           },
           "mobility": 0,
-          "notes": ""
+          "notes": "Class I Composite Restoration intact"
+        },
+        "36": {
+          "toothId": "36",
+          "condition": "missing",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 0,
+            "l": 0,
+            "m": 0,
+            "d": 0
+          },
+          "mobility": 0,
+          "notes": "Extracted 2 years ago due to non-restorable caries"
         }
       },
-      "treatmentPlans": [],
-      "notes": [],
+      "treatmentPlans": [
+        {
+          "id": "TP-1001-1",
+          "title": "Root Canal Treatment & Ceramic Crown #16",
+          "status": "In Progress",
+          "estimatedCost": 11500
+        }
+      ],
+      "notes": [
+        {
+          "date": "2026-10-24",
+          "author": "Dr. Mukesh Kushwaha",
+          "text": "Chief Complaint: Severe nocturnal throbbing pain in upper right molar (#16). EPT positive with lingering response > 30s. Percussion positive. Diagnosis: Acute Irreversible Pulpitis #16."
+        }
+      ],
       "prescriptions": [
         {
-          "id": "RX-8182",
-          "date": "2026-10-25",
+          "id": "RX-5716",
+          "date": "2026-10-27",
           "doctor": "Dr. Mukesh Kushwaha",
           "isFinalized": true,
-          "reviewTimeline": "In 5 days or SOS",
-          "instructions": "Avoid hard foods and maintain good oral hygiene.",
+          "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+          "instructions": "Take medications strictly after meals. Rinse with warm salt water.",
+          "reviewTimeline": "3 days",
           "medicines": [
             {
-              "name": "Amoxicillin 500mg",
-              "instructions": "Take after food",
-              "duration": "5 days",
-              "genericName": "Amoxicillin",
-              "frequency": "1 capsule thrice daily (1-1-1)",
-              "dosage": "500 mg"
-            },
-            {
-              "name": "Zerodol-SP",
-              "instructions": "Take after food for pain and swelling",
-              "duration": "3 days",
-              "genericName": "Aceclofenac + Paracetamol + Serratiopeptidase",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "dosage": "100/325/15 mg"
+              "name": "Ketorolac 10mg (Ketorol-DT)",
+              "genericName": "Ketorolac Tromethamine",
+              "dosage": "10 mg",
+              "frequency": "1 tablet PRN for severe pain (max 3/day)",
+              "duration": "2 days",
+              "instructions": "Dissolve in half glass water"
             }
-          ],
+          ]
+        },
+        {
+          "id": "RX-3282",
+          "date": "2026-10-27",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "isFinalized": true,
+          "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+          "instructions": "Take medications strictly after meals. Rinse with warm salt water.",
+          "reviewTimeline": "3 days",
+          "medicines": [
+            {
+              "name": "Ketorolac 10mg (Ketorol-DT)",
+              "genericName": "Ketorolac Tromethamine",
+              "dosage": "10 mg",
+              "frequency": "1 tablet PRN for severe pain (max 3/day)",
+              "duration": "2 days",
+              "instructions": "Dissolve in half glass water"
+            }
+          ]
+        },
+        {
+          "id": "RX-2026-001",
+          "date": "2026-10-24",
+          "doctor": "Dr. Mukesh Kushwaha",
           "doctorId": "DOC-1",
-          "diagnosis": "Acute Pulpitis & Dental Pain"
-        },
-        {
-          "id": "RX-0422",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
+          "diagnosis": "Acute Irreversible Pulpitis #16",
+          "reviewTimeline": "In 3 days for RCT Sitting 1",
           "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0198",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0027",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9821",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9629",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-8885",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-7540",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-6525",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-2775",
-          "date": "2026-10-25",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "isFinalized": true,
-          "instructions": "Complete entire course",
-          "medicines": [
-            {
-              "frequency": "TDS (Every 8 hours)",
-              "dosage": "1 capsule",
-              "instructions": "Take after food",
-              "name": "Amoxicillin 500mg",
-              "duration": "5 days"
-            }
-          ],
-          "reviewTimeline": "In 5 days",
-          "diagnosis": "Post-op Review & Maintenance"
-        },
-        {
-          "id": "RX-5430",
-          "date": "2026-10-25",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "isFinalized": true,
-          "diagnosis": "Dental Pain",
-          "medicines": [
-            {
-              "name": "Amoxicillin 500mg"
-            }
-          ],
-          "instructions": "Take after food"
-        },
-        {
-          "id": "RX-2026-1012",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "diagnosis": "Post-prep Tooth Sensitivity & Mild Inflammation #16",
-          "isFinalized": true,
-          "instructions": "Take medicines after meals. Avoid chewing hard nuts on upper right quadrant until permanent crown cementation.",
+          "instructions": "Avoid hard chewing on upper right quadrant. Warm saline rinse 3 times daily.",
           "medicines": [
             {
               "name": "Cefixime 200mg (Safe for Penicillin Allergy)",
-              "dosage": "200mg",
-              "frequency": "BD (Twice daily)",
+              "genericName": "Cefixime Trihydrate",
+              "dosage": "200 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
               "duration": "5 days",
-              "instructions": "After food"
+              "instructions": "Take after meals"
             },
             {
-              "name": "Ketorolac (Ketorol-DT) 10mg",
-              "dosage": "10mg",
-              "frequency": "SOS (When needed for pain)",
+              "name": "Ketorol DT 10mg",
+              "genericName": "Ketorolac Tromethamine",
+              "dosage": "10 mg Dispersible",
+              "frequency": "1 tablet SOS (when pain is severe)",
               "duration": "3 days",
-              "instructions": "Dissolve in water after meals"
+              "instructions": "Disperse in 1/2 glass of water after meals"
             },
             {
-              "name": "Pantoprazole 40mg",
-              "dosage": "40mg",
-              "frequency": "OD (Once a day)",
+              "name": "Pantocid 40mg",
+              "genericName": "Pantoprazole Sodium",
+              "dosage": "40 mg",
+              "frequency": "1 tablet once daily morning (1-0-0)",
               "duration": "5 days",
-              "instructions": "30 mins before breakfast"
+              "instructions": "Take 30 mins before breakfast on empty stomach"
             }
           ]
         }
       ],
       "invoices": [
         {
-          "id": "INV-2026-1012",
-          "invoiceNumber": "INV-2026-1012",
-          "date": "2026-10-23",
+          "id": "INV-5775",
+          "invoiceNumber": "INV-2026-5517",
+          "date": "2026-10-27",
+          "createdAt": "2026-10-27T17:32:25.775Z",
+          "isFinalized": true,
+          "treatmentName": "Obturation & Permanent Core Build-up #16",
+          "items": [
+            {
+              "code": "RCT-OBT-01",
+              "description": "Endodontic Obturation #16",
+              "qty": 1,
+              "unitPrice": 3500,
+              "total": 3500
+            },
+            {
+              "code": "REST-CORE-01",
+              "description": "Composite Core Build-up",
+              "qty": 1,
+              "unitPrice": 2000,
+              "total": 2000
+            }
+          ],
+          "subtotal": 5500,
+          "discount": 500,
+          "tax": 0,
+          "total": 5000,
+          "paid": 5000,
+          "paymentMethod": "Fonepay QR",
+          "status": "Paid",
+          "doctorName": "Dr. Mukesh Kushwaha",
+          "receiptNumber": "RCP-2026-72397"
+        },
+        {
+          "id": "INV-3314",
+          "invoiceNumber": "INV-2026-9335",
+          "date": "2026-10-27",
+          "createdAt": "2026-10-27T16:58:13.314Z",
+          "isFinalized": true,
+          "treatmentName": "Obturation & Permanent Core Build-up #16",
+          "items": [
+            {
+              "code": "RCT-OBT-01",
+              "description": "Endodontic Obturation #16",
+              "qty": 1,
+              "unitPrice": 3500,
+              "total": 3500
+            },
+            {
+              "code": "REST-CORE-01",
+              "description": "Composite Core Build-up",
+              "qty": 1,
+              "unitPrice": 2000,
+              "total": 2000
+            }
+          ],
+          "subtotal": 5500,
+          "discount": 500,
+          "tax": 0,
+          "total": 5000,
+          "paid": 5000,
+          "paymentMethod": "Fonepay QR",
+          "status": "Paid",
+          "doctorName": "Dr. Mukesh Kushwaha",
+          "receiptNumber": "RCP-2026-41767"
+        },
+        {
+          "id": "INV-2026-001",
+          "invoiceNumber": "INV-2026-001",
+          "date": "2026-10-24",
           "isFinalized": true,
           "items": [
             {
-              "name": "OPD Consultation & Digital Odontogram",
-              "fee": 200,
+              "name": "Comprehensive Dental Examination & Odontogram",
+              "fee": 500,
               "tooth": ""
             },
             {
-              "name": "Full Ceramic Zirconia Crown Prep & Temp (#16)",
-              "fee": 6500,
+              "name": "Diagnostic Digital IOPA Radiograph (#16)",
+              "fee": 350,
+              "tooth": "16"
+            },
+            {
+              "name": "Emergency Pulpectomy & Pain Relief (#16)",
+              "fee": 1500,
               "tooth": "16"
             }
           ],
-          "subtotal": 6700,
-          "discount": 500,
+          "subtotal": 2350,
+          "discount": 150,
           "taxPercent": 0,
           "taxAmount": 0,
-          "total": 6200,
-          "paid": 6200,
+          "total": 2200,
+          "paid": 2200,
           "balance": 0,
           "status": "Paid",
           "paymentMethod": "Fonepay QR",
           "doctorName": "Dr. Mukesh Kushwaha"
         }
       ],
-      "createdAt": "2026-10-23T13:57:47.307Z",
-      "id": "AS-1012",
-      "name": "Anaya singh",
-      "phone": "9801197710",
-      "age": 40,
-      "gender": "Male",
-      "bloodGroup": "B+",
-      "emergencyContact": "",
-      "allergies": [
-        "Penicillin"
-      ],
-      "medicalHistory": [
-        "Hypertension (High BP)"
-      ],
-      "address": "Kantibazar, Ward 12, Gaushala Municipality, Mahottari, Madhesh Province",
-      "province": "Madhesh Province",
-      "district": "Mahottari",
-      "municipality": "Gaushala Municipality",
-      "ward": "Ward 12",
-      "tole": "Kantibazar",
-      "autoBillTicket": false,
-      "ticketPaymentMethod": "Fonepay QR",
       "orders": [
         {
-          "id": "ORD-2026-201",
-          "patientId": "AS-1012",
-          "patientName": "Anaya singh",
-          "patientPhone": "9801197710",
+          "id": "ORD-2026-001",
+          "patientId": "PT-1001",
+          "patientName": "Aarav Sharma",
+          "patientPhone": "9841234567",
           "orderType": "Crown",
-          "toothOrImplantDetails": "Tooth #16 (Maxillary Right First Molar)",
-          "clinicalSpecifications": "Shade: VITA Classical A2. Margin: Deep Chamfer 360 deg. High Translucency 3D Pro.",
-          "materials": "High Translucency Multilayer Zirconia",
-          "assignedStaffOrLab": "Kathmandu Dental Ceramics & Milling Lab",
-          "orderDate": "2026-10-23T10:00:00.000Z",
-          "expectedCompletionDate": "2026-10-28T14:00:00.000Z",
-          "cost": 4500,
+          "toothOrImplantDetails": "Tooth #16",
+          "clinicalSpecifications": "Monolithic Multi-Layer Zirconia Crown, Shade VITA A2, Chamfer margin",
+          "materials": "Multi-layer Zirconia 3D Pro",
+          "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
+          "orderDate": "2026-10-24T11:00:00.000Z",
+          "expectedCompletionDate": "2026-10-29T15:00:00.000Z",
+          "cost": 5000,
           "paymentStatus": "Paid",
           "progressStatus": "In Progress",
           "notes": [
             {
               "author": "Dr. Mukesh Kushwaha",
-              "text": "Impression sent via courier. Require tight contact with #15.",
-              "date": "2026-10-23T10:30:00.000Z"
+              "text": "Ensure passive fit and accurate contact points with #15 & #17.",
+              "date": "2026-10-24T11:15:00.000Z"
             }
-          ],
-          "attachments": [],
-          "createdBy": "Dr. Mukesh Kushwaha",
-          "createdAt": "2026-10-23T10:00:00.000Z"
+          ]
         }
       ],
-      "advanceCreditBalance": 5000,
       "imaging": [
         {
-          "id": "XRAY-2026-1002",
-          "title": "High-Resolution Intraoral Periapical (IOPA) #16 & #17",
+          "id": "XRAY-2026-001",
+          "title": "Digital IOPA Radiograph #16 (Pre-Op)",
           "radiographType": "Periapical (IOPA)",
           "toothNumbers": [
-            "16",
-            "17"
+            "16"
           ],
           "format": "png",
-          "encounterId": "APT-1012-A",
-          "uploadedAt": "2026-10-23T18:33:28.794Z",
-          "diagnosticImpression": "Working length measurement: 13.5mm from cusp tip to radiographic apex. Mild widening of periodontal ligament (PDL) space around mesiobuccal apex #16 indicative of early periapical periodontitis. Lamina dura intact on distal root.",
-          "storageKey": "XRAY-2026-1002.enc"
-        },
-        {
-          "id": "XRAY-2026-1001",
-          "title": "Full Arch Digital Panoramic OPG (Pre-Op Survey)",
-          "radiographType": "Panoramic (OPG)",
-          "toothNumbers": [
-            "Full Arch"
-          ],
-          "format": "png",
-          "encounterId": "APT-1012-A",
-          "uploadedAt": "2026-10-23T18:33:28.757Z",
-          "diagnosticImpression": "Normal condylar translation bilaterally. Maxillary sinuses clear. Coronal radiolucency on crown #16 approaching pulp chamber. Alveolar bone height preserved within normal physiological limits.",
-          "storageKey": "XRAY-2026-1001.enc"
-        },
-        {
-          "id": "XRAY-2026-8401-5686",
-          "title": "Full Mouth Digital Panoramic OPG (Carestream DICOM)",
-          "radiographType": "Panoramic (OPG)",
-          "toothNumbers": [
-            "Full Arch"
-          ],
-          "format": "dcm",
-          "encounterId": "APT-1012-A",
-          "uploadedAt": "2026-10-23T18:32:18.405Z",
-          "diagnosticImpression": "Generalized horizontal bone levels normal. Deep coronal radiolucency on crown #16 approaching pulp chamber. Normal condylar heads bilaterally.",
-          "storageKey": "XRAY-2026-8401-5686.enc"
+          "encounterId": "APT-2026-001",
+          "uploadedAt": "2026-10-24T10:15:00.000Z",
+          "diagnosticImpression": "Deep disto-occlusal radiolucency approximating mesiobuccal pulp horn #16. Widened PDL space at root apex."
         }
       ]
     },
     {
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [],
-      "invoices": [
-        {
-          "id": "INV-5562",
-          "invoiceNumber": "INV-2026-1723",
-          "date": "2026-11-02",
-          "isFinalized": true,
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "isTicket": true,
-              "ticketStatus": "EXPIRED"
-            }
-          ],
-          "subtotal": 200,
-          "total": 200,
-          "paid": 200,
-          "balance": 0,
-          "paymentMethod": "Fonepay QR"
-        },
-        {
-          "id": "INV-5530",
-          "invoiceNumber": "INV-2026-3368",
-          "date": "2026-10-23",
-          "isFinalized": true,
-          "items": [
-            {
-              "description": "Registration & OPD Consultation (Free Revisit - Waived)",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 0,
-              "total": 0,
-              "isTicket": true,
-              "isWaived": true,
-              "ticketStatus": "VALID_REVISIT"
-            },
-            {
-              "description": "Dental Checkup & Polish",
-              "tooth": "General",
-              "qty": 1,
-              "unitPrice": 800,
-              "total": 800
-            }
-          ],
-          "subtotal": 800,
-          "total": 800,
-          "paid": 800,
-          "balance": 0,
-          "paymentMethod": "Cash"
-        },
-        {
-          "id": "INV-5493",
-          "invoiceNumber": "INV-2026-4112",
-          "date": "2026-10-23",
-          "isFinalized": true,
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "isTicket": true,
-              "ticketStatus": "FIRST_VISIT"
-            }
-          ],
-          "subtotal": 200,
-          "discount": 0,
-          "taxPercent": 0,
-          "taxAmount": 0,
-          "total": 200,
-          "paid": 200,
-          "balance": 0,
-          "status": "Paid",
-          "paymentMethod": "Fonepay QR",
-          "doctorName": "Dr. Mukesh Kushwaha, BDS,  (Dental Surgon)",
-          "doctorId": ""
-        }
-      ],
-      "createdAt": "2026-10-23T13:52:55.492Z",
-      "name": "Test Ticket Patient 5491",
-      "phone": "9841549100",
-      "age": 28,
+      "id": "PT-1002",
+      "name": "Sunita Adhikari",
+      "phone": "9851122334",
+      "email": "sunita.adhikari@outlook.com",
+      "age": 45,
       "gender": "Female",
-      "autoBillTicket": true,
-      "ticketPaymentMethod": "Fonepay QR",
-      "id": "TTP-1012",
-      "lastTicketDate": "2026-11-02",
-      "ticketValidUntil": "2026-11-09",
-      "ticketStatus": "ACTIVE",
-      "lastRevisitDate": "2026-10-23",
-      "orders": [],
-      "advanceCreditBalance": 0
-    },
-    {
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [
-        {
-          "id": "RX-9690",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9404",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-8944",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4618",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4401",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4184",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3977",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3751",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3539",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3334",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3142",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-2956",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-2472",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3838",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3623",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3442",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0804",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9249",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0691",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9191",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "diagnosis": "",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet thrice daily (1-1-1)",
-              "duration": "10 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-833661",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-744675",
-              "sellingPrice": 24
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        }
-      ],
-      "invoices": [
-        {
-          "id": "INV-4621",
-          "invoiceNumber": "INV-2026-1499",
-          "date": "2026-10-24",
-          "isFinalized": true,
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee (Free Revisit - Waived)",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": "200",
-              "total": 200,
-              "isTicket": true,
-              "isWaived": true,
-              "ticketStatus": "VALID_REVISIT"
-            },
-            {
-              "description": "Comprehensive Dental Examination",
-              "tooth": "General",
-              "qty": 1,
-              "unitPrice": "12",
-              "total": 12
-            }
-          ],
-          "subtotal": 212,
-          "discount": 0,
-          "taxPercent": 0,
-          "taxAmount": 0,
-          "total": 212,
-          "paid": 200,
-          "balance": 12,
-          "status": "Partial",
-          "paymentMethod": "IME Pay",
-          "doctorId": "DOC-NEPAL-2",
-          "doctorName": "Dr. S. K. Shrestha",
-          "doctorQualification": "BDS, MDS",
-          "doctorSpecialty": "Endodontics & Conservative Dentistry",
-          "doctorReg": "NMC-55443",
-          "doctorPhone": "+977 98411 22334",
-          "receiptNumber": "RCP-2026-98407"
-        },
-        {
-          "id": "INV-6324",
-          "invoiceNumber": "INV-2026-6941",
-          "date": "2026-10-23",
-          "isFinalized": true,
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "isTicket": true,
-              "isWaived": false,
-              "ticketStatus": "FIRST_VISIT"
-            },
-            {
-              "description": "Comprehensive Dental Examination",
-              "tooth": "General",
-              "qty": 1,
-              "unitPrice": 500,
-              "total": 500
-            }
-          ],
-          "subtotal": 700,
-          "discount": 0,
-          "taxPercent": 0,
-          "taxAmount": 0,
-          "total": 700,
-          "paid": 700,
-          "balance": 0,
-          "status": "Paid",
-          "paymentMethod": "Fonepay QR",
-          "doctorId": "DOC-NEPAL-2",
-          "doctorName": "Dr. S. K. Shrestha",
-          "doctorQualification": "BDS, MDS",
-          "doctorSpecialty": "Endodontics & Conservative Dentistry",
-          "doctorReg": "NMC-55443",
-          "doctorPhone": "+977 98411 22334"
-        }
-      ],
-      "createdAt": "2026-10-23T12:58:17.565Z",
-      "name": "Deepak Kumar Jha",
-      "phone": "9801197788",
-      "age": 39,
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "id": "DKJ-1011",
-      "orders": [],
-      "lastTicketDate": "2026-10-24",
-      "ticketValidUntil": "2026-10-31",
-      "ticketStatus": "ACTIVE",
-      "advanceCreditBalance": 0
-    },
-    {
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [
-        {
-          "id": "RX-1366",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0936",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0532",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-0110",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9691",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-9302",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-8879",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-8400",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-7504",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-5262",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-5040",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4852",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4663",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4472",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4282",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-4090",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3882",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-3192",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-2109",
-          "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
-          "isFinalized": true,
-          "doctorId": "DOC-NEPAL-2",
-          "diagnosis": "General Dental Examination",
-          "medicines": [
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping."
-            }
-          ],
-          "instructions": "Take medications strictly as advised. Maintain oral hygiene.",
-          "reviewTimeline": "In 5 days or SOS"
-        }
-      ],
-      "invoices": [],
-      "createdAt": "2026-10-23T12:58:17.541Z",
-      "id": "RS-1006",
-      "name": "Rohan Shrestha",
-      "phone": "9801197799",
-      "age": 26,
-      "gender": "Male",
-      "bloodGroup": "B+",
-      "orders": [],
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PT-3318",
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [],
-      "invoices": [],
-      "createdAt": "2026-10-23T12:12:03.318Z",
-      "name": "Dinesh Kumar Yadav",
-      "phone": "9801199999",
-      "age": 35,
-      "gender": "Male",
       "bloodGroup": "A+",
-      "orders": [],
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PB-1008",
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [],
-      "invoices": [],
-      "createdAt": "2026-10-23T12:12:03.292Z",
-      "name": "Pooja Bhattarai",
-      "phone": "9801198888",
-      "age": 28,
-      "gender": "Female",
-      "bloodGroup": "O+",
+      "address": "Pulchowk, Ward 3, Lalitpur Metropolitan City, Bagmati Province",
       "province": "Bagmati Province",
-      "district": "Kathmandu",
-      "municipality": "Kathmandu Metropolitan City",
+      "district": "Lalitpur",
+      "municipality": "Lalitpur Metropolitan City",
       "ward": "Ward 3",
-      "tole": "Lazimpat",
-      "orders": [],
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PT-6134",
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [],
-      "invoices": [],
-      "createdAt": "2026-10-23T11:07:26.134Z",
-      "name": "Test Patient 1792753646102",
-      "phone": "+977 9892697035",
-      "age": 28,
-      "gender": "Female",
-      "address": "Pokhara, Kaski",
-      "orders": [],
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PT-6097",
-      "dentalChart": {},
-      "treatmentPlans": [],
-      "notes": [],
-      "prescriptions": [],
-      "invoices": [],
-      "createdAt": "2026-10-23T11:07:26.097Z",
-      "name": "Test Patient 1792753646102",
-      "phone": "+977 9820531299",
-      "age": 35,
-      "gender": "Male",
-      "address": "Baneshwor, Kathmandu",
-      "orders": [],
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PT-2001",
-      "name": "Dr. Sanjeev Banskota",
-      "phone": "9851023456",
-      "age": 42,
-      "gender": "Male",
-      "bloodGroup": "O+",
-      "emergencyContact": "9841334455 (Wife - Sarita Banskota)",
-      "allergies": [
-        "Penicillin",
-        "Aspirin"
-      ],
+      "tole": "Pulchowk",
+      "emergencyContact": "9841998877 (Ramesh Adhikari - Brother)",
+      "allergies": [],
       "medicalHistory": [
-        "Hypertension (High BP)",
-        "Cardiac Condition / Pacemaker"
+        "Hypertension (on Losartan 50mg OD)",
+        "Hypothyroidism (on Thyronorm 50mcg OD)"
       ],
-      "province": "Bagmati Province",
-      "district": "Kathmandu",
-      "municipality": "Kathmandu Metropolitan City",
-      "ward": "Ward 3",
-      "tole": "Maharajgunj Teaching Chowk",
-      "address": "Maharajgunj Teaching Chowk, Ward 3, Kathmandu Metropolitan City, Kathmandu, Bagmati Province",
+      "advanceCreditBalance": 0,
+      "createdAt": "2026-10-25T08:45:00.000Z",
       "dentalChart": {
-        "16": {
-          "condition": "decay",
-          "notes": "Diagnosed by Clinic Owner"
+        "24": {
+          "toothId": "24",
+          "condition": "caries",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "cavity_shallow",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 2,
+            "l": 2,
+            "m": 2,
+            "d": 2
+          },
+          "mobility": 0,
+          "notes": "Cervical enamel-dentin lesion"
         },
-        "21": {
-          "condition": "healthy",
-          "notes": "Checked normal"
+        "31": {
+          "toothId": "31",
+          "condition": "mobility_grade1",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "calculus"
+          },
+          "pocketDepth": {
+            "b": 4,
+            "l": 4,
+            "m": 5,
+            "d": 4
+          },
+          "mobility": 1,
+          "notes": "Deep subgingival pocket with calculus"
         },
-        "46": {
-          "condition": "missing",
-          "notes": "Extracted tooth replaced with space maintainer"
+        "41": {
+          "toothId": "41",
+          "condition": "mobility_grade1",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "calculus"
+          },
+          "pocketDepth": {
+            "b": 4,
+            "l": 4,
+            "m": 4,
+            "d": 5
+          },
+          "mobility": 1,
+          "notes": "Subgingival calculus with bleeding on probing"
         }
       },
       "treatmentPlans": [
         {
-          "id": "TP-2001-1",
-          "tooth": "16",
-          "procedure": "Rotary Molar Root Canal Therapy",
-          "cost": 8500,
-          "status": "In Progress",
-          "doctor": "Dr. Mukesh Kushwaha"
+          "id": "TP-1002-1",
+          "title": "Periodontal Therapy & Scaling",
+          "status": "Completed",
+          "estimatedCost": 3500
+        }
+      ],
+      "notes": [
+        {
+          "date": "2026-10-25",
+          "author": "Dr. Anita Rayamajhi",
+          "text": "Chief Complaint: Bleeding gums while brushing and mobility of lower front teeth. BOP 45%. Plan: Ultrasonic scaling and root planing."
         }
       ],
       "prescriptions": [
         {
-          "id": "RX-6954",
+          "id": "RX-2026-002",
           "date": "2026-10-25",
-          "doctor": "Dr. S. K. Shrestha",
+          "doctor": "Dr. Anita Rayamajhi",
+          "doctorId": "DOC-2",
+          "diagnosis": "Chronic Generalized Periodontitis & Cervical Caries #24",
+          "reviewTimeline": "In 7 days for root planing re-evaluation",
           "isFinalized": true,
-          "diagnosis": "",
+          "instructions": "Use modified Bass brushing technique with ultra-soft bristles. Warm water rinses.",
           "medicines": [
             {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-474231",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 88,
-              "pharmacyMedId": "PHARM-MED-076680",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Cefixime 200mg (Cefixime Trihydrate)",
-              "genericName": "Cefixime Trihydrate",
-              "dosage": "200 mg",
-              "frequency": "1 tablet twice daily (1-0-1)",
-              "duration": "5 days",
-              "instructions": "Take after meals. Complete the full prescribed course without skipping.",
-              "inPharmacyStock": true,
-              "stockCount": 87,
-              "pharmacyMedId": "PHARM-MED-397759",
-              "sellingPrice": 24
-            },
-            {
-              "name": "Hexidine Mouthwash 160ml (Chlorhexidine Gluconate 0.2% w/v)",
+              "name": "Hexidine Mouthwash 160ml",
               "genericName": "Chlorhexidine Gluconate 0.2% w/v",
               "dosage": "10 ml",
               "frequency": "Twice daily morning & night",
               "duration": "10 days",
-              "instructions": "Rinse vigorously for 1 minute then spit. Do not swallow or eat for 20 mins.",
-              "inPharmacyStock": true,
-              "stockCount": 24,
-              "pharmacyMedId": "PHARM-MED-6",
-              "sellingPrice": 165
-            }
-          ],
-          "instructions": "",
-          "reviewTimeline": "In 5 days or SOS"
-        },
-        {
-          "id": "RX-6050",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "isFinalized": true,
-          "diagnosis": "Post-op Sensitivity #16",
-          "medicines": [
-            {
-              "name": "Ketorol DT",
-              "dosage": "10mg",
-              "frequency": "SOS",
-              "duration": "2 days"
-            }
-          ]
-        },
-        {
-          "id": "RX-2001-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "diagnosis": "Acute Irreversible Pulpitis with Apical Periodontitis #16",
-          "medicines": [
-            {
-              "name": "Amoxicillin",
-              "dosage": "500mg",
-              "frequency": "1 tab TDS (8hrly)",
-              "duration": "5 days",
-              "instructions": "Take strictly after meals"
+              "instructions": "Rinse vigorously for 1 minute then spit. Do not eat/drink for 30 mins."
             },
             {
-              "name": "Ibuprofen",
-              "dosage": "400mg",
-              "frequency": "1 tab BD (12hrly)",
+              "name": "Kenacort 0.1% Oral Paste",
+              "genericName": "Triamcinolone Acetonide",
+              "dosage": "Small dab",
+              "frequency": "2-3 times daily after food",
+              "duration": "5 days",
+              "instructions": "Apply gently on irritated marginal gingiva. Do not rub."
+            },
+            {
+              "name": "Zerodol-SP",
+              "genericName": "Aceclofenac + Paracetamol + Serratiopeptidase",
+              "dosage": "100/325/15 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
               "duration": "3 days",
-              "instructions": "Take after meals with water"
+              "instructions": "Take after food for post-scaling sensitivity & swelling."
             }
-          ],
-          "instructions": "Avoid biting hard food on upper right side. Return in 5 days for obturation.",
-          "isFinalized": true
+          ]
         }
       ],
       "invoices": [
         {
-          "id": "INV-2001-1",
-          "invoiceNumber": "INV-2026-101",
-          "date": "2026-10-23",
+          "id": "INV-2026-002",
+          "invoiceNumber": "INV-2026-002",
+          "date": "2026-10-25",
+          "isFinalized": true,
           "items": [
             {
-              "description": "Rotary Endodontic Access & Biomechanical Prep #16",
-              "tooth": "16",
-              "unitPrice": 5000,
-              "quantity": 1,
-              "total": 5000
+              "name": "Full Mouth Ultrasonic Scaling & Polishing",
+              "fee": 2000,
+              "tooth": "Full Mouth"
+            },
+            {
+              "name": "Deep Subgingival Curettage & Root Planing (Lower Anterior)",
+              "fee": 1500,
+              "tooth": "31-41"
             }
           ],
-          "total": 5000,
-          "paid": 5000,
+          "subtotal": 3500,
+          "discount": 200,
+          "taxPercent": 0,
+          "taxAmount": 0,
+          "total": 3300,
+          "paid": 3300,
           "balance": 0,
-          "paymentMethod": "Fonepay QR",
           "status": "Paid",
-          "isFinalized": true
+          "paymentMethod": "Fonepay QR",
+          "doctorName": "Dr. Anita Rayamajhi"
         }
       ],
-      "notes": [
-        {
-          "id": "NOTE-2001-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "soap": "Subjective: Severe throbbing nocturnal pain. Objective: #16 percussion positive, EPT non-vital. Assessment: Acute pulpitis. Plan: Pulpectomy & obturation."
-        }
-      ],
-      "orders": [
-        {
-          "id": "ORD-2026-101",
-          "patientId": "PT-2001",
-          "patientName": "Dr. Sanjeev Banskota",
-          "patientPhone": "9851023456",
-          "orderType": "Crown",
-          "toothOrImplantDetails": "Tooth #16 (Maxillary Right First Molar)",
-          "clinicalSpecifications": "Shade: VITA Classical A2. Margin: Deep Chamfer 360 degrees. Occlusal clearance: 1.5mm. Centric contact only, light lateral contacts.",
-          "materials": "Zirconia (High Translucency Multi-Layered)",
-          "assignedStaffOrLab": "Kathmandu Dental Ceramics & Milling Lab",
-          "orderDate": "2026-10-18T09:00:00.000Z",
-          "expectedCompletionDate": "2026-10-23T12:00:00.000Z",
-          "cost": 4500,
-          "paymentStatus": "Paid",
-          "progressStatus": "Ready",
-          "notes": [
-            {
-              "id": "n-1",
-              "text": "Prepped with 1.5mm occlusal reduction. Shade tab VITA A2 verified under 5500K daylight.",
-              "author": "Dr. Mukesh Kushwaha",
-              "timestamp": "2026-10-18T09:15:00.000Z"
-            },
-            {
-              "id": "n-2",
-              "text": "Milled from 5-layer multilayered zirconia disc. Glazed and dispatched to clinic.",
-              "author": "Lab Tech Bikash",
-              "timestamp": "2026-10-21T16:00:00.000Z"
-            },
-            {
-              "id": "n-3",
-              "text": "Delivered to clinic front desk in sealed sterile pouch with QC certificate. Ready for seating appointment.",
-              "author": "Sita Thapa (Front Desk)",
-              "timestamp": "2026-10-22T08:00:00.000Z"
-            }
-          ],
-          "attachments": [
-            {
-              "id": "att-1",
-              "name": "shade_verification_A2.png",
-              "url": "/sample-crown-shade.svg",
-              "type": "image/svg+xml",
-              "size": 18400,
-              "uploadedAt": "2026-10-18T09:10:00.000Z"
-            }
-          ],
-          "createdBy": "Dr. Mukesh Kushwaha",
-          "createdAt": "2026-10-18T09:00:00.000Z",
-          "updatedAt": "2026-10-22T08:00:00.000Z"
-        },
-        {
-          "id": "ORD-2026-102",
-          "patientId": "PT-2001",
-          "patientName": "Dr. Sanjeev Banskota",
-          "patientPhone": "9851023456",
-          "orderType": "Bridge",
-          "toothOrImplantDetails": "Teeth #24, #25, #26 (Fixed 3-Unit Bridge, #25 Pontic)",
-          "clinicalSpecifications": "Shade: VITA Classical A3. Modified ridge lap pontic design for ease of floss threader hygiene. Light buccal embrasures.",
-          "materials": "Lithium Disilicate (IPS e.max CAD)",
-          "assignedStaffOrLab": "Metro Dental CAD/CAM Center, Patan",
-          "orderDate": "2026-10-20T11:30:00.000Z",
-          "expectedCompletionDate": "2026-10-26T14:00:00.000Z",
-          "cost": 12000,
-          "paymentStatus": "Billed to Patient Invoice",
-          "progressStatus": "In Progress",
-          "notes": [
-            {
-              "id": "n-1",
-              "text": "Digital impression scanned with 3Shape Trios. Framework CAD design approved for milling.",
-              "author": "Dr. Mukesh Kushwaha",
-              "timestamp": "2026-10-20T11:45:00.000Z"
-            }
-          ],
-          "attachments": [],
-          "createdBy": "Dr. Mukesh Kushwaha",
-          "createdAt": "2026-10-20T11:30:00.000Z",
-          "updatedAt": "2026-10-20T11:45:00.000Z"
-        },
-        {
-          "id": "ORD-2026-103",
-          "patientId": "PT-2001",
-          "patientName": "Dr. Sanjeev Banskota",
-          "patientPhone": "9851023456",
-          "orderType": "Implant Work",
-          "toothOrImplantDetails": "Implant Site #46 (Mandibular Right First Molar)",
-          "clinicalSpecifications": "Custom Titanium Abutment + Screw-retained monolithic zirconia crown. Torque specification: 30 Ncm. Access hole on central fossa.",
-          "materials": "Titanium Grade 5 (Custom CAD/CAM Abutment)",
-          "assignedStaffOrLab": "In-House Clinic CAD/CAM Lab",
-          "orderDate": "2026-10-21T10:00:00.000Z",
-          "expectedCompletionDate": "2026-10-27T16:00:00.000Z",
-          "cost": 18000,
-          "paymentStatus": "Partially Paid",
-          "progressStatus": "In Progress",
-          "notes": [
-            {
-              "id": "n-1",
-              "text": "Osstem fixture 4.5 x 10mm osteointegrated. Scan body placed and intraoral scan taken.",
-              "author": "Dr. Mukesh Kushwaha",
-              "timestamp": "2026-10-21T10:30:00.000Z"
-            }
-          ],
-          "attachments": [],
-          "createdBy": "Dr. Mukesh Kushwaha",
-          "createdAt": "2026-10-21T10:00:00.000Z",
-          "updatedAt": "2026-10-21T10:30:00.000Z"
-        },
-        {
-          "id": "ORD-2026-104",
-          "patientId": "PT-2001",
-          "patientName": "Dr. Sanjeev Banskota",
-          "patientPhone": "9851023456",
-          "orderType": "Denture - Flexible Valplast",
-          "toothOrImplantDetails": "Maxillary Removable Partial Denture (Teeth #12, #14, #23)",
-          "clinicalSpecifications": "Gingival shade: Standard Pink Veined. Tissue clasping for esthetics without metal display. Wax rim try-in scheduled.",
-          "materials": "Flexible Valplast Resin",
-          "assignedStaffOrLab": "Himalayan Dental Prosthetic Studio",
-          "orderDate": "2026-10-15T14:00:00.000Z",
-          "expectedCompletionDate": "2026-10-22T10:00:00.000Z",
-          "cost": 11500,
-          "paymentStatus": "Paid",
-          "progressStatus": "Completed",
-          "notes": [
-            {
-              "id": "n-1",
-              "text": "Primary alginate and secondary PVS border molding taken.",
-              "author": "Dr. Mukesh Kushwaha",
-              "timestamp": "2026-10-15T14:15:00.000Z"
-            },
-            {
-              "id": "n-2",
-              "text": "Delivered and seated in patient mouth. Retention excellent, patient comfortable. Post-op instructions given.",
-              "author": "Dr. Mukesh Kushwaha",
-              "timestamp": "2026-10-22T09:00:00.000Z"
-            }
-          ],
-          "attachments": [],
-          "createdBy": "Dr. Mukesh Kushwaha",
-          "createdAt": "2026-10-15T14:00:00.000Z",
-          "updatedAt": "2026-10-22T09:00:00.000Z"
-        }
-      ],
-      "createdAt": "2026-10-23T06:00:00.000Z",
-      "advanceCreditBalance": 0,
+      "orders": [],
       "imaging": [
         {
-          "id": "XRAY-2026-1003",
-          "title": "Posterior Bitewing (BWR) Interproximal Caries Survey",
-          "radiographType": "Bitewing (BWR)",
+          "id": "XRAY-2026-002",
+          "title": "Full Arch Digital Panoramic OPG (Periodontal Survey)",
+          "radiographType": "Panoramic (OPG)",
           "toothNumbers": [
-            "14",
-            "15",
-            "16",
-            "44",
-            "45",
-            "46"
+            "Full Arch"
           ],
           "format": "png",
-          "encounterId": null,
-          "uploadedAt": "2026-10-23T18:33:28.836Z",
-          "diagnosticImpression": "Interproximal enamel intact on #14 and #15. Crestal bone height is 1.5mm from cementoenamel junction (CEJ) with no active vertical defects. Minor subgingival calculus radiopacity noted on distal #45.",
-          "storageKey": "XRAY-2026-1003.enc"
+          "encounterId": "APT-2026-002",
+          "uploadedAt": "2026-10-25T09:10:00.000Z",
+          "diagnosticImpression": "Horizontal bone loss of 25-30% in lower anterior quadrant. Normal condyles."
         }
       ]
     },
     {
-      "id": "PT-2002",
-      "name": "Priyanka Karki Shrestha",
-      "phone": "9841890123",
-      "age": 29,
-      "gender": "Female",
+      "id": "PT-1003",
+      "name": "Rohan Shrestha",
+      "phone": "9812345678",
+      "email": "rohan.shrestha@gmail.com",
+      "age": 24,
+      "gender": "Male",
       "bloodGroup": "B+",
-      "emergencyContact": "9801239988 (Husband - Ayush Shrestha)",
+      "address": "Suryabinayak, Ward 5, Bhaktapur Municipality, Bagmati Province",
+      "province": "Bagmati Province",
+      "district": "Bhaktapur",
+      "municipality": "Bhaktapur Municipality",
+      "ward": "Ward 5",
+      "tole": "Suryabinayak",
+      "emergencyContact": "9803344556 (Bina Shrestha - Mother)",
       "allergies": [
-        "Sulfa Drugs",
-        "Latex"
+        "Sulfa Drugs (Bactrim/Cotrimoxazole)"
       ],
       "medicalHistory": [
-        "Asthma / Respiratory Issues"
+        "No systemic medical conditions"
       ],
-      "province": "Bagmati Province",
-      "district": "Lalitpur",
-      "municipality": "Lalitpur Metropolitan City",
-      "ward": "Ward 4",
-      "tole": "Jawalakhel St. Xavier Road",
-      "address": "Jawalakhel St. Xavier Road, Ward 4, Lalitpur Metropolitan City, Lalitpur, Bagmati Province",
+      "advanceCreditBalance": 3000,
+      "createdAt": "2026-10-25T11:15:00.000Z",
       "dentalChart": {
-        "11": {
-          "condition": "crown",
-          "notes": "IPS e.max all-ceramic crown seated shade A1"
+        "38": {
+          "toothId": "38",
+          "condition": "impacted",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 5,
+            "l": 4,
+            "m": 4,
+            "d": 5
+          },
+          "mobility": 0,
+          "notes": "Mesioangular impacted third molar causing acute pericoronitis"
         },
-        "21": {
-          "condition": "crown",
-          "notes": "IPS e.max all-ceramic crown seated shade A1"
-        },
-        "26": {
-          "condition": "decay",
-          "notes": "Incipient occlusal pit caries"
+        "48": {
+          "toothId": "48",
+          "condition": "sound",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 2,
+            "l": 2,
+            "m": 2,
+            "d": 2
+          },
+          "mobility": 0,
+          "notes": "Erupted third molar"
         }
       },
       "treatmentPlans": [
         {
-          "id": "TP-2002-1",
-          "tooth": "26",
-          "procedure": "Pit & Fissure Sealant + Preventive Resin",
-          "cost": 1500,
-          "status": "Scheduled",
-          "doctor": "Dr. Mukesh Kushwaha"
+          "id": "TP-1003-1",
+          "title": "Surgical Disimpaction #38",
+          "status": "Planned",
+          "estimatedCost": 6500
         }
       ],
-      "prescriptions": [],
+      "notes": [
+        {
+          "date": "2026-10-25",
+          "author": "Dr. Mukesh Kushwaha",
+          "text": "Severe pain, trismus, and swelling over lower left jaw. Erythematous operculum over #38. Treatment: Opercular debridement & medication."
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "RX-2026-003",
+          "date": "2026-10-25",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "doctorId": "DOC-1",
+          "diagnosis": "Acute Pericoronitis #38 (Mesioangular Impacted)",
+          "reviewTimeline": "In 5 days for surgical disimpaction assessment",
+          "isFinalized": true,
+          "instructions": "Warm saline mouth rinses every 2 hours. Soft lukewarm diet. Ice compress externally 15 min on/off.",
+          "medicines": [
+            {
+              "name": "Augmentin 625mg",
+              "genericName": "Amoxicillin 500mg + Clavulanic Acid 125mg",
+              "dosage": "625 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "5 days",
+              "instructions": "Take strictly after meals. Complete full 5-day course."
+            },
+            {
+              "name": "Metrogyl 400mg",
+              "genericName": "Metronidazole",
+              "dosage": "400 mg",
+              "frequency": "1 tablet thrice daily (1-1-1)",
+              "duration": "5 days",
+              "instructions": "Take strictly after food. Strictly avoid alcohol during treatment."
+            },
+            {
+              "name": "Zerodol-SP",
+              "genericName": "Aceclofenac + Paracetamol + Serratiopeptidase",
+              "dosage": "100/325/15 mg",
+              "frequency": "1 tablet twice daily (1-0-1)",
+              "duration": "3 days",
+              "instructions": "Take after meals for severe pain and jaw swelling."
+            }
+          ]
+        }
+      ],
       "invoices": [
         {
-          "id": "INV-2790",
-          "invoiceNumber": "INV-2026-8142",
-          "date": "2026-10-24",
+          "id": "INV-2026-003",
+          "invoiceNumber": "INV-2026-003",
+          "date": "2026-10-25",
           "isFinalized": true,
           "items": [
             {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "isTicket": true,
-              "isWaived": false,
-              "ticketStatus": "FIRST_VISIT"
+              "name": "Emergency Opercular Debridement & Irrigation",
+              "fee": 1000,
+              "tooth": "38"
             },
             {
-              "description": "Comprehensive Dental Examination",
-              "tooth": "General",
-              "qty": 1,
-              "unitPrice": 500,
-              "total": 500
+              "name": "OPG Panoramic X-Ray (Impacted 3rd Molar Survey)",
+              "fee": 1200,
+              "tooth": "38"
             }
           ],
-          "subtotal": 700,
+          "subtotal": 2200,
           "discount": 0,
           "taxPercent": 0,
           "taxAmount": 0,
-          "total": 700,
-          "paid": 500,
-          "balance": 200,
-          "status": "Partial",
-          "paymentMethod": "IME Pay",
-          "doctorId": "DOC-NEPAL-2",
-          "doctorName": "Dr. S. K. Shrestha",
-          "doctorQualification": "BDS, MDS",
-          "doctorSpecialty": "Endodontics & Conservative Dentistry",
-          "doctorReg": "NMC-55443",
-          "doctorPhone": "+977 98411 22334",
-          "receiptNumber": "RCP-2026-64322"
-        },
-        {
-          "id": "INV-2002-1",
-          "invoiceNumber": "INV-2026-102",
-          "date": "2026-10-23",
-          "items": [
-            {
-              "description": "IPS e.max High Aesthetic Crowns (#11, #21)",
-              "tooth": "11, 21",
-              "unitPrice": 12000,
-              "quantity": 2,
-              "total": 24000
-            }
-          ],
-          "total": 24000,
-          "paid": 24000,
+          "total": 2200,
+          "paid": 2200,
           "balance": 0,
-          "paymentMethod": "Credit Card",
           "status": "Paid",
-          "isFinalized": true
-        }
-      ],
-      "notes": [
-        {
-          "id": "NOTE-2002-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "soap": "Crown cementation completed with RelyX luting cement. Verified contact points with dental floss. Patient delighted with aesthetic shade match."
+          "paymentMethod": "Cash",
+          "doctorName": "Dr. Mukesh Kushwaha"
         }
       ],
       "orders": [],
-      "createdAt": "2026-10-23T06:30:00.000Z",
-      "advanceCreditBalance": 0,
-      "lastTicketDate": "2026-10-24",
-      "ticketValidUntil": "2026-10-31",
-      "ticketStatus": "ACTIVE"
+      "imaging": [
+        {
+          "id": "XRAY-2026-003",
+          "title": "Panoramic Radiograph (OPG) - Mesioangular Impaction #38",
+          "radiographType": "Panoramic (OPG)",
+          "toothNumbers": [
+            "38"
+          ],
+          "format": "png",
+          "encounterId": "APT-2026-003",
+          "uploadedAt": "2026-10-25T11:40:00.000Z",
+          "diagnosticImpression": "Mesioangular impaction of tooth #38 with crown abutting distal neck of #37. Pell & Gregory Class II, Position B."
+        }
+      ]
     },
     {
-      "id": "PT-2003",
-      "name": "Bibek Chaudhary",
-      "phone": "9803456789",
-      "age": 36,
-      "gender": "Male",
-      "bloodGroup": "A+",
-      "emergencyContact": "9811223344 (Brother - Suman Chaudhary)",
-      "allergies": [
-        "Local Anesthesia (Lignocaine)"
-      ],
-      "medicalHistory": [
-        "Bleeding Tendency / On Blood Thinners"
-      ],
-      "province": "Madhesh Province",
-      "district": "Dhanusha",
-      "municipality": "Janakpurdham Sub-Metropolitan City",
-      "ward": "Ward 8",
-      "tole": "Bhanu Chowk",
-      "address": "Bhanu Chowk, Ward 8, Janakpurdham Sub-Metropolitan City, Dhanusha, Madhesh Province",
-      "dentalChart": {
-        "36": {
-          "condition": "implant",
-          "notes": "Titanium dental implant placed, ISQ 78, healing abutment intact"
-        },
-        "37": {
-          "condition": "restoration",
-          "notes": "Glass Ionomer Cement Class V Cervical Restoration"
-        }
-      },
-      "treatmentPlans": [
-        {
-          "id": "TP-2003-1",
-          "tooth": "36",
-          "procedure": "Stage 2 Zirconia Custom Abutment & Screw-Retained Crown",
-          "cost": 35000,
-          "status": "In Progress",
-          "doctor": "Dr. Mukesh Kushwaha"
-        }
-      ],
-      "prescriptions": [
-        {
-          "id": "RX-2003-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "diagnosis": "Implant Post-Placement Review #36",
-          "medicines": [
-            {
-              "name": "Chlorhexidine 0.2% Oral Rinse",
-              "dosage": "10ml",
-              "frequency": "Gargle BD after meals",
-              "duration": "7 days",
-              "instructions": "Do not swallow. Spit after 1 minute."
-            }
-          ],
-          "instructions": "Gentle brushing around surgical area with extra-soft brush.",
-          "isFinalized": true
-        }
-      ],
-      "invoices": [
-        {
-          "id": "INV-2003-1",
-          "invoiceNumber": "INV-2026-103",
-          "date": "2026-10-23",
-          "items": [
-            {
-              "description": "Surgical Fixture Placement & Bone Grafting #36",
-              "tooth": "36",
-              "unitPrice": 35000,
-              "quantity": 1,
-              "total": 35000
-            }
-          ],
-          "total": 35000,
-          "paid": 35000,
-          "balance": 0,
-          "paymentMethod": "Bank Transfer (Nabil)",
-          "status": "Paid",
-          "isFinalized": true
-        }
-      ],
-      "notes": [
-        {
-          "id": "NOTE-2003-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "soap": "Periapical radiograph shows healthy bone level around implant threads. ISQ reading stable at 78. Soft tissue cuff pink and firm."
-        }
-      ],
-      "orders": [],
-      "createdAt": "2026-10-23T07:00:00.000Z",
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PT-2004",
-      "name": "Anjali Gurung",
-      "phone": "9861234567",
-      "age": 24,
+      "id": "PT-1004",
+      "name": "Pooja Thapa",
+      "phone": "9860123456",
+      "email": "pooja.thapa@gmail.com",
+      "age": 28,
       "gender": "Female",
       "bloodGroup": "AB+",
-      "emergencyContact": "9846012345 (Father - Man Bahadur Gurung)",
+      "address": "Jhamsikhel, Ward 2, Lalitpur, Bagmati Province",
+      "province": "Bagmati Province",
+      "district": "Lalitpur",
+      "municipality": "Lalitpur Metropolitan City",
+      "ward": "Ward 2",
+      "tole": "Jhamsikhel",
+      "emergencyContact": "9841001122 (Karan Thapa - Husband)",
       "allergies": [],
       "medicalHistory": [
-        "Gastric Acidity / Ulcer"
+        "None reported"
       ],
-      "province": "Gandaki Province",
-      "district": "Kaski",
-      "municipality": "Pokhara Metropolitan City",
-      "ward": "Ward 6",
-      "tole": "Lakeside Center Street",
-      "address": "Lakeside Center Street, Ward 6, Pokhara Metropolitan City, Kaski, Gandaki Province",
+      "advanceCreditBalance": 500,
+      "createdAt": "2026-10-26T10:00:00.000Z",
       "dentalChart": {
-        "28": {
-          "condition": "healthy",
-          "notes": "Fully erupted third molar"
+        "11": {
+          "toothId": "11",
+          "condition": "fracture",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "composite_restoration",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 2,
+            "l": 2,
+            "m": 2,
+            "d": 2
+          },
+          "mobility": 0,
+          "notes": "Ellis Class II fracture restored with aesthetic nano-composite veneer"
         },
-        "38": {
-          "condition": "impacted",
-          "notes": "Distal impaction with recurrent pericoronal inflammation"
-        },
-        "48": {
-          "condition": "impacted",
-          "notes": "Horizontal deep bony impaction touching inferior alveolar canal"
+        "21": {
+          "toothId": "21",
+          "condition": "sound",
+          "surfaces": {
+            "occlusal": "healthy",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 2,
+            "l": 2,
+            "m": 2,
+            "d": 2
+          },
+          "mobility": 0,
+          "notes": "Healthy control incisor"
         }
       },
       "treatmentPlans": [
         {
-          "id": "TP-2004-1",
-          "tooth": "48",
-          "procedure": "Surgical Odontectomy / Disimpaction",
-          "cost": 7500,
-          "status": "Proposed",
-          "doctor": "Dr. Mukesh Kushwaha"
-        }
-      ],
-      "prescriptions": [],
-      "invoices": [
-        {
-          "id": "INV-2004-1",
-          "invoiceNumber": "INV-2026-104",
-          "date": "2026-10-23",
-          "items": [
-            {
-              "description": "OPG Digital Panoramic Radiograph Examination",
-              "tooth": "Full Arch",
-              "unitPrice": 1200,
-              "quantity": 1,
-              "total": 1200
-            }
-          ],
-          "total": 1200,
-          "paid": 1200,
-          "balance": 0,
-          "paymentMethod": "Cash",
-          "status": "Paid",
-          "isFinalized": true
+          "id": "TP-1004-1",
+          "title": "Direct Aesthetic Composite Veneer #11",
+          "status": "Completed",
+          "estimatedCost": 3500
         }
       ],
       "notes": [
         {
-          "id": "NOTE-2004-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "soap": "OPG evaluated: #48 roots in close proximity to mandibular nerve. CBCT 3D scan requested prior to surgical extraction."
-        }
-      ],
-      "orders": [],
-      "createdAt": "2026-10-23T07:30:00.000Z",
-      "advanceCreditBalance": 0
-    },
-    {
-      "id": "PT-2005",
-      "name": "Rameshwar Yadav",
-      "phone": "9812987654",
-      "age": 58,
-      "gender": "Male",
-      "bloodGroup": "O-",
-      "emergencyContact": "9804561234 (Son - Binod Yadav)",
-      "allergies": [
-        "NSAIDs / Ibuprofen",
-        "Erythromycin"
-      ],
-      "medicalHistory": [
-        "Type 2 Diabetes",
-        "Hypertension (High BP)"
-      ],
-      "province": "Madhesh Province",
-      "district": "Mahottari",
-      "municipality": "Gaushala Municipality",
-      "ward": "Ward 5",
-      "tole": "Bazar Chowk Line",
-      "address": "Bazar Chowk Line, Ward 5, Gaushala Municipality, Mahottari, Madhesh Province",
-      "dentalChart": {
-        "11": {
-          "condition": "mobility",
-          "notes": "Grade II mobility with 5mm pocket depth"
-        },
-        "21": {
-          "condition": "mobility",
-          "notes": "Grade II mobility with 5mm pocket depth"
-        },
-        "31": {
-          "condition": "calculus",
-          "notes": "Heavy supragingival & subgingival calculus deposits"
-        },
-        "41": {
-          "condition": "calculus",
-          "notes": "Heavy calculus with bleeding on probing (BOP +)"
-        }
-      },
-      "treatmentPlans": [
-        {
-          "id": "TP-2005-1",
-          "tooth": "Full Mouth",
-          "procedure": "Full Mouth Ultrasonic Scaling & Subgingival Curettage",
-          "cost": 4500,
-          "status": "Completed",
-          "doctor": "Dr. Mukesh Kushwaha"
+          "date": "2026-10-26",
+          "author": "Dr. Mukesh Kushwaha",
+          "text": "Chipped upper front tooth (#11) after sports trauma. EPT test positive and normal. Treatment: Multi-shade layered nano-hybrid composite veneer."
         }
       ],
       "prescriptions": [
         {
-          "id": "RX-2005-1",
-          "date": "2026-10-23",
+          "id": "RX-2026-004",
+          "date": "2026-10-26",
           "doctor": "Dr. Mukesh Kushwaha",
-          "diagnosis": "Generalized Chronic Periodontitis Stage III Grade B",
+          "doctorId": "DOC-1",
+          "diagnosis": "Ellis Class II Crown Fracture #11",
+          "reviewTimeline": "In 2 weeks for vitality check and polish",
+          "isFinalized": true,
+          "instructions": "Avoid biting into hard foods (apples, carrots) directly with front teeth for 48 hours.",
           "medicines": [
             {
-              "name": "Metronidazole",
-              "dosage": "400mg",
-              "frequency": "1 tab TDS",
-              "duration": "5 days",
-              "instructions": "Take strictly after meals"
+              "name": "Dolo 650mg",
+              "genericName": "Paracetamol",
+              "dosage": "650 mg",
+              "frequency": "1 tablet every 6 hours SOS",
+              "duration": "2 days",
+              "instructions": "Take after food if any mild post-operative tooth sensitivity occurs."
             }
-          ],
-          "instructions": "Use interdental brushes and warm salt water rinses 3 times daily.",
-          "isFinalized": true
+          ]
         }
       ],
       "invoices": [
         {
-          "id": "INV-2005-1",
-          "invoiceNumber": "INV-2026-105",
-          "date": "2026-10-23",
+          "id": "INV-2026-004",
+          "invoiceNumber": "INV-2026-004",
+          "date": "2026-10-26",
+          "isFinalized": true,
           "items": [
             {
-              "description": "Full Mouth Deep Ultrasonic Scaling & Root Planing",
-              "tooth": "Full Mouth",
-              "unitPrice": 4500,
-              "quantity": 1,
-              "total": 4500
+              "name": "Aesthetic Direct Nano-Composite Veneer (#11)",
+              "fee": 3500,
+              "tooth": "11"
+            },
+            {
+              "name": "Digital Pre/Post Intraoral Radiograph",
+              "fee": 350,
+              "tooth": "11"
             }
           ],
-          "total": 4500,
-          "paid": 4500,
+          "subtotal": 3850,
+          "discount": 350,
+          "taxPercent": 0,
+          "taxAmount": 0,
+          "total": 3500,
+          "paid": 3500,
           "balance": 0,
-          "paymentMethod": "Fonepay QR",
           "status": "Paid",
-          "isFinalized": true
+          "paymentMethod": "Fonepay QR",
+          "doctorName": "Dr. Mukesh Kushwaha"
+        }
+      ],
+      "orders": [],
+      "imaging": [
+        {
+          "id": "XRAY-2026-004",
+          "title": "Digital IOPA Radiograph #11 (Trauma Assessment)",
+          "radiographType": "Periapical (IOPA)",
+          "toothNumbers": [
+            "11"
+          ],
+          "format": "png",
+          "encounterId": "APT-2026-004",
+          "uploadedAt": "2026-10-26T10:15:00.000Z",
+          "diagnosticImpression": "Intact root with no fracture line. Lamina dura unbroken. Dentin thickness intact between fractured margin and pulp."
+        }
+      ]
+    },
+    {
+      "id": "PT-1005",
+      "name": "Bikash Karki",
+      "phone": "9841887766",
+      "email": "bikash.karki@yahoo.com",
+      "age": 52,
+      "gender": "Male",
+      "bloodGroup": "B+",
+      "address": "Maharajgunj, Ward 3, Kathmandu, Bagmati Province",
+      "province": "Bagmati Province",
+      "district": "Kathmandu",
+      "municipality": "Kathmandu Metropolitan City",
+      "ward": "Ward 3",
+      "tole": "Maharajgunj",
+      "emergencyContact": "9801443322 (Pratima Karki - Wife)",
+      "allergies": [
+        "Aspirin",
+        "NSAIDs (Severe Gastric Irritation)"
+      ],
+      "medicalHistory": [
+        "Type 2 Diabetes Mellitus (on Metformin 500mg BD)",
+        "Mild Osteoarthritis"
+      ],
+      "advanceCreditBalance": 2000,
+      "createdAt": "2026-10-27T08:00:00.000Z",
+      "dentalChart": {
+        "46": {
+          "toothId": "46",
+          "condition": "caries",
+          "surfaces": {
+            "occlusal": "cavity_deep",
+            "mesial": "healthy",
+            "distal": "cavity_deep",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 4,
+            "l": 3,
+            "m": 4,
+            "d": 4
+          },
+          "mobility": 0,
+          "notes": "Gross caries with necrotic pulp and apical radiolucency"
+        },
+        "47": {
+          "toothId": "47",
+          "condition": "restoration",
+          "surfaces": {
+            "occlusal": "filling_amalgam",
+            "mesial": "healthy",
+            "distal": "healthy",
+            "buccal": "healthy",
+            "lingual": "healthy"
+          },
+          "pocketDepth": {
+            "b": 2,
+            "l": 2,
+            "m": 2,
+            "d": 2
+          },
+          "mobility": 0,
+          "notes": "Amalgam restoration intact"
+        }
+      },
+      "treatmentPlans": [
+        {
+          "id": "TP-1005-1",
+          "title": "Molar Endodontic Therapy & Solid Zirconia Crown #46",
+          "status": "In Progress",
+          "estimatedCost": 11000
         }
       ],
       "notes": [
         {
-          "id": "NOTE-2005-1",
-          "date": "2026-10-23",
-          "doctor": "Dr. Mukesh Kushwaha",
-          "soap": "HbA1c test reported 7.1%. Deep periodontal scaling completed without complication. Follow-up review scheduled in 3 weeks."
+          "date": "2026-10-27",
+          "author": "Dr. Mukesh Kushwaha",
+          "text": "Food lodgement and dull ache in lower right molar (#46). Diabetic control confirmed (Fasting BG 118 mg/dL). Plan: Rotary RCT + Crown."
         }
       ],
-      "orders": [],
-      "createdAt": "2026-10-23T08:00:00.000Z",
-      "advanceCreditBalance": 0
+      "prescriptions": [
+        {
+          "id": "RX-2026-005",
+          "date": "2026-10-27",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "doctorId": "DOC-1",
+          "diagnosis": "Chronic Apical Periodontitis with Pulp Necrosis #46",
+          "reviewTimeline": "In 4 days for canal obturation",
+          "isFinalized": true,
+          "instructions": "Avoid hard foods on right side. Maintain regular diabetes medications.",
+          "medicines": [
+            {
+              "name": "Amoxicillin 500mg",
+              "genericName": "Amoxicillin Trihydrate",
+              "dosage": "500 mg",
+              "frequency": "1 capsule thrice daily (1-1-1)",
+              "duration": "5 days",
+              "instructions": "Take after food. Complete course."
+            },
+            {
+              "name": "Paracetamol 650mg (Safe Alternative to NSAIDs)",
+              "genericName": "Paracetamol",
+              "dosage": "650 mg",
+              "frequency": "1 tablet every 6 hours SOS",
+              "duration": "3 days",
+              "instructions": "Take after food for post-op discomfort. Avoid NSAIDs due to allergy history."
+            },
+            {
+              "name": "Pantocid 40mg",
+              "genericName": "Pantoprazole Sodium",
+              "dosage": "40 mg",
+              "frequency": "1 tablet once daily morning (1-0-0)",
+              "duration": "5 days",
+              "instructions": "Take 30 mins before breakfast on empty stomach."
+            }
+          ]
+        }
+      ],
+      "invoices": [
+        {
+          "id": "INV-2026-005",
+          "invoiceNumber": "INV-2026-005",
+          "date": "2026-10-27",
+          "isFinalized": true,
+          "items": [
+            {
+              "name": "Rotary Endodontic Therapy - RCT Molar (#46)",
+              "fee": 6500,
+              "tooth": "46"
+            },
+            {
+              "name": "Digital Working Length RVG X-Rays (2 shots)",
+              "fee": 600,
+              "tooth": "46"
+            }
+          ],
+          "subtotal": 7100,
+          "discount": 500,
+          "taxPercent": 0,
+          "taxAmount": 0,
+          "total": 6600,
+          "paid": 6600,
+          "balance": 0,
+          "status": "Paid",
+          "paymentMethod": "Fonepay QR",
+          "doctorName": "Dr. Mukesh Kushwaha"
+        }
+      ],
+      "orders": [
+        {
+          "id": "ORD-2026-005",
+          "patientId": "PT-1005",
+          "patientName": "Bikash Karki",
+          "patientPhone": "9841887766",
+          "orderType": "Crown",
+          "toothOrImplantDetails": "Tooth #46",
+          "clinicalSpecifications": "Full Contour Zirconia Crown, Shade VITA A3, Heavy Occlusal Clearance",
+          "materials": "BruxZir Solid Zirconia",
+          "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
+          "orderDate": "2026-10-27T09:30:00.000Z",
+          "expectedCompletionDate": "2026-11-01T14:00:00.000Z",
+          "cost": 4500,
+          "paymentStatus": "Paid",
+          "progressStatus": "Pending",
+          "notes": [
+            {
+              "author": "Dr. Mukesh Kushwaha",
+              "text": "Patient has strong masseter muscles; ensure high fracture resistance.",
+              "date": "2026-10-27T09:40:00.000Z"
+            }
+          ]
+        }
+      ],
+      "imaging": [
+        {
+          "id": "XRAY-2026-005",
+          "title": "Digital IOPA Radiograph #46 (Working Length)",
+          "radiographType": "Periapical (IOPA)",
+          "toothNumbers": [
+            "46"
+          ],
+          "format": "png",
+          "encounterId": "APT-2026-005",
+          "uploadedAt": "2026-10-27T08:30:00.000Z",
+          "diagnosticImpression": "Distal canal working length: 20mm. Mesiobuccal: 19.5mm. Mesiolingual: 19.5mm. Radiolucency at distal apex."
+        }
+      ]
     }
   ],
   "appointments": [
     {
-      "id": "APT-5757",
+      "id": "APT-2026-001",
       "status": "Confirmed",
-      "createdAt": "2026-10-26T10:06:25.757Z",
+      "createdAt": "2026-10-26T10:00:00.000Z",
       "patientId": "PT-1001",
-      "patientName": "Rupesh Jha",
-      "patientPhone": "+977 98011 97710",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-10-26",
-      "time": "02:30 PM",
-      "durationMinutes": 45,
-      "treatmentType": "Root Canal Therapy (RCT Sitting 2)",
-      "notes": "Patient requested painless local anaesthesia"
-    },
-    {
-      "id": "APT-1012-A",
-      "patientId": "AS-1012",
-      "patientName": "Anaya singh",
-      "patientPhone": "9801197710",
-      "doctorId": "DOC-MUKESH",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-10-23",
-      "time": "10:00 AM",
-      "durationMinutes": 45,
-      "treatmentType": "Crown Preparation & Digital Impression (#16)",
-      "status": "Completed",
-      "notes": "Tooth prepared with 1.5mm occlusal reduction. Shade VITA A2 verified with patient.",
-      "createdAt": "2026-10-22T08:00:00.000Z"
-    },
-    {
-      "id": "APT-1012-B",
-      "patientId": "AS-1012",
-      "patientName": "Anaya singh",
-      "patientPhone": "9801197710",
-      "doctorId": "DOC-MUKESH",
+      "patientName": "Aarav Sharma",
+      "patientPhone": "+977 98412 34567",
       "doctorName": "Dr. Mukesh Kushwaha",
       "chair": "Chair 1 (Main Operatory)",
       "date": "2026-10-28",
-      "time": "02:30 PM",
-      "durationMinutes": 30,
-      "treatmentType": "Zirconia Crown Trial & Permanent Cementation (#16)",
-      "status": "Scheduled",
-      "notes": "Permanent cementation with Resin-modified Glass Ionomer (RMGIC).",
-      "createdAt": "2026-10-23T10:30:00.000Z"
-    },
-    {
-      "id": "APT-1001-A",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Shrestha",
-      "patientPhone": "+977 98412 34567",
-      "doctorId": "DOC-MUKESH",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-10-16",
       "time": "10:00 AM",
-      "durationMinutes": 60,
-      "treatmentType": "Root Canal Therapy (Molar #46)",
-      "status": "Completed",
-      "notes": "Access opening, biomechanical prep, obturation done.",
-      "createdAt": "2026-10-15T09:30:00.000Z"
+      "durationMinutes": 45,
+      "treatmentType": "Root Canal Therapy (RCT Sitting 1) #16",
+      "notes": "Penicillin allergy noted. Patient requested profound local anaesthesia."
     },
     {
-      "id": "APT-1001-B",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Shrestha",
-      "patientPhone": "+977 98412 34567",
-      "doctorId": "DOC-MUKESH",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-10-24",
+      "id": "APT-2026-002",
+      "status": "Confirmed",
+      "createdAt": "2026-10-26T11:00:00.000Z",
+      "patientId": "PT-1002",
+      "patientName": "Sunita Adhikari",
+      "patientPhone": "+977 98511 22334",
+      "doctorName": "Dr. Anita Rayamajhi",
+      "chair": "Chair 2 (Orthodontic & Hygiene)",
+      "date": "2026-10-28",
       "time": "11:30 AM",
-      "durationMinutes": 45,
-      "treatmentType": "Crown Delivery & Occlusal Verification (#46)",
-      "status": "Scheduled",
-      "notes": "Zirconia crown trial and cementation.",
-      "createdAt": "2026-10-18T10:00:00.000Z"
-    },
-    {
-      "id": "APT-1002-A",
-      "patientId": "PT-1002",
-      "patientName": "Sunita Adhikari",
-      "patientPhone": "+977 98510 98765",
-      "doctorId": "DOC-ANJALI",
-      "doctorName": "Dr. Anjali Shrestha",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-10-19",
-      "time": "02:00 PM",
-      "durationMinutes": 75,
-      "treatmentType": "Bridge Abutment Preparation & Impression",
-      "status": "Completed",
-      "notes": "Shoulder-chamfer margin prep on 23, 26. Elastomeric impression taken.",
-      "createdAt": "2026-10-17T11:45:00.000Z"
-    },
-    {
-      "id": "APT-1002-B",
-      "patientId": "PT-1002",
-      "patientName": "Sunita Adhikari",
-      "patientPhone": "+977 98510 98765",
-      "doctorId": "DOC-ANJALI",
-      "doctorName": "Dr. Anjali Shrestha",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-10-23",
-      "time": "02:30 PM",
-      "durationMinutes": 45,
-      "treatmentType": "4-Unit PFM Bridge Seating & Cementation",
-      "status": "Confirmed",
-      "notes": "Bridge ready from Himalayan lab. Verify occlusion and marginal fit.",
-      "createdAt": "2026-10-19T14:30:00.000Z"
-    },
-    {
-      "id": "APT-1003-A",
-      "patientId": "PT-1003",
-      "patientName": "Bijay Thapa",
-      "patientPhone": "+977 98130 55443",
-      "doctorId": "DOC-MUKESH",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 2 (Surgical & Implant Suite)",
-      "date": "2026-10-18",
-      "time": "03:30 PM",
       "durationMinutes": 30,
-      "treatmentType": "Surgical Assessment & Operculectomy",
-      "status": "Completed",
-      "notes": "Electrocautery operculectomy performed. Antibiotics prescribed.",
-      "createdAt": "2026-10-18T14:15:00.000Z"
+      "treatmentType": "Root Planing Re-Evaluation & Polish",
+      "notes": "Check bleeding on probing indices post-scaling"
     },
     {
-      "id": "APT-1003-B",
+      "id": "APT-2026-003",
+      "status": "Confirmed",
+      "createdAt": "2026-10-26T12:00:00.000Z",
       "patientId": "PT-1003",
-      "patientName": "Bijay Thapa",
-      "patientPhone": "+977 98130 55443",
-      "doctorId": "DOC-MUKESH",
+      "patientName": "Rohan Shrestha",
+      "patientPhone": "+977 98123 45678",
       "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 2 (Surgical & Implant Suite)",
-      "date": "2026-10-25",
-      "time": "10:00 AM",
-      "durationMinutes": 60,
-      "treatmentType": "Surgical Disimpaction & Odontectomy (#38)",
-      "status": "Scheduled",
-      "notes": "Full mucoperiosteal flap, bone guttering, tooth sectioning under 2% lignocaine with adrenaline.",
-      "createdAt": "2026-10-20T10:15:00.000Z"
-    },
-    {
-      "id": "APT-1004-A",
-      "patientId": "PT-1004",
-      "patientName": "Rashmi Gurung",
-      "patientPhone": "+977 98012 88990",
-      "doctorId": "DOC-MUKESH",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 2 (Surgical & Implant Suite)",
-      "date": "2026-10-19",
-      "time": "11:00 AM",
-      "durationMinutes": 90,
-      "treatmentType": "Implant Fixture Placement (Straumann #47)",
-      "status": "Completed",
-      "notes": "Osteotomy prepared, fixture torqued to 40 Ncm, healing abutment placed, 4-0 vicryl sutures.",
-      "createdAt": "2026-10-19T10:15:00.000Z"
-    },
-    {
-      "id": "APT-1004-B",
-      "patientId": "PT-1004",
-      "patientName": "Rashmi Gurung",
-      "patientPhone": "+977 98012 88990",
-      "doctorId": "DOC-MUKESH",
-      "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 2 (Surgical & Implant Suite)",
+      "chair": "Chair 1 (Main Operatory)",
       "date": "2026-10-28",
-      "time": "04:00 PM",
-      "durationMinutes": 45,
-      "treatmentType": "Custom Titanium Abutment & Crown Seating",
-      "status": "Scheduled",
-      "notes": "Screw retained crown delivery.",
-      "createdAt": "2026-10-21T11:15:00.000Z"
+      "time": "02:00 PM",
+      "durationMinutes": 60,
+      "treatmentType": "Surgical Disimpaction #38",
+      "notes": "Informed consent signed for lower third molar surgical extraction"
     },
     {
-      "id": "APT-1005-A",
-      "patientId": "PT-1005",
-      "patientName": "Deepak Sharma",
-      "patientPhone": "+977 98491 11223",
-      "doctorId": "DOC-MUKESH",
+      "id": "APT-2026-004",
+      "status": "Confirmed",
+      "createdAt": "2026-10-26T13:00:00.000Z",
+      "patientId": "PT-1004",
+      "patientName": "Pooja Thapa",
+      "patientPhone": "+977 98601 23456",
       "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 3 (Hygiene & General)",
-      "date": "2026-10-20",
-      "time": "10:30 AM",
-      "durationMinutes": 45,
-      "treatmentType": "Maxillary Complete Denture Wax Try-in",
-      "status": "Completed",
-      "notes": "Centric relation, lip support, phonetics, and smile line checked and approved.",
-      "createdAt": "2026-10-20T10:15:00.000Z"
+      "chair": "Chair 2 (Orthodontic & Hygiene)",
+      "date": "2026-10-29",
+      "time": "09:30 AM",
+      "durationMinutes": 30,
+      "treatmentType": "Aesthetic Polish & Vitality Follow-Up #11",
+      "notes": "Review incisal edge contour under natural daylight"
     },
     {
-      "id": "APT-1005-B",
+      "id": "APT-2026-005",
+      "status": "Confirmed",
+      "createdAt": "2026-10-26T14:00:00.000Z",
       "patientId": "PT-1005",
-      "patientName": "Deepak Sharma",
-      "patientPhone": "+977 98491 11223",
-      "doctorId": "DOC-MUKESH",
+      "patientName": "Bikash Karki",
+      "patientPhone": "+977 98418 87766",
       "doctorName": "Dr. Mukesh Kushwaha",
-      "chair": "Chair 3 (Hygiene & General)",
-      "date": "2026-10-24",
-      "time": "03:00 PM",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-10-29",
+      "time": "11:00 AM",
       "durationMinutes": 45,
-      "treatmentType": "Final Denture Delivery & Occlusal Verification",
-      "status": "In Chair",
-      "notes": "Denture insertion, pressure indicator paste test, home care instructions.",
-      "createdAt": "2026-10-21T15:45:00.000Z"
+      "treatmentType": "Canal Obturation & Temp Seal #46",
+      "notes": "Diabetic patient. NSAID allergy - paracetamol only."
     }
   ],
   "billingPolicy": {
@@ -3506,6 +1343,145 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "tlog-1793122345980-947",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-5775",
+      "details": {
+        "invoiceNumber": "INV-2026-5517",
+        "total": 5000,
+        "paid": 5000,
+        "receiptNumber": "RCP-2026-72397"
+      },
+      "timestamp": "2026-10-27T17:32:25.980Z"
+    },
+    {
+      "id": "tlog-1793122345802-354",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-345802",
+      "details": {
+        "type": "INCOME",
+        "amount": 5000,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-72397"
+      },
+      "timestamp": "2026-10-27T17:32:25.803Z"
+    },
+    {
+      "id": "tlog-1793122345737-992",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-5716",
+      "details": {
+        "patientId": "PT-1001",
+        "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-27T17:32:25.737Z"
+    },
+    {
+      "id": "tlog-1793122345663-390",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-1001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-10-27T17:32:25.663Z"
+    },
+    {
+      "id": "tlog-1793120293411-466",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-3314",
+      "details": {
+        "invoiceNumber": "INV-2026-9335",
+        "total": 5000,
+        "paid": 5000,
+        "receiptNumber": "RCP-2026-41767"
+      },
+      "timestamp": "2026-10-27T16:58:13.411Z"
+    },
+    {
+      "id": "tlog-1793120293324-462",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-293324",
+      "details": {
+        "type": "INCOME",
+        "amount": 5000,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-41767"
+      },
+      "timestamp": "2026-10-27T16:58:13.324Z"
+    },
+    {
+      "id": "tlog-1793120293296-569",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3282",
+      "details": {
+        "patientId": "PT-1001",
+        "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-27T16:58:13.296Z"
+    },
+    {
+      "id": "tlog-1793120293258-367",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-1001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-10-27T16:58:13.258Z"
+    },
+    {
+      "id": "tlog-1793119516374-539",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "PHARMACY_SALE_PROCESSED",
+      "resource": "pharmacy_sales",
+      "resourceId": "PSALE-1793119516362",
+      "details": {
+        "receiptNumber": "PHARM-INV-516362",
+        "patientName": "Anaya singh",
+        "itemsCount": 2,
+        "totalAmount": 48,
+        "paymentMethod": "Cash"
+      },
+      "timestamp": "2026-10-27T16:45:16.374Z"
+    },
     {
       "id": "tlog-1792924597943-491",
       "userId": "user-nepal-admin",
@@ -10916,7 +8892,7 @@
       "id": "BATCH-076692-788",
       "medicineId": "PHARM-MED-076680",
       "batchNumber": "CFX-26A",
-      "quantity": 88,
+      "quantity": 87,
       "initialQuantity": 100,
       "purchasePrice": 14.5,
       "sellingPrice": 24,
@@ -10929,7 +8905,7 @@
       "id": "BATCH-397772-764",
       "medicineId": "PHARM-MED-397759",
       "batchNumber": "CFX-26A",
-      "quantity": 87,
+      "quantity": 86,
       "initialQuantity": 100,
       "purchasePrice": 14.5,
       "sellingPrice": 24,
@@ -11574,6 +9550,54 @@
     }
   ],
   "pharmacySales": [
+    {
+      "id": "PSALE-1793119516362",
+      "receiptNumber": "PHARM-INV-516362",
+      "date": "2026-10-27T16:45:16.362Z",
+      "patientId": "AS-1012",
+      "patientName": "Anaya singh",
+      "patientPhone": "9801197710",
+      "items": [
+        {
+          "medicineId": "PHARM-MED-076680",
+          "medicineName": "Cefixime 200mg",
+          "genericName": "Cefixime Trihydrate",
+          "brand": "Taxim-O (Alkem)",
+          "strength": "200 mg",
+          "dosageForm": "Tablet",
+          "batchId": "BATCH-076692-788",
+          "batchNumber": "CFX-26A",
+          "expiryDate": "2027-11-30",
+          "quantity": 1,
+          "unitPrice": 24,
+          "total": 24
+        },
+        {
+          "medicineId": "PHARM-MED-397759",
+          "medicineName": "Cefixime 200mg",
+          "genericName": "Cefixime Trihydrate",
+          "brand": "Taxim-O (Alkem)",
+          "strength": "200 mg",
+          "dosageForm": "Tablet",
+          "batchId": "BATCH-397772-764",
+          "batchNumber": "CFX-26A",
+          "expiryDate": "2027-11-30",
+          "quantity": 1,
+          "unitPrice": 24,
+          "total": 24
+        }
+      ],
+      "subtotal": 48,
+      "discountPercent": 0,
+      "discountAmount": 0,
+      "totalAmount": 48,
+      "paidAmount": 48,
+      "paymentMethod": "Cash",
+      "servedBy": "user-devadmin",
+      "staffName": "Anaya Craft Developer Admin",
+      "notes": "",
+      "status": "COMPLETED"
+    },
     {
       "id": "PSALE-1792763973961",
       "receiptNumber": "PHARM-INV-973961",
@@ -12327,36 +10351,116 @@
   },
   "financeTransactions": [
     {
-      "id": "TXN-092796",
-      "date": "2026-10-24",
-      "refNumber": "RCP-2026-64322",
-      "payerOrRecipient": "Priyanka Karki Shrestha",
+      "id": "TXN-345802",
+      "date": "2026-10-27",
+      "refNumber": "RCP-2026-72397",
+      "payerOrRecipient": "Aarav Sharma",
       "type": "INCOME",
       "category": "Patient Treatment",
-      "amount": 500,
-      "paymentMethod": "IME Pay",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
       "status": "Completed",
-      "relatedPatientId": "PT-2002",
+      "relatedPatientId": "PT-1001",
       "relatedStaffId": null,
-      "notes": "Invoice payment for #INV-2026-8142",
+      "notes": "Invoice payment for #INV-2026-5517",
       "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "createdAt": "2026-10-24T09:44:52.796Z"
+      "createdAt": "2026-10-27T17:32:25.802Z"
     },
     {
-      "id": "TXN-014629",
-      "date": "2026-10-24",
-      "refNumber": "RCP-2026-98407",
-      "payerOrRecipient": "Deepak Kumar Jha",
+      "id": "TXN-293324",
+      "date": "2026-10-27",
+      "refNumber": "RCP-2026-41767",
+      "payerOrRecipient": "Aarav Sharma",
       "type": "INCOME",
       "category": "Patient Treatment",
-      "amount": 200,
-      "paymentMethod": "IME Pay",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
       "status": "Completed",
-      "relatedPatientId": "DKJ-1011",
+      "relatedPatientId": "PT-1001",
       "relatedStaffId": null,
-      "notes": "Invoice payment for #INV-2026-1499",
+      "notes": "Invoice payment for #INV-2026-9335",
       "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "createdAt": "2026-10-24T09:43:34.629Z"
+      "createdAt": "2026-10-27T16:58:13.324Z"
+    },
+    {
+      "id": "TXN-2026-001",
+      "date": "2026-10-24",
+      "refNumber": "INV-2026-001",
+      "payerOrRecipient": "Aarav Sharma",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 2200,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-1001",
+      "relatedStaffId": null,
+      "notes": "Invoice settlement for INV-2026-001",
+      "createdBy": "Dr. Mukesh Kushwaha (Lead Surgeon)",
+      "createdAt": "2026-10-24T12:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-002",
+      "date": "2026-10-25",
+      "refNumber": "INV-2026-002",
+      "payerOrRecipient": "Sunita Adhikari",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 3300,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-1002",
+      "relatedStaffId": null,
+      "notes": "Invoice settlement for INV-2026-002",
+      "createdBy": "Dr. Mukesh Kushwaha (Lead Surgeon)",
+      "createdAt": "2026-10-25T12:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-003",
+      "date": "2026-10-25",
+      "refNumber": "INV-2026-003",
+      "payerOrRecipient": "Rohan Shrestha",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 2200,
+      "paymentMethod": "Cash",
+      "status": "Completed",
+      "relatedPatientId": "PT-1003",
+      "relatedStaffId": null,
+      "notes": "Invoice settlement for INV-2026-003",
+      "createdBy": "Dr. Mukesh Kushwaha (Lead Surgeon)",
+      "createdAt": "2026-10-25T12:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-004",
+      "date": "2026-10-26",
+      "refNumber": "INV-2026-004",
+      "payerOrRecipient": "Pooja Thapa",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 3500,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-1004",
+      "relatedStaffId": null,
+      "notes": "Invoice settlement for INV-2026-004",
+      "createdBy": "Dr. Mukesh Kushwaha (Lead Surgeon)",
+      "createdAt": "2026-10-26T12:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-005",
+      "date": "2026-10-27",
+      "refNumber": "INV-2026-005",
+      "payerOrRecipient": "Bikash Karki",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 6600,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-1005",
+      "relatedStaffId": null,
+      "notes": "Invoice settlement for INV-2026-005",
+      "createdBy": "Dr. Mukesh Kushwaha (Lead Surgeon)",
+      "createdAt": "2026-10-27T12:00:00.000Z"
     },
     {
       "id": "TXN-421196",
@@ -12405,81 +10509,6 @@
       "notes": "Salary Advance Disbursed to Pooja Thapa (Dental Assistant) - Festival & personal advance",
       "createdBy": "Dr. Mukesh Kushwaha",
       "createdAt": "2026-10-24T09:00:20.995Z"
-    },
-    {
-      "id": "TXN-2026-1001",
-      "date": "2026-10-16T11:00:00.000Z",
-      "refNumber": "REC-INV-1001",
-      "payerOrRecipient": "Aarav Shrestha",
-      "type": "INCOME",
-      "category": "Patient Treatment",
-      "amount": 9500,
-      "paymentMethod": "FonePay / QR",
-      "status": "Completed",
-      "relatedPatientId": "PT-1001",
-      "notes": "Full payment for RCT #46, core build-up & consultation.",
-      "createdBy": "Sita Thapa (Front Desk)",
-      "createdAt": "2026-10-16T11:00:00.000Z"
-    },
-    {
-      "id": "TXN-2026-1002",
-      "date": "2026-10-19T14:30:00.000Z",
-      "refNumber": "REC-INV-1002",
-      "payerOrRecipient": "Sunita Adhikari",
-      "type": "INCOME",
-      "category": "Patient Treatment",
-      "amount": 8000,
-      "paymentMethod": "Bank Transfer",
-      "status": "Completed",
-      "relatedPatientId": "PT-1002",
-      "notes": "50% advance deposit for 4-unit PFM bridge (Teeth 23-26).",
-      "createdBy": "Sita Thapa (Front Desk)",
-      "createdAt": "2026-10-19T14:30:00.000Z"
-    },
-    {
-      "id": "TXN-2026-1003",
-      "date": "2026-10-18T15:00:00.000Z",
-      "refNumber": "REC-INV-1003",
-      "payerOrRecipient": "Bijay Thapa",
-      "type": "INCOME",
-      "category": "Patient Treatment",
-      "amount": 6000,
-      "paymentMethod": "Cash",
-      "status": "Completed",
-      "relatedPatientId": "PT-1003",
-      "notes": "OPG consultation, operculectomy & surgical extraction deposit.",
-      "createdBy": "Sita Thapa (Front Desk)",
-      "createdAt": "2026-10-18T15:00:00.000Z"
-    },
-    {
-      "id": "TXN-2026-1004",
-      "date": "2026-10-19T12:00:00.000Z",
-      "refNumber": "REC-INV-1004",
-      "payerOrRecipient": "Rashmi Gurung",
-      "type": "INCOME",
-      "category": "Patient Treatment",
-      "amount": 15000,
-      "paymentMethod": "FonePay / QR",
-      "status": "Completed",
-      "relatedPatientId": "PT-1004",
-      "notes": "Stage-1 implant surgery fixture payment for #47.",
-      "createdBy": "Sita Thapa (Front Desk)",
-      "createdAt": "2026-10-19T12:00:00.000Z"
-    },
-    {
-      "id": "TXN-2026-1005",
-      "date": "2026-10-20T12:00:00.000Z",
-      "refNumber": "REC-INV-1005",
-      "payerOrRecipient": "Deepak Sharma",
-      "type": "INCOME",
-      "category": "Patient Treatment",
-      "amount": 18000,
-      "paymentMethod": "FonePay / QR",
-      "status": "Completed",
-      "relatedPatientId": "PT-1005",
-      "notes": "Complete upper Lucitone denture fee installment settlement.",
-      "createdBy": "Sita Thapa (Front Desk)",
-      "createdAt": "2026-10-20T12:00:00.000Z"
     },
     {
       "id": "TXN-855666",
@@ -13024,7 +11053,7 @@
       "category": "Current Assets",
       "normalBalance": "DEBIT",
       "description": "Clearing account for FonePay QR, Cards POS, eSewa and digital settlements",
-      "balance": 47500,
+      "balance": 57500,
       "isActive": true
     },
     {
@@ -13134,7 +11163,7 @@
       "category": "Operating Revenue",
       "normalBalance": "CREDIT",
       "description": "Gross billings for restorations, root canals, dental implants, crowns, and extractions",
-      "balance": 198912,
+      "balance": 209912,
       "isActive": true
     },
     {
@@ -13254,11 +11283,135 @@
       "category": "Contra Revenue",
       "normalBalance": "DEBIT",
       "description": "Authorized treatment price reductions, student/senior citizen concessions, and waivers",
-      "balance": 9600,
+      "balance": 10600,
       "isActive": true
     }
   ],
   "journalEntries": [
+    {
+      "id": "JE-2026-2174",
+      "date": "2026-10-27",
+      "reference": "RCP-2026-72397",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Aarav Sharma for invoice #INV-2026-5517",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 5000
+        }
+      ],
+      "totalDebit": 5000,
+      "totalCredit": 5000,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T17:32:25.907Z"
+    },
+    {
+      "id": "JE-2026-6930",
+      "date": "2026-10-27",
+      "reference": "INV-2026-5517",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Aarav Sharma (Inv #INV-2026-5517)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 5500
+        }
+      ],
+      "totalDebit": 5500,
+      "totalCredit": 5500,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T17:32:25.869Z"
+    },
+    {
+      "id": "JE-2026-8909",
+      "date": "2026-10-27",
+      "reference": "RCP-2026-41767",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Aarav Sharma for invoice #INV-2026-9335",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 5000
+        }
+      ],
+      "totalDebit": 5000,
+      "totalCredit": 5000,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T16:58:13.372Z"
+    },
+    {
+      "id": "JE-2026-5182",
+      "date": "2026-10-27",
+      "reference": "INV-2026-9335",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Aarav Sharma (Inv #INV-2026-9335)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 5500
+        }
+      ],
+      "totalDebit": 5500,
+      "totalCredit": 5500,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T16:58:13.359Z"
+    },
     {
       "id": "JE-2026-3603",
       "date": "2026-10-24",
@@ -14168,6 +12321,38 @@
   ],
   "receipts": [
     {
+      "id": "RCP-2026-72397",
+      "receiptNumber": "RCP-2026-72397",
+      "patientId": "PT-1001",
+      "patientName": "Aarav Sharma",
+      "invoiceId": "INV-2026-5517",
+      "depositId": null,
+      "date": "2026-10-27",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-INV-2026-5517",
+      "notes": "Payment collected for invoice #INV-2026-5517",
+      "issuedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T17:32:25.776Z"
+    },
+    {
+      "id": "RCP-2026-41767",
+      "receiptNumber": "RCP-2026-41767",
+      "patientId": "PT-1001",
+      "patientName": "Aarav Sharma",
+      "invoiceId": "INV-2026-9335",
+      "depositId": null,
+      "date": "2026-10-27",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-INV-2026-9335",
+      "notes": "Payment collected for invoice #INV-2026-9335",
+      "issuedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T16:58:13.315Z"
+    },
+    {
       "id": "RCP-2026-64322",
       "receiptNumber": "RCP-2026-64322",
       "patientId": "PT-2002",
@@ -14362,263 +12547,110 @@
   },
   "xrays": [
     {
-      "id": "XRAY-2026-1003",
-      "patientId": "PT-2001",
-      "patientName": "Dr. Sanjeev Banskota",
-      "patientPhone": "9851023456",
-      "encounterId": null,
-      "title": "Posterior Bitewing (BWR) Interproximal Caries Survey",
-      "radiographType": "Bitewing (BWR)",
-      "toothNumbers": [
-        "14",
-        "15",
-        "16",
-        "44",
-        "45",
-        "46"
-      ],
-      "fileName": "bitewing_quad1_pt2001.png",
-      "fileSize": 2935,
-      "format": "png",
-      "mimeType": "image/svg+xml",
-      "storage": {
-        "provider": "private-vault-aes256",
-        "bucket": "clinic-vault-tenant-nepal-dental",
-        "key": "XRAY-2026-1003.enc",
-        "serverSideEncryption": "AES-256-GCM",
-        "acl": "private",
-        "originalSizeBytes": 2935,
-        "encryptedSizeBytes": 2963,
-        "sha256": "4d2bb90a407d05132a48ad95979aa8b8ed86e5fb85519131d71d7b2882a7b102"
-      },
-      "dicomMetadata": {
-        "isDicom": true,
-        "modality": "IO",
-        "modalityDescription": "Bitewing Radiography",
-        "patientName": "Dr. Sanjeev Banskota",
-        "patientID": "PT-2001",
-        "studyDate": "2026-10-21",
-        "studyTime": "11:00:00",
-        "studyDescription": "Posterior Bitewing Right Quadrant",
-        "manufacturer": "Planmeca ProSensor HD",
-        "manufacturerModel": "ProSensor Size 2",
-        "institutionName": "Nepal Dental & Healthcare Wellness Centre",
-        "dimensions": {
-          "rows": 1500,
-          "columns": 1100,
-          "bitsAllocated": 16,
-          "bitsStored": 12
-        },
-        "exposure": {
-          "kvp": "68 kVp",
-          "tubeCurrent": "7 mA",
-          "exposureTime": "100 ms"
-        },
-        "windowing": {
-          "windowCenter": 2000,
-          "windowWidth": 4000
-        }
-      },
-      "clinicalNotes": "Routine 6-month checkup radiograph.",
-      "diagnosticImpression": "Interproximal enamel intact on #14 and #15. Crestal bone height is 1.5mm from cementoenamel junction (CEJ) with no active vertical defects. Minor subgingival calculus radiopacity noted on distal #45.",
-      "findings": [],
-      "uploadedBy": "Dr. Mukesh Kushwaha",
-      "uploadedByRole": "DOCTOR",
-      "uploadedAt": "2026-10-23T18:33:28.836Z"
-    },
-    {
-      "id": "XRAY-2026-1002",
-      "patientId": "AS-1012",
-      "patientName": "Anaya singh",
-      "patientPhone": "9801197710",
-      "encounterId": "APT-1012-A",
-      "title": "High-Resolution Intraoral Periapical (IOPA) #16 & #17",
+      "id": "XRAY-2026-001",
+      "patientId": "PT-1001",
+      "patientName": "Aarav Sharma",
+      "patientPhone": "9841234567",
+      "encounterId": "APT-2026-001",
+      "title": "Diagnostic Intraoral Periapical (IOPA) #16 & #17",
       "radiographType": "Periapical (IOPA)",
       "toothNumbers": [
         "16",
         "17"
       ],
-      "fileName": "iopa_molar_16_as1012.png",
-      "fileSize": 3956,
+      "fileName": "iopa_16_pt1001.png",
+      "fileSize": 3200,
       "format": "png",
       "mimeType": "image/svg+xml",
-      "storage": {
-        "provider": "private-vault-aes256",
-        "bucket": "clinic-vault-tenant-nepal-dental",
-        "key": "XRAY-2026-1002.enc",
-        "serverSideEncryption": "AES-256-GCM",
-        "acl": "private",
-        "originalSizeBytes": 3956,
-        "encryptedSizeBytes": 3984,
-        "sha256": "4baaa9d1d6dafbe0264508374353ce96e617b45345596ece74da9de8144ada2b"
-      },
-      "dicomMetadata": {
-        "isDicom": true,
-        "modality": "IO",
-        "modalityDescription": "Intra-oral Dental Radiography",
-        "patientName": "Anaya singh",
-        "patientID": "AS-1012",
-        "studyDate": "2026-10-23",
-        "studyTime": "10:25:00",
-        "studyDescription": "Targeted IOPA Radiograph Molar #16",
-        "manufacturer": "Vatech EzSensor Classic",
-        "manufacturerModel": "EzSensor HD Size 2",
-        "institutionName": "Nepal Dental & Healthcare Wellness Centre",
-        "dimensions": {
-          "rows": 1600,
-          "columns": 1200,
-          "bitsAllocated": 16,
-          "bitsStored": 14
-        },
-        "exposure": {
-          "kvp": "65 kVp",
-          "tubeCurrent": "7 mA",
-          "exposureTime": "120 ms"
-        },
-        "windowing": {
-          "windowCenter": 1800,
-          "windowWidth": 3600
-        }
-      },
-      "clinicalNotes": "Verified adequate tooth structure remaining for full zirconia crown margin preparation.",
-      "diagnosticImpression": "Working length measurement: 13.5mm from cusp tip to radiographic apex. Mild widening of periodontal ligament (PDL) space around mesiobuccal apex #16 indicative of early periapical periodontitis. Lamina dura intact on distal root.",
-      "findings": [],
+      "clinicalNotes": "Pre-operative assessment of pulp chamber and root canal anatomy.",
+      "diagnosticImpression": "Deep disto-occlusal radiolucency approaching mesiobuccal pulp horn #16. Widened PDL space at root apex.",
       "uploadedBy": "Dr. Mukesh Kushwaha",
       "uploadedByRole": "DOCTOR",
-      "uploadedAt": "2026-10-23T18:33:28.794Z"
+      "uploadedAt": "2026-10-24T10:15:00.000Z"
     },
     {
-      "id": "XRAY-2026-1001",
-      "patientId": "AS-1012",
-      "patientName": "Anaya singh",
-      "patientPhone": "9801197710",
-      "encounterId": "APT-1012-A",
-      "title": "Full Arch Digital Panoramic OPG (Pre-Op Survey)",
+      "id": "XRAY-2026-002",
+      "patientId": "PT-1002",
+      "patientName": "Sunita Adhikari",
+      "patientPhone": "9851122334",
+      "encounterId": "APT-2026-002",
+      "title": "Full Arch Digital Panoramic OPG (Periodontal Survey)",
       "radiographType": "Panoramic (OPG)",
       "toothNumbers": [
         "Full Arch"
       ],
-      "fileName": "panoramic_opg_full_arch_as1012.png",
-      "fileSize": 11251,
+      "fileName": "opg_pt1002.png",
+      "fileSize": 4500,
       "format": "png",
       "mimeType": "image/svg+xml",
-      "storage": {
-        "provider": "private-vault-aes256",
-        "bucket": "clinic-vault-tenant-nepal-dental",
-        "key": "XRAY-2026-1001.enc",
-        "serverSideEncryption": "AES-256-GCM",
-        "acl": "private",
-        "originalSizeBytes": 11251,
-        "encryptedSizeBytes": 11279,
-        "sha256": "31dbfbbd8cffd9e87406f8cd3ae40e630b2c0347781fd4870d6f22784ba01335"
-      },
-      "dicomMetadata": {
-        "isDicom": true,
-        "modality": "PX",
-        "modalityDescription": "Panoramic Radiography (OPG)",
-        "patientName": "Anaya singh",
-        "patientID": "AS-1012",
-        "studyDate": "2026-10-23",
-        "studyTime": "10:15:00",
-        "studyDescription": "Full Mouth Panoramic Radiograph (OPG)",
-        "manufacturer": "Carestream Dental CS 8100 3D",
-        "manufacturerModel": "CS 8100 Family",
-        "institutionName": "Nepal Dental & Healthcare Wellness Centre",
-        "dimensions": {
-          "rows": 1440,
-          "columns": 2880,
-          "bitsAllocated": 16,
-          "bitsStored": 12
-        },
-        "exposure": {
-          "kvp": "73 kVp",
-          "tubeCurrent": "8 mA",
-          "exposureTime": "13.9 s"
-        },
-        "windowing": {
-          "windowCenter": 2048,
-          "windowWidth": 4096
-        }
-      },
-      "clinicalNotes": "Indicated for comprehensive restorative treatment planning and crown preparation assessment.",
-      "diagnosticImpression": "Normal condylar translation bilaterally. Maxillary sinuses clear. Coronal radiolucency on crown #16 approaching pulp chamber. Alveolar bone height preserved within normal physiological limits.",
-      "findings": [],
-      "uploadedBy": "Dr. Mukesh Kushwaha",
+      "clinicalNotes": "Full mouth periodontal screening.",
+      "diagnosticImpression": "Generalized horizontal bone loss of 25-30% in lower anterior quadrant. Normal condyles.",
+      "uploadedBy": "Dr. Anita Rayamajhi",
       "uploadedByRole": "DOCTOR",
-      "uploadedAt": "2026-10-23T18:33:28.757Z"
+      "uploadedAt": "2026-10-25T09:10:00.000Z"
     },
     {
-      "id": "XRAY-2026-8401-5686",
-      "patientId": "AS-1012",
-      "patientName": "Anaya singh",
-      "patientPhone": "9801197710",
-      "encounterId": "APT-1012-A",
-      "title": "Full Mouth Digital Panoramic OPG (Carestream DICOM)",
+      "id": "XRAY-2026-003",
+      "patientId": "PT-1003",
+      "patientName": "Rohan Shrestha",
+      "patientPhone": "9812345678",
+      "encounterId": "APT-2026-003",
+      "title": "Panoramic Radiograph (OPG) - Mesioangular Impaction #38",
       "radiographType": "Panoramic (OPG)",
       "toothNumbers": [
-        "Full Arch"
+        "38"
       ],
-      "fileName": "panoramic_opg_as1012.dcm",
-      "fileSize": 336,
-      "format": "dcm",
-      "mimeType": "application/dicom",
-      "storage": {
-        "provider": "private-vault-aes256",
-        "bucket": "clinic-vault-tenant-nepal-dental",
-        "key": "XRAY-2026-8401-5686.enc",
-        "serverSideEncryption": "AES-256-GCM",
-        "acl": "private",
-        "originalSizeBytes": 336,
-        "encryptedSizeBytes": 364,
-        "sha256": "0211c98ff49a03c304034498d68a1c667d021177c716c8bc9333ad3a750d853f"
-      },
-      "dicomMetadata": {
-        "isDicom": true,
-        "modality": "PX",
-        "modalityDescription": "Panoramic Radiography (OPG)",
-        "patientName": "Anaya singh",
-        "patientID": "AS-1012",
-        "studyDate": "",
-        "studyTime": "",
-        "studyDescription": "Orthopantomogram (Panoramic OPG)",
-        "seriesDescription": "",
-        "manufacturer": "Carestream Dental CS 8100 3D",
-        "manufacturerModel": "",
-        "institutionName": "Nepal Dental & Healthcare Wellness Centre",
-        "bodyPart": "JAW / TEETH",
-        "dimensions": {
-          "rows": 1024,
-          "columns": 1024,
-          "bitsAllocated": 16,
-          "bitsStored": 12
-        },
-        "exposure": {
-          "kvp": "73 kVp",
-          "tubeCurrent": "8 mA",
-          "exposureTime": "150 ms"
-        },
-        "windowing": {
-          "windowCenter": 2048,
-          "windowWidth": 4096
-        },
-        "rawTags": {
-          "modality": "PX",
-          "manufacturer": "Carestream Dental CS 8100 3D",
-          "institutionName": "Nepal Dental & Healthcare Wellness Centre",
-          "studyDescription": "Orthopantomogram (Panoramic OPG)",
-          "patientName": "Anaya singh",
-          "patientID": "AS-1012",
-          "kvp": "73",
-          "xRayTubeCurrent": "8",
-          "exposureTime": "150"
-        }
-      },
-      "clinicalNotes": "",
-      "diagnosticImpression": "Generalized horizontal bone levels normal. Deep coronal radiolucency on crown #16 approaching pulp chamber. Normal condylar heads bilaterally.",
-      "findings": [],
-      "uploadedBy": "Clinical Staff",
+      "fileName": "opg_38_pt1003.png",
+      "fileSize": 4800,
+      "format": "png",
+      "mimeType": "image/svg+xml",
+      "clinicalNotes": "Pre-surgical impaction evaluation.",
+      "diagnosticImpression": "Mesioangular impaction of tooth #38 abutting distal neck of #37. Pell & Gregory Class II, Position B.",
+      "uploadedBy": "Dr. Mukesh Kushwaha",
       "uploadedByRole": "DOCTOR",
-      "uploadedAt": "2026-10-23T18:32:18.405Z"
+      "uploadedAt": "2026-10-25T11:40:00.000Z"
+    },
+    {
+      "id": "XRAY-2026-004",
+      "patientId": "PT-1004",
+      "patientName": "Pooja Thapa",
+      "patientPhone": "9860123456",
+      "encounterId": "APT-2026-004",
+      "title": "Digital IOPA Radiograph #11 (Trauma Assessment)",
+      "radiographType": "Periapical (IOPA)",
+      "toothNumbers": [
+        "11"
+      ],
+      "fileName": "iopa_11_pt1004.png",
+      "fileSize": 2800,
+      "format": "png",
+      "mimeType": "image/svg+xml",
+      "clinicalNotes": "Post-trauma crown fracture evaluation.",
+      "diagnosticImpression": "Intact root with no fracture line. Lamina dura unbroken. Dentin thickness intact between fractured margin and pulp.",
+      "uploadedBy": "Dr. Mukesh Kushwaha",
+      "uploadedByRole": "DOCTOR",
+      "uploadedAt": "2026-10-26T10:15:00.000Z"
+    },
+    {
+      "id": "XRAY-2026-005",
+      "patientId": "PT-1005",
+      "patientName": "Bikash Karki",
+      "patientPhone": "9841887766",
+      "encounterId": "APT-2026-005",
+      "title": "Digital IOPA Radiograph #46 (Working Length)",
+      "radiographType": "Periapical (IOPA)",
+      "toothNumbers": [
+        "46"
+      ],
+      "fileName": "iopa_46_pt1005.png",
+      "fileSize": 3100,
+      "format": "png",
+      "mimeType": "image/svg+xml",
+      "clinicalNotes": "Working length measurement and apical lesion survey.",
+      "diagnosticImpression": "Distal canal working length: 20mm. Mesiobuccal: 19.5mm. Mesiolingual: 19.5mm. Radiolucency at distal apex.",
+      "uploadedBy": "Dr. Mukesh Kushwaha",
+      "uploadedByRole": "DOCTOR",
+      "uploadedAt": "2026-10-27T08:30:00.000Z"
     }
   ],
   "financeStaffAdvances": [

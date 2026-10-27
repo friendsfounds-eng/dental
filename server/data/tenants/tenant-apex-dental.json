@@ -1735,5 +1735,148 @@
       "Dental Lab Services Markup"
     ],
     "notes": "Registered under Inland Revenue Department (IRD) Nepal as VAT taxable health wellness establishment."
-  }
+  },
+  "financeStaffAdvances": [
+    {
+      "id": "ADV-2026-001",
+      "advanceNumber": "ADV-2026-001",
+      "staffId": "usr-anjali-nurse",
+      "staffName": "Anjali Maharjan",
+      "role": "Chairside Dental Assistant & Nurse",
+      "amount": 15000,
+      "balanceRemaining": 5000,
+      "recoveredAmount": 10000,
+      "reason": "Family medical emergency & Dashain festival advance",
+      "disbursedDate": "2026-09-15",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 5000,
+      "totalInstallments": 3,
+      "installmentsDeducted": 2,
+      "status": "Active",
+      "recoveryHistory": [
+        {
+          "date": "2026-09-25",
+          "amountDeducted": 5000,
+          "payrollPaymentId": "PAY-2026-09-04",
+          "payrollPeriod": "September 2026",
+          "voucherNumber": "SAL-2026-09-04"
+        },
+        {
+          "date": "2026-10-25",
+          "amountDeducted": 5000,
+          "payrollPaymentId": "PAY-2026-10-04",
+          "payrollPeriod": "October 2026",
+          "voucherNumber": "SAL-2026-10-04"
+        }
+      ],
+      "notes": "Approved by Dr. Mukesh. Rs 5,000 deducted monthly across 3 payrolls.",
+      "createdAt": "2026-09-15T09:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-002",
+      "advanceNumber": "ADV-2026-002",
+      "staffId": "usr-bikash-tech",
+      "staffName": "Bikash Shrestha",
+      "role": "In-House CAD/CAM Milling Technician",
+      "amount": 10000,
+      "balanceRemaining": 10000,
+      "recoveredAmount": 0,
+      "reason": "Personal two-wheeler repair and commute expenses",
+      "disbursedDate": "2026-10-18",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Cash",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 5000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 0,
+      "status": "Active",
+      "recoveryHistory": [],
+      "notes": "To be deducted starting from November and December payrolls.",
+      "createdAt": "2026-10-18T11:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-003",
+      "advanceNumber": "ADV-2026-003",
+      "staffId": "usr-sita-recep",
+      "staffName": "Sita Thapa",
+      "role": "Front Desk & Receptionist Manager",
+      "amount": 8000,
+      "balanceRemaining": 0,
+      "recoveredAmount": 8000,
+      "reason": "Advance for home relocation expenses",
+      "disbursedDate": "2026-08-10",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "LUMP_SUM",
+      "installmentAmount": 8000,
+      "totalInstallments": 1,
+      "installmentsDeducted": 1,
+      "status": "Fully Recovered",
+      "recoveryHistory": [
+        {
+          "date": "2026-08-25",
+          "amountDeducted": 8000,
+          "payrollPaymentId": "PAY-2026-08-03",
+          "payrollPeriod": "August 2026",
+          "voucherNumber": "SAL-2026-08-03"
+        }
+      ],
+      "notes": "Fully recovered in August 2026 payroll.",
+      "createdAt": "2026-08-10T08:30:00.000Z"
+    },
+    {
+      "id": "ADV-2026-004",
+      "advanceNumber": "ADV-2026-004",
+      "staffId": "usr-ramesh-pharma",
+      "staffName": "Ramesh Adhikari",
+      "role": "Clinical Pharmacist & Inventory",
+      "amount": 12000,
+      "balanceRemaining": 6000,
+      "recoveredAmount": 6000,
+      "reason": "Emergency family medical support",
+      "disbursedDate": "2026-09-20",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 6000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 1,
+      "status": "Active",
+      "recoveryHistory": [
+        {
+          "date": "2026-10-25",
+          "amountDeducted": 6000,
+          "payrollPaymentId": "PAY-2026-10-06",
+          "payrollPeriod": "October 2026",
+          "voucherNumber": "SAL-2026-10-06"
+        }
+      ],
+      "notes": "50% recovered in October. Remaining Rs 6,000 scheduled for November payroll.",
+      "createdAt": "2026-09-20T10:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-005",
+      "advanceNumber": "ADV-2026-005",
+      "staffId": "usr-dr-anita",
+      "staffName": "Dr. Anita Sharma",
+      "role": "Consultant Orthodontist",
+      "amount": 20000,
+      "balanceRemaining": 20000,
+      "recoveredAmount": 0,
+      "reason": "National Dental Orthodontic Conference travel & registration fees",
+      "disbursedDate": "2026-10-24",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 10000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 0,
+      "status": "Pending Approval",
+      "recoveryHistory": [],
+      "notes": "Awaiting board sign-off for educational conference sponsorship advance.",
+      "createdAt": "2026-10-24T08:30:00.000Z"
+    }
+  ]
 }

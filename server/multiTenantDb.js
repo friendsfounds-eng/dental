@@ -2144,6 +2144,34 @@ class MultiTenantDatabase {
     return tenant;
   }
 
+  deleteTenant(tenantId) {
+    if (tenantId === 'tenant-nepal-dental') return false;
+    const idx = this.platform.tenants.findIndex(t => t.id === tenantId);
+    if (idx === -1) return false;
+
+    this.platform.tenants.splice(idx, 1);
+
+    if (Array.isArray(this.platform.domainBindings)) {
+      this.platform.domainBindings = this.platform.domainBindings.filter(d => d.tenantId !== tenantId);
+    }
+    if (Array.isArray(this.platform.memberships)) {
+      this.platform.memberships = this.platform.memberships.filter(m => m.tenantId !== tenantId);
+    }
+
+    this.savePlatform();
+
+    const filePath = this.getTenantFilePath(tenantId);
+    if (fs.existsSync(filePath)) {
+      try {
+        fs.unlinkSync(filePath);
+      } catch (e) {
+        console.warn(`Failed to unlink tenant file ${filePath}:`, e);
+      }
+    }
+
+    return true;
+  }
+
   // -------------------------------------------------------------
   // Audit Logs (Append-only & Tamper resistant)
   // -------------------------------------------------------------

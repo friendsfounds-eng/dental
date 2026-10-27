@@ -18,6 +18,7 @@ import {
   Stethoscope,
   Crown,
   MapPin,
+  Phone,
   CreditCard,
   Menu,
   X,
@@ -26,6 +27,49 @@ import {
   ArrowLeftRight,
   ChevronRight
 } from 'lucide-react';
+
+function formatClinicHeader(fullName) {
+  const name = (fullName || 'Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.').trim();
+
+  // Special match for Nepal Dental
+  if (/nepal\s*dental/i.test(name)) {
+    return {
+      primary: 'Nepal Dental',
+      connector: '&',
+      secondary: 'Healthcare Wellness Centre',
+      suffix: 'Pvt. Ltd.',
+      isSplit: true
+    };
+  }
+
+  // Generic match for other clinic names
+  const pvtMatch = name.match(/^(.*?)(?:,\s*|\s+)(Pvt\.?\s*Ltd\.?|LLC|Inc\.?)$/i);
+  let baseName = name;
+  let suffix = '';
+  if (pvtMatch) {
+    baseName = pvtMatch[1];
+    suffix = pvtMatch[2];
+  }
+
+  const splitMatch = baseName.match(/^(.*?)\s+(?:and|&|-|–)\s+(.*)$/i);
+  if (splitMatch) {
+    return {
+      primary: splitMatch[1],
+      connector: '&',
+      secondary: splitMatch[2],
+      suffix,
+      isSplit: true
+    };
+  }
+
+  return {
+    primary: baseName,
+    connector: '',
+    secondary: '',
+    suffix,
+    isSplit: false
+  };
+}
 
 export default function Navbar({
   clinicProfile = {},
@@ -95,6 +139,7 @@ export default function Navbar({
   };
 
   const RoleIcon = roleBadge.icon;
+  const brandInfo = formatClinicHeader(clinicProfile.name);
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50 px-3 sm:px-6 h-14 sm:h-16 flex items-center shadow-2xs no-print">
@@ -116,33 +161,84 @@ export default function Navbar({
             )}
           </button>
 
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 overflow-hidden flex-shrink-0">
-            {clinicProfile.logo ? (
-              <img src={clinicProfile.logo} alt="Clinic Logo" className="w-full h-full object-contain p-0.5 bg-white rounded-lg" />
-            ) : (
-              <span className="text-xl">🦷</span>
-            )}
+          {/* Premium 3D Glowing Gradient Logo Tile */}
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 p-0.5 shadow-md shadow-blue-500/25 flex items-center justify-center text-white flex-shrink-0 group hover:shadow-lg hover:shadow-cyan-500/30 transition-all">
+            <div className="w-full h-full rounded-[14px] bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden">
+              {clinicProfile.logo ? (
+                <img src={clinicProfile.logo} alt="Clinic Logo" className="w-full h-full object-contain p-1" />
+              ) : (
+                <span className="text-xl sm:text-2xl filter drop-shadow select-none">🦷</span>
+              )}
+            </div>
           </div>
-          <div className="min-w-0">
-            {/* Static Clinic Name (Royal Blue & Indigo Gradient) & Live Indicator */}
-            <div className="flex items-center space-x-2">
+
+          {/* Clinic Brand & Hierarchy with Fancy Colors */}
+          <div className="min-w-0 flex flex-col justify-center">
+            {/* Line 1: Primary Brand (Royal Indigo-Cyan Gradient) + Secondary & Badges */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap leading-tight">
               <h1
-                className="text-xs sm:text-sm md:text-base font-extrabold text-blue-950 tracking-tight leading-normal truncate max-w-[135px] min-[400px]:max-w-[200px] sm:max-w-[360px] md:max-w-[480px] lg:max-w-[560px]"
+                className="text-xs min-[400px]:text-sm sm:text-base md:text-lg font-black tracking-tight bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 bg-clip-text text-transparent drop-shadow-xs truncate max-w-[130px] min-[400px]:max-w-[180px] sm:max-w-none"
                 title={clinicProfile.name || 'Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.'}
               >
-                {clinicProfile.name || 'Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.'}
+                {brandInfo.primary}
               </h1>
-              <span className="hidden sm:inline-flex items-center bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-200 flex-shrink-0">
-                Live ●
+
+              {brandInfo.secondary && (
+                <div className="hidden sm:inline-flex items-center gap-1">
+                  <span className="text-amber-500 dark:text-amber-400 font-black text-xs sm:text-sm">
+                    {brandInfo.connector}
+                  </span>
+                  <span className="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 dark:from-teal-400 dark:via-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent tracking-tight">
+                    {brandInfo.secondary}
+                  </span>
+                </div>
+              )}
+
+              {brandInfo.suffix && (
+                <span className="hidden md:inline-flex items-center text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-gradient-to-r from-indigo-50 to-blue-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 border border-indigo-200/90 dark:border-indigo-700/60 shadow-2xs">
+                  {brandInfo.suffix}
+                </span>
+              )}
+
+              {/* Pulsing Emerald Live Status Badge */}
+              <span className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs flex-shrink-0">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>LIVE</span>
               </span>
             </div>
 
-            {/* Below: Dental Address */}
-            <div className="flex items-center space-x-1.5 mt-0.5 text-[10px] sm:text-[11px] text-slate-500 font-medium leading-none">
+            {/* Line 2: Dental Address & Contact Credentials */}
+            <div className="flex items-center space-x-1.5 mt-0.5 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
               <MapPin className="w-3 h-3 text-rose-500 flex-shrink-0" />
-              <span className="truncate max-w-[130px] min-[400px]:max-w-[190px] sm:max-w-[320px] md:max-w-[460px] text-slate-600 font-medium" title={clinicProfile.address || 'Gaushala-12 Mahaottari Nepal'}>
+              <span
+                className="truncate max-w-[125px] min-[400px]:max-w-[180px] sm:max-w-[300px] md:max-w-[420px] text-slate-600 dark:text-slate-300 font-medium"
+                title={clinicProfile.address || 'Gaushala-12 Mahaottari Nepal'}
+              >
                 {clinicProfile.address || 'Gaushala-12 Mahaottari Nepal'}
               </span>
+
+              {clinicProfile.phone && (
+                <>
+                  <span className="hidden lg:inline text-slate-300 dark:text-slate-600">•</span>
+                  <span className="hidden lg:inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold">
+                    <Phone className="w-2.5 h-2.5" />
+                    <span>{clinicProfile.phone}</span>
+                  </span>
+                </>
+              )}
+
+              {clinicProfile.regNo && (
+                <>
+                  <span className="hidden xl:inline text-slate-300 dark:text-slate-600">•</span>
+                  <span className="hidden xl:inline-flex items-center gap-1 text-[9px] font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800 px-1.5 py-0.2 rounded-md">
+                    <ShieldCheck className="w-2.5 h-2.5 text-teal-600" />
+                    <span>{clinicProfile.regNo}</span>
+                  </span>
+                </>
+              )}
             </div>
           </div>
         </div>

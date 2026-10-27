@@ -707,44 +707,42 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
             <table className="w-full text-left text-xs">
               <thead className="bg-slate-50/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 font-bold uppercase text-[11px] tracking-wider border-b border-slate-200 dark:border-slate-700">
                 <tr>
-                  <th className="px-4 py-3 min-w-[180px]">Clinic Name & Slug</th>
-                  <th className="px-4 py-3 min-w-[140px]">Tenant ID</th>
-                  <th className="px-4 py-3 min-w-[260px]">Subscription Plan</th>
-                  <th className="px-4 py-3 min-w-[190px]">Domains</th>
+                  <th className="px-4 py-3 min-w-[220px]">Clinic & Tenant Identity</th>
+                  <th className="px-4 py-3 min-w-[190px]">Subscription Plan</th>
+                  <th className="px-4 py-3 min-w-[160px]">Domains</th>
                   <th className="px-4 py-3 min-w-[190px]">Modules Allocated</th>
-                  <th className="px-4 py-3 min-w-[100px]">Status</th>
-                  <th className="px-4 py-3 text-right min-w-[210px]">Actions</th>
+                  <th className="px-4 py-3 text-right min-w-[130px]">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
                 {tenants.map(t => (
                   <tr key={t.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition-colors">
                     <td className="px-4 py-3.5 align-middle">
-                      <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
-                        <span className="font-bold text-slate-900 dark:text-slate-100 text-[13px] leading-tight">{t.name}</span>
+                      <div className="flex items-center space-x-1.5 flex-wrap gap-y-1 mb-1">
+                        <span className="font-bold text-slate-900 dark:text-slate-100 text-sm leading-tight">{t.name}</span>
                         {t.id === 'tenant-nepal-dental' && (
                           <span className="text-[9px] uppercase px-1.5 py-0.5 font-bold tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 rounded-md">
                             Primary
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 mt-0.5">
-                        {t.slug}.anacraft.com
+                      <div className="flex items-center space-x-2 text-[11px] font-mono">
+                        <span className="text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 select-all font-medium">
+                          {t.id}
+                        </span>
+                        <span className="text-indigo-600 dark:text-indigo-400 font-semibold truncate max-w-[170px]" title={`${t.slug}.anacraft.com`}>
+                          {t.slug}.anacraft.com
+                        </span>
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
-                      <span className="font-mono text-[11px] text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700 select-all inline-block font-medium">
-                        {t.id}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3.5 align-middle min-w-[260px]">
+                    <td className="px-4 py-3.5 align-middle">
                       <div className="space-y-1.5">
-                        <div className="relative inline-block w-full min-w-[240px]">
+                        <div className="relative inline-block w-full">
                           <select
                             value={t.planId || t.plan?.id || 'plan-starter'}
                             onChange={(e) => handleQuickChangeTenantPlan(t.id, e.target.value)}
                             disabled={actionProcessing}
-                            className="w-full appearance-none bg-purple-50 hover:bg-purple-100/90 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-900 dark:text-purple-200 border border-purple-200 dark:border-purple-800 font-semibold text-xs rounded-xl px-3 py-1.5 pr-7 outline-none cursor-pointer transition shadow-2xs focus:ring-2 focus:ring-purple-400"
+                            className="w-full appearance-none bg-purple-50 hover:bg-purple-100/90 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-900 dark:text-purple-200 border border-purple-200 dark:border-purple-800 font-semibold text-xs rounded-xl px-2.5 py-1.5 pr-7 outline-none cursor-pointer transition shadow-2xs focus:ring-2 focus:ring-purple-400"
                             title="Quick switch: Change this clinic's assigned subscription plan"
                           >
                             {plans.map(p => (
@@ -773,32 +771,36 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                     </td>
                     <td className="px-4 py-3.5 align-middle">
                       <div className="space-y-1">
-                        {(t.domains || []).map((d, i) => (
-                          <div key={i} className="text-[11px] text-slate-700 dark:text-slate-300 font-mono flex items-center space-x-1.5 whitespace-nowrap">
-                            <span>{d.domain}</span>
-                            {d.isPrimary && (
-                              <span className="text-amber-500 text-xs" title="Primary Domain">★</span>
-                            )}
-                          </div>
-                        ))}
+                        {(t.domains && t.domains.length > 0) ? (
+                          t.domains.map((d, i) => (
+                            <div key={i} className="text-[11px] text-slate-700 dark:text-slate-300 font-mono flex items-center space-x-1.5">
+                              <span className="truncate max-w-[170px]" title={d.domain}>{d.domain}</span>
+                              {d.isPrimary && (
+                                <span className="text-amber-500 text-xs flex-shrink-0" title="Primary Domain">★</span>
+                              )}
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-[11px] text-slate-400 font-mono italic">Default Subdomain</div>
+                        )}
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 align-middle space-y-1.5 min-w-[190px]">
+                    <td className="px-4 py-3.5 align-middle space-y-1.5">
                       <button
                         type="button"
                         onClick={() => handleToggleModule(t.id, 'pharmacy')}
-                        className={`w-full px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
+                        className={`w-full px-2 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
                           t.modules?.pharmacy !== false
                             ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
                             : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/40 dark:text-slate-400 dark:border-slate-700'
                         }`}
                         title="Developer Admin: Toggle Pharmacy feature allocation for this tenant"
                       >
-                        <span className="flex items-center space-x-1.5">
+                        <span className="flex items-center space-x-1 truncate">
                           <span>💊</span>
                           <span>Pharmacy</span>
                         </span>
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ml-1 flex-shrink-0 ${
                           t.modules?.pharmacy !== false
                             ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100'
                             : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
@@ -810,18 +812,18 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                       <button
                         type="button"
                         onClick={() => handleToggleModule(t.id, 'finance')}
-                        className={`w-full px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
+                        className={`w-full px-2 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
                           t.modules?.finance !== false
                             ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
                             : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/40 dark:text-slate-400 dark:border-slate-700'
                         }`}
-                        title="Developer Admin: Toggle Finance feature allocation for this tenant"
+                        title="Developer Admin: Toggle Finance & Revenue feature allocation for this tenant"
                       >
-                        <span className="flex items-center space-x-1.5">
+                        <span className="flex items-center space-x-1 truncate">
                           <span>💰</span>
-                          <span>Finance</span>
+                          <span>Finance & Revenue</span>
                         </span>
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ml-1 flex-shrink-0 ${
                           t.modules?.finance !== false
                             ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100'
                             : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
@@ -830,21 +832,11 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                         </span>
                       </button>
                     </td>
-                    <td className="px-4 py-3.5 align-middle">
-                      <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
-                        t.status === 'Active'
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
-                          : 'bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${t.status === 'Active' ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-                        <span>{t.status}</span>
-                      </span>
-                    </td>
                     <td className="px-4 py-3.5 align-middle text-right whitespace-nowrap">
                       <div className="inline-flex items-center space-x-1.5 justify-end">
                         <button
                           onClick={() => handleOpenEditModal(t)}
-                          className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition inline-flex items-center space-x-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800"
+                          className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition inline-flex items-center space-x-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800 shadow-2xs"
                           title="Edit clinic name, change password, and configure settings"
                         >
                           <Edit className="w-3.5 h-3.5" />
@@ -852,7 +844,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                         </button>
                         <button
                           onClick={() => handleToggleTenantStatus(t.id, t.status)}
-                          className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition inline-flex items-center space-x-1 ${
+                          className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition inline-flex items-center space-x-1 shadow-2xs ${
                             t.status === 'Active'
                               ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
                               : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
@@ -861,25 +853,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                         >
                           <span>{t.status === 'Active' ? 'Suspend' : 'Activate'}</span>
                         </button>
-                        {t.id !== 'tenant-nepal-dental' ? (
-                          <button
-                            onClick={() => handleDeleteTenant(t.id, t.name)}
-                            disabled={actionProcessing}
-                            className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition inline-flex items-center space-x-1 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800"
-                            title="Permanently delete this clinic and its databases"
-                          >
-                            <Trash2 className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-                            <span>Delete</span>
-                          </button>
-                        ) : (
-                          <span
-                            className="text-xs font-medium px-2 py-1 rounded-lg bg-slate-100 text-slate-400 border border-slate-200 inline-flex items-center space-x-1 cursor-not-allowed select-none dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700"
-                            title="Primary clinic is protected and cannot be deleted"
-                          >
-                            <Lock className="w-3 h-3" />
-                            <span>Primary</span>
-                          </span>
-                        )}
+
                       </div>
                     </td>
                   </tr>
@@ -1388,7 +1362,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                       className="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500"
                     />
                     <div>
-                      <span className="text-xs font-black text-emerald-900 block">Allocate Finance Management Module</span>
+                      <span className="text-xs font-black text-emerald-900 block">Allocate Finance & Revenue Module</span>
                       <span className="text-[11px] text-emerald-700 block">Enable centralized transaction ledger, FonePay QR accounts, patient receivables, P&L analysis, staff payment sheets and payouts</span>
                     </div>
                   </label>
@@ -1667,7 +1641,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                   </div>
                   <div>
                     <label className="block font-bold text-slate-700 uppercase mb-1">
-                      Finance Management Module
+                      Finance & Revenue Module
                     </label>
                     <select
                       value={editForm.enableFinance ? 'true' : 'false'}
