@@ -435,6 +435,42 @@ app.put('/api/platform/tenants/:id/status', authenticate, requireRole('PLATFORM_
   res.json({ success: true, tenant: updated });
 });
 
+// Delete Clinic Tenant - Developer Admin
+app.delete('/api/platform/tenants/:id', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id } = req.params;
+    if (id === 'tenant-nepal-dental') {
+      return res.status(403).json({ error: 'CANNOT_DELETE_PRIMARY', message: 'The primary system clinic cannot be deleted.' });
+    }
+
+    const tenant = multiTenantDb.getTenantById(id);
+    if (!tenant) {
+      return res.status(404).json({ error: 'NOT_FOUND', message: 'Clinic tenant not found.' });
+    }
+
+    const deleted = multiTenantDb.deleteTenant(id);
+    if (!deleted) {
+      return res.status(500).json({ error: 'DELETE_FAILED', message: 'Could not delete clinic tenant.' });
+    }
+
+    multiTenantDb.logPlatformAudit({
+      tenantId: id,
+      userId: req.user.id,
+      userEmail: req.user.email,
+      userRole: 'PLATFORM_ADMIN',
+      action: 'TENANT_DELETED',
+      resource: 'tenant',
+      resourceId: id,
+      details: { deletedClinicName: tenant.name, slug: tenant.slug }
+    });
+
+    res.json({ success: true, message: `Clinic "${tenant.name}" was permanently deleted.` });
+  } catch (err) {
+    console.error('Delete tenant error:', err);
+    res.status(500).json({ error: 'SERVER_ERROR', message: err.message || 'Failed to delete clinic.' });
+  }
+});
+
 // Toggle Feature Module Allocation (Pharmacy, AI, etc.) - Developer Admin Controlled
 app.post('/api/platform/tenants/:id/toggle-module', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
   const { id } = req.params;
@@ -1404,19 +1440,13 @@ app.post('/api/patients', authenticate, resolveTenant, requirePermission('regist
     counter++;
   }
 
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-  const dateStr = now.toISOString().split('T')[0];
-
   const newPatient = {
     dentalChart: {},
     treatmentPlans: [],
     notes: [],
     prescriptions: [],
     invoices: [],
-    createdAt: now.toISOString(),
-    registrationDate: req.body.registrationDate || dateStr,
-    registrationTime: req.body.registrationTime || timeStr,
+    createdAt: new Date().toISOString(),
     ...req.body,
     id: finalId,
     name: patientName,

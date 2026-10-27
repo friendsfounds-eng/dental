@@ -28,7 +28,8 @@ import {
   CheckCircle2,
   XCircle,
   Filter,
-  ChevronDown
+  ChevronDown,
+  Trash2
 } from 'lucide-react';
 
 export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
@@ -259,6 +260,36 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
       fetchPlatformData();
     } catch (err) {
       alert(err.message);
+    }
+  };
+
+  const handleDeleteTenant = async (tenantId, tenantName) => {
+    if (tenantId === 'tenant-nepal-dental') {
+      alert('The primary system clinic (Nepal Dental) cannot be deleted.');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `⚠️ PERMANENT CLINIC DELETION\n\nAre you sure you want to delete "${tenantName}" (${tenantId})?\n\nThis will permanently delete the clinic, its databases, domains, and staff records. This action cannot be undone.`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      setActionProcessing(true);
+      const res = await fetch(`/api/platform/tenants/${tenantId}`, {
+        method: 'DELETE',
+        headers
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || data.error || 'Failed to delete clinic');
+
+      setToast(`🗑️ Clinic "${tenantName}" has been permanently deleted.`);
+      setTimeout(() => setToast(null), 4000);
+      fetchPlatformData();
+    } catch (err) {
+      alert(`Deletion Failed: ${err.message}`);
+    } finally {
+      setActionProcessing(false);
     }
   };
 
@@ -674,117 +705,182 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-600 font-bold uppercase text-[10px] border-b border-slate-200">
+              <thead className="bg-slate-50/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 font-bold uppercase text-[11px] tracking-wider border-b border-slate-200 dark:border-slate-700">
                 <tr>
-                  <th className="p-3">Clinic Name & Slug</th>
-                  <th className="p-3">Tenant ID</th>
-                  <th className="p-3 min-w-[170px]">Subscription Plan</th>
-                  <th className="p-3">Domains</th>
-                  <th className="p-3">Modules Allocated</th>
-                  <th className="p-3">Status</th>
-                  <th className="p-3 text-right">Actions</th>
+                  <th className="px-4 py-3 min-w-[180px]">Clinic Name & Slug</th>
+                  <th className="px-4 py-3 min-w-[140px]">Tenant ID</th>
+                  <th className="px-4 py-3 min-w-[260px]">Subscription Plan</th>
+                  <th className="px-4 py-3 min-w-[190px]">Domains</th>
+                  <th className="px-4 py-3 min-w-[190px]">Modules Allocated</th>
+                  <th className="px-4 py-3 min-w-[100px]">Status</th>
+                  <th className="px-4 py-3 text-right min-w-[210px]">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
                 {tenants.map(t => (
-                  <tr key={t.id} className="hover:bg-slate-50/60">
-                    <td className="p-3">
-                      <div className="font-bold text-slate-900">{t.name}</div>
-                      <div className="text-[11px] font-mono text-blue-600">{t.slug}.anacraft.com</div>
+                  <tr key={t.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-4 py-3.5 align-middle">
+                      <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
+                        <span className="font-bold text-slate-900 dark:text-slate-100 text-[13px] leading-tight">{t.name}</span>
+                        {t.id === 'tenant-nepal-dental' && (
+                          <span className="text-[9px] uppercase px-1.5 py-0.5 font-bold tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 rounded-md">
+                            Primary
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 mt-0.5">
+                        {t.slug}.anacraft.com
+                      </div>
                     </td>
-                    <td className="p-3 font-mono text-slate-500 text-[11px]">{t.id}</td>
-                    <td className="p-3">
-                      <div className="space-y-1">
-                        <div className="relative inline-block w-full min-w-[160px]">
+                    <td className="px-4 py-3.5 align-middle whitespace-nowrap">
+                      <span className="font-mono text-[11px] text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700 select-all inline-block font-medium">
+                        {t.id}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3.5 align-middle min-w-[260px]">
+                      <div className="space-y-1.5">
+                        <div className="relative inline-block w-full min-w-[240px]">
                           <select
                             value={t.planId || t.plan?.id || 'plan-starter'}
                             onChange={(e) => handleQuickChangeTenantPlan(t.id, e.target.value)}
                             disabled={actionProcessing}
-                            className="w-full appearance-none bg-purple-50 hover:bg-purple-100/90 text-purple-900 border border-purple-300 font-bold text-xs rounded-xl px-2.5 py-1.5 pr-6 outline-none cursor-pointer transition shadow-2xs focus:ring-2 focus:ring-purple-400"
+                            className="w-full appearance-none bg-purple-50 hover:bg-purple-100/90 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-900 dark:text-purple-200 border border-purple-200 dark:border-purple-800 font-semibold text-xs rounded-xl px-3 py-1.5 pr-7 outline-none cursor-pointer transition shadow-2xs focus:ring-2 focus:ring-purple-400"
                             title="Quick switch: Change this clinic's assigned subscription plan"
                           >
                             {plans.map(p => (
-                              <option key={p.id} value={p.id}>
+                              <option key={p.id} value={p.id} className="text-slate-900 bg-white dark:bg-slate-900 dark:text-slate-100">
                                 {p.name} (Rs. {Number(p.priceMonthly || 0).toLocaleString()}/mo)
                               </option>
                             ))}
                           </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1.5 text-purple-600">
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-purple-600 dark:text-purple-400">
                             <ChevronDown className="w-3.5 h-3.5" />
                           </div>
                         </div>
-                        <div className="text-[10px] text-slate-500 font-medium flex items-center justify-between">
-                          <span>Status:</span>
-                          <span className={`font-bold px-1.5 py-0.5 rounded text-[9px] ${
-                            (t.subscription?.status || 'Active') === 'Active' ? 'bg-emerald-100 text-emerald-800' :
-                            t.subscription?.status === 'Payment Awaiting Verification' ? 'bg-amber-100 text-amber-800' :
-                            'bg-slate-200 text-slate-700'
+                        <div className="text-[10px] text-slate-500 font-medium flex items-center justify-between px-0.5">
+                          <span>Billing Status:</span>
+                          <span className={`font-semibold px-2 py-0.5 rounded-full text-[10px] ${
+                            (t.subscription?.status || 'Active') === 'Active'
+                              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
+                              : t.subscription?.status === 'Payment Awaiting Verification'
+                              ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
+                              : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                           }`}>
                             {t.subscription?.status || 'Active'}
                           </span>
                         </div>
                       </div>
                     </td>
-                    <td className="p-3">
-                      {(t.domains || []).map((d, i) => (
-                        <div key={i} className="text-[11px] text-slate-600 font-mono">
-                          {d.domain} {d.isPrimary && '⭐'}
-                        </div>
-                      ))}
+                    <td className="px-4 py-3.5 align-middle">
+                      <div className="space-y-1">
+                        {(t.domains || []).map((d, i) => (
+                          <div key={i} className="text-[11px] text-slate-700 dark:text-slate-300 font-mono flex items-center space-x-1.5 whitespace-nowrap">
+                            <span>{d.domain}</span>
+                            {d.isPrimary && (
+                              <span className="text-amber-500 text-xs" title="Primary Domain">★</span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </td>
-                    <td className="p-3 space-y-1">
+                    <td className="px-4 py-3.5 align-middle space-y-1.5 min-w-[190px]">
                       <button
+                        type="button"
                         onClick={() => handleToggleModule(t.id, 'pharmacy')}
-                        className={`w-full px-2 py-0.5 rounded-lg text-[10px] font-black border transition flex items-center justify-between ${
+                        className={`w-full px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
                           t.modules?.pharmacy !== false
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                            : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+                            : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/40 dark:text-slate-400 dark:border-slate-700'
                         }`}
                         title="Developer Admin: Toggle Pharmacy feature allocation for this tenant"
                       >
-                        <span>💊 Pharmacy:</span>
-                        <strong className="uppercase">{t.modules?.pharmacy !== false ? 'Allocated' : 'Disabled'}</strong>
+                        <span className="flex items-center space-x-1.5">
+                          <span>💊</span>
+                          <span>Pharmacy</span>
+                        </span>
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                          t.modules?.pharmacy !== false
+                            ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100'
+                            : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
+                        }`}>
+                          {t.modules?.pharmacy !== false ? 'Allocated' : 'Disabled'}
+                        </span>
                       </button>
 
                       <button
+                        type="button"
                         onClick={() => handleToggleModule(t.id, 'finance')}
-                        className={`w-full px-2 py-0.5 rounded-lg text-[10px] font-black border transition flex items-center justify-between ${
+                        className={`w-full px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
                           t.modules?.finance !== false
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                            : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+                            : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/40 dark:text-slate-400 dark:border-slate-700'
                         }`}
                         title="Developer Admin: Toggle Finance feature allocation for this tenant"
                       >
-                        <span>💰 Finance:</span>
-                        <strong className="uppercase">{t.modules?.finance !== false ? 'Allocated' : 'Disabled'}</strong>
+                        <span className="flex items-center space-x-1.5">
+                          <span>💰</span>
+                          <span>Finance</span>
+                        </span>
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                          t.modules?.finance !== false
+                            ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100'
+                            : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
+                        }`}>
+                          {t.modules?.finance !== false ? 'Allocated' : 'Disabled'}
+                        </span>
                       </button>
                     </td>
-                    <td className="p-3">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        t.status === 'Active' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                    <td className="px-4 py-3.5 align-middle">
+                      <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
+                        t.status === 'Active'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+                          : 'bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800'
                       }`}>
-                        {t.status}
+                        <span className={`w-1.5 h-1.5 rounded-full ${t.status === 'Active' ? 'bg-emerald-500' : 'bg-rose-500'}`} />
+                        <span>{t.status}</span>
                       </span>
                     </td>
-                    <td className="p-3 text-right space-x-1.5 whitespace-nowrap">
-                      <button
-                        onClick={() => handleOpenEditModal(t)}
-                        className="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition inline-flex items-center space-x-1"
-                        title="Edit clinic name, change password, and configure settings"
-                      >
-                        <Edit className="w-3 h-3" />
-                        <span>Edit</span>
-                      </button>
-                      <button
-                        onClick={() => handleToggleTenantStatus(t.id, t.status)}
-                        className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition ${
-                          t.status === 'Active'
-                            ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
-                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
-                        }`}
-                      >
-                        {t.status === 'Active' ? 'Suspend' : 'Activate'}
-                      </button>
+                    <td className="px-4 py-3.5 align-middle text-right whitespace-nowrap">
+                      <div className="inline-flex items-center space-x-1.5 justify-end">
+                        <button
+                          onClick={() => handleOpenEditModal(t)}
+                          className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition inline-flex items-center space-x-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800"
+                          title="Edit clinic name, change password, and configure settings"
+                        >
+                          <Edit className="w-3.5 h-3.5" />
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleToggleTenantStatus(t.id, t.status)}
+                          className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition inline-flex items-center space-x-1 ${
+                            t.status === 'Active'
+                              ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
+                              : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+                          }`}
+                          title={t.status === 'Active' ? 'Suspend clinic operations' : 'Activate clinic operations'}
+                        >
+                          <span>{t.status === 'Active' ? 'Suspend' : 'Activate'}</span>
+                        </button>
+                        {t.id !== 'tenant-nepal-dental' ? (
+                          <button
+                            onClick={() => handleDeleteTenant(t.id, t.name)}
+                            disabled={actionProcessing}
+                            className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition inline-flex items-center space-x-1 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800"
+                            title="Permanently delete this clinic and its databases"
+                          >
+                            <Trash2 className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
+                            <span>Delete</span>
+                          </button>
+                        ) : (
+                          <span
+                            className="text-xs font-medium px-2 py-1 rounded-lg bg-slate-100 text-slate-400 border border-slate-200 inline-flex items-center space-x-1 cursor-not-allowed select-none dark:bg-slate-800 dark:text-slate-500 dark:border-slate-700"
+                            title="Primary clinic is protected and cannot be deleted"
+                          >
+                            <Lock className="w-3 h-3" />
+                            <span>Primary</span>
+                          </span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
