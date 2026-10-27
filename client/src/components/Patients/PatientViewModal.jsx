@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { assessTicketValidity } from '../../utils/ticketValidity';
+import { getGeneratedTime } from '../../utils/timeFormat';
 import {
   X,
   User,
@@ -785,7 +786,11 @@ export default function PatientViewModal({
                                 {inv.invoiceNumber || inv.id || `INV-${idx + 1}`}
                               </td>
                               <td className="py-3 px-4 text-slate-600 font-medium">
-                                {formatDate(inv.date)}
+                                <div>{formatDate(inv.date)}</div>
+                                <div className="text-[10px] text-blue-600 font-mono flex items-center gap-1 mt-0.5">
+                                  <Clock className="w-2.5 h-2.5" />
+                                  <span>{getGeneratedTime(inv)}</span>
+                                </div>
                               </td>
                               <td className="py-3 px-4 max-w-xs truncate text-slate-800" title={itemsSummary}>
                                 <div className="font-semibold truncate">{itemsSummary}</div>

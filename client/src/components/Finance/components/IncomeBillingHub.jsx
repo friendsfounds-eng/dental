@@ -19,6 +19,7 @@ import {
   User
 } from 'lucide-react';
 import { exportToCsv } from '../../../utils/excelExport';
+import { getGeneratedTime } from '../../../utils/timeFormat';
 
 export default function IncomeBillingHub({
   patients = [],
@@ -275,8 +276,12 @@ export default function IncomeBillingHub({
                       <td className="px-4 py-3 font-mono font-bold text-slate-900">
                         {inv.invoiceNumber || inv.id}
                       </td>
-                      <td className="px-4 py-3 text-slate-500">
-                        {inv.date}
+                      <td className="px-4 py-3 text-slate-600">
+                        <div className="font-medium">{inv.date}</div>
+                        <div className="text-[10px] text-blue-600 font-mono flex items-center gap-1 mt-0.5">
+                          <Clock className="w-2.5 h-2.5" />
+                          <span>{getGeneratedTime(inv)}</span>
+                        </div>
                       </td>
                       <td className="px-4 py-3">
                         <div className="font-bold text-slate-900">{inv.patientName}</div>

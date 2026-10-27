@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { exportToA4Pdf } from '../../utils/pdfExport';
 import { assessTicketValidity, createTicketInvoiceItem } from '../../utils/ticketValidity';
+import { getGeneratedTime } from '../../utils/timeFormat';
 import {
   Receipt,
   Plus,
@@ -242,6 +243,8 @@ export default function BillingManager({
     e.preventDefault();
     const status = balance === 0 ? 'Paid' : paidAmount > 0 ? 'Partial' : 'Unpaid';
     const assignedDoc = doctors.find(d => d.id === invoiceDoctorId) || doctors[0];
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
     onAddInvoice(invoicePatientId, {
       items,
@@ -254,8 +257,10 @@ export default function BillingManager({
       balance,
       status,
       paymentMethod,
-      date: new Date().toISOString().split('T')[0],
-      createdAt: new Date().toISOString(),
+      date: now.toISOString().split('T')[0],
+      time: timeStr,
+      generatedTime: timeStr,
+      createdAt: now.toISOString(),
       doctorId: assignedDoc?.id || '',
       doctorName: assignedDoc?.name || clinicProfile.doctorInCharge || 'Dr. Yugal Sharma',
       doctorQualification: assignedDoc?.qualification || 'BDS, MDS',
@@ -349,7 +354,7 @@ export default function BillingManager({
         .join('\n');
       text = `Dear *${patient.name}*,\n\nHere is your official *Digital Dental Prescription & Tax Invoice* from *${clinicProfile.name || 'Apex Dental'}*:\n\n🩺 *Diagnosis:* ${activeRx.diagnosis || 'Dental Evaluation & Therapy'}\n\n💊 *Prescribed Medications (Rx):*\n${rxMeds || 'No systemic medications prescribed.'}\n${activeRx.instructions ? `⚠️ *Advice:* ${activeRx.instructions}\n` : ''}\n🦷 *Dental Procedures & Billing:*\n${itemsSummary}\n\n💰 *Total Bill:* ${currency} ${(targetInv.total || 0).toLocaleString()}\n✅ *Amount Paid:* ${currency} ${(targetInv.paid || 0).toLocaleString()} (${targetInv.status})\n${targetInv.balance > 0 ? `⚠️ *Balance Due:* ${currency} ${targetInv.balance.toLocaleString()}\n` : ''}💳 *Payment Method:* ${targetInv.paymentMethod || 'Fonepay / Cash'}${doctorInfo}\n\n🔗 *Online View & Download Auto Link:*\n${clientAutoLink}\n\n📎 *Note:* Your 1-Page Combined Prescription & Bill PDF has been downloaded as *${filename}*. Please find the attached document.\n\nThank you for trusting ${clinicProfile.name || 'Apex Dental'} with your smile! For queries, call ${clinicProfile.phone || '+977 98012 34567'}.`;
     } else {
-      text = `Dear *${patient.name}*,\n\nHere is your official *Dental Treatment Tax Invoice & Receipt* from *${clinicProfile.name || 'Apex Dental'}*:\n\n📄 *Invoice No:* #${targetInv.invoiceNumber}\n📅 *Billing Date:* ${targetInv.date}\n\n🦷 *Treatments / Procedures:*\n${itemsSummary}\n\n💰 *Total Amount:* ${currency} ${(targetInv.total || 0).toLocaleString()}\n✅ *Amount Paid:* ${currency} ${(targetInv.paid || 0).toLocaleString()} (${targetInv.status})\n${targetInv.balance > 0 ? `⚠️ *Balance Due:* ${currency} ${targetInv.balance.toLocaleString()}\n` : ''}💳 *Payment Method:* ${targetInv.paymentMethod || 'Fonepay / Cash'}${doctorInfo}\n\n🔗 *Online Invoice Auto Link:*\n${clientAutoLink}\n\n📎 *Note:* Your official A4 Invoice PDF has been downloaded as *${filename}*. Please find the attached document.\n\nThank you for trusting ${clinicProfile.name || 'Apex Dental'} with your smile! For queries, call ${clinicProfile.phone || '+977 98012 34567'}.`;
+      text = `Dear *${patient.name}*,\n\nHere is your official *Dental Treatment Tax Invoice & Receipt* from *${clinicProfile.name || 'Apex Dental'}*:\n\n📄 *Invoice No:* #${targetInv.invoiceNumber}\n📅 *Billing Date & Time:* ${targetInv.date} at ${getGeneratedTime(targetInv)}\n\n🦷 *Treatments / Procedures:*\n${itemsSummary}\n\n💰 *Total Amount:* ${currency} ${(targetInv.total || 0).toLocaleString()}\n✅ *Amount Paid:* ${currency} ${(targetInv.paid || 0).toLocaleString()} (${targetInv.status})\n${targetInv.balance > 0 ? `⚠️ *Balance Due:* ${currency} ${targetInv.balance.toLocaleString()}\n` : ''}💳 *Payment Method:* ${targetInv.paymentMethod || 'Fonepay / Cash'}${doctorInfo}\n\n🔗 *Online Invoice Auto Link:*\n${clientAutoLink}\n\n📎 *Note:* Your official A4 Invoice PDF has been downloaded as *${filename}*. Please find the attached document.\n\nThank you for trusting ${clinicProfile.name || 'Apex Dental'} with your smile! For queries, call ${clinicProfile.phone || '+977 98012 34567'}.`;
     }
 
     // 3. Open WhatsApp
@@ -556,11 +561,18 @@ export default function BillingManager({
                     </strong>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
-                    <span>Date: {inv.date}</span>
-                    <span>Method: {inv.paymentMethod}</span>
+                  <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1 text-xs text-slate-500 mt-1">
+                    <span className="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Date: <strong className="font-semibold text-slate-800 dark:text-slate-200">{inv.date}</strong></span>
+                    </span>
+                    <span className="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+                      <Clock className="w-3.5 h-3.5 text-blue-500" />
+                      <span>Generated: <strong className="font-mono font-semibold text-blue-700 dark:text-blue-300">{getGeneratedTime(inv)}</strong></span>
+                    </span>
+                    <span>Method: <strong className="font-semibold text-slate-700 dark:text-slate-300">{inv.paymentMethod || 'Fonepay QR'}</strong></span>
                     {inv.doctorName && (
-                      <span className="text-blue-700 font-semibold flex items-center gap-1">
+                      <span className="text-blue-700 dark:text-blue-400 font-semibold flex items-center gap-1">
                         <Stethoscope className="w-3 h-3" />
                         Dr: {inv.doctorName}
                       </span>
@@ -825,6 +837,8 @@ export default function BillingManager({
                         <div className="text-slate-700 text-[11px] mt-0.5">
                           <span className="font-semibold">Billing Date:</span>{' '}
                           <span className="font-mono font-bold">{printInvoice.date}</span>
+                          <span className="mx-1 text-slate-400">•</span>
+                          <span className="font-mono font-bold text-slate-800">{getGeneratedTime(printInvoice)}</span>
                         </div>
                         <div className="text-slate-700 text-[11px] mt-0.5">
                           <span className="font-semibold">Method:</span>{' '}
@@ -1097,6 +1111,8 @@ export default function BillingManager({
                       <div className="text-slate-700 mt-1">
                         <span className="font-semibold">Billing Date:</span>{' '}
                         <span className="font-mono font-bold">{printInvoice.date}</span>
+                        <span className="mx-1 text-slate-400">•</span>
+                        <span className="font-mono font-bold text-slate-800">{getGeneratedTime(printInvoice)}</span>
                       </div>
                       <div className="text-slate-700 mt-0.5">
                         <span className="font-semibold">Payment Method:</span>{' '}
