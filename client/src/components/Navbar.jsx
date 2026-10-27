@@ -245,18 +245,6 @@ export default function Navbar({
           {/* UI Theme Switcher */}
           <ThemeSwitcher />
 
-          {/* Quick Subscription & Renewal Shortcut */}
-          {onOpenSubscription && (
-            <button
-              onClick={onOpenSubscription}
-              className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200 text-blue-800 rounded-xl text-xs font-bold transition shadow-2xs group"
-              title="View Clinic Plan & Renew Subscription"
-            >
-              <CreditCard className="w-3.5 h-3.5 text-blue-600 group-hover:scale-110 transition-transform" />
-              <span>Subscription</span>
-            </button>
-          )}
-
           {/* User & Role Badge */}
           <div
             onClick={onOpenLoginModal}
