@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { assessTicketValidity } from '../../utils/ticketValidity';
-import { getGeneratedTime } from '../../utils/timeFormat';
+import { getGeneratedTime, getRegistrationTime } from '../../utils/timeFormat';
 import {
   X,
   User,
@@ -193,8 +193,12 @@ export default function PatientViewModal({
                     Blood: {patient.bloodGroup || 'N/A'}
                   </span>
                   <span>•</span>
-                  <span className="text-slate-300">
-                    Registered: {formatDate(patient.createdAt)}
+                  <span className="text-slate-300 inline-flex items-center space-x-1.5 bg-white/10 px-2 py-0.5 rounded-lg border border-white/15">
+                    <Calendar className="w-3.5 h-3.5 text-blue-300 flex-shrink-0" />
+                    <span>Registered: {formatDate(patient.createdAt || patient.registrationDate)}</span>
+                    <span className="text-slate-400">•</span>
+                    <Clock className="w-3.5 h-3.5 text-blue-300 flex-shrink-0" />
+                    <span className="font-mono text-blue-200 font-semibold">{getRegistrationTime(patient)}</span>
                   </span>
                 </div>
               </div>
@@ -603,10 +607,16 @@ export default function PatientViewModal({
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Registration Date</span>
-                    <span className="font-medium text-slate-700 mt-1 block">
-                      {formatDate(patient.createdAt)}
-                    </span>
+                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Registration Date & Time</span>
+                    <div className="flex items-center space-x-2 mt-1 flex-wrap gap-y-1">
+                      <span className="font-semibold text-slate-800">
+                        {formatDate(patient.createdAt || patient.registrationDate)}
+                      </span>
+                      <span className="inline-flex items-center space-x-1 font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-200 text-xs shadow-2xs">
+                        <Clock className="w-3 h-3 text-blue-500" />
+                        <span>{getRegistrationTime(patient)}</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
 

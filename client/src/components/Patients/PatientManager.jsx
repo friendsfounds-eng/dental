@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { assessTicketValidity } from '../../utils/ticketValidity';
+import { getRegistrationTime, formatRecordDate } from '../../utils/timeFormat';
 import {
   UserPlus,
   Search,
@@ -401,6 +402,10 @@ export default function PatientManager({
 
     const formattedAddress = addressParts.join(', ');
 
+    const now = new Date();
+    const currentDateStr = now.toISOString().split('T')[0];
+    const currentTimeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
     const payload = {
       id: (formData.id && formData.id.trim()) ? formData.id.trim().toUpperCase() : generatePatientId(formData.name, patients),
       name: formData.name,
@@ -417,6 +422,9 @@ export default function PatientManager({
       municipality: formData.municipality,
       ward: formData.ward,
       tole: formData.tole,
+      createdAt: editingPatientId ? undefined : now.toISOString(),
+      registrationDate: editingPatientId ? undefined : currentDateStr,
+      registrationTime: editingPatientId ? undefined : currentTimeStr,
       autoBillTicket: !editingPatientId ? (formData.autoBillTicket !== false) : false,
       ticketPaymentMethod: formData.ticketPaymentMethod || 'Fonepay QR'
     };
@@ -739,6 +747,13 @@ export default function PatientManager({
                                   {patient.bloodGroup || 'Blood N/A'}
                                 </span>
                               </div>
+                              <div className="flex items-center space-x-1 text-[10px] text-slate-400 mt-1">
+                                <Calendar className="w-3 h-3 text-slate-400 flex-shrink-0" />
+                                <span>Reg: {formatRecordDate(patient.createdAt || patient.registrationDate)}</span>
+                                <span className="text-slate-300">•</span>
+                                <Clock className="w-3 h-3 text-blue-500 flex-shrink-0" />
+                                <span className="font-mono text-blue-600 font-semibold">{getRegistrationTime(patient)}</span>
+                              </div>
                             </div>
                           </div>
                         </td>
@@ -958,6 +973,15 @@ export default function PatientManager({
 
                   {/* Name */}
                   <h3 className="text-sm font-bold text-slate-900 leading-snug">{patient.name}</h3>
+
+                  {/* Registration Date & Time */}
+                  <div className="flex items-center space-x-1.5 text-[11px] text-slate-400 mt-1">
+                    <Calendar className="w-3 h-3 text-slate-400 flex-shrink-0" />
+                    <span>Reg: {formatRecordDate(patient.createdAt || patient.registrationDate)}</span>
+                    <span className="text-slate-300">•</span>
+                    <Clock className="w-3 h-3 text-blue-500 flex-shrink-0" />
+                    <span className="font-mono text-blue-600 font-semibold">{getRegistrationTime(patient)}</span>
+                  </div>
 
                   {/* Contact & Address with Instant WhatsApp Auto Link */}
                   <div className="text-xs text-slate-600 mt-1.5 space-y-1.5">

@@ -1404,13 +1404,19 @@ app.post('/api/patients', authenticate, resolveTenant, requirePermission('regist
     counter++;
   }
 
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+  const dateStr = now.toISOString().split('T')[0];
+
   const newPatient = {
     dentalChart: {},
     treatmentPlans: [],
     notes: [],
     prescriptions: [],
     invoices: [],
-    createdAt: new Date().toISOString(),
+    createdAt: now.toISOString(),
+    registrationDate: req.body.registrationDate || dateStr,
+    registrationTime: req.body.registrationTime || timeStr,
     ...req.body,
     id: finalId,
     name: patientName,

@@ -1,5 +1,20 @@
 // Time & Timestamp formatting utilities for Dental SaaS ERP
 
+export function formatRecordDate(dateStr) {
+  if (!dateStr) return 'N/A';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  } catch (e) {
+    return dateStr;
+  }
+}
+
 export function getGeneratedTime(record) {
   if (!record) return '';
 
@@ -35,6 +50,53 @@ export function getGeneratedTime(record) {
   // 4. Deterministic stable fallback for mock/imported legacy data
   // Produces a consistent, realistic clinical daytime timestamp (between 09:30 AM and 05:45 PM)
   const str = String(record.invoiceNumber || record.receiptNumber || record.id || record.patientId || 'INV-REC');
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0;
+  }
+  const positive = Math.abs(hash);
+  const hour24 = 9 + (positive % 8); // 9 AM to 4 PM
+  const mins = ((positive % 12) * 5); // 00, 05, 10, ... 55
+  const period = hour24 >= 12 ? 'PM' : 'AM';
+  const hour12 = hour24 > 12 ? hour24 - 12 : hour24;
+  return `${String(hour12).padStart(2, '0')}:${String(mins).padStart(2, '0')} ${period}`;
+}
+
+export function getRegistrationTime(patient) {
+  if (!patient) return '';
+
+  // 1. Explicit registrationTime or time
+  if (patient.registrationTime && typeof patient.registrationTime === 'string' && patient.registrationTime.trim()) {
+    return patient.registrationTime.trim();
+  }
+  if (patient.time && typeof patient.time === 'string' && patient.time.trim()) {
+    return patient.time.trim();
+  }
+
+  // 2. ISO timestamp from createdAt or registeredAt
+  const isoCandidate = patient.createdAt || patient.registeredAt;
+  if (isoCandidate) {
+    try {
+      const d = new Date(isoCandidate);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+      }
+    } catch (e) {}
+  }
+
+  // 3. Date string that includes a time component
+  if (patient.registrationDate && typeof patient.registrationDate === 'string' && patient.registrationDate.includes('T')) {
+    try {
+      const d = new Date(patient.registrationDate);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+      }
+    } catch (e) {}
+  }
+
+  // 4. Deterministic stable fallback for legacy mock patients
+  const str = String(patient.id || patient.phone || patient.name || 'PT-REG');
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = (hash << 5) - hash + str.charCodeAt(i);
