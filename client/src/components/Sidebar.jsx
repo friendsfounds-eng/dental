@@ -158,16 +158,6 @@ export default function Sidebar({
             </div>
           </div>
 
-          {/* Section Navigation Header */}
-          <div className="px-3 py-2.5 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 mb-1.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
-              {isPlatformAdmin ? 'Platform Management' : `${role} Navigation`}
-            </span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-2xs">
-              RBAC
-            </span>
-          </div>
-
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -179,10 +169,10 @@ export default function Sidebar({
                   onTabChange(item.id);
                   if (onClose) onClose();
                 }}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[13px] font-semibold transition ${
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition ${
                   isActive
-                    ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-500/20'
-                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800'
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <div className="flex items-center space-x-3">
@@ -194,7 +184,7 @@ export default function Sidebar({
                         ? 'text-blue-600'
                         : item.highlightGreen
                         ? 'text-emerald-600'
-                        : 'text-slate-500 dark:text-slate-400'
+                        : 'text-slate-500'
                     }`}
                   />
                   <span className="truncate">{item.label}</span>
@@ -202,10 +192,10 @@ export default function Sidebar({
 
                 {item.badge !== undefined && (
                   <span
-                    className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
+                    className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                       isActive
                         ? 'bg-white/20 text-white'
-                        : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                        : 'bg-slate-100 text-slate-600'
                     }`}
                   >
                     {item.badge}
