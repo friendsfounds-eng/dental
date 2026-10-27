@@ -1,12 +1,12 @@
 // Theme Manager for Dental SaaS ERP
-// Supports Light, Dark, Midnight Blue, Emerald Care, and Warm Amber Eye-Care
+// Supports 2 clean themes: Light and Dark
 
 export const THEMES = [
   {
     id: 'light',
-    name: 'Clean Light',
+    name: 'Light',
     subtitle: 'Crisp daylight clinic white & slate',
-    badge: 'Standard',
+    badge: 'Day',
     iconName: 'Sun',
     bgPreview: '#f8fafc',
     cardPreview: '#ffffff',
@@ -16,50 +16,14 @@ export const THEMES = [
   },
   {
     id: 'dark',
-    name: 'Sleek Dark',
+    name: 'Dark',
     subtitle: 'Low-glare charcoal & slate operatory mode',
-    badge: 'Night Care',
+    badge: 'Night',
     iconName: 'Moon',
     bgPreview: '#0b1120',
     cardPreview: '#1e293b',
     accentColor: '#3b82f6',
     textColor: '#f8fafc',
-    isDark: true
-  },
-  {
-    id: 'midnight',
-    name: 'Midnight Blue',
-    subtitle: 'Deep sapphire navy with cyan clinical accents',
-    badge: 'High Contrast',
-    iconName: 'Sparkles',
-    bgPreview: '#040812',
-    cardPreview: '#0b162c',
-    accentColor: '#06b6d4',
-    textColor: '#e0f2fe',
-    isDark: true
-  },
-  {
-    id: 'teal',
-    name: 'Emerald Care',
-    subtitle: 'Soothing mint & forest slate clinical spa tone',
-    badge: 'Wellness',
-    iconName: 'HeartPulse',
-    bgPreview: '#04120e',
-    cardPreview: '#0a251d',
-    accentColor: '#10b981',
-    textColor: '#ecfdf5',
-    isDark: true
-  },
-  {
-    id: 'amber',
-    name: 'Warm Eye-Care',
-    subtitle: 'Soft warm sepia tone reducing blue light fatigue',
-    badge: 'Eye Comfort',
-    iconName: 'Flame',
-    bgPreview: '#14110e',
-    cardPreview: '#241f1a',
-    accentColor: '#f59e0b',
-    textColor: '#fef3c7',
     isDark: true
   }
 ];
@@ -67,12 +31,14 @@ export const THEMES = [
 export function applyTheme(themeId) {
   const root = document.documentElement;
   // Remove existing theme classes
-  THEMES.forEach((t) => {
-    root.classList.remove(`theme-${t.id}`);
-  });
-  root.classList.remove('dark');
+  root.classList.remove('theme-light', 'theme-dark', 'theme-midnight', 'theme-teal', 'theme-amber', 'dark');
 
-  const selected = THEMES.find((t) => t.id === themeId) || THEMES[0];
+  // Normalize any legacy theme id to 'dark' or 'light'
+  const normalizedId = (themeId === 'dark' || themeId === 'midnight' || themeId === 'teal' || themeId === 'amber')
+    ? 'dark'
+    : 'light';
+
+  const selected = THEMES.find((t) => t.id === normalizedId) || THEMES[0];
   root.classList.add(`theme-${selected.id}`);
   if (selected.isDark) {
     root.classList.add('dark');
@@ -94,13 +60,22 @@ export function getCurrentTheme() {
   try {
     const saved = localStorage.getItem('dental_erp_theme');
     if (saved) {
-      const match = THEMES.find((t) => t.id === saved);
-      if (match) return match;
+      if (saved === 'dark' || saved === 'midnight' || saved === 'teal' || saved === 'amber') {
+        return THEMES[1]; // Dark
+      }
+      return THEMES[0]; // Light
     }
   } catch (e) {
     // Ignore storage issues
   }
   return THEMES[0];
+}
+
+// Toggle between Light and Dark
+export function toggleTheme() {
+  const current = getCurrentTheme();
+  const nextId = current.id === 'dark' ? 'light' : 'dark';
+  return applyTheme(nextId);
 }
 
 // Initialize on script load

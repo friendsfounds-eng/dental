@@ -201,7 +201,7 @@ html.dark:not(.printing-prescription):not(.printing-single-invoice) ::-webkit-sc
   background: #475569;
 }
 
-/* 1. SLEEK DARK THEME (Charcoal Slate) */
+/* SLEEK DARK THEME (Charcoal Slate Operatory Mode) */
 html.theme-dark:not(.printing-prescription):not(.printing-single-invoice) body {
   background-color: #0b1120 !important;
   color: #f1f5f9 !important;
@@ -229,96 +229,6 @@ html.theme-dark .border-slate-200,
 html.theme-dark .border-slate-300,
 html.theme-dark .border-slate-100 {
   border-color: #243247 !important;
-}
-
-/* 2. MIDNIGHT BLUE THEME (Deep Navy & Sapphire Blue) */
-html.theme-midnight:not(.printing-prescription):not(.printing-single-invoice) body {
-  background-color: #040812 !important;
-  color: #e0f2fe !important;
-}
-html.theme-midnight header,
-html.theme-midnight aside {
-  background-color: #08101e !important;
-  border-color: #132238 !important;
-  color: #e0f2fe !important;
-}
-html.theme-midnight .bg-white:not(#printable-prescription-pad):not(#printable-single-invoice):not(.print-container) {
-  background-color: #0b162c !important;
-  color: #f0f9ff !important;
-}
-html.theme-midnight .bg-slate-50:not(#printable-prescription-pad):not(#printable-single-invoice),
-html.theme-midnight .bg-slate-50\/70:not(#printable-prescription-pad):not(#printable-single-invoice) {
-  background-color: #071224 !important;
-  color: #e0f2fe !important;
-}
-html.theme-midnight .bg-slate-100:not(#printable-prescription-pad):not(#printable-single-invoice) {
-  background-color: #0e1e3b !important;
-  color: #e0f2fe !important;
-}
-html.theme-midnight .border-slate-200,
-html.theme-midnight .border-slate-300,
-html.theme-midnight .border-slate-100 {
-  border-color: #172c4c !important;
-}
-
-/* 3. EMERALD CARE THEME (Forest Slate & Soothing Mint) */
-html.theme-teal:not(.printing-prescription):not(.printing-single-invoice) body {
-  background-color: #04120e !important;
-  color: #ecfdf5 !important;
-}
-html.theme-teal header,
-html.theme-teal aside {
-  background-color: #081d16 !important;
-  border-color: #113328 !important;
-  color: #ecfdf5 !important;
-}
-html.theme-teal .bg-white:not(#printable-prescription-pad):not(#printable-single-invoice):not(.print-container) {
-  background-color: #0a251d !important;
-  color: #f0fdf4 !important;
-}
-html.theme-teal .bg-slate-50:not(#printable-prescription-pad):not(#printable-single-invoice),
-html.theme-teal .bg-slate-50\/70:not(#printable-prescription-pad):not(#printable-single-invoice) {
-  background-color: #061b14 !important;
-  color: #d1fae5 !important;
-}
-html.theme-teal .bg-slate-100:not(#printable-prescription-pad):not(#printable-single-invoice) {
-  background-color: #0e3026 !important;
-  color: #d1fae5 !important;
-}
-html.theme-teal .border-slate-200,
-html.theme-teal .border-slate-300,
-html.theme-teal .border-slate-100 {
-  border-color: #143d30 !important;
-}
-
-/* 4. WARM AMBER EYE-CARE THEME (Soft Sepia & Eye Comfort) */
-html.theme-amber:not(.printing-prescription):not(.printing-single-invoice) body {
-  background-color: #14110e !important;
-  color: #fef3c7 !important;
-}
-html.theme-amber header,
-html.theme-amber aside {
-  background-color: #1c1814 !important;
-  border-color: #2e2620 !important;
-  color: #fef3c7 !important;
-}
-html.theme-amber .bg-white:not(#printable-prescription-pad):not(#printable-single-invoice):not(.print-container) {
-  background-color: #241f1a !important;
-  color: #fffbeb !important;
-}
-html.theme-amber .bg-slate-50:not(#printable-prescription-pad):not(#printable-single-invoice),
-html.theme-amber .bg-slate-50\/70:not(#printable-prescription-pad):not(#printable-single-invoice) {
-  background-color: #191512 !important;
-  color: #fde68a !important;
-}
-html.theme-amber .bg-slate-100:not(#printable-prescription-pad):not(#printable-single-invoice) {
-  background-color: #2e2721 !important;
-  color: #fde68a !important;
-}
-html.theme-amber .border-slate-200,
-html.theme-amber .border-slate-300,
-html.theme-amber .border-slate-100 {
-  border-color: #3d342c !important;
 }
 
 /* Universal Dark Theme Text Adjustments */
