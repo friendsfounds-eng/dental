@@ -802,6 +802,7 @@ export default function App() {
         onOpenSubscription={() => setActiveTab('subscription')}
         onToggleSidebar={() => setSidebarOpen(prev => !prev)}
         isSidebarOpen={sidebarOpen}
+        onNavigate={setActiveTab}
       />
 
       <div className="flex flex-1 overflow-hidden relative">
