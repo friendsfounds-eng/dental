@@ -23,7 +23,6 @@ import {
   Package,
   DollarSign,
   Scan,
-  X,
   ChevronDown,
   ChevronRight,
   FolderCog
@@ -246,25 +245,15 @@ export default function Sidebar({
         `}
       >
         <div className="space-y-1">
-          {/* Mobile Drawer Header with Close Button */}
-          <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 lg:hidden">
-            <div className="flex items-center space-x-2.5">
-              <span className="text-2xl">🦷</span>
-              <div>
-                <span className="font-bold text-xs text-slate-900 block leading-tight">
-                  {activeTenant?.name || 'Nepal Dental ERP'}
-                </span>
-                <span className="text-[10px] text-slate-500 font-mono">Navigation Menu</span>
-              </div>
+          {/* Mobile Drawer Header */}
+          <div className="flex items-center space-x-2.5 pb-3 mb-2 border-b border-slate-100 lg:hidden">
+            <span className="text-2xl">🦷</span>
+            <div className="min-w-0 flex-1">
+              <span className="font-bold text-xs text-slate-900 block leading-tight truncate">
+                {activeTenant?.name || 'Nepal Dental ERP'}
+              </span>
+              <span className="text-[10px] text-slate-500 font-mono">Navigation Menu</span>
             </div>
-            <button
-              onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
-              title="Close menu"
-              aria-label="Close menu"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
 
           <div className="px-3 py-2 text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
