@@ -76,6 +76,121 @@ app.post('/api/auth/login', (req, res) => {
   }
 });
 
+// POST /api/auth/register (Create new User ID / Clinic Account)
+app.post('/api/auth/register', (req, res) => {
+  const { name, email, password, phone, role = 'DOCTOR', clinicName, specialty, qualification } = req.body;
+  if (!email || !password || !name) {
+    return res.status(400).json({ error: 'Name, email/User ID, and password are required.' });
+  }
+
+  const trimmedEmail = email.trim().toLowerCase();
+
+  // Check if user already exists
+  const existingUser = multiTenantDb.platform.users.find(u => u.email.toLowerCase() === trimmedEmail);
+  if (existingUser) {
+    return res.status(409).json({ error: 'USER_EXISTS', message: 'An account with this User ID / Email already exists. Please sign in.' });
+  }
+
+  // Determine clinic
+  let tenantId = 'tenant-nepal-dental'; // default primary clinic
+  let activeTenant = multiTenantDb.getTenantById(tenantId) || multiTenantDb.platform.tenants[0];
+
+  if (clinicName && clinicName.trim()) {
+    try {
+      const slug = clinicName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+      const uniqueSlug = `${slug}-${Date.now().toString().slice(-4)}`;
+      const newTenant = multiTenantDb.createTenant({
+        name: clinicName.trim(),
+        slug: uniqueSlug,
+        country: 'Nepal',
+        currency: 'Rs.',
+        adminEmail: trimmedEmail,
+        adminName: name.trim(),
+        adminPassword: password,
+        doctorName: role === 'DOCTOR' ? name.trim() : null
+      });
+      tenantId = newTenant.id;
+      activeTenant = newTenant;
+    } catch (err) {
+      console.warn('Could not create new tenant, defaulting to primary:', err.message);
+    }
+  }
+
+  // Create User
+  const newUser = {
+    id: `user-${Date.now().toString().slice(-6)}`,
+    email: trimmedEmail,
+    name: name.trim(),
+    phone: phone ? phone.trim() : '',
+    passwordHash: hashPassword(password),
+    globalRole: null,
+    status: 'active',
+    tokenVersion: 1,
+    createdAt: new Date().toISOString()
+  };
+  multiTenantDb.platform.users.push(newUser);
+
+  // Create Membership
+  const userRole = role === 'CLINIC_ADMIN' ? 'CLINIC_ADMIN' : (role === 'RECEPTIONIST' ? 'RECEPTIONIST' : 'DOCTOR');
+  const allowedModules = userRole === 'CLINIC_ADMIN'
+    ? ['chart', 'prescriptions', 'pharmacy', 'finance', 'patients', 'xray', 'orders', 'appointments', 'billing', 'ai', 'settings']
+    : (userRole === 'RECEPTIONIST'
+        ? ['patients', 'appointments', 'billing', 'whatsapp', 'orders']
+        : ['chart', 'prescriptions', 'patients', 'xray', 'orders', 'appointments', 'ai']);
+
+  const newMembership = {
+    id: `mem-${Date.now()}`,
+    tenantId,
+    userId: newUser.id,
+    role: userRole,
+    roles: [userRole],
+    allowedModules,
+    isActive: true
+  };
+  multiTenantDb.platform.memberships.push(newMembership);
+
+  // If Doctor, also add to clinic's doctors list so they appear in schedules & queues
+  if (userRole === 'DOCTOR') {
+    const tData = multiTenantDb.getTenantData(tenantId);
+    if (tData) {
+      if (!Array.isArray(tData.doctors)) tData.doctors = [];
+      const docExists = tData.doctors.some(d => d.name?.toLowerCase() === name.trim().toLowerCase());
+      if (!docExists) {
+        tData.doctors.push({
+          id: `doc-${Date.now().toString().slice(-4)}`,
+          name: name.trim().startsWith('Dr.') ? name.trim() : `Dr. ${name.trim()}`,
+          specialty: specialty || 'General Dentistry',
+          qualification: qualification || 'BDS',
+          phone: phone ? phone.trim() : '',
+          color: '#2563eb'
+        });
+        multiTenantDb.saveTenantData(tenantId, tData);
+      }
+    }
+  }
+
+  multiTenantDb.savePlatform();
+
+  // Generate authenticated session
+  const session = multiTenantDb.authenticate(trimmedEmail, password);
+
+  multiTenantDb.logPlatformAudit({
+    tenantId,
+    userId: newUser.id,
+    userEmail: newUser.email,
+    userRole,
+    action: 'USER_REGISTERED',
+    resource: 'auth',
+    details: { name: newUser.name, role: userRole }
+  });
+
+  res.status(201).json({
+    success: true,
+    message: 'User ID created successfully!',
+    ...session
+  });
+});
+
 // GET /api/auth/me (Returns active user & tenant session)
 app.get('/api/auth/me', authenticate, (req, res) => {
   const user = multiTenantDb.platform.users.find(u => u.id === req.user.id);

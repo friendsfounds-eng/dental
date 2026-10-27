@@ -45,17 +45,11 @@ export default function App() {
   // Authentication & Tenant State
   const [currentUser, setCurrentUser] = useState(() => {
     try {
-      const saved = localStorage.getItem('dental_user');
-      if (saved) return JSON.parse(saved);
+      const savedUser = localStorage.getItem('dental_user');
+      const savedToken = localStorage.getItem('dental_auth_token');
+      if (savedUser && savedToken) return JSON.parse(savedUser);
     } catch (e) {}
-    return {
-      id: 'usr-dr-mukesh',
-      name: 'Dr. Mukesh Kushwaha',
-      email: 'dr.mukesh@nepaldental.com.np',
-      role: 'DOCTOR',
-      globalRole: null,
-      tenantId: 'tenant-nepal-dental'
-    };
+    return null;
   });
 
   const [activeTenant, setActiveTenant] = useState(() => {
@@ -213,40 +207,21 @@ export default function App() {
             setAuthToken(savedToken);
             fetchData(savedToken, data.activeTenant?.id);
             fetchMyTenants(savedToken);
+            setLoading(false);
             return;
           }
         } catch (e) {
-          console.warn('Session verification failed, logging in default doctor:', e);
+          console.warn('Session verification failed:', e);
         }
       }
 
-      // Default Login as Dr. Mukesh Kushwaha at Nepal Dental
-      try {
-        const res = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: 'dr.mukesh@nepaldental.com.np',
-            password: 'Doctor@123'
-          })
-        });
-        const data = await res.json();
-        if (data.success && data.token) {
-          localStorage.setItem('dental_auth_token', data.token);
-          localStorage.setItem('dental_user', JSON.stringify(data.user));
-          localStorage.setItem('dental_tenant', JSON.stringify(data.activeTenant));
-          setAuthToken(data.token);
-          setCurrentUser(data.user);
-          setActiveTenant(data.activeTenant);
-          fetchData(data.token, data.activeTenant?.id);
-          fetchMyTenants(data.token);
-        } else {
-          fetchData('', 'tenant-nepal-dental');
-        }
-      } catch (err) {
-        console.error('Default login failed:', err);
-        fetchData('', 'tenant-nepal-dental');
-      }
+      // No saved active session -> Prompt user to login with User ID & Password
+      localStorage.removeItem('dental_auth_token');
+      localStorage.removeItem('dental_user');
+      setAuthToken('');
+      setCurrentUser(null);
+      setLoading(false);
+      setLoginModalOpen(true);
     };
 
     initAuth();
@@ -256,6 +231,7 @@ export default function App() {
     setAuthToken(loginData.token);
     setCurrentUser(loginData.user);
     setActiveTenant(loginData.activeTenant);
+    setLoginModalOpen(false);
 
     // Switch to role-appropriate initial tab
     if (loginData.user.globalRole === 'PLATFORM_ADMIN') {
@@ -287,6 +263,7 @@ export default function App() {
     localStorage.removeItem('dental_user');
     localStorage.removeItem('dental_tenant');
     setAuthToken('');
+    setCurrentUser(null);
     setLoginModalOpen(true);
   };
 
@@ -783,6 +760,26 @@ export default function App() {
             <span className="text-blue-400 font-sans text-[11px] font-semibold">Dental Cloud SaaS Active</span>
           </div>
         )}
+      </div>
+    );
+  }
+
+  // Gatekeeper: Require authenticated User ID & Password to access the clinic practice
+  if (!currentUser || !authToken) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
+        {/* Ambient background glow */}
+        <div className="absolute w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl -top-32 -left-32 pointer-events-none" />
+        <div className="absolute w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-3xl -bottom-32 -right-32 pointer-events-none" />
+
+        <LoginModal
+          isOpen={true}
+          onClose={null}
+          currentUser={null}
+          activeTenant={activeTenant}
+          onLoginSuccess={handleLoginSuccess}
+          onLogout={handleLogout}
+        />
       </div>
     );
   }
