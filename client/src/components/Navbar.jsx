@@ -240,34 +240,10 @@ export default function Navbar({
           )}
         </div>
 
-        {/* Right Actions: User Profile, Theme Switcher & Session */}
+        {/* Right Actions: Theme Switcher & Settings */}
         <div className="flex items-center space-x-2 sm:space-x-2.5 flex-shrink-0">
           {/* UI Theme Switcher */}
           <ThemeSwitcher />
-
-          {/* User & Role Badge */}
-          <div
-            onClick={onOpenLoginModal}
-            className="flex items-center space-x-2 cursor-pointer group"
-            title="Click to view profile or sign in"
-          >
-            <div className="w-8 h-8 rounded-xl bg-slate-100 group-hover:bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs border border-slate-200 transition">
-              <RoleIcon className="w-4 h-4 text-blue-600" />
-            </div>
-            <div className="hidden md:block text-left">
-              <div className="flex items-center space-x-1.5">
-                <span className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition leading-tight block">
-                  {currentUser?.name || 'Dr. Mukesh Kushwaha'}
-                </span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${roleBadge.bg}`}>
-                  {roleBadge.label}
-                </span>
-              </div>
-              <span className="text-[11px] text-slate-500 leading-tight block font-medium">
-                {activeTenant?.name ? activeTenant.name.split(' ')[0] : 'Nepal Dental'}
-              </span>
-            </div>
-          </div>
 
           {/* Settings & Account Menu (Replaces standalone Logout button) */}
           <div ref={settingsMenuRef} className="relative">
