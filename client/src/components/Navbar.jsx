@@ -264,38 +264,31 @@ export default function Navbar({
 
             {/* Dropdown Menu */}
             {settingsOpen && (
-              <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 animate-fadeIn">
+              <div className="absolute right-0 top-full mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 animate-fadeIn select-none">
                 {/* 1. Account Summary Card */}
-                <div className="p-3.5 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
+                <div className="p-3.5 bg-slate-50/80 dark:bg-slate-800/50">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-xs border border-slate-200 flex items-center justify-center text-blue-600 font-bold text-sm flex-shrink-0">
-                      <RoleIcon className="w-5 h-5 text-blue-600" />
+                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 shadow-2xs border border-slate-200 dark:border-slate-700 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold flex-shrink-0">
+                      <RoleIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center space-x-1.5">
-                        <span className="text-xs font-bold text-slate-900 truncate block">
+                      <div className="flex items-center justify-between gap-1.5">
+                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate block" title={currentUser?.name}>
                           {currentUser?.name || 'Dr. Mukesh Kushwaha'}
                         </span>
-                        <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full border flex-shrink-0 ${roleBadge.bg}`}>
+                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border flex-shrink-0 ${roleBadge.bg}`}>
                           {roleBadge.label}
                         </span>
                       </div>
-                      <div className="text-[10px] text-slate-500 font-mono truncate mt-0.5">
+                      <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate mt-0.5">
                         {currentUser?.email || 'No email attached'}
-                      </div>
-                      <div className="text-[10px] text-blue-700 font-semibold truncate mt-0.5">
-                        🏢 {activeTenant?.name || 'Nepal Dental Practice'}
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* 2. Settings Menu Links */}
-                <div className="p-2 space-y-1">
-                  <div className="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    Clinic Settings & Hub
-                  </div>
-
+                <div className="p-1.5 space-y-0.5">
                   {/* Clinic Configuration */}
                   <button
                     type="button"
@@ -303,18 +296,15 @@ export default function Navbar({
                       setSettingsOpen(false);
                       if (onNavigate) onNavigate('settings');
                     }}
-                    className="w-full text-left px-2.5 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition flex items-center justify-between group"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center justify-between group"
                   >
-                    <div className="flex items-center space-x-2.5 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">
-                        <Building className="w-3.5 h-3.5" />
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition shadow-2xs">
+                        <Building className="w-4 h-4" />
                       </div>
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold leading-tight">Clinic Configuration</div>
-                        <div className="text-[10px] text-slate-400 leading-tight">Hours, profile & clinic details</div>
-                      </div>
+                      <span className="text-xs font-semibold truncate">Clinic Configuration</span>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-blue-500 transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </button>
 
                   {/* Staff Management (Visible to Super Admin / Platform Admin) */}
@@ -325,18 +315,15 @@ export default function Navbar({
                         setSettingsOpen(false);
                         if (onNavigate) onNavigate('staff');
                       }}
-                      className="w-full text-left px-2.5 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition flex items-center justify-between group"
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center justify-between group"
                     >
-                      <div className="flex items-center space-x-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition">
-                          <UserCog className="w-3.5 h-3.5" />
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition shadow-2xs">
+                          <UserCog className="w-4 h-4" />
                         </div>
-                        <div className="min-w-0">
-                          <div className="text-xs font-bold leading-tight">Staff Management</div>
-                          <div className="text-[10px] text-slate-400 leading-tight">Doctors, roles & permissions</div>
-                        </div>
+                        <span className="text-xs font-semibold truncate">Staff Management</span>
                       </div>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-indigo-500 transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                     </button>
                   )}
 
@@ -347,18 +334,15 @@ export default function Navbar({
                       setSettingsOpen(false);
                       if (onNavigate) onNavigate('whatsapp');
                     }}
-                    className="w-full text-left px-2.5 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-emerald-700 transition flex items-center justify-between group"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 transition flex items-center justify-between group"
                   >
-                    <div className="flex items-center space-x-2.5 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:bg-[#25D366] group-hover:text-white transition">
-                        <MessageSquare className="w-3.5 h-3.5" />
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 group-hover:bg-[#25D366] group-hover:text-white transition shadow-2xs">
+                        <MessageSquare className="w-4 h-4" />
                       </div>
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold leading-tight">WhatsApp Automation</div>
-                        <div className="text-[10px] text-slate-400 leading-tight">Reminders & message templates</div>
-                      </div>
+                      <span className="text-xs font-semibold truncate">WhatsApp Automation</span>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-emerald-500 transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </button>
 
                   {/* Account & Subscription */}
@@ -368,18 +352,15 @@ export default function Navbar({
                       setSettingsOpen(false);
                       if (onNavigate) onNavigate('subscription');
                     }}
-                    className="w-full text-left px-2.5 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition flex items-center justify-between group"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-600 dark:hover:text-amber-400 transition flex items-center justify-between group"
                   >
-                    <div className="flex items-center space-x-2.5 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
-                        <CreditCard className="w-3.5 h-3.5" />
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-600 group-hover:text-white transition shadow-2xs">
+                        <CreditCard className="w-4 h-4" />
                       </div>
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold leading-tight">Account & Subscription</div>
-                        <div className="text-[10px] text-slate-400 leading-tight">Plan tier, quota & licensing</div>
-                      </div>
+                      <span className="text-xs font-semibold truncate">Account & Subscription</span>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-amber-500 transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </button>
 
                   {/* Switch Account / Switch Profile */}
@@ -389,45 +370,37 @@ export default function Navbar({
                       setSettingsOpen(false);
                       if (onOpenLoginModal) onOpenLoginModal();
                     }}
-                    className="w-full text-left px-2.5 py-2 rounded-xl text-slate-700 hover:bg-slate-50 hover:text-purple-700 transition flex items-center justify-between group"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 transition flex items-center justify-between group"
                   >
-                    <div className="flex items-center space-x-2.5 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">
-                        <ArrowLeftRight className="w-3.5 h-3.5" />
+                    <div className="flex items-center space-x-3 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600 group-hover:text-white transition shadow-2xs">
+                        <ArrowLeftRight className="w-4 h-4" />
                       </div>
-                      <div className="min-w-0">
-                        <div className="text-xs font-bold leading-tight">Switch Account / User ID</div>
-                        <div className="text-[10px] text-slate-400 leading-tight">Sign in with different credentials</div>
-                      </div>
+                      <span className="text-xs font-semibold truncate">Switch Account / User ID</span>
                     </div>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-purple-500 transition-transform group-hover:translate-x-0.5 flex-shrink-0" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </button>
                 </div>
 
                 {/* 3. Dedicated Logout Action */}
                 {onLogout && (
-                  <div className="p-2 bg-slate-50/50">
+                  <div className="p-1.5">
                     <button
                       type="button"
                       onClick={() => {
                         setSettingsOpen(false);
                         onLogout();
                       }}
-                      className="w-full text-left px-2.5 py-2 rounded-xl text-red-600 hover:bg-red-50 hover:text-red-700 border border-transparent hover:border-red-200 transition flex items-center justify-between group shadow-2xs"
+                      className="w-full text-left px-3 py-2 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition flex items-center justify-between group"
                       title="Logout from active session"
                     >
-                      <div className="flex items-center space-x-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-lg bg-red-100 text-red-600 flex items-center justify-center flex-shrink-0 group-hover:bg-red-600 group-hover:text-white transition">
-                          <LogOut className="w-3.5 h-3.5" />
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400 flex items-center justify-center flex-shrink-0 group-hover:bg-red-600 group-hover:text-white transition shadow-2xs">
+                          <LogOut className="w-4 h-4" />
                         </div>
-                        <div className="min-w-0">
-                          <div className="text-xs font-bold leading-tight">Logout</div>
-                          <div className="text-[10px] text-red-400 leading-tight">Exit and lock practice workspace</div>
-                        </div>
+                        <span className="text-xs font-semibold truncate">Logout</span>
                       </div>
-                      <span className="text-[10px] font-bold uppercase bg-red-100 text-red-700 group-hover:bg-red-600 group-hover:text-white px-2 py-0.5 rounded-full transition flex-shrink-0">
-                        Exit
-                      </span>
+                      <ChevronRight className="w-4 h-4 text-red-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                     </button>
                   </div>
                 )}
