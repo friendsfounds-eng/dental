@@ -240,7 +240,7 @@ export default function Navbar({
           )}
         </div>
 
-        {/* Right Actions: Theme Switcher & Settings */}
+        {/* Right Actions: Theme Switcher & Settings/Account */}
         <div className="flex items-center space-x-2 sm:space-x-2.5 flex-shrink-0">
           {/* UI Theme Switcher */}
           <ThemeSwitcher />
@@ -276,14 +276,14 @@ export default function Navbar({
                         <span className="text-xs font-bold text-slate-900 truncate block">
                           {currentUser?.name || 'Dr. Mukesh Kushwaha'}
                         </span>
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex-shrink-0 ${roleBadge.bg}`}>
+                        <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full border flex-shrink-0 ${roleBadge.bg}`}>
                           {roleBadge.label}
                         </span>
                       </div>
-                      <div className="text-[11px] text-slate-500 font-mono truncate mt-0.5">
+                      <div className="text-[10px] text-slate-500 font-mono truncate mt-0.5">
                         {currentUser?.email || 'No email attached'}
                       </div>
-                      <div className="text-[11px] text-blue-700 font-semibold truncate mt-0.5">
+                      <div className="text-[10px] text-blue-700 font-semibold truncate mt-0.5">
                         🏢 {activeTenant?.name || 'Nepal Dental Practice'}
                       </div>
                     </div>
@@ -292,7 +292,7 @@ export default function Navbar({
 
                 {/* 2. Settings Menu Links */}
                 <div className="p-2 space-y-1">
-                  <div className="px-2.5 py-1 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                  <div className="px-2 py-1 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                     Clinic Settings & Hub
                   </div>
 
