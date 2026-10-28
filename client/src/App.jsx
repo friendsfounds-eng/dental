@@ -40,6 +40,24 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem('sidebar_collapsed') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const handleToggleSidebarCollapse = useCallback(() => {
+    setSidebarCollapsed(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem('sidebar_collapsed', String(next));
+      } catch (_) {}
+      return next;
+    });
+  }, []);
+
   const [allocatedDoctorModal, setAllocatedDoctorModal] = useState(null);
 
   // Authentication & Tenant State
@@ -816,10 +834,12 @@ export default function App() {
           appointmentCount={appointments.length}
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
+          isCollapsed={sidebarCollapsed}
+          onToggleCollapse={handleToggleSidebarCollapse}
         />
 
         {/* Main Content Area (Auto-fits Mobile, Tablet & Desktop) */}
-        <main className="flex-1 p-3 sm:p-4 md:p-6 pb-20 lg:pb-6 overflow-y-auto max-w-7xl mx-auto w-full">
+        <main className={`flex-1 p-3 sm:p-4 md:p-6 pb-20 lg:pb-6 overflow-y-auto w-full transition-all duration-300 ${sidebarCollapsed ? 'max-w-none' : 'max-w-7xl mx-auto'}`}>
           <ErrorBoundary key={activeTab}>
             {/* Active Patient Notification Pill in Odontogram View */}
           {selectedPatient && activeTab === 'chart' && (

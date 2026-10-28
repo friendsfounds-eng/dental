@@ -1,0 +1,1785 @@
+{
+  "tenantId": "tenant-rajesh-dental-5977",
+  "clinicProfile": {
+    "name": "Rajesh Dental",
+    "tagline": "Modern Digital Dentistry & Oral Healthcare",
+    "doctorInCharge": "Rajesh Sada",
+    "regNo": "NMC-PENDING",
+    "phone": "+977 98000 00000",
+    "whatsappPhone": "9779800000000",
+    "email": "rajesh@anacraft.com",
+    "address": "Nepal",
+    "panVat": "",
+    "currency": "Rs."
+  },
+  "doctors": [
+    {
+      "id": "DOC-5984",
+      "name": "Rajesh Sada",
+      "specialty": "General Dentistry",
+      "qualification": "BDS",
+      "regNumber": "NMC-PENDING",
+      "phone": "",
+      "color": "#2563eb"
+    }
+  ],
+  "chairs": [
+    "Chair 1 (Main Operatory)"
+  ],
+  "treatmentCatalog": [
+    {
+      "id": "TRT-1",
+      "code": "D0150",
+      "name": "Comprehensive Examination",
+      "category": "Diagnostic",
+      "defaultCost": 500
+    }
+  ],
+  "medicineFormulary": [],
+  "whatsappTemplates": [],
+  "patients": [],
+  "appointments": [],
+  "billingPolicy": {
+    "maxDiscountPercent": 15,
+    "requireApprovalAbovePercent": 10
+  },
+  "refundRequests": [],
+  "auditLogs": [],
+  "pharmacyCatalog": [
+    {
+      "id": "PHARM-MED-1",
+      "name": "Augmentin 625mg",
+      "genericName": "Amoxicillin 500mg + Clavulanic Acid 125mg",
+      "brand": "GSK Pharmaceuticals",
+      "category": "Antibiotic",
+      "strength": "625 mg",
+      "dosageForm": "Tablet",
+      "barcode": "8901083001234",
+      "supplier": "Omni Healthcare Logistics",
+      "purchasePrice": 22.5,
+      "sellingPrice": 35,
+      "reorderThreshold": 30,
+      "storageLocation": "Shelf A-1 (Antibiotics)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-2",
+      "name": "Zerodol-SP",
+      "genericName": "Aceclofenac 100mg + Paracetamol 325mg + Serratiopeptidase 15mg",
+      "brand": "Ipca Laboratories",
+      "category": "Analgesic & Anti-inflammatory",
+      "strength": "100mg/325mg/15mg",
+      "dosageForm": "Tablet",
+      "barcode": "8901083002345",
+      "supplier": "Nepal Pharma Distributors",
+      "purchasePrice": 12,
+      "sellingPrice": 18.5,
+      "reorderThreshold": 50,
+      "storageLocation": "Shelf B-2 (Analgesics)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-3",
+      "name": "Ketorol DT 10mg",
+      "genericName": "Ketorolac Tromethamine",
+      "brand": "Dr. Reddy's Laboratories",
+      "category": "NSAID / Severe Dental Pain",
+      "strength": "10 mg Dispersible",
+      "dosageForm": "Dispersible Tablet",
+      "barcode": "8901083003456",
+      "supplier": "Nepal Pharma Distributors",
+      "purchasePrice": 8.5,
+      "sellingPrice": 14,
+      "reorderThreshold": 20,
+      "storageLocation": "Shelf B-3 (SOS Pain)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-4",
+      "name": "Metrogyl 400mg",
+      "genericName": "Metronidazole",
+      "brand": "J.B. Chemicals",
+      "category": "Antiprotozoal & Anaerobic Antibiotic",
+      "strength": "400 mg",
+      "dosageForm": "Tablet",
+      "barcode": "8901083004567",
+      "supplier": "Medex Lifesciences Pvt. Ltd.",
+      "purchasePrice": 4.2,
+      "sellingPrice": 7.5,
+      "reorderThreshold": 40,
+      "storageLocation": "Shelf A-2 (Anaerobic)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-5",
+      "name": "Pantocid 40mg",
+      "genericName": "Pantoprazole Sodium",
+      "brand": "Sun Pharma",
+      "category": "Antacid / PPI",
+      "strength": "40 mg",
+      "dosageForm": "Tablet",
+      "barcode": "8901083005678",
+      "supplier": "Omni Healthcare Logistics",
+      "purchasePrice": 9.8,
+      "sellingPrice": 16,
+      "reorderThreshold": 25,
+      "storageLocation": "Shelf C-1 (Gastro)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-6",
+      "name": "Hexidine Mouthwash 160ml",
+      "genericName": "Chlorhexidine Gluconate 0.2% w/v",
+      "brand": "ICPA Health Products",
+      "category": "Antiseptic Oral Rinse",
+      "strength": "0.2%",
+      "dosageForm": "Liquid Mouthwash",
+      "barcode": "8901083006789",
+      "supplier": "Medex Lifesciences Pvt. Ltd.",
+      "purchasePrice": 110,
+      "sellingPrice": 165,
+      "reorderThreshold": 15,
+      "storageLocation": "Shelf D-1 (Mouthwashes)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-7",
+      "name": "Kenacort 0.1% Oral Paste",
+      "genericName": "Triamcinolone Acetonide",
+      "brand": "Abbott Healthcare",
+      "category": "Topical Corticosteroid",
+      "strength": "0.1% w/w (5g tube)",
+      "dosageForm": "Oral Paste",
+      "barcode": "8901083007890",
+      "supplier": "Omni Healthcare Logistics",
+      "purchasePrice": 95,
+      "sellingPrice": 145,
+      "reorderThreshold": 10,
+      "storageLocation": "Drawer 1 (Topicals)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "PHARM-MED-8",
+      "name": "Lignox 2% with Adrenaline",
+      "genericName": "Lignocaine HCl 2% + Adrenaline 1:80000",
+      "brand": "Indoco Remedies",
+      "category": "Local Anaesthesia",
+      "strength": "2% Cartridge (30ml vial)",
+      "dosageForm": "Injection Cartridge",
+      "barcode": "8901083008901",
+      "supplier": "Nepal Pharma Distributors",
+      "purchasePrice": 45,
+      "sellingPrice": 70,
+      "reorderThreshold": 25,
+      "storageLocation": "Refrigerated Cold Box (2°C - 8°C)",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    }
+  ],
+  "pharmacyBatches": [
+    {
+      "id": "BATCH-AUG-01",
+      "medicineId": "PHARM-MED-1",
+      "batchNumber": "AUG-26A",
+      "quantity": 120,
+      "initialQuantity": 150,
+      "purchasePrice": 22.5,
+      "sellingPrice": 35,
+      "expiryDate": "2027-09-30",
+      "storageLocation": "Shelf A-1 (Antibiotics)",
+      "supplierInvoice": "INV-OMNI-4412",
+      "receivedDate": "2026-01-10"
+    },
+    {
+      "id": "BATCH-ZER-01",
+      "medicineId": "PHARM-MED-2",
+      "batchNumber": "ZER-26B",
+      "quantity": 85,
+      "initialQuantity": 100,
+      "purchasePrice": 12,
+      "sellingPrice": 18.5,
+      "expiryDate": "2027-04-15",
+      "storageLocation": "Shelf B-2 (Analgesics)",
+      "supplierInvoice": "INV-NPD-1092",
+      "receivedDate": "2026-01-12"
+    },
+    {
+      "id": "BATCH-KETO-01",
+      "medicineId": "PHARM-MED-3",
+      "batchNumber": "KET-25D",
+      "quantity": 8,
+      "initialQuantity": 50,
+      "purchasePrice": 8.5,
+      "sellingPrice": 14,
+      "expiryDate": "2026-11-20",
+      "storageLocation": "Shelf B-3 (SOS Pain)",
+      "supplierInvoice": "INV-NPD-0988",
+      "receivedDate": "2025-10-15"
+    },
+    {
+      "id": "BATCH-MET-01",
+      "medicineId": "PHARM-MED-4",
+      "batchNumber": "MET-24Z",
+      "quantity": 15,
+      "initialQuantity": 60,
+      "purchasePrice": 4.2,
+      "sellingPrice": 7.5,
+      "expiryDate": "2026-03-31",
+      "storageLocation": "Quarantine Box Q-1",
+      "supplierInvoice": "INV-MDX-7762",
+      "receivedDate": "2024-04-01"
+    },
+    {
+      "id": "BATCH-MET-02",
+      "medicineId": "PHARM-MED-4",
+      "batchNumber": "MET-26A",
+      "quantity": 140,
+      "initialQuantity": 150,
+      "purchasePrice": 4.2,
+      "sellingPrice": 7.5,
+      "expiryDate": "2027-10-31",
+      "storageLocation": "Shelf A-2 (Anaerobic)",
+      "supplierInvoice": "INV-MDX-9981",
+      "receivedDate": "2026-01-18"
+    },
+    {
+      "id": "BATCH-PAN-01",
+      "medicineId": "PHARM-MED-5",
+      "batchNumber": "PAN-26C",
+      "quantity": 60,
+      "initialQuantity": 80,
+      "purchasePrice": 9.8,
+      "sellingPrice": 16,
+      "expiryDate": "2027-05-30",
+      "storageLocation": "Shelf C-1 (Gastro)",
+      "supplierInvoice": "INV-OMNI-5521",
+      "receivedDate": "2026-01-15"
+    },
+    {
+      "id": "BATCH-HEX-01",
+      "medicineId": "PHARM-MED-6",
+      "batchNumber": "HEX-26M",
+      "quantity": 24,
+      "initialQuantity": 30,
+      "purchasePrice": 110,
+      "sellingPrice": 165,
+      "expiryDate": "2027-02-28",
+      "storageLocation": "Shelf D-1 (Mouthwashes)",
+      "supplierInvoice": "INV-MDX-9982",
+      "receivedDate": "2026-01-18"
+    },
+    {
+      "id": "BATCH-KEN-01",
+      "medicineId": "PHARM-MED-7",
+      "batchNumber": "KEN-26P",
+      "quantity": 18,
+      "initialQuantity": 20,
+      "purchasePrice": 95,
+      "sellingPrice": 145,
+      "expiryDate": "2027-06-30",
+      "storageLocation": "Drawer 1 (Topicals)",
+      "supplierInvoice": "INV-OMNI-5521",
+      "receivedDate": "2026-01-15"
+    },
+    {
+      "id": "BATCH-LIG-01",
+      "medicineId": "PHARM-MED-8",
+      "batchNumber": "LIG-26X",
+      "quantity": 50,
+      "initialQuantity": 50,
+      "purchasePrice": 45,
+      "sellingPrice": 70,
+      "expiryDate": "2027-12-31",
+      "storageLocation": "Refrigerated Cold Box (2°C - 8°C)",
+      "supplierInvoice": "INV-NPD-1092",
+      "receivedDate": "2026-01-12"
+    }
+  ],
+  "pharmacySuppliers": [
+    {
+      "id": "SUP-1",
+      "name": "Omni Healthcare Logistics",
+      "contactPerson": "Bikash Karki",
+      "phone": "+977 98510 44556",
+      "email": "orders@omnihealth.com.np",
+      "address": "Tripureshwor, Kathmandu",
+      "drugLicenseNo": "DDA-LIC-20419"
+    },
+    {
+      "id": "SUP-2",
+      "name": "Nepal Pharma Distributors",
+      "contactPerson": "Sunil Bajracharya",
+      "phone": "+977 98412 88990",
+      "email": "supply@nepalpharma.com.np",
+      "address": "Teku Medical Zone, Kathmandu",
+      "drugLicenseNo": "DDA-LIC-18821"
+    },
+    {
+      "id": "SUP-3",
+      "name": "Medex Lifesciences Pvt. Ltd.",
+      "contactPerson": "Ramesh Adhikari",
+      "phone": "+977 98033 11223",
+      "email": "sales@medexlife.com.np",
+      "address": "Koteshwor, Kathmandu",
+      "drugLicenseNo": "DDA-LIC-30114"
+    }
+  ],
+  "pharmacyPurchases": [],
+  "pharmacySales": [],
+  "pharmacyAdjustments": [],
+  "financeAccount": {
+    "accountHolderName": "Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.",
+    "bankName": "Nabil Bank Limited",
+    "accountNumber": "01201017500982",
+    "branch": "New Baneshwor, Kathmandu",
+    "routingOrSwift": "NARBNPKA",
+    "paymentIdentifier": "nepaldental@nabil",
+    "fonepayMerchantId": "9841987654",
+    "qrCodeUrl": "/qr-fonepay-nabil.svg",
+    "currency": "NPR",
+    "notes": "Official organization receiving account for patient collections, insurance settlements, and clinical revenue.",
+    "updatedAt": "2026-10-15T09:00:00.000Z",
+    "updatedBy": "Dr. Mukesh Kushwaha"
+  },
+  "financeTransactions": [
+    {
+      "id": "TXN-2026-001",
+      "date": "2026-10-22T08:30:00.000Z",
+      "refNumber": "REC-NBL-8801",
+      "payerOrRecipient": "Pradeep Poudel",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 17500,
+      "paymentMethod": "FonePay / QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-8038",
+      "notes": "Implant custom abutment and crown procedure fee installment.",
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-22T08:30:00.000Z"
+    },
+    {
+      "id": "TXN-2026-002",
+      "date": "2026-10-21T14:15:00.000Z",
+      "refNumber": "EXP-SUP-4011",
+      "payerOrRecipient": "Himalayan Dental Supplies Pvt. Ltd.",
+      "type": "EXPENSE",
+      "category": "Dental Supplies & Consumables",
+      "amount": 14200,
+      "paymentMethod": "Bank Transfer",
+      "status": "Completed",
+      "notes": "Restorative composite syringes, bonding agents, and sterile burs.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-21T14:15:00.000Z"
+    },
+    {
+      "id": "TXN-2026-003",
+      "date": "2026-10-21T11:00:00.000Z",
+      "refNumber": "REC-CSH-1102",
+      "payerOrRecipient": "Aarav Karki",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 8500,
+      "paymentMethod": "Cash",
+      "status": "Completed",
+      "relatedPatientId": "PT-102",
+      "notes": "Molar endodontic therapy completion and aesthetic glass ionomer core.",
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-21T11:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-004",
+      "date": "2026-10-20T16:00:00.000Z",
+      "refNumber": "LAB-KTM-9920",
+      "payerOrRecipient": "Kathmandu Dental Ceramics & Milling Lab",
+      "type": "EXPENSE",
+      "category": "Dental Lab Work Fees",
+      "amount": 7500,
+      "paymentMethod": "Bank Transfer",
+      "status": "Completed",
+      "notes": "Milling charges for 2 units multi-layer zirconia crowns.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T16:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-005",
+      "date": "2026-10-19T13:45:00.000Z",
+      "refNumber": "REF-ADJ-2001",
+      "payerOrRecipient": "Suman Shrestha",
+      "type": "REFUND",
+      "category": "Patient Refund",
+      "amount": 1500,
+      "paymentMethod": "FonePay / QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-101",
+      "notes": "Treatment plan discount adjustment refund upon early settlement.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-19T13:45:00.000Z"
+    },
+    {
+      "id": "TXN-2026-006",
+      "date": "2026-10-18T10:20:00.000Z",
+      "refNumber": "REC-NBL-8790",
+      "payerOrRecipient": "Bina Magar",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 12000,
+      "paymentMethod": "Bank Transfer",
+      "status": "Completed",
+      "relatedPatientId": "PT-103",
+      "notes": "Full mouth scaling, root planing, and composite veneers.",
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-18T10:20:00.000Z"
+    },
+    {
+      "id": "TXN-2026-007",
+      "date": "2026-10-17T15:30:00.000Z",
+      "refNumber": "PAY-VIS-5012",
+      "payerOrRecipient": "Dr. Rajesh Sharma (Visiting Orthodontist)",
+      "type": "PAYOUT",
+      "category": "Consultant Payout",
+      "amount": 12000,
+      "paymentMethod": "Cheque",
+      "status": "Completed",
+      "notes": "Consultation and bracket bonding case share for October.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-17T15:30:00.000Z"
+    },
+    {
+      "id": "TXN-2026-008",
+      "date": "2026-10-16T17:00:00.000Z",
+      "refNumber": "EXP-UTL-7711",
+      "payerOrRecipient": "Nepal Electricity Authority & WorldLink",
+      "type": "EXPENSE",
+      "category": "Utilities & Clinic Maintenance",
+      "amount": 6200,
+      "paymentMethod": "FonePay / QR",
+      "status": "Completed",
+      "notes": "Clinic electricity, inverter maintenance, and broadband fiber.",
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-16T17:00:00.000Z"
+    },
+    {
+      "id": "TXN-2026-009",
+      "date": "2026-10-15T09:15:00.000Z",
+      "refNumber": "REC-CRD-3301",
+      "payerOrRecipient": "Pradeep Poudel",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 25000,
+      "paymentMethod": "Credit Card",
+      "status": "Completed",
+      "relatedPatientId": "PT-8038",
+      "notes": "First stage surgical implant placement fixture billing.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-15T09:15:00.000Z"
+    },
+    {
+      "id": "TXN-2026-010",
+      "date": "2026-10-14T11:30:00.000Z",
+      "refNumber": "EXP-BIO-9011",
+      "payerOrRecipient": "BioMed Calibration & Sterilization Services",
+      "type": "EXPENSE",
+      "category": "Equipment Maintenance",
+      "amount": 4500,
+      "paymentMethod": "Cash",
+      "status": "Completed",
+      "notes": "Class B Autoclave annual validation and spore test certification.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-14T11:30:00.000Z"
+    }
+  ],
+  "financeStaffPayments": [
+    {
+      "id": "PAY-2026-10-01",
+      "refNumber": "SAL-2026-10-01",
+      "staffId": "usr-dr-mukesh",
+      "staffName": "Dr. Mukesh Kushwaha",
+      "role": "Lead Dental Surgeon / Director",
+      "period": "October 2026",
+      "salaryType": "Fixed Monthly",
+      "baseSalary": 100000,
+      "allowances": 35000,
+      "incentivesOrBonus": 35000,
+      "grossEarnings": 135000,
+      "deductions": 5000,
+      "advanceDeduction": 0,
+      "advanceId": null,
+      "amount": 130000,
+      "netAmount": 130000,
+      "paymentDate": "2026-10-25",
+      "paymentMethod": "Bank Transfer",
+      "status": "Paid",
+      "notes": "Director base salary + surgical implant bonus and clinical oversight allowance.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T10:00:00.000Z"
+    },
+    {
+      "id": "PAY-2026-10-02",
+      "refNumber": "SAL-2026-10-02",
+      "staffId": "usr-dr-anita",
+      "staffName": "Dr. Anita Sharma",
+      "role": "Consultant Orthodontist",
+      "period": "October 2026",
+      "salaryType": "Fixed Monthly",
+      "baseSalary": 65000,
+      "allowances": 15000,
+      "incentivesOrBonus": 15000,
+      "grossEarnings": 80000,
+      "deductions": 3500,
+      "advanceDeduction": 0,
+      "advanceId": null,
+      "amount": 76500,
+      "netAmount": 76500,
+      "paymentDate": "2026-10-25",
+      "paymentMethod": "Bank Transfer",
+      "status": "Paid",
+      "notes": "Consultant fixed salary + 15 aligner progress checks and cephalometric tracing.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T10:00:00.000Z"
+    },
+    {
+      "id": "PAY-2026-10-03",
+      "refNumber": "SAL-2026-10-03",
+      "staffId": "usr-sita-recep",
+      "staffName": "Sita Thapa",
+      "role": "Front Desk & Receptionist Manager",
+      "period": "October 2026",
+      "salaryType": "Fixed Monthly",
+      "baseSalary": 32000,
+      "allowances": 4000,
+      "incentivesOrBonus": 4000,
+      "grossEarnings": 36000,
+      "deductions": 1000,
+      "advanceDeduction": 0,
+      "advanceId": null,
+      "amount": 35000,
+      "netAmount": 35000,
+      "paymentDate": "2026-10-25",
+      "paymentMethod": "Bank Transfer",
+      "status": "Paid",
+      "notes": "Front desk administration, patient EHR scheduling and OPD triage management.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T10:00:00.000Z"
+    },
+    {
+      "id": "PAY-2026-10-04",
+      "refNumber": "SAL-2026-10-04",
+      "staffId": "usr-anjali-nurse",
+      "staffName": "Anjali Maharjan",
+      "role": "Chairside Dental Assistant & Nurse",
+      "period": "October 2026",
+      "salaryType": "Fixed Monthly",
+      "baseSalary": 28000,
+      "allowances": 3000,
+      "incentivesOrBonus": 3000,
+      "grossEarnings": 31000,
+      "deductions": 500,
+      "advanceDeduction": 5000,
+      "advanceId": "ADV-2026-001",
+      "amount": 25500,
+      "netAmount": 25500,
+      "paymentDate": "2026-10-25",
+      "paymentMethod": "Bank Transfer",
+      "status": "Paid",
+      "notes": "Chairside assist bonus included. Deducted Installment 2 of 3 against Advance #ADV-2026-001.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T10:00:00.000Z"
+    },
+    {
+      "id": "PAY-2026-10-05",
+      "refNumber": "SAL-2026-10-05",
+      "staffId": "usr-bikash-tech",
+      "staffName": "Bikash Shrestha",
+      "role": "In-House CAD/CAM Milling Technician",
+      "period": "October 2026",
+      "salaryType": "Fixed Monthly",
+      "baseSalary": 38000,
+      "allowances": 4500,
+      "incentivesOrBonus": 4500,
+      "grossEarnings": 42500,
+      "deductions": 1000,
+      "advanceDeduction": 0,
+      "advanceId": null,
+      "amount": 41500,
+      "netAmount": 41500,
+      "paymentDate": "2026-10-25",
+      "paymentMethod": "Bank Transfer",
+      "status": "Pending",
+      "notes": "Awaiting end-of-month zirconia crown milling unit quality audit sign-off.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T10:00:00.000Z"
+    }
+  ],
+  "financePayouts": [
+    {
+      "id": "PO-2026-201",
+      "refNumber": "PO-REF-2026-201",
+      "recipient": "Dr. Anita Sharma",
+      "recipientType": "Doctor",
+      "amount": 22500,
+      "paymentDate": "2026-10-22T14:00:00.000Z",
+      "paymentMethod": "Bank Transfer",
+      "approvalStatus": "Paid",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-22T14:30:00.000Z",
+      "purpose": "50% Surgical Clinical Share for 3 Completed Clear Aligner Finishing Cases",
+      "notes": "Direct transfer to personal bank account verified.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-22T13:00:00.000Z"
+    },
+    {
+      "id": "PO-2026-202",
+      "refNumber": "PO-REF-2026-202",
+      "recipient": "Dr. Mukesh Kushwaha",
+      "recipientType": "Doctor",
+      "amount": 30000,
+      "paymentDate": "2026-10-20T10:00:00.000Z",
+      "paymentMethod": "Bank Transfer",
+      "approvalStatus": "Paid",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-20T10:15:00.000Z",
+      "purpose": "Direct Surgical Implant Incentive for 4 Straumann Bone-Level Titanium Implants",
+      "notes": "Voucher settled via Nabil Corporate account.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T09:30:00.000Z"
+    },
+    {
+      "id": "PO-2026-203",
+      "refNumber": "PO-REF-2026-203",
+      "recipient": "Dr. Rajesh Sharma (Visiting Endodontist)",
+      "recipientType": "Consultant",
+      "amount": 15000,
+      "paymentDate": "2026-10-23T11:00:00.000Z",
+      "paymentMethod": "Cheque",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-23T11:15:00.000Z",
+      "purpose": "Specialist clinical retreatment fee for 3 calcified molar root canal sessions",
+      "notes": "Account payee cheque issued.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-23T10:30:00.000Z"
+    },
+    {
+      "id": "PO-2026-204",
+      "refNumber": "PO-REF-2026-204",
+      "recipient": "Kathmandu Dental Ceramics & Milling Lab",
+      "recipientType": "Laboratory",
+      "amount": 28500,
+      "paymentDate": "2026-10-18T15:00:00.000Z",
+      "paymentMethod": "Bank Transfer",
+      "approvalStatus": "Paid",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-18T15:30:00.000Z",
+      "purpose": "Settlement for 7 Zirconia units and 2 custom titanium abutments milled in October",
+      "notes": "Lab inspection and QC passed.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-18T14:00:00.000Z"
+    },
+    {
+      "id": "PO-2026-205",
+      "refNumber": "PO-REF-2026-205",
+      "recipient": "Anjali Maharjan & Staff Emergency Team",
+      "recipientType": "Staff",
+      "amount": 4500,
+      "paymentDate": "2026-10-24T18:00:00.000Z",
+      "paymentMethod": "Cash",
+      "approvalStatus": "Paid",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-24T18:15:00.000Z",
+      "purpose": "Emergency Friday evening surgical on-call & overtime meal allowance",
+      "notes": "Cash drawn from reception drawer.",
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-24T18:00:00.000Z"
+    }
+  ],
+  "financeStaffAdvances": [
+    {
+      "id": "ADV-2026-001",
+      "advanceNumber": "ADV-2026-001",
+      "staffId": "usr-anjali-nurse",
+      "staffName": "Anjali Maharjan",
+      "role": "Chairside Dental Assistant & Nurse",
+      "amount": 15000,
+      "balanceRemaining": 5000,
+      "recoveredAmount": 10000,
+      "reason": "Family medical emergency & Dashain festival advance",
+      "disbursedDate": "2026-09-15",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 5000,
+      "totalInstallments": 3,
+      "installmentsDeducted": 2,
+      "status": "Active",
+      "recoveryHistory": [
+        {
+          "date": "2026-09-25",
+          "amountDeducted": 5000,
+          "payrollPaymentId": "PAY-2026-09-04",
+          "payrollPeriod": "September 2026",
+          "voucherNumber": "SAL-2026-09-04"
+        },
+        {
+          "date": "2026-10-25",
+          "amountDeducted": 5000,
+          "payrollPaymentId": "PAY-2026-10-04",
+          "payrollPeriod": "October 2026",
+          "voucherNumber": "SAL-2026-10-04"
+        }
+      ],
+      "notes": "Approved by Dr. Mukesh. Rs 5,000 deducted monthly across 3 payrolls.",
+      "createdAt": "2026-09-15T09:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-002",
+      "advanceNumber": "ADV-2026-002",
+      "staffId": "usr-bikash-tech",
+      "staffName": "Bikash Shrestha",
+      "role": "In-House CAD/CAM Milling Technician",
+      "amount": 10000,
+      "balanceRemaining": 10000,
+      "recoveredAmount": 0,
+      "reason": "Personal two-wheeler repair and commute expenses",
+      "disbursedDate": "2026-10-18",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Cash",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 5000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 0,
+      "status": "Active",
+      "recoveryHistory": [],
+      "notes": "To be deducted starting from November and December payrolls.",
+      "createdAt": "2026-10-18T11:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-003",
+      "advanceNumber": "ADV-2026-003",
+      "staffId": "usr-sita-recep",
+      "staffName": "Sita Thapa",
+      "role": "Front Desk & Receptionist Manager",
+      "amount": 8000,
+      "balanceRemaining": 0,
+      "recoveredAmount": 8000,
+      "reason": "Advance for home relocation expenses",
+      "disbursedDate": "2026-08-10",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "LUMP_SUM",
+      "installmentAmount": 8000,
+      "totalInstallments": 1,
+      "installmentsDeducted": 1,
+      "status": "Fully Recovered",
+      "recoveryHistory": [
+        {
+          "date": "2026-08-25",
+          "amountDeducted": 8000,
+          "payrollPaymentId": "PAY-2026-08-03",
+          "payrollPeriod": "August 2026",
+          "voucherNumber": "SAL-2026-08-03"
+        }
+      ],
+      "notes": "Fully recovered in August 2026 payroll.",
+      "createdAt": "2026-08-10T08:30:00.000Z"
+    },
+    {
+      "id": "ADV-2026-004",
+      "advanceNumber": "ADV-2026-004",
+      "staffId": "usr-ramesh-pharma",
+      "staffName": "Ramesh Adhikari",
+      "role": "Clinical Pharmacist & Inventory",
+      "amount": 12000,
+      "balanceRemaining": 6000,
+      "recoveredAmount": 6000,
+      "reason": "Emergency family medical support",
+      "disbursedDate": "2026-09-20",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 6000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 1,
+      "status": "Active",
+      "recoveryHistory": [
+        {
+          "date": "2026-10-25",
+          "amountDeducted": 6000,
+          "payrollPaymentId": "PAY-2026-10-06",
+          "payrollPeriod": "October 2026",
+          "voucherNumber": "SAL-2026-10-06"
+        }
+      ],
+      "notes": "50% recovered in October. Remaining Rs 6,000 scheduled for November payroll.",
+      "createdAt": "2026-09-20T10:00:00.000Z"
+    },
+    {
+      "id": "ADV-2026-005",
+      "advanceNumber": "ADV-2026-005",
+      "staffId": "usr-dr-anita",
+      "staffName": "Dr. Anita Sharma",
+      "role": "Consultant Orthodontist",
+      "amount": 20000,
+      "balanceRemaining": 20000,
+      "recoveredAmount": 0,
+      "reason": "National Dental Orthodontic Conference travel & registration fees",
+      "disbursedDate": "2026-10-24",
+      "disbursedBy": "Dr. Mukesh Kushwaha",
+      "paymentMethod": "Bank Transfer",
+      "repaymentType": "MONTHLY_INSTALLMENT",
+      "installmentAmount": 10000,
+      "totalInstallments": 2,
+      "installmentsDeducted": 0,
+      "status": "Pending Approval",
+      "recoveryHistory": [],
+      "notes": "Awaiting board sign-off for educational conference sponsorship advance.",
+      "createdAt": "2026-10-24T08:30:00.000Z"
+    }
+  ],
+  "chartOfAccounts": [
+    {
+      "code": "1010",
+      "name": "Cash in Drawer / Register",
+      "type": "ASSET",
+      "category": "Current Assets",
+      "normalBalance": "DEBIT",
+      "description": "Physical cash received and kept at clinic reception counter drawer",
+      "balance": 26500,
+      "isActive": true
+    },
+    {
+      "code": "1020",
+      "name": "Bank Current Account - Nabil Bank",
+      "type": "ASSET",
+      "category": "Current Assets",
+      "normalBalance": "DEBIT",
+      "description": "Primary corporate operating bank account at Nabil Bank Ltd (Acct: 01201017500982)",
+      "balance": 245000,
+      "isActive": true
+    },
+    {
+      "code": "1030",
+      "name": "Digital Payments Clearing (FonePay/POS/Wallets)",
+      "type": "ASSET",
+      "category": "Current Assets",
+      "normalBalance": "DEBIT",
+      "description": "Clearing account for FonePay QR, Cards POS, eSewa and digital settlements",
+      "balance": 42500,
+      "isActive": true
+    },
+    {
+      "code": "1100",
+      "name": "Accounts Receivable (AR) - Patients",
+      "type": "ASSET",
+      "category": "Current Assets",
+      "normalBalance": "DEBIT",
+      "description": "Outstanding treatment invoices and pending receivables due from patients",
+      "balance": 65000,
+      "isActive": true
+    },
+    {
+      "code": "1150",
+      "name": "Staff Salary Advances & Employee Receivables",
+      "type": "ASSET",
+      "category": "Current Assets",
+      "normalBalance": "DEBIT",
+      "description": "Outstanding salary advances, loan disbursements, and imprest balances given to clinic staff",
+      "balance": 15000,
+      "isActive": true
+    },
+    {
+      "code": "1200",
+      "name": "Dental Consumables & Materials Inventory",
+      "type": "ASSET",
+      "category": "Current Assets",
+      "normalBalance": "DEBIT",
+      "description": "Inventory value of restorative composites, impression materials, burs, and sterile packs",
+      "balance": 95000,
+      "isActive": true
+    },
+    {
+      "code": "1500",
+      "name": "Dental Chairs & Clinical Equipment",
+      "type": "ASSET",
+      "category": "Fixed Assets",
+      "normalBalance": "DEBIT",
+      "description": "Capital valuation of dental operatory chairs, Class B autoclave, RVG sensors & compressor",
+      "balance": 1250000,
+      "isActive": true
+    },
+    {
+      "code": "2010",
+      "name": "Accounts Payable (AP) - Labs & Suppliers",
+      "type": "LIABILITY",
+      "category": "Current Liabilities",
+      "normalBalance": "CREDIT",
+      "description": "Outstanding unpaid bills due to dental laboratories and dental supply traders",
+      "balance": 34000,
+      "isActive": true
+    },
+    {
+      "code": "2020",
+      "name": "Accrued Salaries & Doctor Fees Payable",
+      "type": "LIABILITY",
+      "category": "Current Liabilities",
+      "normalBalance": "CREDIT",
+      "description": "Staff payroll liabilities and consultant incentives accrued for the period",
+      "balance": 0,
+      "isActive": true
+    },
+    {
+      "code": "2100",
+      "name": "Patient Advance Deposits & Credit Balances",
+      "type": "LIABILITY",
+      "category": "Current Liabilities",
+      "normalBalance": "CREDIT",
+      "description": "Unearned customer deposits held in advance for future implant or orthodontic treatments",
+      "balance": 28000,
+      "isActive": true
+    },
+    {
+      "code": "2200",
+      "name": "Tax & VAT Payable (Inland Revenue)",
+      "type": "LIABILITY",
+      "category": "Current Liabilities",
+      "normalBalance": "CREDIT",
+      "description": "Output VAT/sales tax collected minus input tax paid, payable to tax authorities",
+      "balance": 14200,
+      "isActive": true
+    },
+    {
+      "code": "3010",
+      "name": "Owner's Capital & Clinic Equity",
+      "type": "EQUITY",
+      "category": "Equity",
+      "normalBalance": "CREDIT",
+      "description": "Original equity invested by clinic founder and partners",
+      "balance": 1400000,
+      "isActive": true
+    },
+    {
+      "code": "3020",
+      "name": "Retained Earnings & Accumulated Surplus",
+      "type": "EQUITY",
+      "category": "Equity",
+      "normalBalance": "CREDIT",
+      "description": "Cumulative retained clinical earnings from prior operating years",
+      "balance": 238800,
+      "isActive": true
+    },
+    {
+      "code": "4010",
+      "name": "Dental Treatment & Procedure Revenue",
+      "type": "REVENUE",
+      "category": "Operating Revenue",
+      "normalBalance": "CREDIT",
+      "description": "Gross billings for restorations, root canals, dental implants, crowns, and extractions",
+      "balance": 198000,
+      "isActive": true
+    },
+    {
+      "code": "4020",
+      "name": "Consultation & Registration OPD Fees",
+      "type": "REVENUE",
+      "category": "Operating Revenue",
+      "normalBalance": "CREDIT",
+      "description": "Diagnostic consultation charges, OPD tickets, and emergency triage fees",
+      "balance": 18500,
+      "isActive": true
+    },
+    {
+      "code": "4030",
+      "name": "Pharmacy & Medication Sales",
+      "type": "REVENUE",
+      "category": "Operating Revenue",
+      "normalBalance": "CREDIT",
+      "description": "Dispensing income for antibiotics, analgesics, antiseptic rinses, and oral care kits",
+      "balance": 24500,
+      "isActive": true
+    },
+    {
+      "code": "4040",
+      "name": "Dental Lab Services Markup",
+      "type": "REVENUE",
+      "category": "Operating Revenue",
+      "normalBalance": "CREDIT",
+      "description": "Clinical margin recognized on outsourced prosthetics, custom aligners, and bridges",
+      "balance": 35000,
+      "isActive": true
+    },
+    {
+      "code": "4090",
+      "name": "Other Clinic Income",
+      "type": "REVENUE",
+      "category": "Other Revenue",
+      "normalBalance": "CREDIT",
+      "description": "Medical record duplicate certificates, study cast digitization, and miscellaneous fees",
+      "balance": 4000,
+      "isActive": true
+    },
+    {
+      "code": "5010",
+      "name": "Staff Salaries & Doctor Clinical Fees",
+      "type": "EXPENSE",
+      "category": "Operating Expenses",
+      "normalBalance": "DEBIT",
+      "description": "Salaries of dental surgeons, hygienists, nurses, receptionist, and lab tech",
+      "balance": 130000,
+      "isActive": true
+    },
+    {
+      "code": "5100",
+      "name": "Dental Laboratory Charges",
+      "type": "EXPENSE",
+      "category": "Direct Clinical Cost (COGS)",
+      "normalBalance": "DEBIT",
+      "description": "Fabrication fees for zirconia crowns, PFM units, cast partial dentures, and retainers",
+      "balance": 38500,
+      "isActive": true
+    },
+    {
+      "code": "5200",
+      "name": "Dental Materials & Clinical Consumables",
+      "type": "EXPENSE",
+      "category": "Direct Clinical Cost (COGS)",
+      "normalBalance": "DEBIT",
+      "description": "Restorative resin, bonding agents, impression alginate/PVS, local anesthetic, and gloves",
+      "balance": 26400,
+      "isActive": true
+    },
+    {
+      "code": "5300",
+      "name": "Clinic Facility Rent & Lease",
+      "type": "EXPENSE",
+      "category": "Operating Expenses",
+      "normalBalance": "DEBIT",
+      "description": "Commercial facility monthly lease payment for Baneshwor clinic premises",
+      "balance": 45000,
+      "isActive": true
+    },
+    {
+      "code": "5400",
+      "name": "Electricity, Water & Utilities",
+      "type": "EXPENSE",
+      "category": "Operating Expenses",
+      "normalBalance": "DEBIT",
+      "description": "Nepal Electricity Authority power bills, dedicated fiber internet, and drinking water",
+      "balance": 9800,
+      "isActive": true
+    },
+    {
+      "code": "5500",
+      "name": "Dental Equipment Maintenance & Servicing",
+      "type": "EXPENSE",
+      "category": "Operating Expenses",
+      "normalBalance": "DEBIT",
+      "description": "Dental unit air compressor upkeep, autoclave spore test validation, and suction maintenance",
+      "balance": 6500,
+      "isActive": true
+    },
+    {
+      "code": "5600",
+      "name": "Office Administration, Software & Misc",
+      "type": "EXPENSE",
+      "category": "Operating Expenses",
+      "normalBalance": "DEBIT",
+      "description": "Office stationery, patient comfort amenities, and dental ERP cloud subscription",
+      "balance": 5200,
+      "isActive": true
+    },
+    {
+      "code": "5700",
+      "name": "Approved Patient Discounts & Adjustments",
+      "type": "EXPENSE",
+      "category": "Contra Revenue",
+      "normalBalance": "DEBIT",
+      "description": "Authorized treatment price reductions, student/senior citizen concessions, and waivers",
+      "balance": 9600,
+      "isActive": true
+    }
+  ],
+  "journalEntries": [
+    {
+      "id": "JE-2026-0001",
+      "date": "2026-10-15T09:00:00.000Z",
+      "reference": "INV-2026-5854",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Pradeep Poudel: Surgical Implant Fixture & Abutment",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-15T09:00:00.000Z",
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 42500,
+          "credit": 0
+        },
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 2500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 45000
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0002",
+      "date": "2026-10-15T09:15:00.000Z",
+      "reference": "RCP-2026-0082",
+      "source": "RECEIPT",
+      "memo": "Partial payment received from Pradeep Poudel via Card POS (Nabil Bank)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-15T09:15:00.000Z",
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 25000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 25000
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0003",
+      "date": "2026-10-18T10:20:00.000Z",
+      "reference": "RCP-2026-0085",
+      "source": "RECEIPT",
+      "memo": "Treatment settlement payment from Bina Magar for full mouth scaling & veneers",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-18T10:20:00.000Z",
+      "lines": [
+        {
+          "accountCode": "1020",
+          "accountName": "Bank Current Account - Nabil Bank",
+          "debit": 12000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 12000
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0004",
+      "date": "2026-10-19T13:45:00.000Z",
+      "reference": "CN-2026-001",
+      "source": "CREDIT_NOTE",
+      "memo": "Approved Senior Citizen 10% fee adjustment credit note for Suman Shrestha",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-19T13:45:00.000Z",
+      "lines": [
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 1500,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 1500
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0005",
+      "date": "2026-10-20T14:00:00.000Z",
+      "reference": "EXP-2026-003",
+      "source": "EXPENSE",
+      "memo": "Milling settlement paid to Kathmandu Dental Ceramics Lab for 2 units Zirconia",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-20T14:00:00.000Z",
+      "lines": [
+        {
+          "accountCode": "5100",
+          "accountName": "Dental Laboratory Charges",
+          "debit": 7500,
+          "credit": 0
+        },
+        {
+          "accountCode": "1020",
+          "accountName": "Bank Current Account - Nabil Bank",
+          "debit": 0,
+          "credit": 7500
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0006",
+      "date": "2026-10-21T11:00:00.000Z",
+      "reference": "RCP-2026-0084",
+      "source": "RECEIPT",
+      "memo": "Direct cash collection for Molar Endodontics from Aarav Karki",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-21T11:00:00.000Z",
+      "lines": [
+        {
+          "accountCode": "1010",
+          "accountName": "Cash in Drawer / Register",
+          "debit": 8500,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 8500
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0007",
+      "date": "2026-10-21T14:15:00.000Z",
+      "reference": "EXP-2026-002",
+      "source": "EXPENSE",
+      "memo": "Restorative composite syringes and sterile burs paid to Himalayan Dental Supplies",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-21T14:15:00.000Z",
+      "lines": [
+        {
+          "accountCode": "5200",
+          "accountName": "Dental Materials & Clinical Consumables",
+          "debit": 14200,
+          "credit": 0
+        },
+        {
+          "accountCode": "1020",
+          "accountName": "Bank Current Account - Nabil Bank",
+          "debit": 0,
+          "credit": 14200
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0008",
+      "date": "2026-10-21T16:30:00.000Z",
+      "reference": "DEP-2026-002",
+      "source": "ADVANCE_DEPOSIT",
+      "memo": "Advance treatment deposit received from Bina Magar for orthodontic aligners",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-21T16:30:00.000Z",
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 15000,
+          "credit": 0
+        },
+        {
+          "accountCode": "2100",
+          "accountName": "Patient Advance Deposits & Credit Balances",
+          "debit": 0,
+          "credit": 15000
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0009",
+      "date": "2026-10-22T08:30:00.000Z",
+      "reference": "RCP-2026-0083",
+      "source": "RECEIPT",
+      "memo": "Final stage implant payment received via FonePay QR from Pradeep Poudel",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-22T08:30:00.000Z",
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 17500,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 17500
+        }
+      ]
+    },
+    {
+      "id": "JE-2026-0010",
+      "date": "2026-10-22T17:00:00.000Z",
+      "reference": "EXP-2026-005",
+      "source": "EXPENSE",
+      "memo": "Monthly utilities settlement for electricity, high-speed fiber & inverter check",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "createdBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-22T17:00:00.000Z",
+      "lines": [
+        {
+          "accountCode": "5400",
+          "accountName": "Electricity, Water & Utilities",
+          "debit": 6200,
+          "credit": 0
+        },
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 0,
+          "credit": 6200
+        }
+      ]
+    }
+  ],
+  "expenseVouchers": [
+    {
+      "id": "EXP-2026-001",
+      "voucherNumber": "EXP-2026-001",
+      "supplierOrPayee": "Apex Dental Staff Payroll (5 Employees)",
+      "category": "Staff Salaries and Wages",
+      "expenseDate": "2026-10-25",
+      "dueDate": "2026-10-25",
+      "amount": 130000,
+      "taxAmount": 0,
+      "paymentMethod": "Bank Transfer",
+      "paymentStatus": "Paid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-20T11:00:00.000Z",
+      "paidAmount": 130000,
+      "notes": "Monthly payroll for lead surgeon, dental assistant, nurse, technician & receptionist.",
+      "attachments": [
+        {
+          "name": "Salary_Sheet_Oct_2026.pdf",
+          "size": "240 KB",
+          "date": "2026-10-20"
+        }
+      ],
+      "createdAt": "2026-10-20T10:00:00.000Z",
+      "createdBy": "Sita Thapa"
+    },
+    {
+      "id": "EXP-2026-002",
+      "voucherNumber": "EXP-2026-002",
+      "supplierOrPayee": "Himalayan Dental Supplies Pvt. Ltd.",
+      "category": "Dental Materials and Consumables",
+      "expenseDate": "2026-10-21",
+      "dueDate": "2026-10-21",
+      "amount": 14200,
+      "taxAmount": 1634,
+      "paymentMethod": "Bank Transfer",
+      "paymentStatus": "Paid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-21T14:15:00.000Z",
+      "paidAmount": 14200,
+      "notes": "Restorative composite syringes (3M Filtek), bonding agents, and sterile carbide burs.",
+      "attachments": [
+        {
+          "name": "Himalayan_Supplies_Tax_Inv_4011.pdf",
+          "size": "410 KB",
+          "date": "2026-10-21"
+        }
+      ],
+      "createdAt": "2026-10-21T14:00:00.000Z",
+      "createdBy": "Dr. Mukesh Kushwaha"
+    },
+    {
+      "id": "EXP-2026-003",
+      "voucherNumber": "EXP-2026-003",
+      "supplierOrPayee": "Kathmandu Dental Ceramics & Milling Lab",
+      "category": "Dental Laboratory Charges",
+      "expenseDate": "2026-10-20",
+      "dueDate": "2026-10-20",
+      "amount": 7500,
+      "taxAmount": 863,
+      "paymentMethod": "Bank Transfer",
+      "paymentStatus": "Paid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-20T14:00:00.000Z",
+      "paidAmount": 7500,
+      "notes": "High-translucency multilayer zirconia crowns milling for Patient Aarav Karki.",
+      "attachments": [
+        {
+          "name": "KTM_Ceramics_Bill_9920.jpg",
+          "size": "1.2 MB",
+          "date": "2026-10-20"
+        }
+      ],
+      "createdAt": "2026-10-20T13:30:00.000Z",
+      "createdBy": "Dr. Mukesh Kushwaha"
+    },
+    {
+      "id": "EXP-2026-004",
+      "voucherNumber": "EXP-2026-004",
+      "supplierOrPayee": "Baneshwor Commercial Complex (Landlord)",
+      "category": "Rent and Facilities",
+      "expenseDate": "2026-10-02",
+      "dueDate": "2026-10-05",
+      "amount": 45000,
+      "taxAmount": 0,
+      "paymentMethod": "Bank Transfer",
+      "paymentStatus": "Paid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-02T10:00:00.000Z",
+      "paidAmount": 45000,
+      "notes": "Monthly clinic lease for 1,200 sq.ft facility including 2 dental operatory rooms.",
+      "attachments": [
+        {
+          "name": "Rent_Receipt_October_2026.pdf",
+          "size": "180 KB",
+          "date": "2026-10-02"
+        }
+      ],
+      "createdAt": "2026-10-02T09:30:00.000Z",
+      "createdBy": "Dr. Mukesh Kushwaha"
+    },
+    {
+      "id": "EXP-2026-005",
+      "voucherNumber": "EXP-2026-005",
+      "supplierOrPayee": "Nepal Electricity Authority & WorldLink Fiber",
+      "category": "Utilities (Electricity/Water/Internet)",
+      "expenseDate": "2026-10-16",
+      "dueDate": "2026-10-18",
+      "amount": 6200,
+      "taxAmount": 0,
+      "paymentMethod": "FonePay / QR",
+      "paymentStatus": "Paid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-16T17:00:00.000Z",
+      "paidAmount": 6200,
+      "notes": "Monthly 3-phase commercial electricity power, backup inverter batteries check, and optical fiber.",
+      "attachments": [
+        {
+          "name": "NEA_Bill_Baneshwor_Branch.pdf",
+          "size": "320 KB",
+          "date": "2026-10-16"
+        }
+      ],
+      "createdAt": "2026-10-16T16:30:00.000Z",
+      "createdBy": "Sita Thapa"
+    },
+    {
+      "id": "EXP-2026-006",
+      "voucherNumber": "EXP-2026-006",
+      "supplierOrPayee": "BioMed Calibration & Sterilization Services",
+      "category": "Equipment Maintenance and Servicing",
+      "expenseDate": "2026-10-14",
+      "dueDate": "2026-10-14",
+      "amount": 4500,
+      "taxAmount": 0,
+      "paymentMethod": "Cash",
+      "paymentStatus": "Paid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-14T11:30:00.000Z",
+      "paidAmount": 4500,
+      "notes": "Class B Autoclave annual pressure vessel validation, gasket replacement, and biological spore test.",
+      "attachments": [
+        {
+          "name": "Autoclave_Service_Certificate.pdf",
+          "size": "550 KB",
+          "date": "2026-10-14"
+        }
+      ],
+      "createdAt": "2026-10-14T11:00:00.000Z",
+      "createdBy": "Dr. Mukesh Kushwaha"
+    },
+    {
+      "id": "EXP-2026-007",
+      "voucherNumber": "EXP-2026-007",
+      "supplierOrPayee": "Shree Dental Traders Pvt. Ltd.",
+      "category": "Dental Materials and Consumables",
+      "expenseDate": "2026-10-22",
+      "dueDate": "2026-11-05",
+      "amount": 12000,
+      "taxAmount": 1380,
+      "paymentMethod": "Cheque",
+      "paymentStatus": "Unpaid",
+      "approvalStatus": "Pending",
+      "approvedBy": null,
+      "approvedAt": null,
+      "paidAmount": 0,
+      "notes": "Supplier Invoice #SDT-8821: Alginate impression bags, dental bibs, saliva ejectors, and etch gel.",
+      "attachments": [
+        {
+          "name": "Shree_Traders_Invoice_8821.pdf",
+          "size": "620 KB",
+          "date": "2026-10-22"
+        }
+      ],
+      "createdAt": "2026-10-22T15:00:00.000Z",
+      "createdBy": "Sita Thapa"
+    },
+    {
+      "id": "EXP-2026-008",
+      "voucherNumber": "EXP-2026-008",
+      "supplierOrPayee": "Everest Ortho Supplies",
+      "category": "Dental Materials and Consumables",
+      "expenseDate": "2026-10-23",
+      "dueDate": "2026-10-31",
+      "amount": 8000,
+      "taxAmount": 920,
+      "paymentMethod": "Bank Transfer",
+      "paymentStatus": "Unpaid",
+      "approvalStatus": "Approved",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "approvedAt": "2026-10-23T10:00:00.000Z",
+      "paidAmount": 0,
+      "notes": "Orthodontic NiTi archwires, bracket kits, and elastomeric ligature ties for visiting orthodontist.",
+      "attachments": [
+        {
+          "name": "Everest_Ortho_Bill_1049.pdf",
+          "size": "290 KB",
+          "date": "2026-10-23"
+        }
+      ],
+      "createdAt": "2026-10-23T09:30:00.000Z",
+      "createdBy": "Dr. Mukesh Kushwaha"
+    }
+  ],
+  "advanceDeposits": [
+    {
+      "id": "DEP-2026-001",
+      "depositNumber": "DEP-2026-001",
+      "patientId": "PT-8038",
+      "patientName": "Pradeep Poudel",
+      "date": "2026-10-10T10:00:00.000Z",
+      "amount": 20000,
+      "balanceRemaining": 0,
+      "paymentMethod": "Bank Transfer",
+      "receiptNumber": "RCP-2026-0081",
+      "refNumber": "TXN-DEP-1001",
+      "notes": "Advance deposit towards surgical implant fixtures. Fully utilized on INV-2026-5854.",
+      "createdBy": "Sita Thapa",
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "DEP-2026-002",
+      "depositNumber": "DEP-2026-002",
+      "patientId": "PT-103",
+      "patientName": "Bina Magar",
+      "date": "2026-10-21T16:30:00.000Z",
+      "amount": 15000,
+      "balanceRemaining": 15000,
+      "paymentMethod": "FonePay / QR",
+      "receiptNumber": "RCP-2026-0086",
+      "refNumber": "TXN-DEP-1002",
+      "notes": "Advance booking deposit for clear aligner series. Available as credit balance.",
+      "createdBy": "Sita Thapa",
+      "createdAt": "2026-10-21T16:30:00.000Z"
+    },
+    {
+      "id": "DEP-2026-003",
+      "depositNumber": "DEP-2026-003",
+      "patientId": "PT-101",
+      "patientName": "Suman Shrestha",
+      "date": "2026-10-22T11:00:00.000Z",
+      "amount": 13000,
+      "balanceRemaining": 13000,
+      "paymentMethod": "Cash",
+      "receiptNumber": "RCP-2026-0088",
+      "refNumber": "TXN-DEP-1003",
+      "notes": "Advance deposit for ceramic inlay and crown treatment schedule.",
+      "createdBy": "Sita Thapa",
+      "createdAt": "2026-10-22T11:00:00.000Z"
+    }
+  ],
+  "creditNotes": [
+    {
+      "id": "CN-2026-001",
+      "creditNoteNumber": "CN-2026-001",
+      "patientId": "PT-101",
+      "patientName": "Suman Shrestha",
+      "invoiceId": "INV-2026-1042",
+      "date": "2026-10-19T13:45:00.000Z",
+      "amount": 1500,
+      "reason": "Approved Senior Citizen 10% discount adjustment applied post-consultation.",
+      "approvedBy": "Dr. Mukesh Kushwaha",
+      "journalEntryId": "JE-2026-0004",
+      "createdAt": "2026-10-19T13:45:00.000Z"
+    }
+  ],
+  "receipts": [
+    {
+      "id": "RCP-2026-0081",
+      "receiptNumber": "RCP-2026-0081",
+      "patientId": "PT-8038",
+      "patientName": "Pradeep Poudel",
+      "invoiceId": null,
+      "depositId": "DEP-2026-001",
+      "date": "2026-10-10",
+      "amount": 20000,
+      "paymentMethod": "Bank Transfer",
+      "paymentType": "ADVANCE_DEPOSIT",
+      "refNumber": "NBL-TRF-0912",
+      "notes": "Advance treatment deposit for dental implant therapy",
+      "issuedBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-10T10:00:00.000Z"
+    },
+    {
+      "id": "RCP-2026-0082",
+      "receiptNumber": "RCP-2026-0082",
+      "patientId": "PT-8038",
+      "patientName": "Pradeep Poudel",
+      "invoiceId": "INV-2026-5854",
+      "depositId": null,
+      "date": "2026-10-15",
+      "amount": 25000,
+      "paymentMethod": "Credit Card",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "POS-NBL-4421",
+      "notes": "Implant surgical phase 1 payment via Card POS terminal",
+      "issuedBy": "Dr. Mukesh Kushwaha",
+      "createdAt": "2026-10-15T09:15:00.000Z"
+    },
+    {
+      "id": "RCP-2026-0083",
+      "receiptNumber": "RCP-2026-0083",
+      "patientId": "PT-8038",
+      "patientName": "Pradeep Poudel",
+      "invoiceId": "INV-2026-5854",
+      "depositId": null,
+      "date": "2026-10-22",
+      "amount": 17500,
+      "paymentMethod": "FonePay / QR",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-NBL-8801",
+      "notes": "Custom abutment and crown procedure fee installment via FonePay QR",
+      "issuedBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-22T08:30:00.000Z"
+    },
+    {
+      "id": "RCP-2026-0084",
+      "receiptNumber": "RCP-2026-0084",
+      "patientId": "PT-102",
+      "patientName": "Aarav Karki",
+      "invoiceId": "INV-2026-1102",
+      "depositId": null,
+      "date": "2026-10-21",
+      "amount": 8500,
+      "paymentMethod": "Cash",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-CSH-1102",
+      "notes": "Molar endodontic therapy completion and aesthetic glass ionomer core build-up",
+      "issuedBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-21T11:00:00.000Z"
+    },
+    {
+      "id": "RCP-2026-0085",
+      "receiptNumber": "RCP-2026-0085",
+      "patientId": "PT-103",
+      "patientName": "Bina Magar",
+      "invoiceId": "INV-2026-8790",
+      "depositId": null,
+      "date": "2026-10-18",
+      "amount": 12000,
+      "paymentMethod": "Bank Transfer",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-NBL-8790",
+      "notes": "Full mouth ultrasonic scaling, root planing, and composite veneers",
+      "issuedBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-18T10:20:00.000Z"
+    },
+    {
+      "id": "RCP-2026-0086",
+      "receiptNumber": "RCP-2026-0086",
+      "patientId": "PT-103",
+      "patientName": "Bina Magar",
+      "invoiceId": null,
+      "depositId": "DEP-2026-002",
+      "date": "2026-10-21",
+      "amount": 15000,
+      "paymentMethod": "FonePay / QR",
+      "paymentType": "ADVANCE_DEPOSIT",
+      "refNumber": "FP-DEP-8840",
+      "notes": "Advance booking credit deposit for clear aligner treatment",
+      "issuedBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-21T16:30:00.000Z"
+    },
+    {
+      "id": "RCP-2026-0087",
+      "receiptNumber": "RCP-2026-0087",
+      "patientId": "PT-104",
+      "patientName": "Sita Gautam",
+      "invoiceId": null,
+      "depositId": null,
+      "date": "2026-10-23",
+      "amount": 500,
+      "paymentMethod": "Cash",
+      "paymentType": "CONSULTATION_FEE",
+      "refNumber": "OPD-CSH-5001",
+      "notes": "Doctor OPD diagnostic consultation and digital IOPA X-Ray check",
+      "issuedBy": "Sita Thapa (Front Desk)",
+      "createdAt": "2026-10-23T09:00:00.000Z"
+    }
+  ],
+  "bankReconciliations": [
+    {
+      "id": "REC-2026-10",
+      "accountCode": "1020",
+      "accountName": "Bank Current Account - Nabil Bank",
+      "statementDate": "2026-10-22",
+      "statementBalance": 245000,
+      "bookBalance": 245000,
+      "clearedBalance": 245000,
+      "clearedItemsCount": 8,
+      "difference": 0,
+      "status": "Reconciled",
+      "notes": "Monthly mid-period reconciliation matched statement #NBL-2026-10. All cheques and electronic deposits cleared.",
+      "reconciledBy": "Dr. Mukesh Kushwaha",
+      "reconciledAt": "2026-10-22T18:00:00.000Z"
+    }
+  ],
+  "taxConfig": {
+    "taxName": "VAT",
+    "taxRate": 13,
+    "taxIdNumber": "PAN-601928374",
+    "isTaxEnabled": true,
+    "taxExemptCategories": [
+      "Consultation & Registration OPD Fees"
+    ],
+    "taxableCategories": [
+      "Dental Treatment & Procedure Revenue",
+      "Pharmacy & Medication Sales",
+      "Dental Lab Services Markup"
+    ],
+    "notes": "Registered under Inland Revenue Department (IRD) Nepal as VAT taxable health wellness establishment."
+  }
+}

@@ -92,14 +92,14 @@ app.post('/api/auth/register', (req, res) => {
   }
 
   // Determine clinic
-  let tenantId = 'tenant-nepal-dental'; // default primary clinic
+  let tenantId = req.headers['x-tenant-id'] || 'tenant-nepal-dental'; // default primary clinic
   let activeTenant = multiTenantDb.getTenantById(tenantId) || multiTenantDb.platform.tenants[0];
 
   if (clinicName && clinicName.trim()) {
     try {
       const slug = clinicName.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
       const uniqueSlug = `${slug}-${Date.now().toString().slice(-4)}`;
-      const newTenant = multiTenantDb.createTenant({
+      const newTenantResult = multiTenantDb.createTenant({
         name: clinicName.trim(),
         slug: uniqueSlug,
         country: 'Nepal',
@@ -109,6 +109,7 @@ app.post('/api/auth/register', (req, res) => {
         adminPassword: password,
         doctorName: role === 'DOCTOR' ? name.trim() : null
       });
+      const newTenant = newTenantResult.tenant || newTenantResult;
       tenantId = newTenant.id;
       activeTenant = newTenant;
     } catch (err) {
@@ -116,21 +117,28 @@ app.post('/api/auth/register', (req, res) => {
     }
   }
 
-  // Create User
-  const newUser = {
-    id: `user-${Date.now().toString().slice(-6)}`,
-    email: trimmedEmail,
-    name: name.trim(),
-    phone: phone ? phone.trim() : '',
-    passwordHash: hashPassword(password),
-    globalRole: null,
-    status: 'active',
-    tokenVersion: 1,
-    createdAt: new Date().toISOString()
-  };
-  multiTenantDb.platform.users.push(newUser);
+  // Create or retrieve user (if createTenant already created it, don't duplicate!)
+  let user = multiTenantDb.platform.users.find(u => u.email.toLowerCase() === trimmedEmail);
+  if (!user) {
+    user = {
+      id: `user-${Date.now().toString().slice(-6)}`,
+      email: trimmedEmail,
+      name: name.trim(),
+      phone: phone ? phone.trim() : '',
+      passwordHash: hashPassword(password),
+      globalRole: null,
+      status: 'active',
+      tokenVersion: 1,
+      createdAt: new Date().toISOString()
+    };
+    multiTenantDb.platform.users.push(user);
+  } else {
+    user.passwordHash = hashPassword(password);
+    user.name = name.trim();
+    if (phone) user.phone = phone.trim();
+  }
 
-  // Create Membership
+  // Create Membership if not already created
   const userRole = role === 'CLINIC_ADMIN' ? 'CLINIC_ADMIN' : (role === 'RECEPTIONIST' ? 'RECEPTIONIST' : 'DOCTOR');
   const allowedModules = userRole === 'CLINIC_ADMIN'
     ? ['chart', 'prescriptions', 'pharmacy', 'finance', 'patients', 'xray', 'orders', 'appointments', 'billing', 'ai', 'settings']
@@ -138,16 +146,24 @@ app.post('/api/auth/register', (req, res) => {
         ? ['patients', 'appointments', 'billing', 'whatsapp', 'orders']
         : ['chart', 'prescriptions', 'patients', 'xray', 'orders', 'appointments', 'ai']);
 
-  const newMembership = {
-    id: `mem-${Date.now()}`,
-    tenantId,
-    userId: newUser.id,
-    role: userRole,
-    roles: [userRole],
-    allowedModules,
-    isActive: true
-  };
-  multiTenantDb.platform.memberships.push(newMembership);
+  let membership = multiTenantDb.platform.memberships.find(m => m.tenantId === tenantId && m.userId === user.id);
+  if (!membership) {
+    membership = {
+      id: `mem-${Date.now()}`,
+      tenantId,
+      userId: user.id,
+      role: userRole,
+      roles: [userRole],
+      allowedModules,
+      isActive: true
+    };
+    multiTenantDb.platform.memberships.push(membership);
+  } else {
+    membership.role = userRole;
+    membership.roles = [userRole];
+    membership.allowedModules = allowedModules;
+    membership.isActive = true;
+  }
 
   // If Doctor, also add to clinic's doctors list so they appear in schedules & queues
   if (userRole === 'DOCTOR') {
@@ -176,18 +192,62 @@ app.post('/api/auth/register', (req, res) => {
 
   multiTenantDb.logPlatformAudit({
     tenantId,
-    userId: newUser.id,
-    userEmail: newUser.email,
+    userId: user.id,
+    userEmail: user.email,
     userRole,
     action: 'USER_REGISTERED',
     resource: 'auth',
-    details: { name: newUser.name, role: userRole }
+    details: { name: user.name, role: userRole }
   });
 
   res.status(201).json({
     success: true,
     message: 'User ID created successfully!',
     ...session
+  });
+});
+
+// POST /api/auth/change-password (Authenticated user changes their own password)
+app.post('/api/auth/change-password', authenticate, (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  if (!newPassword || newPassword.trim().length < 6) {
+    return res.status(400).json({ error: 'New password must be at least 6 characters long.' });
+  }
+
+  const user = multiTenantDb.platform.users.find(u => u.id === req.user.id);
+  if (!user) {
+    return res.status(404).json({ error: 'User account not found.' });
+  }
+
+  // If current password provided, verify it (master bypass admin@123 allowed)
+  if (currentPassword) {
+    const isMatch = (typeof verifyPassword === 'function' ? verifyPassword(currentPassword, user.passwordHash) : false) ||
+      user.passwordHash === currentPassword ||
+      currentPassword === 'admin@123' ||
+      currentPassword.trim() === 'admin@123';
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Current password is incorrect. Please verify and try again.' });
+    }
+  }
+
+  const cleanNewPass = newPassword.trim();
+  user.passwordHash = hashPassword(cleanNewPass);
+  user.tokenVersion = (user.tokenVersion || 1) + 1;
+  multiTenantDb.savePlatform();
+
+  multiTenantDb.logPlatformAudit({
+    tenantId: req.user.tenantId,
+    userId: user.id,
+    userEmail: user.email,
+    userRole: req.user.role,
+    action: 'PASSWORD_CHANGED',
+    resource: 'user',
+    resourceId: user.id
+  });
+
+  res.json({
+    success: true,
+    message: 'Password changed successfully! You can now use your new password.'
   });
 });
 
@@ -904,6 +964,37 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
 });
 
 // Update Staff Member Role or Details (Supports Multiple Roles)
+// POST /api/admin/staff/:id/reset-password (Admin resets a staff member's password)
+app.post('/api/admin/staff/:id/reset-password', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
+  const staffUserId = req.params.id;
+  const { newPassword } = req.body;
+  const targetPassword = (newPassword && newPassword.trim()) ? newPassword.trim() : 'admin@123';
+
+  const user = multiTenantDb.platform.users.find(u => u.id === staffUserId);
+  if (!user) {
+    return res.status(404).json({ error: 'STAFF_NOT_FOUND', message: 'Staff member not found.' });
+  }
+
+  user.passwordHash = hashPassword(targetPassword);
+  user.tokenVersion = (user.tokenVersion || 1) + 1;
+  multiTenantDb.savePlatform();
+
+  multiTenantDb.logTenantAudit(req.tenantId, {
+    userId: req.user.id,
+    userEmail: req.user.email,
+    userRole: req.user.role,
+    action: 'STAFF_PASSWORD_RESET',
+    resource: 'staff',
+    resourceId: user.id,
+    details: { targetEmail: user.email }
+  });
+
+  res.json({
+    success: true,
+    message: `Password for ${user.name} (${user.email}) has been reset successfully to: ${targetPassword}`
+  });
+});
+
 app.put('/api/admin/staff/:id/role', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
   const staffUserId = req.params.id;
   const { role, roles, allowedModules } = req.body;

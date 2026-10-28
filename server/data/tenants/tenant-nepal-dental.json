@@ -53,6 +53,14 @@
       "phone": "+977 98511 77889",
       "specialization": "Orthodontics & Dentofacial Orthopedics (BDS, MDS)",
       "status": "Active"
+    },
+    {
+      "id": "doc-6602",
+      "name": "Dr. Sitaram Kushwaha",
+      "specialty": "General Dentistry",
+      "qualification": "BDS",
+      "phone": "",
+      "color": "#2563eb"
     }
   ],
   "chairs": [
@@ -284,6 +292,44 @@
       ],
       "prescriptions": [
         {
+          "id": "RX-2485",
+          "date": "2026-10-28",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "isFinalized": true,
+          "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+          "instructions": "Take medications strictly after meals. Rinse with warm salt water.",
+          "reviewTimeline": "3 days",
+          "medicines": [
+            {
+              "name": "Ketorolac 10mg (Ketorol-DT)",
+              "genericName": "Ketorolac Tromethamine",
+              "dosage": "10 mg",
+              "frequency": "1 tablet PRN for severe pain (max 3/day)",
+              "duration": "2 days",
+              "instructions": "Dissolve in half glass water"
+            }
+          ]
+        },
+        {
+          "id": "RX-3126",
+          "date": "2026-10-27",
+          "doctor": "Dr. Mukesh Kushwaha",
+          "isFinalized": true,
+          "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+          "instructions": "Take medications strictly after meals. Rinse with warm salt water.",
+          "reviewTimeline": "3 days",
+          "medicines": [
+            {
+              "name": "Ketorolac 10mg (Ketorol-DT)",
+              "genericName": "Ketorolac Tromethamine",
+              "dosage": "10 mg",
+              "frequency": "1 tablet PRN for severe pain (max 3/day)",
+              "duration": "2 days",
+              "instructions": "Dissolve in half glass water"
+            }
+          ]
+        },
+        {
           "id": "RX-5716",
           "date": "2026-10-27",
           "doctor": "Dr. Mukesh Kushwaha",
@@ -359,6 +405,72 @@
         }
       ],
       "invoices": [
+        {
+          "id": "INV-2514",
+          "invoiceNumber": "INV-2026-1056",
+          "date": "2026-10-28",
+          "createdAt": "2026-10-28T05:47:52.514Z",
+          "isFinalized": true,
+          "treatmentName": "Obturation & Permanent Core Build-up #16",
+          "items": [
+            {
+              "code": "RCT-OBT-01",
+              "description": "Endodontic Obturation #16",
+              "qty": 1,
+              "unitPrice": 3500,
+              "total": 3500
+            },
+            {
+              "code": "REST-CORE-01",
+              "description": "Composite Core Build-up",
+              "qty": 1,
+              "unitPrice": 2000,
+              "total": 2000
+            }
+          ],
+          "subtotal": 5500,
+          "discount": 500,
+          "tax": 0,
+          "total": 5000,
+          "paid": 5000,
+          "paymentMethod": "Fonepay QR",
+          "status": "Paid",
+          "doctorName": "Dr. Mukesh Kushwaha",
+          "receiptNumber": "RCP-2026-74242"
+        },
+        {
+          "id": "INV-3168",
+          "invoiceNumber": "INV-2026-1820",
+          "date": "2026-10-27",
+          "createdAt": "2026-10-27T18:25:33.168Z",
+          "isFinalized": true,
+          "treatmentName": "Obturation & Permanent Core Build-up #16",
+          "items": [
+            {
+              "code": "RCT-OBT-01",
+              "description": "Endodontic Obturation #16",
+              "qty": 1,
+              "unitPrice": 3500,
+              "total": 3500
+            },
+            {
+              "code": "REST-CORE-01",
+              "description": "Composite Core Build-up",
+              "qty": 1,
+              "unitPrice": 2000,
+              "total": 2000
+            }
+          ],
+          "subtotal": 5500,
+          "discount": 500,
+          "tax": 0,
+          "total": 5000,
+          "paid": 5000,
+          "paymentMethod": "Fonepay QR",
+          "status": "Paid",
+          "doctorName": "Dr. Mukesh Kushwaha",
+          "receiptNumber": "RCP-2026-14093"
+        },
         {
           "id": "INV-5775",
           "invoiceNumber": "INV-2026-5517",
@@ -1343,6 +1455,128 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "tlog-1793166472629-461",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-2514",
+      "details": {
+        "invoiceNumber": "INV-2026-1056",
+        "total": 5000,
+        "paid": 5000,
+        "receiptNumber": "RCP-2026-74242"
+      },
+      "timestamp": "2026-10-28T05:47:52.629Z"
+    },
+    {
+      "id": "tlog-1793166472522-973",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-472522",
+      "details": {
+        "type": "INCOME",
+        "amount": 5000,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-74242"
+      },
+      "timestamp": "2026-10-28T05:47:52.522Z"
+    },
+    {
+      "id": "tlog-1793166472497-953",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-2485",
+      "details": {
+        "patientId": "PT-1001",
+        "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-28T05:47:52.497Z"
+    },
+    {
+      "id": "tlog-1793166472470-971",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-1001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-10-28T05:47:52.470Z"
+    },
+    {
+      "id": "tlog-1793125533263-943",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-3168",
+      "details": {
+        "invoiceNumber": "INV-2026-1820",
+        "total": 5000,
+        "paid": 5000,
+        "receiptNumber": "RCP-2026-14093"
+      },
+      "timestamp": "2026-10-27T18:25:33.263Z"
+    },
+    {
+      "id": "tlog-1793125533186-644",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-533186",
+      "details": {
+        "type": "INCOME",
+        "amount": 5000,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-14093"
+      },
+      "timestamp": "2026-10-27T18:25:33.186Z"
+    },
+    {
+      "id": "tlog-1793125533135-222",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-3126",
+      "details": {
+        "patientId": "PT-1001",
+        "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-27T18:25:33.135Z"
+    },
+    {
+      "id": "tlog-1793125533092-98",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-1001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-10-27T18:25:33.092Z"
+    },
     {
       "id": "tlog-1793122345980-947",
       "userId": "user-nepal-admin",
@@ -10351,6 +10585,38 @@
   },
   "financeTransactions": [
     {
+      "id": "TXN-472522",
+      "date": "2026-10-28",
+      "refNumber": "RCP-2026-74242",
+      "payerOrRecipient": "Aarav Sharma",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-1001",
+      "relatedStaffId": null,
+      "notes": "Invoice payment for #INV-2026-1056",
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-28T05:47:52.522Z"
+    },
+    {
+      "id": "TXN-533186",
+      "date": "2026-10-27",
+      "refNumber": "RCP-2026-14093",
+      "payerOrRecipient": "Aarav Sharma",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-1001",
+      "relatedStaffId": null,
+      "notes": "Invoice payment for #INV-2026-1820",
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T18:25:33.186Z"
+    },
+    {
       "id": "TXN-345802",
       "date": "2026-10-27",
       "refNumber": "RCP-2026-72397",
@@ -11053,7 +11319,7 @@
       "category": "Current Assets",
       "normalBalance": "DEBIT",
       "description": "Clearing account for FonePay QR, Cards POS, eSewa and digital settlements",
-      "balance": 57500,
+      "balance": 67500,
       "isActive": true
     },
     {
@@ -11163,7 +11429,7 @@
       "category": "Operating Revenue",
       "normalBalance": "CREDIT",
       "description": "Gross billings for restorations, root canals, dental implants, crowns, and extractions",
-      "balance": 209912,
+      "balance": 220912,
       "isActive": true
     },
     {
@@ -11283,11 +11549,135 @@
       "category": "Contra Revenue",
       "normalBalance": "DEBIT",
       "description": "Authorized treatment price reductions, student/senior citizen concessions, and waivers",
-      "balance": 10600,
+      "balance": 11600,
       "isActive": true
     }
   ],
   "journalEntries": [
+    {
+      "id": "JE-2026-8389",
+      "date": "2026-10-28",
+      "reference": "RCP-2026-74242",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Aarav Sharma for invoice #INV-2026-1056",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 5000
+        }
+      ],
+      "totalDebit": 5000,
+      "totalCredit": 5000,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-28T05:47:52.598Z"
+    },
+    {
+      "id": "JE-2026-2302",
+      "date": "2026-10-28",
+      "reference": "INV-2026-1056",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Aarav Sharma (Inv #INV-2026-1056)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 5500
+        }
+      ],
+      "totalDebit": 5500,
+      "totalCredit": 5500,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-28T05:47:52.574Z"
+    },
+    {
+      "id": "JE-2026-1995",
+      "date": "2026-10-27",
+      "reference": "RCP-2026-14093",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Aarav Sharma for invoice #INV-2026-1820",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 5000
+        }
+      ],
+      "totalDebit": 5000,
+      "totalCredit": 5000,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T18:25:33.230Z"
+    },
+    {
+      "id": "JE-2026-5871",
+      "date": "2026-10-27",
+      "reference": "INV-2026-1820",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Aarav Sharma (Inv #INV-2026-1820)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 5500
+        }
+      ],
+      "totalDebit": 5500,
+      "totalCredit": 5500,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T18:25:33.212Z"
+    },
     {
       "id": "JE-2026-2174",
       "date": "2026-10-27",
@@ -12320,6 +12710,38 @@
     }
   ],
   "receipts": [
+    {
+      "id": "RCP-2026-74242",
+      "receiptNumber": "RCP-2026-74242",
+      "patientId": "PT-1001",
+      "patientName": "Aarav Sharma",
+      "invoiceId": "INV-2026-1056",
+      "depositId": null,
+      "date": "2026-10-28",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-INV-2026-1056",
+      "notes": "Payment collected for invoice #INV-2026-1056",
+      "issuedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-28T05:47:52.515Z"
+    },
+    {
+      "id": "RCP-2026-14093",
+      "receiptNumber": "RCP-2026-14093",
+      "patientId": "PT-1001",
+      "patientName": "Aarav Sharma",
+      "invoiceId": "INV-2026-1820",
+      "depositId": null,
+      "date": "2026-10-27",
+      "amount": 5000,
+      "paymentMethod": "Fonepay QR",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-INV-2026-1820",
+      "notes": "Payment collected for invoice #INV-2026-1820",
+      "issuedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-27T18:25:33.169Z"
+    },
     {
       "id": "RCP-2026-72397",
       "receiptNumber": "RCP-2026-72397",
