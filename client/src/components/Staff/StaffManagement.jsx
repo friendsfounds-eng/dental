@@ -228,6 +228,7 @@ export default function StaffManagement({
   // New staff form state
   const [newStaff, setNewStaff] = useState({
     name: '',
+    username: '',
     email: '',
     phone: '',
     roles: ['DOCTOR'],
@@ -314,11 +315,18 @@ export default function StaffManagement({
       ? newStaff.allowedModules
       : getDefaultModulesForRoles(assignedRoles);
 
+    const cleanUsername = (newStaff.username || newStaff.email || '').replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    if (!cleanUsername) {
+      alert('Username must contain only letters and numbers.');
+      return;
+    }
+
     const payload = {
       name: newStaff.name,
-      email: newStaff.email,
+      username: cleanUsername,
+      email: newStaff.email || `${cleanUsername}@platform.local`,
       phone: newStaff.phone,
-      password: newStaff.password,
+      password: newStaff.password || 'admin@123',
       specialization: newStaff.specialization,
       roles: assignedRoles,
       role: assignedRoles.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : assignedRoles[0],
@@ -338,6 +346,7 @@ export default function StaffManagement({
       setAddModalOpen(false);
       setNewStaff({
         name: '',
+        username: '',
         email: '',
         phone: '',
         roles: ['DOCTOR'],
@@ -496,7 +505,7 @@ export default function StaffManagement({
   // Filtered staff (supports multi-role matching)
   const filteredStaff = staff.filter(s => {
     const q = searchQuery.toLowerCase();
-    const matchesSearch = !q || s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q) || (s.phone && s.phone.includes(q));
+    const matchesSearch = !q || s.name.toLowerCase().includes(q) || (s.username && s.username.toLowerCase().includes(q)) || s.email.toLowerCase().includes(q) || (s.phone && s.phone.includes(q));
     const userRoles = Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : (s.role ? [s.role] : []);
     const matchesRole = roleFilter === 'ALL' || userRoles.includes(roleFilter);
     const matchesStatus = statusFilter === 'ALL' || s.status === statusFilter;
@@ -719,9 +728,12 @@ export default function StaffManagement({
                                 </span>
                               )}
                             </div>
-                            <div className="text-[11px] font-mono text-slate-400 flex items-center space-x-1">
-                              <Mail className="w-3 h-3 text-slate-400" />
-                              <span>{s.email}</span>
+                            <div className="text-[11px] font-mono text-slate-500 flex items-center space-x-1">
+                              <User className="w-3 h-3 text-blue-600" />
+                              <span className="font-bold text-slate-700">@{s.username || (s.email ? s.email.split('@')[0] : 'user')}</span>
+                              {s.email && !s.email.endsWith('@platform.local') && (
+                                <span className="text-slate-400 font-normal">({s.email})</span>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -897,17 +909,22 @@ export default function StaffManagement({
                 />
               </div>
 
-              {/* Email */}
+              {/* Username */}
               <div>
                 <label className="block font-bold text-slate-700 uppercase mb-1">
-                  Email Address (Login Username) *
+                  Username (Letters & Numbers Only) *
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   required
-                  placeholder="staff@nepaldental.com.np"
-                  value={newStaff.email}
-                  onChange={(e) => setNewStaff({ ...newStaff, email: e.target.value })}
+                  pattern="[a-zA-Z0-9]+"
+                  title="Only letters and numbers are allowed (no spaces or special characters)"
+                  placeholder="e.g. drsarita or staff01"
+                  value={newStaff.username || ''}
+                  onChange={(e) => {
+                    const clean = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+                    setNewStaff({ ...newStaff, username: clean, email: clean ? `${clean.toLowerCase()}@platform.local` : '' });
+                  }}
                   className="w-full p-2.5 rounded-xl border border-slate-300 font-medium focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>

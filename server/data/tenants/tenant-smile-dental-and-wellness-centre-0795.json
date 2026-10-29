@@ -122,7 +122,9 @@
           "doctorQualification": "BDS, MDS",
           "doctorSpecialty": "Dental Surgeon",
           "doctorReg": "NMC-PENDING",
-          "doctorPhone": "+977 98000 00000"
+          "doctorPhone": "+977 98000 00000",
+          "createdAt": "2026-10-23T10:15:00.000Z",
+          "time": "01:15 PM"
         }
       ],
       "createdAt": "2026-10-23T11:19:37.372Z",

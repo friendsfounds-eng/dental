@@ -785,7 +785,12 @@ export default function PatientViewModal({
                                 {inv.invoiceNumber || inv.id || `INV-${idx + 1}`}
                               </td>
                               <td className="py-3 px-4 text-slate-600 font-medium">
-                                {formatDate(inv.date)}
+                                <div>{formatDate(inv.date)}</div>
+                                {(inv.time || inv.createdAt) && (
+                                  <div className="text-[10px] text-slate-400 font-mono">
+                                    {inv.time || (inv.createdAt ? new Date(inv.createdAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '')}
+                                  </div>
+                                )}
                               </td>
                               <td className="py-3 px-4 max-w-xs truncate text-slate-800" title={itemsSummary}>
                                 <div className="font-semibold truncate">{itemsSummary}</div>

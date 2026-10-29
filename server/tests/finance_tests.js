@@ -124,8 +124,8 @@ async function runFinanceTests() {
         type: 'INCOME',
         category: 'Patient Treatment',
         paymentMethod: 'FonePay / QR',
-        payerOrRecipient: 'Pradeep Poudel',
-        relatedPatientId: 'PT-8038',
+        payerOrRecipient: 'Aarav Sharma',
+        relatedPatientId: 'PT-1001',
         notes: 'Final crown seating settlement via Fonepay'
       })
     });
@@ -164,10 +164,10 @@ async function runFinanceTests() {
     const ptTxnData = await ptTxnRes.json();
     assert(ptTxnRes.ok, 'Retrieved patient financial records');
     assert(Array.isArray(ptTxnData), 'Patient report list returned');
-    const p8038 = ptTxnData.find(p => p.patientId === 'PT-8038');
-    assert(p8038 !== undefined, 'Found records for patient PT-8038');
-    assert(p8038.totalReceived > 0, 'Total received payments tracked');
-    console.log(`  ✅ PASS: Patient [${p8038.patientName}]: Total Received: Rs. ${p8038.totalReceived} | Outstanding: Rs. ${p8038.outstandingBalance}`);
+    const p1001 = ptTxnData.find(p => p.patientId === 'PT-1001');
+    assert(p1001 !== undefined, 'Found records for patient PT-1001');
+    assert(p1001.totalReceived > 0, 'Total received payments tracked');
+    console.log(`  ✅ PASS: Patient [${p1001.patientName}]: Total Received: Rs. ${p1001.totalReceived} | Outstanding: Rs. ${p1001.outstandingBalance}`);
 
     // Receptionist has view access to patient transactions
     const recepPtRes = await fetch(`${BASE_URL}/api/finance/patient-transactions`, {
@@ -178,7 +178,7 @@ async function runFinanceTests() {
 
     // Issue Patient Refund
     console.log('\n--- 6. Patient Refund Issuance ---');
-    const refundRes = await fetch(`${BASE_URL}/api/finance/patient-transactions/PT-101/refund`, {
+    const refundRes = await fetch(`${BASE_URL}/api/finance/patient-transactions/PT-1001/refund`, {
       method: 'POST',
       headers: adminHeaders,
       body: JSON.stringify({
@@ -191,7 +191,7 @@ async function runFinanceTests() {
     assert(refundRes.ok, 'Patient refund issued successfully');
     assert(refundData.transaction.type === 'REFUND', 'Transaction recorded with REFUND type');
     assert(refundData.transaction.amount === 1200, 'Refund amount verified');
-    console.log(`  ✅ PASS: Refund of Rs. 1200 issued for patient PT-101 (Txn: ${refundData.transaction.id})`);
+    console.log(`  ✅ PASS: Refund of Rs. 1200 issued for patient PT-1001 (Txn: ${refundData.transaction.id})`);
 
     // 7. Staff Payment Sheet (Payroll)
     console.log('\n--- 7. Staff Payment Sheet & Payroll Workflow ---');

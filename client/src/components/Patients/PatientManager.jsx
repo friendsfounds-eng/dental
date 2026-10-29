@@ -17,7 +17,6 @@ import {
   Package,
   RotateCw,
   Ticket,
-  Eye,
   List,
   LayoutGrid,
   Calendar,
@@ -831,20 +830,9 @@ export default function PatientManager({
                           </div>
                         </td>
 
-                        {/* Actions Column: View, Edit, Chart, Orders */}
+                        {/* Actions Column: Edit, Chart, Orders */}
                         <td className="py-3.5 px-4 text-center whitespace-nowrap">
                           <div className="flex items-center justify-center space-x-1.5" onClick={(e) => e.stopPropagation()}>
-                            {/* ACTION BUTTON: VIEW */}
-                            <button
-                              type="button"
-                              onClick={() => setViewingPatient(patient)}
-                              className="flex items-center space-x-1 px-2.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition"
-                              title="View Complete Patient EHR Profile"
-                            >
-                              <Eye className="w-3.5 h-3.5" />
-                              <span>View</span>
-                            </button>
-
                             {/* ACTION BUTTON: EDIT */}
                             <button
                               type="button"
@@ -1013,19 +1001,9 @@ export default function PatientManager({
                   </div>
                 </div>
 
-                {/* Bottom Quick Stats & Explicit VIEW and EDIT Action Buttons */}
+                {/* Bottom Quick Stats & Explicit EDIT Action Button */}
                 <div className="mt-4 pt-3 border-t border-slate-200/70 flex items-center justify-between gap-2" onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center space-x-1.5">
-                    <button
-                      type="button"
-                      onClick={() => setViewingPatient(patient)}
-                      className="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition"
-                      title="View Complete EHR Profile"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>View</span>
-                    </button>
-
                     <button
                       type="button"
                       onClick={(e) => handleOpenEditModal(patient, e)}

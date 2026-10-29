@@ -42,15 +42,16 @@ app.get('/health', (req, res) => {
 
 // POST /api/auth/login
 app.post('/api/auth/login', (req, res) => {
-  const { email, password, tenantSlug } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required.' });
+  const identifier = req.body.username || req.body.email || req.body.userId;
+  const { password, tenantSlug } = req.body;
+  if (!identifier || !password) {
+    return res.status(400).json({ error: 'Username and password are required.' });
   }
 
   try {
-    const session = multiTenantDb.authenticate(email, password, tenantSlug);
+    const session = multiTenantDb.authenticate(identifier, password, tenantSlug);
     if (!session) {
-      return res.status(401).json({ error: 'INVALID_CREDENTIALS', message: 'Invalid email or password.' });
+      return res.status(401).json({ error: 'INVALID_CREDENTIALS', message: 'Invalid username or password.' });
     }
 
     multiTenantDb.logPlatformAudit({
@@ -78,17 +79,28 @@ app.post('/api/auth/login', (req, res) => {
 
 // POST /api/auth/register (Create new User ID / Clinic Account)
 app.post('/api/auth/register', (req, res) => {
-  const { name, email, password, phone, role = 'DOCTOR', clinicName, specialty, qualification } = req.body;
-  if (!email || !password || !name) {
-    return res.status(400).json({ error: 'Name, email/User ID, and password are required.' });
+  const { name, username, email, password, phone, role = 'DOCTOR', clinicName, specialty, qualification } = req.body;
+  const rawIdentifier = (username || email || '').trim();
+  if (!rawIdentifier || !password || !name) {
+    return res.status(400).json({ error: 'Name, username, and password are required.' });
   }
 
-  const trimmedEmail = email.trim().toLowerCase();
+  // Enforce strictly letters and numbers for usernames
+  const cleanUsername = rawIdentifier.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  if (!cleanUsername) {
+    return res.status(400).json({ error: 'INVALID_USERNAME', message: 'Username must contain only letters and numbers.' });
+  }
+
+  const cleanEmail = email && email.includes('@') ? email.trim().toLowerCase() : `${cleanUsername}@platform.local`;
 
   // Check if user already exists
-  const existingUser = multiTenantDb.platform.users.find(u => u.email.toLowerCase() === trimmedEmail);
+  const existingUser = multiTenantDb.platform.users.find(u => 
+    (u.username && u.username.toLowerCase() === cleanUsername) ||
+    (u.email && u.email.toLowerCase() === cleanUsername) ||
+    (u.email && u.email.toLowerCase() === cleanEmail)
+  );
   if (existingUser) {
-    return res.status(409).json({ error: 'USER_EXISTS', message: 'An account with this User ID / Email already exists. Please sign in.' });
+    return res.status(409).json({ error: 'USER_EXISTS', message: 'An account with this username already exists. Please sign in.' });
   }
 
   // Determine clinic
@@ -104,7 +116,8 @@ app.post('/api/auth/register', (req, res) => {
         slug: uniqueSlug,
         country: 'Nepal',
         currency: 'Rs.',
-        adminEmail: trimmedEmail,
+        adminUsername: cleanUsername,
+        adminEmail: cleanEmail,
         adminName: name.trim(),
         adminPassword: password,
         doctorName: role === 'DOCTOR' ? name.trim() : null
@@ -118,11 +131,15 @@ app.post('/api/auth/register', (req, res) => {
   }
 
   // Create or retrieve user (if createTenant already created it, don't duplicate!)
-  let user = multiTenantDb.platform.users.find(u => u.email.toLowerCase() === trimmedEmail);
+  let user = multiTenantDb.platform.users.find(u => 
+    (u.username && u.username.toLowerCase() === cleanUsername) ||
+    (u.email && u.email.toLowerCase() === cleanEmail)
+  );
   if (!user) {
     user = {
       id: `user-${Date.now().toString().slice(-6)}`,
-      email: trimmedEmail,
+      username: cleanUsername,
+      email: cleanEmail,
       name: name.trim(),
       phone: phone ? phone.trim() : '',
       passwordHash: hashPassword(password),
@@ -133,6 +150,7 @@ app.post('/api/auth/register', (req, res) => {
     };
     multiTenantDb.platform.users.push(user);
   } else {
+    user.username = cleanUsername;
     user.passwordHash = hashPassword(password);
     user.name = name.trim();
     if (phone) user.phone = phone.trim();
@@ -264,6 +282,7 @@ app.get('/api/auth/me', authenticate, (req, res) => {
   res.json({
     user: {
       id: user.id,
+      username: user.username || (user.email ? user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : user.id),
       email: user.email,
       name: user.name,
       phone: user.phone,
@@ -383,7 +402,7 @@ app.get('/api/platform/tenants', authenticate, requireRole('PLATFORM_ADMIN'), (r
 // Create New Clinic Wizard
 app.post('/api/platform/tenants', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
   try {
-    const { name, slug, country, currency, timeZone, planId, adminEmail, adminName, adminPassword, doctorName, enablePharmacy, enableFinance } = req.body;
+    const { name, slug, country, currency, timeZone, planId, adminUsername, adminEmail, adminName, adminPassword, doctorName, enablePharmacy, enableFinance } = req.body;
     if (!name || !slug) {
       return res.status(400).json({ error: 'Clinic name and unique URL slug are required.' });
     }
@@ -395,6 +414,7 @@ app.post('/api/platform/tenants', authenticate, requireRole('PLATFORM_ADMIN'), (
       currency: currency || 'Rs.',
       timeZone: timeZone || 'Asia/Kathmandu',
       planId: planId || 'plan-starter',
+      adminUsername,
       adminEmail,
       adminName,
       adminPassword,
@@ -425,6 +445,7 @@ app.put('/api/platform/tenants/:id', authenticate, requireRole('PLATFORM_ADMIN')
       phone,
       doctorInCharge,
       adminName,
+      adminUsername,
       adminEmail,
       adminPassword,
       enablePharmacy,
@@ -451,6 +472,7 @@ app.put('/api/platform/tenants/:id', authenticate, requireRole('PLATFORM_ADMIN')
       phone,
       doctorInCharge,
       adminName,
+      adminUsername,
       adminEmail,
       adminPassword,
       subscription,
@@ -845,6 +867,7 @@ app.get('/api/admin/staff', authenticate, resolveTenant, requirePermission('mana
       : getDefaultModulesForRoles(assignedRoles);
     return {
       id: user ? user.id : m.userId,
+      username: user ? (user.username || user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '')) : '',
       email: user ? user.email : 'unknown',
       name: user ? user.name : 'Unknown User',
       phone: user ? user.phone : '',
@@ -860,10 +883,19 @@ app.get('/api/admin/staff', authenticate, resolveTenant, requirePermission('mana
 
 // Provision Staff Account (Supports Multiple Roles: Doctor, Receptionist, Pharmacist, Nurse, Admin)
 app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
-  const { email, name, phone, role, roles, allowedModules, password } = req.body;
-  if (!email || !name) {
-    return res.status(400).json({ error: 'Email and name are required.' });
+  const { email, username, name, phone, role, roles, allowedModules, password } = req.body;
+  const rawIdentifier = (username || email || '').trim();
+  if (!rawIdentifier || !name) {
+    return res.status(400).json({ error: 'Username and name are required.' });
   }
+
+  // Strictly letters and numbers only for usernames
+  const cleanUsername = rawIdentifier.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  if (!cleanUsername) {
+    return res.status(400).json({ error: 'INVALID_USERNAME', message: 'Username must contain only letters and numbers.' });
+  }
+
+  const cleanEmail = email && email.includes('@') ? email.trim().toLowerCase() : `${cleanUsername}@platform.local`;
 
   // Support multiple selected roles
   const selectedRoles = Array.isArray(roles) && roles.length > 0
@@ -885,11 +917,15 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
     ? 'DOCTOR'
     : selectedRoles[0];
 
-  let user = multiTenantDb.platform.users.find(u => u.email.toLowerCase() === email.trim().toLowerCase());
+  let user = multiTenantDb.platform.users.find(u => 
+    (u.username && u.username.toLowerCase() === cleanUsername) ||
+    (u.email && u.email.toLowerCase() === cleanEmail)
+  );
   if (!user) {
     user = {
       id: `user-${Date.now().toString().slice(-6)}`,
-      email: email.trim().toLowerCase(),
+      username: cleanUsername,
+      email: cleanEmail,
       passwordHash: hashPassword(password || 'Staff@123'),
       name: name.trim(),
       phone: phone || '',
@@ -899,6 +935,9 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
       createdAt: new Date().toISOString()
     };
     multiTenantDb.platform.users.push(user);
+  } else {
+    user.username = cleanUsername;
+    if (password) user.passwordHash = hashPassword(password);
   }
 
   // Check if already a member
@@ -959,7 +998,7 @@ app.post('/api/admin/staff', authenticate, resolveTenant, requirePermission('man
 
   res.status(201).json({
     success: true,
-    user: { id: user.id, email: user.email, name: user.name, role: membership.role, status: user.status }
+    user: { id: user.id, username: user.username, email: user.email, name: user.name, role: membership.role, status: user.status }
   });
 });
 
@@ -1558,10 +1597,13 @@ app.post('/api/patients', authenticate, resolveTenant, requirePermission('regist
     validUntilDate.setDate(validUntilDate.getDate() + validityDays);
     const validUntilStr = validUntilDate.toISOString().split('T')[0];
 
+    const ticketNow = new Date();
     const initialTicketInvoice = {
       id: `INV-${Date.now().toString().slice(-4)}`,
       invoiceNumber: `INV-2026-${String(Math.floor(1000 + Math.random() * 9000))}`,
       date: todayStr,
+      time: ticketNow.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+      createdAt: ticketNow.toISOString(),
       isFinalized: true,
       items: [
         {
@@ -1755,8 +1797,10 @@ app.post('/api/patients/:id/invoices', authenticate, resolveTenant, requirePermi
   const patient = (tData.patients || []).find(p => p.id === req.params.id);
   if (!patient) return res.status(404).json({ error: 'Patient not found.' });
 
-  const invoiceDate = req.body.date || new Date().toISOString().split('T')[0];
-  const invoiceCreatedAt = req.body.createdAt || new Date().toISOString();
+  const now = new Date();
+  const invoiceDate = req.body.date || now.toISOString().split('T')[0];
+  const invoiceTime = req.body.time || now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  const invoiceCreatedAt = req.body.createdAt || now.toISOString();
   const newInvoiceId = `INV-${Date.now().toString().slice(-4)}`;
   const newInvoiceNumber = req.body.invoiceNumber || `INV-2026-${String(Math.floor(1000 + Math.random() * 9000))}`;
   const totalAmount = Number(req.body.total || 0);
@@ -1768,10 +1812,13 @@ app.post('/api/patients/:id/invoices', authenticate, resolveTenant, requirePermi
     id: newInvoiceId,
     invoiceNumber: newInvoiceNumber,
     date: invoiceDate,
+    time: invoiceTime,
     createdAt: invoiceCreatedAt,
     isFinalized: paidAmount > 0,
     ...req.body
   };
+  if (!newInvoice.time) newInvoice.time = invoiceTime;
+  if (!newInvoice.createdAt) newInvoice.createdAt = invoiceCreatedAt;
 
   // Unique receipt generation if payment is collected
   let receiptRecord = null;
@@ -2925,7 +2972,7 @@ app.post('/api/pharmacy/sales', authenticate, resolveTenant, requireModule('phar
 });
 
 // GET /api/pharmacy/sales - Get sales history
-app.get('/api/pharmacy/sales', authenticate, resolveTenant, requireModule('pharmacy'), (req, res) => {
+app.get('/api/pharmacy/sales', optionalAuth, resolveTenant, (req, res) => {
   const tData = multiTenantDb.getTenantData(req.tenantId);
   if (!tData) return res.status(404).json({ error: 'TENANT_DATA_NOT_FOUND' });
   res.json(tData.pharmacySales || []);

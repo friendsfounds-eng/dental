@@ -1118,6 +1118,9 @@ export default function App() {
               doctors={doctors}
               clinicProfile={clinicProfile}
               treatmentCatalog={treatmentCatalog}
+              pharmacyCatalog={pharmacyCatalog}
+              authToken={authToken}
+              activeTenant={activeTenant}
               onAddInvoice={handleAddInvoice}
               onOpenWhatsApp={handleOpenWhatsApp}
             />

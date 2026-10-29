@@ -13,8 +13,6 @@ import {
   Check,
   Eye,
   EyeOff,
-  UserPlus,
-  KeyRound,
   ShieldCheck
 } from 'lucide-react';
 
@@ -35,25 +33,13 @@ export default function LoginModal({
   onLoginSuccess,
   onLogout
 }) {
-  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
   const [copied, setCopied] = useState(false);
-
-  // Register Form State
-  const [registerData, setRegisterData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    role: 'DOCTOR',
-    password: '',
-    confirmPassword: '',
-    clinicName: ''
-  });
 
   // Customer Support Contact Details
   const supportPhone = activeTenant?.supportPhone || '+977 98012 34567';
@@ -82,10 +68,11 @@ export default function LoginModal({
     setLoading(true);
 
     try {
+      const identifier = username.trim();
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), password })
+        body: JSON.stringify({ username: identifier, email: identifier, password })
       });
 
       const data = await res.json();
@@ -100,65 +87,6 @@ export default function LoginModal({
 
       onLoginSuccess(data);
       if (onClose) onClose();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleRegisterSubmit = async (e) => {
-    if (e) e.preventDefault();
-    setError(null);
-    setSuccessMsg(null);
-
-    if (!registerData.name.trim() || !registerData.email.trim() || !registerData.password) {
-      setError('Please fill in your name, user ID/email, and password.');
-      return;
-    }
-
-    if (registerData.password.length < 6) {
-      setError('Password must be at least 6 characters long.');
-      return;
-    }
-
-    if (registerData.password !== registerData.confirmPassword) {
-      setError('Passwords do not match. Please verify.');
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: registerData.name.trim(),
-          email: registerData.email.trim(),
-          phone: registerData.phone.trim(),
-          role: registerData.role,
-          password: registerData.password,
-          clinicName: registerData.clinicName.trim() || undefined
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || data.error || 'Failed to create user ID.');
-      }
-
-      setSuccessMsg('User ID created successfully! Signing you in...');
-
-      // Store token & session
-      localStorage.setItem('dental_auth_token', data.token);
-      localStorage.setItem('dental_user', JSON.stringify(data.user));
-      localStorage.setItem('dental_tenant', JSON.stringify(data.activeTenant));
-
-      setTimeout(() => {
-        onLoginSuccess(data);
-        if (onClose) onClose();
-      }, 700);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -188,7 +116,7 @@ export default function LoginModal({
                   </span>
                 </h3>
                 <p className="text-xs text-blue-200 mt-0.5">
-                  Sign in or create your User ID to access the practice.
+                  Sign in with your username to access your practice.
                 </p>
               </div>
             </div>
@@ -247,238 +175,58 @@ export default function LoginModal({
             </div>
           )}
 
-          {/* Tab Selector: Sign In vs Create User ID */}
-          <div className="flex rounded-2xl bg-slate-100 p-1 border border-slate-200">
-            <button
-              type="button"
-              onClick={() => {
-                setAuthMode('login');
-                setError(null);
-                setSuccessMsg(null);
-              }}
-              className={`flex-1 py-2 text-xs font-bold rounded-xl transition flex items-center justify-center space-x-1.5 ${
-                authMode === 'login'
-                  ? 'bg-white text-blue-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <KeyRound className="w-3.5 h-3.5" />
-              <span>Sign In</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                setAuthMode('register');
-                setError(null);
-                setSuccessMsg(null);
-              }}
-              className={`flex-1 py-2 text-xs font-bold rounded-xl transition flex items-center justify-center space-x-1.5 ${
-                authMode === 'register'
-                  ? 'bg-white text-blue-700 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <UserPlus className="w-3.5 h-3.5" />
-              <span>Create User ID</span>
-            </button>
-          </div>
-
-          {/* 1. SIGN IN FORM */}
-          {authMode === 'login' ? (
-            <form onSubmit={handleLoginSubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  User ID / Email Address
-                </label>
-                <div className="relative">
-                  <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter your User ID or email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                  />
-                </div>
+          {/* Sign In Form */}
+          <form onSubmit={handleLoginSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                Username
+              </label>
+              <div className="relative">
+                <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter username (e.g. devadmin, nepaladmin, apexadmin)"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full text-xs pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
+                />
               </div>
+            </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Password
-                </label>
-                <div className="relative">
-                  <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full text-xs pl-9 pr-10 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2 disabled:opacity-50"
-              >
-                <span>{loading ? 'Authenticating...' : 'Sign In & Access Practice'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <div className="text-center pt-1">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                Password
+              </label>
+              <div className="relative">
+                <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full text-xs pl-9 pr-10 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
+                />
                 <button
                   type="button"
-                  onClick={() => {
-                    setAuthMode('register');
-                    setError(null);
-                  }}
-                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
                 >
-                  New customer? <strong className="underline">Create User ID</strong>
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
-            </form>
-          ) : (
-            /* 2. CREATE USER ID (REGISTER) FORM */
-            <form onSubmit={handleRegisterSubmit} className="space-y-3">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  Full Name *
-                </label>
-                <div className="relative">
-                  <User className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Dr. Rajesh Thapa"
-                    value={registerData.name}
-                    onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
-                    className="w-full text-xs pl-9 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                  />
-                </div>
-              </div>
+            </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                  User ID / Email Address *
-                </label>
-                <div className="relative">
-                  <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. rajesh@nepaldental.com or user ID"
-                    value={registerData.email}
-                    onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                    className="w-full text-xs pl-9 pr-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    Mobile / WhatsApp
-                  </label>
-                  <div className="relative">
-                    <Phone className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="text"
-                      placeholder="+977 98012..."
-                      value={registerData.phone}
-                      onChange={(e) => setRegisterData({ ...registerData, phone: e.target.value })}
-                      className="w-full text-xs pl-8 pr-2.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    Role *
-                  </label>
-                  <select
-                    value={registerData.role}
-                    onChange={(e) => setRegisterData({ ...registerData, role: e.target.value })}
-                    className="w-full text-xs px-2.5 py-2 rounded-xl border border-slate-300 bg-white font-semibold focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  >
-                    <option value="DOCTOR">🩺 Doctor / Dentist</option>
-                    <option value="CLINIC_ADMIN">👑 Clinic Owner / Admin</option>
-                    <option value="RECEPTIONIST">📋 Reception / Front Desk</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    Password *
-                  </label>
-                  <div className="relative">
-                    <Lock className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      placeholder="Min 6 chars"
-                      value={registerData.password}
-                      onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                      className="w-full text-xs pl-8 pr-2.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
-                    Confirm Password *
-                  </label>
-                  <div className="relative">
-                    <Lock className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      placeholder="Re-enter"
-                      value={registerData.confirmPassword}
-                      onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
-                      className="w-full text-xs pl-8 pr-2.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none font-medium"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 rounded-xl shadow-md transition flex items-center justify-center space-x-2 disabled:opacity-50 mt-1"
-              >
-                <span>{loading ? 'Creating Account...' : 'Create User ID & Access Practice'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <div className="text-center pt-1">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('login');
-                    setError(null);
-                  }}
-                  className="text-xs text-blue-600 hover:text-blue-800 font-semibold"
-                >
-                  Already have a User ID? <strong className="underline">Sign In</strong>
-                </button>
-              </div>
-            </form>
-          )}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-2 disabled:opacity-50"
+            >
+              <span>{loading ? 'Authenticating...' : 'Sign In & Access Practice'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
 
           {/* Redesigned Customer Support & Helpdesk Section */}
           <div className="pt-3 border-t border-slate-200/90 space-y-3">
@@ -498,7 +246,7 @@ export default function LoginModal({
                       </span>
                     </h4>
                     <p className="text-[10px] text-slate-500 leading-tight">
-                      Need help with login, User ID creation, or onboarding?
+                      Need help with sign in or credentials?
                     </p>
                   </div>
                 </div>

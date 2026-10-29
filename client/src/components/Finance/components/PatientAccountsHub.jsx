@@ -62,6 +62,14 @@ export default function PatientAccountsHub({
     totalPaid += (Number(inv.paid) || 0);
   });
 
+  // Include Dental & Lab Orders in Patient Total Billed & Paid
+  (selectedPatient?.orders || []).forEach(ord => {
+    const cost = Number(ord.cost) || 0;
+    const paid = Number(ord.paidAmount) || (ord.paymentStatus === 'Paid' ? cost : 0);
+    totalBilled += cost;
+    totalPaid += paid;
+  });
+
   // Add credit notes to discounts
   const ptCreditNotes = creditNotes.filter(cn => cn.patientId === selectedPatient?.id);
   const totalCreditNotesAmount = ptCreditNotes.reduce((s, cn) => s + (Number(cn.amount) || 0), 0);
@@ -92,6 +100,33 @@ export default function PatientAccountsHub({
         description: `Payment for Inv #${inv.invoiceNumber} (${inv.paymentMethod || 'Cash'})`,
         debit: 0,
         credit: Number(inv.paid)
+      });
+    }
+  });
+
+  // Patient Dental & Lab Orders (Debit for Order Cost, Credit for Paid Amount)
+  (selectedPatient?.orders || []).forEach(ord => {
+    const cost = Number(ord.cost) || 0;
+    const paid = Number(ord.paidAmount) || (ord.paymentStatus === 'Paid' ? cost : 0);
+    const due = Number(ord.balanceDue) !== undefined ? Number(ord.balanceDue) : Math.max(0, cost - paid);
+
+    ledgerEntries.push({
+      date: (ord.orderDate || ord.createdAt || '2026-10-01').split('T')[0],
+      refNumber: ord.id,
+      type: 'LAB_ORDER',
+      description: `Dental Order [${ord.orderType}]: ${ord.toothOrImplantDetails || 'Prosthetic'} (${ord.materials || 'Lab'}) - Assigned: ${ord.assignedStaffOrLab || 'Dental Lab'}`,
+      debit: cost,
+      credit: 0
+    });
+
+    if (paid > 0) {
+      ledgerEntries.push({
+        date: (ord.updatedAt || ord.createdAt || '2026-10-01').split('T')[0],
+        refNumber: `RCP-${ord.id}`,
+        type: 'PAYMENT',
+        description: `Order Payment for ${ord.id} (${ord.paymentMethod || 'Cash'})${due > 0 ? ` [Partial • Due Remaining: ${currency} ${due.toLocaleString()}]` : ' [Fully Settled]'}`,
+        debit: 0,
+        credit: paid
       });
     }
   });
@@ -340,12 +375,13 @@ export default function PatientAccountsHub({
                   <td className="px-4 py-3">
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
                       entry.type === 'INVOICE' ? 'bg-amber-100 text-amber-800' :
+                      entry.type === 'LAB_ORDER' ? 'bg-indigo-100 text-indigo-800' :
                       entry.type === 'PAYMENT' ? 'bg-emerald-100 text-emerald-800' :
                       entry.type === 'ADVANCE_DEPOSIT' ? 'bg-blue-100 text-blue-800' :
                       entry.type === 'CREDIT_NOTE' ? 'bg-purple-100 text-purple-800' :
                       'bg-rose-100 text-rose-800'
                     }`}>
-                      {entry.type}
+                      {entry.type === 'LAB_ORDER' ? '🧪 LAB ORDER' : entry.type}
                     </span>
                   </td>
                   <td className="px-4 py-3 font-medium text-slate-800 max-w-sm">

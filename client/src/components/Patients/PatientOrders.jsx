@@ -26,7 +26,8 @@ import {
   ShieldCheck,
   Eye,
   RefreshCw,
-  UploadCloud
+  UploadCloud,
+  CreditCard
 } from 'lucide-react';
 
 const ORDER_TYPES = [
@@ -119,6 +120,8 @@ export default function PatientOrders({
     assignedStaffOrLab: 'Kathmandu Dental Ceramics & Milling Lab',
     cost: 4500,
     paymentStatus: 'Unpaid',
+    paidAmount: 0,
+    paymentMethod: 'Cash',
     progressStatus: 'Requested',
     expectedCompletionDays: 5,
     notes: ''
@@ -224,6 +227,17 @@ export default function PatientOrders({
       const expectedDate = new Date(Date.now() + (parseInt(formData.expectedCompletionDays) || 5) * 24 * 60 * 60 * 1000).toISOString();
       const compiledSpecs = `${formData.clinicalSpecifications.trim()} | Shade: ${formData.shade} | Margin: ${formData.marginType} | Clearance: ${formData.occlusalClearance}`;
 
+      const numCost = Math.max(0, Number(formData.cost) || 0);
+      let numPaid = 0;
+      if (formData.paymentStatus === 'Paid') {
+        numPaid = numCost;
+      } else if (formData.paymentStatus === 'Partial') {
+        numPaid = Math.min(numCost, Math.max(0, Number(formData.paidAmount) || 0));
+      } else {
+        numPaid = 0;
+      }
+      const numBalanceDue = Math.max(0, numCost - numPaid);
+
       const payload = {
         orderType: formData.orderType,
         toothOrImplantDetails: formData.toothOrImplantDetails.trim(),
@@ -231,8 +245,11 @@ export default function PatientOrders({
         materials: formData.materials,
         assignedStaffOrLab: formData.assignedStaffOrLab,
         expectedCompletionDate: expectedDate,
-        cost: Number(formData.cost) || 0,
+        cost: numCost,
+        paidAmount: numPaid,
+        balanceDue: numBalanceDue,
         paymentStatus: formData.paymentStatus,
+        paymentMethod: formData.paymentMethod || 'Cash',
         progressStatus: formData.progressStatus,
         notes: formData.notes.trim() || `New ${formData.orderType} order initialized for ${targetPatient?.name}.`
       };
@@ -279,10 +296,30 @@ export default function PatientOrders({
 
     try {
       setLoading(true);
+      const numCost = Math.max(0, Number(editOrder.cost) || 0);
+      let numPaid = 0;
+      if (editOrder.paymentStatus === 'Paid') {
+        numPaid = numCost;
+      } else if (editOrder.paymentStatus === 'Partial') {
+        numPaid = Math.min(numCost, Math.max(0, Number(editOrder.paidAmount) || 0));
+      } else {
+        numPaid = 0;
+      }
+      const numBalanceDue = Math.max(0, numCost - numPaid);
+
+      const payload = {
+        ...editOrder,
+        cost: numCost,
+        paidAmount: numPaid,
+        balanceDue: numBalanceDue,
+        paymentStatus: editOrder.paymentStatus,
+        paymentMethod: editOrder.paymentMethod || 'Cash'
+      };
+
       const res = await fetch(`/api/patients/${patientId}/orders/${editOrder.id}`, {
         method: 'PUT',
         headers: getHeaders(),
-        body: JSON.stringify(editOrder)
+        body: JSON.stringify(payload)
       });
 
       if (!res.ok) {
@@ -411,7 +448,13 @@ export default function PatientOrders({
   const readyCount = orders.filter(o => o.progressStatus === 'Ready').length;
   const completedCount = orders.filter(o => o.progressStatus === 'Completed').length;
   const totalValue = orders.reduce((sum, o) => sum + (Number(o.cost) || 0), 0);
-  const unpaidValue = orders.filter(o => o.paymentStatus !== 'Paid').reduce((sum, o) => sum + (Number(o.cost) || 0), 0);
+  const totalPaidValue = orders.reduce((sum, o) => {
+    const cost = Number(o.cost) || 0;
+    if (o.paymentStatus === 'Paid') return sum + cost;
+    if (o.paymentStatus === 'Partial') return sum + (Number(o.paidAmount) || 0);
+    return sum;
+  }, 0);
+  const totalDueValue = Math.max(0, totalValue - totalPaidValue);
 
   if (!patient && allPatientsList.length === 0) {
     return (
@@ -541,6 +584,34 @@ export default function PatientOrders({
             <span className="text-lg font-black text-emerald-300 mt-0.5 block">{completedCount}</span>
           </div>
         </div>
+
+        {/* Orders Financial Revenue & Outstanding Due Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-3 pt-3 border-t border-white/10 text-xs">
+          <div className="bg-white/10 backdrop-blur-xs rounded-xl px-3.5 py-2.5 flex items-center justify-between">
+            <span className="text-slate-300 text-[11px] font-medium">Total Orders Cost:</span>
+            <span className="font-mono font-bold text-white text-sm">
+              NPR {totalValue.toLocaleString()}
+            </span>
+          </div>
+          <div className="bg-emerald-500/15 backdrop-blur-xs rounded-xl px-3.5 py-2.5 flex items-center justify-between border border-emerald-400/20">
+            <span className="text-emerald-200 text-[11px] font-medium flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+              <span>Collected / Paid:</span>
+            </span>
+            <span className="font-mono font-bold text-emerald-200 text-sm">
+              NPR {totalPaidValue.toLocaleString()}
+            </span>
+          </div>
+          <div className="bg-amber-500/15 backdrop-blur-xs rounded-xl px-3.5 py-2.5 flex items-center justify-between border border-amber-400/20">
+            <span className="text-amber-200 text-[11px] font-medium flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5 text-amber-300" />
+              <span>Outstanding Due:</span>
+            </span>
+            <span className="font-mono font-black text-amber-300 text-sm">
+              NPR {totalDueValue.toLocaleString()}
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* SEARCH & FILTERS BAR */}
@@ -666,19 +737,36 @@ export default function PatientOrders({
 
                   {/* Actions & Cost */}
                   <div className="flex items-center space-x-2 justify-end">
-                    <div className="text-right mr-2">
-                      <span className="text-xs font-black text-slate-900 block">
-                        ₹{(order.cost || 0).toLocaleString()}
-                      </span>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                        order.paymentStatus === 'Paid'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : order.paymentStatus === 'Partial'
-                          ? 'bg-amber-100 text-amber-800'
-                          : 'bg-rose-100 text-rose-800'
-                      }`}>
-                        {order.paymentStatus}
-                      </span>
+                    <div className="text-right mr-2 space-y-0.5">
+                      <div className="flex items-baseline justify-end space-x-1.5">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase">Total:</span>
+                        <span className="text-xs font-black text-slate-900 font-mono">
+                          NPR {(order.cost || 0).toLocaleString()}
+                        </span>
+                      </div>
+
+                      {order.paymentStatus === 'Partial' && (
+                        <div className="text-[10px] font-semibold text-emerald-700 font-mono">
+                          Paid: NPR {(order.paidAmount || 0).toLocaleString()}
+                        </div>
+                      )}
+
+                      <div className="flex items-center justify-end">
+                        <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${
+                          order.paymentStatus === 'Paid'
+                            ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                            : order.paymentStatus === 'Partial'
+                            ? 'bg-amber-100 text-amber-900 border-amber-300'
+                            : 'bg-rose-100 text-rose-800 border-rose-300'
+                        }`}>
+                          {order.paymentStatus === 'Partial'
+                            ? `Partial • Due: NPR ${(order.balanceDue !== undefined ? order.balanceDue : Math.max(0, (order.cost || 0) - (order.paidAmount || 0))).toLocaleString()}`
+                            : order.paymentStatus === 'Paid'
+                            ? 'Paid in Full'
+                            : `Unpaid • Due: NPR ${(order.cost || 0).toLocaleString()}`
+                          }
+                        </span>
+                      </div>
                     </div>
 
                     <button
@@ -1187,6 +1275,7 @@ export default function PatientOrders({
                   <label className="block font-bold text-slate-700 mb-1">Cost (₹ / NPR)</label>
                   <input
                     type="number"
+                    step="any"
                     min={0}
                     value={formData.cost}
                     onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
@@ -1198,15 +1287,133 @@ export default function PatientOrders({
                   <label className="block font-bold text-slate-700 mb-1">Payment Status</label>
                   <select
                     value={formData.paymentStatus}
-                    onChange={(e) => setFormData({ ...formData, paymentStatus: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => {
+                      const newStatus = e.target.value;
+                      let newPaid = formData.paidAmount;
+                      if (newStatus === 'Paid') {
+                        newPaid = Number(formData.cost) || 0;
+                      } else if (newStatus === 'Unpaid') {
+                        newPaid = 0;
+                      } else if (newStatus === 'Partial' && (!newPaid || Number(newPaid) === 0)) {
+                        newPaid = Math.round((Number(formData.cost) || 0) / 2);
+                      }
+                      setFormData({
+                        ...formData,
+                        paymentStatus: newStatus,
+                        paidAmount: newPaid
+                      });
+                    }}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold"
                   >
-                    <option value="Unpaid">Unpaid</option>
-                    <option value="Partial">Partial</option>
-                    <option value="Paid">Paid</option>
+                    <option value="Unpaid">Unpaid (Full Balance Due)</option>
+                    <option value="Partial">Partial (Enter Amount Paid)</option>
+                    <option value="Paid">Paid in Full</option>
                   </select>
                 </div>
               </div>
+
+              {/* If Partial Payment Selected in Create Modal */}
+              {formData.paymentStatus === 'Partial' && (
+                <div className="bg-amber-50/80 border border-amber-300 rounded-2xl p-4 space-y-3.5 shadow-2xs animate-fadeIn">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-amber-950 flex items-center gap-1.5">
+                      <CreditCard className="w-4 h-4 text-amber-600" />
+                      <span>Partial Payment Breakdown & Subtraction</span>
+                    </span>
+                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-amber-200/80 text-amber-900 border border-amber-300">
+                      Live Subtraction
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">
+                        Amount Paid (₹ / NPR) <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        step="any"
+                        min={0}
+                        max={Number(formData.cost) || 0}
+                        value={formData.paidAmount}
+                        onChange={(e) => setFormData({ ...formData, paidAmount: e.target.value })}
+                        placeholder="Enter paid advance amount"
+                        className="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 text-xs shadow-2xs"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Payment Method</label>
+                      <select
+                        value={formData.paymentMethod || 'Cash'}
+                        onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                        className="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 text-xs font-semibold shadow-2xs"
+                      >
+                        <option value="Cash">Cash Counter</option>
+                        <option value="FonePay / QR">FonePay / QR Scan</option>
+                        <option value="Card">Credit / Debit Card</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cheque">Cheque</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Real-time Subtraction Calculation Box */}
+                  <div className="bg-white rounded-xl p-3 border border-amber-200 divide-y divide-slate-100 text-xs shadow-2xs">
+                    <div className="flex items-center justify-between pb-1.5">
+                      <span className="text-slate-600 font-semibold">Final Total Payment Amount:</span>
+                      <span className="font-mono font-bold text-slate-900">
+                        NPR {Number(formData.cost || 0).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between py-1.5 text-emerald-700 font-semibold">
+                      <span>Less Amount Paid:</span>
+                      <span className="font-mono font-bold">
+                        - NPR {Number(formData.paidAmount || 0).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="font-black text-rose-700 text-xs uppercase tracking-wide">
+                        Remaining Payment Due:
+                      </span>
+                      <span className="font-mono font-black text-base text-rose-700">
+                        NPR {Math.max(0, (Number(formData.cost) || 0) - (Number(formData.paidAmount) || 0)).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-1.5 text-[11px] text-amber-900 bg-amber-100/70 p-2.5 rounded-xl border border-amber-200/60">
+                    <ShieldCheck className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                    <span>
+                      Payment linked to Patient ID: <b>{currentActivePatient?.id}</b> ({currentActivePatient?.name}) • Amount paid updates Clinic Revenue, and due balance is linked to Finance Outstanding.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {formData.paymentStatus === 'Paid' && (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 space-y-2 text-xs animate-fadeIn">
+                  <div className="flex items-center justify-between font-bold text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span>Full Payment Collected</span>
+                    </span>
+                    <span className="font-mono font-black">
+                      NPR {Number(formData.cost || 0).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-emerald-700 text-[11px]">
+                    <span>Remaining Balance Due:</span>
+                    <span className="font-bold font-mono">NPR 0 (Fully Settled)</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-[11px] text-emerald-900 pt-1">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" />
+                    <span>
+                      Payment linked to Patient ID: <b>{currentActivePatient?.id}</b> ({currentActivePatient?.name}) • 100% recognized in Clinic Revenue.
+                    </span>
+                  </div>
+                </div>
+              )}
 
               {/* Initial Note */}
               <div>
@@ -1301,6 +1508,7 @@ export default function PatientOrders({
                   <label className="block font-bold text-slate-700 mb-1">Cost (₹)</label>
                   <input
                     type="number"
+                    step="any"
                     value={editOrder.cost}
                     onChange={(e) => setEditOrder({ ...editOrder, cost: Number(e.target.value) })}
                     className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2"
@@ -1313,12 +1521,27 @@ export default function PatientOrders({
                   <label className="block font-bold text-slate-700 mb-1">Payment Status</label>
                   <select
                     value={editOrder.paymentStatus}
-                    onChange={(e) => setEditOrder({ ...editOrder, paymentStatus: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2"
+                    onChange={(e) => {
+                      const newStatus = e.target.value;
+                      let newPaid = editOrder.paidAmount;
+                      if (newStatus === 'Paid') {
+                        newPaid = Number(editOrder.cost) || 0;
+                      } else if (newStatus === 'Unpaid') {
+                        newPaid = 0;
+                      } else if (newStatus === 'Partial' && (!newPaid || Number(newPaid) === 0)) {
+                        newPaid = Math.round((Number(editOrder.cost) || 0) / 2);
+                      }
+                      setEditOrder({
+                        ...editOrder,
+                        paymentStatus: newStatus,
+                        paidAmount: newPaid
+                      });
+                    }}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-semibold"
                   >
-                    <option value="Unpaid">Unpaid</option>
-                    <option value="Partial">Partial</option>
-                    <option value="Paid">Paid</option>
+                    <option value="Unpaid">Unpaid (Full Due)</option>
+                    <option value="Partial">Partial (Enter Amount Paid)</option>
+                    <option value="Paid">Paid in Full</option>
                   </select>
                 </div>
                 <div>
@@ -1326,7 +1549,7 @@ export default function PatientOrders({
                   <select
                     value={editOrder.progressStatus}
                     onChange={(e) => setEditOrder({ ...editOrder, progressStatus: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-semibold"
                   >
                     <option value="Requested">Requested</option>
                     <option value="In Progress">In Progress</option>
@@ -1336,6 +1559,109 @@ export default function PatientOrders({
                   </select>
                 </div>
               </div>
+
+              {/* If Partial Payment Selected in Edit Modal */}
+              {editOrder.paymentStatus === 'Partial' && (
+                <div className="bg-amber-50/80 border border-amber-300 rounded-2xl p-4 space-y-3.5 shadow-2xs animate-fadeIn">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-amber-950 flex items-center gap-1.5">
+                      <CreditCard className="w-4 h-4 text-amber-600" />
+                      <span>Partial Payment Breakdown & Subtraction</span>
+                    </span>
+                    <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md bg-amber-200/80 text-amber-900 border border-amber-300">
+                      Live Subtraction
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">
+                        Amount Paid (₹ / NPR) <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        step="any"
+                        min={0}
+                        max={Number(editOrder.cost) || 0}
+                        value={editOrder.paidAmount !== undefined ? editOrder.paidAmount : ''}
+                        onChange={(e) => setEditOrder({ ...editOrder, paidAmount: e.target.value })}
+                        placeholder="Enter paid advance amount"
+                        className="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 text-xs shadow-2xs"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-slate-700 mb-1">Payment Method</label>
+                      <select
+                        value={editOrder.paymentMethod || 'Cash'}
+                        onChange={(e) => setEditOrder({ ...editOrder, paymentMethod: e.target.value })}
+                        className="w-full bg-white border border-amber-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 text-xs font-semibold shadow-2xs"
+                      >
+                        <option value="Cash">Cash Counter</option>
+                        <option value="FonePay / QR">FonePay / QR Scan</option>
+                        <option value="Card">Credit / Debit Card</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cheque">Cheque</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Subtraction Calculation Box */}
+                  <div className="bg-white rounded-xl p-3 border border-amber-200 divide-y divide-slate-100 text-xs shadow-2xs">
+                    <div className="flex items-center justify-between pb-1.5">
+                      <span className="text-slate-600 font-semibold">Final Total Payment Amount:</span>
+                      <span className="font-mono font-bold text-slate-900">
+                        NPR {Number(editOrder.cost || 0).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between py-1.5 text-emerald-700 font-semibold">
+                      <span>Less Amount Paid:</span>
+                      <span className="font-mono font-bold">
+                        - NPR {Number(editOrder.paidAmount || 0).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="font-black text-rose-700 text-xs uppercase tracking-wide">
+                        Remaining Payment Due:
+                      </span>
+                      <span className="font-mono font-black text-base text-rose-700">
+                        NPR {Math.max(0, (Number(editOrder.cost) || 0) - (Number(editOrder.paidAmount) || 0)).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-1.5 text-[11px] text-amber-900 bg-amber-100/70 p-2.5 rounded-xl border border-amber-200/60">
+                    <ShieldCheck className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                    <span>
+                      Payment linked to Patient ID: <b>{editOrder.patientId || currentActivePatient?.id}</b> ({editOrder.patientName || currentActivePatient?.name}) • Amount paid updates Clinic Revenue, and due balance is linked to Finance Outstanding.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {editOrder.paymentStatus === 'Paid' && (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 space-y-2 text-xs animate-fadeIn">
+                  <div className="flex items-center justify-between font-bold text-emerald-900">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span>Full Payment Recognized</span>
+                    </span>
+                    <span className="font-mono font-black">
+                      NPR {Number(editOrder.cost || 0).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-emerald-700 text-[11px]">
+                    <span>Remaining Balance Due:</span>
+                    <span className="font-bold font-mono">NPR 0 (Fully Settled)</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-[11px] text-emerald-900 pt-1">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" />
+                    <span>
+                      Payment linked to Patient ID: <b>{editOrder.patientId || currentActivePatient?.id}</b> ({editOrder.patientName || currentActivePatient?.name}) • 100% credited to Clinic Revenue.
+                    </span>
+                  </div>
+                </div>
+              )}
 
               <div className="pt-4 border-t border-slate-200 flex justify-end space-x-3">
                 <button
@@ -1408,8 +1734,8 @@ export default function PatientOrders({
                   <p><span className="text-slate-500 font-semibold">Required By:</span> <strong className="text-rose-700">{new Date(printOrder.expectedCompletionDate).toLocaleDateString()}</strong></p>
                 </div>
                 <div>
-                  <p><span className="text-slate-500 font-semibold">Patient Name:</span> <strong>{patient.name}</strong></p>
-                  <p><span className="text-slate-500 font-semibold">Patient ID:</span> <strong className="font-mono">{patient.id}</strong> ({patient.gender}, {patient.age} yrs)</p>
+                  <p><span className="text-slate-500 font-semibold">Patient Name:</span> <strong>{printOrder.patientName || patient?.name || currentActivePatient?.name}</strong></p>
+                  <p><span className="text-slate-500 font-semibold">Patient ID:</span> <strong className="font-mono">{printOrder.patientId || patient?.id || currentActivePatient?.id}</strong> ({printOrder.patientGender || patient?.gender || currentActivePatient?.gender || 'N/A'}, {printOrder.patientAge || patient?.age || currentActivePatient?.age || ''} yrs)</p>
                   <p><span className="text-slate-500 font-semibold">Assigned Lab:</span> <strong>{printOrder.assignedStaffOrLab}</strong></p>
                 </div>
               </div>
@@ -1439,6 +1765,28 @@ export default function PatientOrders({
                   <p className="text-slate-800 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed font-medium">
                     {printOrder.clinicalSpecifications}
                   </p>
+                </div>
+              </div>
+
+              {/* Financial & Payment Status Breakdown */}
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl grid grid-cols-3 gap-3 text-xs">
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-bold">Total Cost</span>
+                  <span className="font-mono font-bold text-slate-900">
+                    NPR {Number(printOrder.cost || 0).toLocaleString()}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-bold">Amount Paid ({printOrder.paymentStatus})</span>
+                  <span className="font-mono font-bold text-emerald-700">
+                    NPR {Number(printOrder.paidAmount || (printOrder.paymentStatus === 'Paid' ? printOrder.cost : 0)).toLocaleString()}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase font-bold">Remaining Due</span>
+                  <span className="font-mono font-black text-rose-700">
+                    NPR {Number(printOrder.balanceDue !== undefined ? printOrder.balanceDue : (printOrder.paymentStatus === 'Paid' ? 0 : printOrder.cost || 0)).toLocaleString()}
+                  </span>
                 </div>
               </div>
 

@@ -378,7 +378,9 @@ export default function AccountAndSubscription({
                 <h2 className="text-sm font-black text-slate-900 leading-tight">
                   {currentUser?.name || 'Dr. Mukesh Kushwaha'}
                 </h2>
-                <p className="text-xs text-slate-500 font-medium">{currentUser?.email || 'admin@nepaldental.com.np'}</p>
+                <p className="text-xs text-slate-500 font-medium">
+                  {currentUser?.username ? `@${currentUser.username}` : (currentUser?.email || 'admin@nepaldental.com.np')}
+                </p>
                 <div className="flex items-center space-x-2 mt-1">
                   <span className="text-[10px] font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full border border-blue-200 uppercase font-mono">
                     {currentUser?.role || 'CLINIC_ADMIN'}

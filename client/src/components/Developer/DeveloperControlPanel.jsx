@@ -60,6 +60,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
     currency: 'Rs.',
     timeZone: 'Asia/Kathmandu',
     planId: 'plan-professional',
+    adminUsername: '',
     adminEmail: '',
     adminName: '',
     adminPassword: '',
@@ -90,6 +91,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
     phone: '',
     doctorInCharge: '',
     adminName: '',
+    adminUsername: '',
     adminEmail: '',
     adminPassword: '',
     enablePharmacy: true,
@@ -233,6 +235,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
         currency: 'Rs.',
         timeZone: 'Asia/Kathmandu',
         planId: 'plan-professional',
+        adminUsername: '',
         adminEmail: '',
         adminName: '',
         adminPassword: '',
@@ -353,6 +356,7 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
       phone: t.clinicProfile?.phone || '',
       doctorInCharge: t.clinicProfile?.doctorInCharge || '',
       adminName: t.adminUser?.name || '',
+      adminUsername: t.adminUser?.username || (t.adminUser?.email ? t.adminUser.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : ''),
       adminEmail: t.adminUser?.email || '',
       adminPassword: '',
       enablePharmacy: t.modules?.pharmacy !== false,
@@ -1373,14 +1377,19 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Admin Email *</label>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Admin Username (Letters & Numbers Only) *</label>
                   <input
-                    type="email"
+                    type="text"
                     required
-                    placeholder="admin@clinic.com"
-                    value={newClinic.adminEmail}
-                    onChange={(e) => setNewClinic({ ...newClinic, adminEmail: e.target.value })}
-                    className="w-full p-2 rounded-lg border border-slate-300"
+                    pattern="[a-zA-Z0-9]+"
+                    title="Only letters and numbers are allowed (no spaces or special characters)"
+                    placeholder="e.g. apexadmin or drsarita"
+                    value={newClinic.adminUsername || ''}
+                    onChange={(e) => {
+                      const clean = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+                      setNewClinic({ ...newClinic, adminUsername: clean, adminEmail: clean ? `${clean.toLowerCase()}@platform.local` : '' });
+                    }}
+                    className="w-full p-2 rounded-lg border border-slate-300 font-medium"
                   />
                 </div>
 
@@ -1519,14 +1528,19 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                   </div>
                   <div>
                     <label className="block font-bold text-slate-700 uppercase mb-1">
-                      Owner Login Email
+                      Owner Username (Letters & Numbers Only)
                     </label>
                     <input
-                      type="email"
-                      value={editForm.adminEmail}
-                      onChange={(e) => setEditForm({ ...editForm, adminEmail: e.target.value })}
+                      type="text"
+                      pattern="[a-zA-Z0-9]+"
+                      title="Only letters and numbers are allowed (no spaces or special characters)"
+                      value={editForm.adminUsername || ''}
+                      onChange={(e) => {
+                        const clean = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
+                        setEditForm({ ...editForm, adminUsername: clean });
+                      }}
                       className="w-full p-2 rounded-lg border border-slate-300 font-medium bg-white outline-none focus:ring-2 focus:ring-amber-500"
-                      placeholder="e.g. admin@nepaldental.com.np"
+                      placeholder="e.g. apexadmin or nepaladmin"
                     />
                   </div>
                 </div>

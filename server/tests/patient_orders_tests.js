@@ -61,7 +61,7 @@ async function runPatientOrdersTests() {
 
     // 2. Fetch Existing Patient Orders directly linked to Patient ID
     console.log('\n--- 2. Retrieve Patient Orders Linked to Patient ID ---');
-    const patientId = 'PT-8038';
+    const patientId = 'PT-1001';
     const ordersRes = await fetch(`${BASE_URL}/api/patients/${patientId}/orders`, {
       headers: docHeaders
     });

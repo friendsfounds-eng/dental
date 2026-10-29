@@ -205,6 +205,7 @@ export function authenticate(req, res, next) {
       const membership = multiTenantDb.platform.memberships.find(m => m.userId === user.id && m.tenantId === tenantId);
       req.user = {
         id: user.id,
+        username: user.username || (user.email ? user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : user.id),
         email: user.email,
         name: user.name,
         globalRole: user.globalRole,
@@ -236,6 +237,7 @@ export function authenticate(req, res, next) {
   const { payload, user } = result;
   req.user = {
     id: user.id,
+    username: user.username || payload.username || (user.email ? user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : user.id),
     email: user.email,
     name: user.name,
     globalRole: user.globalRole,
@@ -263,6 +265,7 @@ export function optionalAuth(req, res, next) {
       const membership = multiTenantDb.platform.memberships.find(m => m.userId === user.id && m.tenantId === tenantId);
       req.user = {
         id: user.id,
+        username: user.username || (user.email ? user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : user.id),
         email: user.email,
         name: user.name,
         globalRole: user.globalRole,
@@ -285,6 +288,7 @@ export function optionalAuth(req, res, next) {
       }
       req.user = {
         id: result.user.id,
+        username: result.user.username || result.payload.username || (result.user.email ? result.user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : result.user.id),
         email: result.user.email,
         name: result.user.name,
         globalRole: result.user.globalRole,

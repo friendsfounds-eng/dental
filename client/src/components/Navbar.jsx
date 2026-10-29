@@ -377,7 +377,7 @@ export default function Navbar({
                         </span>
                       </div>
                       <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate mt-0.5">
-                        {currentUser?.email || 'No email attached'}
+                        {currentUser?.username ? `@${currentUser.username}` : (currentUser?.email || 'No user handle')}
                       </div>
                     </div>
                   </div>
