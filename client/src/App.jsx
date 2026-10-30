@@ -803,7 +803,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen lg:h-screen lg:overflow-hidden flex flex-col bg-slate-100 font-sans">
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden flex flex-col bg-slate-100 font-sans overflow-x-hidden">
       {/* Top Navigation */}
       <Navbar
         clinicProfile={clinicProfile}
@@ -839,7 +839,7 @@ export default function App() {
         />
 
         {/* Main Content Area (Auto-fits Mobile, Tablet & Desktop) */}
-        <main className={`flex-1 p-3 sm:p-4 md:p-6 pb-20 lg:pb-6 overflow-y-auto w-full transition-all duration-300 ${sidebarCollapsed ? 'max-w-none' : 'max-w-7xl mx-auto'}`}>
+        <main className={`flex-1 min-w-0 p-3 sm:p-4 md:p-6 pb-20 lg:pb-6 overflow-y-auto w-full transition-all duration-300 ${sidebarCollapsed ? 'max-w-none' : 'max-w-7xl mx-auto'}`}>
           <ErrorBoundary key={activeTab}>
             {/* Active Patient Notification Pill in Odontogram View */}
           {selectedPatient && activeTab === 'chart' && (
@@ -1200,7 +1200,7 @@ export default function App() {
       {/* Mobile Bottom Quick Navigation Bar (Sticky on Mobile Phones & Small Tablets) */}
       <div className="fixed bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-200/90 lg:hidden px-2 py-1 flex items-center justify-around shadow-lg no-print">
         <button
-          onClick={() => setActiveTab('doctor-dashboard')}
+          onClick={() => setActiveTab(currentUser?.role === 'DOCTOR' ? 'doctor-dashboard' : 'dashboard')}
           className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
             activeTab === 'doctor-dashboard' || activeTab === 'dashboard'
               ? 'text-blue-600 font-bold'

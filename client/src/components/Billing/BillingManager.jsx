@@ -1116,8 +1116,8 @@ export default function BillingManager({
                 key={inv.id}
                 className="p-4 rounded-2xl border border-slate-200 bg-white hover:shadow-sm transition flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
-                <div className="flex items-start space-x-4">
-                  <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 p-2.5 rounded-xl text-center min-w-[80px] flex flex-col items-center justify-center">
+                <div className="flex items-start space-x-3.5 sm:space-x-4 flex-1 min-w-0">
+                  <div className="bg-emerald-50 text-emerald-800 border border-emerald-200 p-2.5 rounded-xl text-center min-w-[80px] shrink-0 flex flex-col items-center justify-center">
                     {clinicProfile.logo ? (
                       <img src={clinicProfile.logo} alt="Logo" className="w-8 h-8 object-contain mb-1 rounded" />
                     ) : (
@@ -1126,9 +1126,9 @@ export default function BillingManager({
                     <span className="text-[10px] font-mono font-bold block">{inv.invoiceNumber}</span>
                   </div>
 
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <h4 className="text-sm font-bold text-slate-900">{inv.patientName}</h4>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                      <h4 className="text-sm font-bold text-slate-900 truncate">{inv.patientName}</h4>
                       <span className="text-xs text-slate-500 font-mono">({inv.patientId})</span>
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -1160,7 +1160,7 @@ export default function BillingManager({
                       )}
                     </div>
 
-                    <div className="text-xs text-slate-600 mt-1">
+                    <div className="text-xs text-slate-600 mt-1 line-clamp-1" title={inv.items?.map(i => i.description?.trim()).filter(Boolean).join(', ')}>
                       <span>Items: </span>
                       <strong className="text-slate-800">
                         {inv.items?.map(i => i.description?.trim()).filter(Boolean).join(', ') || 'General Dental Treatment'}
@@ -1184,11 +1184,11 @@ export default function BillingManager({
                   </div>
                 </div>
 
-                {/* Amounts & Actions */}
-                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between md:justify-end gap-3 sm:space-x-4 border-t border-slate-100 pt-3 md:border-t-0 md:pt-0">
-                  <div className="text-left md:text-right">
-                    <div className="text-sm font-black text-slate-900">{currency} {inv.total?.toLocaleString()}</div>
-                    <div className="text-[11px] text-slate-500">
+                {/* Amounts & Actions - Fixed Column Alignment */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between md:justify-end gap-2.5 sm:gap-4 shrink-0 border-t border-slate-100 pt-3 md:border-t-0 md:pt-0">
+                  <div className="flex sm:block items-center justify-between text-left md:text-right shrink-0 min-w-[95px] sm:min-w-[110px]">
+                    <div className="text-sm font-black text-slate-900 whitespace-nowrap">{currency} {inv.total?.toLocaleString()}</div>
+                    <div className="text-[11px] text-slate-500 whitespace-nowrap">
                       Paid: <span className="text-emerald-600 font-bold">{currency} {inv.paid?.toLocaleString()}</span>
                       {inv.balance > 0 && (
                         <span className="text-red-600 font-bold ml-1.5">Due: {currency} {inv.balance?.toLocaleString()}</span>
@@ -1196,22 +1196,22 @@ export default function BillingManager({
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0 flex-nowrap w-full sm:w-auto justify-end sm:justify-start">
                     <button
                       onClick={() => handleOpenPrintPreview(inv)}
-                      className="flex items-center space-x-1 px-3 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-bold text-xs transition"
+                      className="flex items-center justify-center space-x-1 flex-1 sm:flex-none sm:w-[92px] py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-bold text-xs transition shrink-0 whitespace-nowrap cursor-pointer"
                       title="Print single patient A4 invoice"
                     >
-                      <Printer className="w-3.5 h-3.5" />
+                      <Printer className="w-3.5 h-3.5 shrink-0" />
                       <span>Print A4</span>
                     </button>
 
                     <button
                       onClick={() => handleCardWhatsAppPdf(inv)}
-                      className="flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-xs transition shadow-xs"
+                      className="flex items-center justify-center space-x-1.5 flex-2 sm:flex-none sm:w-[172px] py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold text-xs transition shadow-xs shrink-0 whitespace-nowrap cursor-pointer"
                       title="Generate PDF, download to device, and launch WhatsApp"
                     >
-                      <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                      <MessageSquare className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span>Send PDF (WhatsApp)</span>
                     </button>
                   </div>

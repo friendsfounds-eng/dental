@@ -1278,6 +1278,67 @@
   ],
   "auditLogs": [
     {
+      "id": "tlog-1793342375038-931",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-4936",
+      "details": {
+        "invoiceNumber": "INV-2026-6959",
+        "total": 5000,
+        "paid": 5000,
+        "receiptNumber": "RCP-2026-31218"
+      },
+      "timestamp": "2026-10-30T06:39:35.038Z"
+    },
+    {
+      "id": "tlog-1793342374943-702",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-374943",
+      "details": {
+        "type": "INCOME",
+        "amount": 5000,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-31218"
+      },
+      "timestamp": "2026-10-30T06:39:34.943Z"
+    },
+    {
+      "id": "tlog-1793342374924-131",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4921",
+      "details": {
+        "patientId": "PT-1001",
+        "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-10-30T06:39:34.924Z"
+    },
+    {
+      "id": "tlog-1793342374906-233",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-1001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-10-30T06:39:34.906Z"
+    },
+    {
       "id": "tlog-1793296445371-470",
       "userId": "user-nepal-admin",
       "userEmail": "admin@nepaldental.com.np",
@@ -8818,60 +8879,6 @@
         "phone": "+977 98419 87654"
       },
       "timestamp": "2026-10-21T18:24:53.545Z"
-    },
-    {
-      "id": "tlog-1792607093531-236",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "DENTAL_CHART_UPDATED",
-      "resource": "patient",
-      "resourceId": "PT-101",
-      "details": {
-        "tooth": "21",
-        "condition": "healthy"
-      },
-      "timestamp": "2026-10-21T18:24:53.531Z"
-    },
-    {
-      "id": "tlog-1792607093516-758",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
-      "resource": "prescription",
-      "resourceId": "RX-3510",
-      "details": {
-        "patientId": "PT-101",
-        "diagnosis": "Post-op Sensitivity #16",
-        "medicinesCount": 1
-      },
-      "timestamp": "2026-10-21T18:24:53.516Z"
-    },
-    {
-      "id": "tlog-1792607093504-34",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "CLINIC_PROFILE_UPDATED",
-      "resource": "clinicProfile",
-      "details": {
-        "tagline": "Premier Advanced Dental Hospital in Kathmandu"
-      },
-      "timestamp": "2026-10-21T18:24:53.504Z"
-    },
-    {
-      "id": "tlog-1792606995002-124",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_STATUS_ACTIVE",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "details": {
-        "status": "active"
-      },
-      "timestamp": "2026-10-21T18:23:15.002Z"
     }
   ],
   "pharmacyCatalog": [
@@ -11388,7 +11395,7 @@
       "category": "Current Assets",
       "normalBalance": "DEBIT",
       "description": "Clearing account for FonePay QR, Cards POS, eSewa and digital settlements",
-      "balance": 131000,
+      "balance": 136000,
       "isActive": true
     },
     {
@@ -11498,7 +11505,7 @@
       "category": "Operating Revenue",
       "normalBalance": "CREDIT",
       "description": "Gross billings for restorations, root canals, dental implants, crowns, and extractions",
-      "balance": 294160,
+      "balance": 299660,
       "isActive": true
     },
     {
@@ -11618,11 +11625,73 @@
       "category": "Contra Revenue",
       "normalBalance": "DEBIT",
       "description": "Authorized treatment price reductions, student/senior citizen concessions, and waivers",
-      "balance": 14848,
+      "balance": 15348,
       "isActive": true
     }
   ],
   "journalEntries": [
+    {
+      "id": "JE-2026-7855",
+      "date": "2026-10-30",
+      "reference": "RCP-2026-31218",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Aarav Sharma for invoice #INV-2026-6959",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 5000
+        }
+      ],
+      "totalDebit": 5000,
+      "totalCredit": 5000,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-30T06:39:34.994Z"
+    },
+    {
+      "id": "JE-2026-8020",
+      "date": "2026-10-30",
+      "reference": "INV-2026-6959",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Aarav Sharma (Inv #INV-2026-6959)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 5000,
+          "credit": 0
+        },
+        {
+          "accountCode": "5700",
+          "accountName": "Approved Patient Discounts & Adjustments",
+          "debit": 500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 5500
+        }
+      ],
+      "totalDebit": 5500,
+      "totalCredit": 5500,
+      "createdBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
+      "createdAt": "2026-10-30T06:39:34.972Z"
+    },
     {
       "id": "JE-2026-2820",
       "date": "2026-10-29",

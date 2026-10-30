@@ -296,9 +296,10 @@ export default function Sidebar({
       <aside
         className={`
           fixed top-14 sm:top-16 bottom-0 left-0 z-40 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between select-none no-print overflow-y-auto overflow-x-hidden transition-all duration-300 ease-in-out
-          lg:static lg:top-auto lg:bottom-auto lg:z-auto lg:h-[calc(100vh-4rem)] lg:translate-x-0 relative
+          lg:static lg:top-auto lg:bottom-auto lg:z-auto lg:h-[calc(100vh-4rem)] lg:translate-x-0 lg:relative
           ${isCollapsed ? 'lg:w-20 lg:p-2.5' : 'lg:w-64 lg:p-3'}
-          ${isOpen ? 'w-72 sm:w-80 translate-x-0 shadow-2xl p-3' : '-translate-x-full lg:translate-x-0'}
+          w-72 sm:w-80 max-w-[85vw]
+          ${isOpen ? 'translate-x-0 shadow-2xl p-3 pointer-events-auto' : '-translate-x-full pointer-events-none lg:pointer-events-auto p-0 lg:p-3'}
         `}
       >
         <div className="space-y-3">

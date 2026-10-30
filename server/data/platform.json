@@ -1192,6 +1192,62 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1793342374844-853",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-10-30T06:39:34.844Z"
+    },
+    {
+      "id": "aud-1793342374826-176",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-10-30T06:39:34.826Z"
+    },
+    {
+      "id": "aud-1793297371795-192",
+      "tenantId": "tenant-rajesh-dental-5977",
+      "userId": "user-775977",
+      "userEmail": "rajesh@anacraft.com",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-10-29T18:09:31.795Z"
+    },
+    {
+      "id": "aud-1793297364014-954",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGOUT",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-10-29T18:09:24.014Z"
+    },
+    {
       "id": "aud-1793296448851-175",
       "tenantId": "tenant-nepal-dental",
       "userId": "user-devadmin",
@@ -17256,71 +17312,6 @@
       },
       "ipAddress": "127.0.0.1",
       "timestamp": "2026-10-22T07:16:38.143Z"
-    },
-    {
-      "id": "aud-1792653398127-711",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "manage:clinic_settings",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "manage:clinic_settings",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:16:38.127Z"
-    },
-    {
-      "id": "aud-1792653398114-745",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "PERMISSION_DENIED",
-      "resource": "edit:dental_chart",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "edit:dental_chart",
-        "userRole": "RECEPTIONIST"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:16:38.114Z"
-    },
-    {
-      "id": "aud-1792653398109-876",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "PERMISSION_DENIED",
-      "resource": "create:prescription",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "create:prescription",
-        "userRole": "RECEPTIONIST"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:16:38.109Z"
-    },
-    {
-      "id": "aud-1792653398012-769",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:16:38.012Z"
     }
   ],
   "paymentConfig": {
