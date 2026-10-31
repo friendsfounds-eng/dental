@@ -377,6 +377,13 @@ export default function PatientManager({
       return;
     }
 
+    const cleanAgeStr = String(formData.age || '').replace(/\D/g, '');
+    const parsedAge = parseInt(cleanAgeStr, 10);
+    if (!cleanAgeStr || isNaN(parsedAge) || parsedAge < 1 || parsedAge > 100) {
+      alert('Invalid Age: Patient age must be a valid number between 1 and 100.');
+      return;
+    }
+
     const allergiesArr = formData.allergies ? formData.allergies.split(',').map(s => s.trim()).filter(Boolean) : [];
     const medHistoryArr = formData.medicalHistory ? formData.medicalHistory.split(',').map(s => s.trim()).filter(Boolean) : [];
 
@@ -404,7 +411,7 @@ export default function PatientManager({
       id: (formData.id && formData.id.trim()) ? formData.id.trim().toUpperCase() : generatePatientId(formData.name, patients),
       name: formData.name,
       phone: formData.phone,
-      age: parseInt(formData.age) || 30,
+      age: parsedAge,
       gender: formData.gender,
       bloodGroup: formData.bloodGroup,
       emergencyContact: formData.emergencyContact,
@@ -1190,14 +1197,40 @@ export default function PatientManager({
                   <div className="grid grid-cols-3 gap-2.5">
                     <div>
                       <label className="block font-bold text-slate-700 uppercase mb-1 text-[11px]">
-                        Age
+                        Age (1-100) *
                       </label>
                       <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         value={formData.age}
-                        onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                        placeholder="e.g. 32"
-                        className="w-full px-2.5 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-xs"
+                        onChange={(e) => {
+                          const digitsOnly = e.target.value.replace(/\D/g, '');
+                          if (!digitsOnly) {
+                            setFormData(prev => ({ ...prev, age: '' }));
+                            return;
+                          }
+                          const num = parseInt(digitsOnly, 10);
+                          if (num > 100) {
+                            setFormData(prev => ({ ...prev, age: '100' }));
+                          } else {
+                            setFormData(prev => ({ ...prev, age: String(num) }));
+                          }
+                        }}
+                        onBlur={() => {
+                          if (formData.age) {
+                            const num = parseInt(formData.age, 10);
+                            if (isNaN(num) || num < 1) {
+                              setFormData(prev => ({ ...prev, age: '1' }));
+                            } else if (num > 100) {
+                              setFormData(prev => ({ ...prev, age: '100' }));
+                            }
+                          }
+                        }}
+                        placeholder="1 - 100"
+                        maxLength={3}
+                        className="w-full px-2.5 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-xs font-semibold"
+                        required
                       />
                     </div>
                     <div>

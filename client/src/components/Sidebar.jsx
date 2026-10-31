@@ -312,15 +312,6 @@ export default function Sidebar({
               </span>
               <span className="text-[10px] text-slate-500 font-mono">Navigation Menu</span>
             </div>
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-              title="Close menu"
-              aria-label="Close menu"
-            >
-              ✕
-            </button>
           </div>
 
           {/* Desktop Sidebar Header with Toggle Button */}

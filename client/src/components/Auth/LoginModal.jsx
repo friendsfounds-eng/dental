@@ -75,7 +75,22 @@ export default function LoginModal({
         body: JSON.stringify({ username: identifier, email: identifier, password })
       });
 
-      const data = await res.json();
+      let data;
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const rawText = await res.text();
+        try {
+          data = JSON.parse(rawText);
+        } catch (parseErr) {
+          if (!res.ok) {
+            throw new Error(`Backend server is connecting or not responding (HTTP ${res.status}). Please ensure backend is running.`);
+          }
+          throw new Error('Server returned an unexpected response. Please try again.');
+        }
+      }
+
       if (!res.ok || !data.success) {
         throw new Error(data.message || data.error || 'Login failed. Please check your credentials.');
       }
@@ -88,15 +103,34 @@ export default function LoginModal({
       onLoginSuccess(data);
       if (onClose) onClose();
     } catch (err) {
-      setError(err.message);
+      if (err.name === 'SyntaxError' || (err.message && err.message.includes('Unexpected token'))) {
+        setError('Backend server is currently restarting or unavailable. Please retry in a few seconds.');
+      } else {
+        setError(err.message || 'Login failed. Please check credentials or network connection.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden flex flex-col max-h-[92vh]">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn ${
+        currentUser
+          ? 'bg-slate-900/40 backdrop-blur-xs'
+          : 'bg-gradient-to-br from-slate-100 via-white to-blue-50/50'
+      }`}
+    >
+      {/* Decorative ambient subtle blooms for standalone login screen */}
+      {!currentUser && (
+        <>
+          <div className="absolute w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl -top-32 -left-32 pointer-events-none" />
+          <div className="absolute w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl -bottom-32 -right-32 pointer-events-none" />
+          <div className="absolute w-[450px] h-[450px] bg-cyan-400/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+        </>
+      )}
+
+      <div className="bg-white rounded-3xl shadow-2xl border border-slate-200/90 w-full max-w-md overflow-hidden flex flex-col max-h-[92vh] relative z-10">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 relative">
           <div className="flex items-center justify-between">

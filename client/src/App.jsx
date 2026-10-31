@@ -759,23 +759,23 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col items-center justify-center text-white p-4 relative overflow-hidden select-none">
-        {/* Ambient background glow */}
-        <div className="absolute w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl -top-32 -left-32 pointer-events-none" />
-        <div className="absolute w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-3xl -bottom-32 -right-32 pointer-events-none" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50/50 flex flex-col items-center justify-center text-slate-800 p-4 relative overflow-hidden select-none">
+        {/* Clean, bright ambient background glow */}
+        <div className="absolute w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl -top-32 -left-32 pointer-events-none" />
+        <div className="absolute w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl -bottom-32 -right-32 pointer-events-none" />
 
         {/* Official Anaya Craft Logo Card - New Branding */}
-        <div className="p-8 bg-white rounded-3xl shadow-2xl border border-slate-100 flex flex-col items-center text-center max-w-sm w-full animate-fadeIn relative z-10 hover:shadow-blue-500/10 transition-shadow">
+        <div className="p-8 bg-white rounded-3xl shadow-xl border border-slate-200/80 flex flex-col items-center text-center max-w-sm w-full animate-fadeIn relative z-10 hover:shadow-blue-500/10 transition-shadow">
           <AnayaCraftLogo variant="stacked" size="lg" />
         </div>
 
         {/* Active Clinic Tenant Initializing Badge */}
         {activeTenant?.name && (
-          <div className="mt-6 px-4 py-2 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 flex items-center space-x-2.5 shadow-xl backdrop-blur-md relative z-10 animate-pulse">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span className="font-bold text-white tracking-wide">{activeTenant.name}</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-blue-400 font-sans text-[11px] font-semibold">Dental Cloud SaaS Active</span>
+          <div className="mt-6 px-4 py-2 rounded-2xl bg-white/95 border border-slate-200 text-xs font-mono text-slate-700 flex items-center space-x-2.5 shadow-md backdrop-blur-md relative z-10 animate-pulse">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span className="font-bold text-slate-900 tracking-wide">{activeTenant.name}</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-blue-600 font-sans text-[11px] font-semibold">Dental Cloud SaaS Active</span>
           </div>
         )}
       </div>
@@ -785,10 +785,10 @@ export default function App() {
   // Gatekeeper: Require authenticated User ID & Password to access the clinic practice
   if (!currentUser || !authToken) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
-        {/* Ambient background glow */}
-        <div className="absolute w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-3xl -top-32 -left-32 pointer-events-none" />
-        <div className="absolute w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-3xl -bottom-32 -right-32 pointer-events-none" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50/50 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
+        {/* Clean, bright ambient background glow */}
+        <div className="absolute w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl -top-32 -left-32 pointer-events-none" />
+        <div className="absolute w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-3xl -bottom-32 -right-32 pointer-events-none" />
 
         <LoginModal
           isOpen={true}
@@ -1252,8 +1252,10 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => setSidebarOpen(true)}
-          className="flex flex-col items-center py-1 px-3 rounded-xl text-slate-500 hover:text-blue-600 transition"
+          onClick={() => setSidebarOpen(prev => !prev)}
+          className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
+            sidebarOpen ? 'text-blue-600 font-bold' : 'text-slate-500 hover:text-blue-600'
+          }`}
           title="More Features & Menus"
         >
           <Menu className="w-5 h-5" />

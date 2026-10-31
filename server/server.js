@@ -1570,6 +1570,20 @@ app.post('/api/patients', authenticate, resolveTenant, requirePermission('regist
     counter++;
   }
 
+  // Validate Age (Strictly numbers only, range 1-100)
+  let patientAge = 30;
+  if (req.body.age !== undefined && req.body.age !== null && req.body.age !== '') {
+    const rawAge = String(req.body.age).replace(/\D/g, '');
+    const parsedAge = parseInt(rawAge, 10);
+    if (!rawAge || isNaN(parsedAge) || parsedAge < 1 || parsedAge > 100) {
+      return res.status(400).json({
+        error: 'INVALID_AGE',
+        message: 'Patient age must be a valid number between 1 and 100.'
+      });
+    }
+    patientAge = parsedAge;
+  }
+
   const newPatient = {
     dentalChart: {},
     treatmentPlans: [],
@@ -1580,7 +1594,8 @@ app.post('/api/patients', authenticate, resolveTenant, requirePermission('regist
     ...req.body,
     id: finalId,
     name: patientName,
-    phone: patientPhone
+    phone: patientPhone,
+    age: patientAge
   };
 
   // Patient Ticket Charge & Revisit Validity Window: First Visit Assessment
@@ -1678,6 +1693,19 @@ app.put('/api/patients/:id', authenticate, resolveTenant, requirePermission('edi
         isDuplicate: true
       });
     }
+  }
+
+  // Validate Age (Strictly numbers only, range 1-100)
+  if (req.body.age !== undefined && req.body.age !== null && req.body.age !== '') {
+    const rawAge = String(req.body.age).replace(/\D/g, '');
+    const parsedAge = parseInt(rawAge, 10);
+    if (!rawAge || isNaN(parsedAge) || parsedAge < 1 || parsedAge > 100) {
+      return res.status(400).json({
+        error: 'INVALID_AGE',
+        message: 'Patient age must be a valid number between 1 and 100.'
+      });
+    }
+    req.body.age = parsedAge;
   }
 
   // Do not allow overwriting clinical records through demographic update
