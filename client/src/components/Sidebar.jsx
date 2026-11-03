@@ -25,6 +25,9 @@ export default function Sidebar({
   onTabChange,
   currentUser,
   activeTenant,
+  availableTenants = [],
+  onSwitchTenant,
+  clinicProfile = {},
   patientCount = 0,
   appointmentCount = 0,
   isOpen = false,
@@ -308,7 +311,7 @@ export default function Sidebar({
             <span className="text-2xl select-none">🦷</span>
             <div className="min-w-0 flex-1">
               <span className="font-bold text-xs text-slate-900 dark:text-white block leading-tight truncate">
-                {activeTenant?.name || 'Nepal Dental ERP'}
+                {clinicProfile?.name || activeTenant?.name || 'Dental Practice ERP'}
               </span>
               <span className="text-[10px] text-slate-500 font-mono">Navigation Menu</span>
             </div>

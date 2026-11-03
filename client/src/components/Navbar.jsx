@@ -32,39 +32,52 @@ import {
 } from 'lucide-react';
 
 function formatClinicHeader(fullName) {
-  const name = (fullName || 'Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.').trim();
-
-  // Special match for Nepal Dental
-  if (/nepal\s*dental/i.test(name)) {
+  if (!fullName) {
     return {
-      primary: 'Nepal Dental',
-      connector: '&',
-      secondary: 'Healthcare Wellness Centre',
-      suffix: 'Pvt. Ltd.',
-      isSplit: true
+      primary: 'Dental Practice',
+      connector: '',
+      secondary: '',
+      suffix: '',
+      isSplit: false
     };
   }
 
-  // Generic match for other clinic names
-  const pvtMatch = name.match(/^(.*?)(?:,\s*|\s+)(Pvt\.?\s*Ltd\.?|LLC|Inc\.?)$/i);
+  const name = fullName.trim();
+
+  // Extract legal entity suffix if present (e.g. "Pvt. Ltd.", "P. Ltd.", "LLC", "Inc.", "Ltd.")
+  const pvtMatch = name.match(/^(.*?)(?:,\s*|\s+)(Pvt\.?\s*Ltd\.?|P\.?\s*Ltd\.?|LLC|Inc\.?|Ltd\.?)$/i);
   let baseName = name;
   let suffix = '';
   if (pvtMatch) {
-    baseName = pvtMatch[1];
-    suffix = pvtMatch[2];
+    baseName = pvtMatch[1].trim();
+    suffix = pvtMatch[2].trim();
   }
 
-  const splitMatch = baseName.match(/^(.*?)\s+(?:and|&|-|–)\s+(.*)$/i);
+  // Check if name has an explicit connector (&, and, +, -, –)
+  const splitMatch = baseName.match(/^(.*?)\s+(?:&|and|\+)\s+(.*)$/i);
   if (splitMatch) {
     return {
-      primary: splitMatch[1],
+      primary: splitMatch[1].trim(),
       connector: '&',
-      secondary: splitMatch[2],
+      secondary: splitMatch[2].trim(),
       suffix,
       isSplit: true
     };
   }
 
+  // If no explicit connector, but has 3 or more words, stylishly split first 2 words as primary, and remainder as secondary
+  const words = baseName.split(/\s+/);
+  if (words.length >= 3) {
+    return {
+      primary: words.slice(0, 2).join(' '),
+      connector: '',
+      secondary: words.slice(2).join(' '),
+      suffix,
+      isSplit: true
+    };
+  }
+
+  // 1 or 2 words (e.g. "Rajesh Dental", "sada")
   return {
     primary: baseName,
     connector: '',
@@ -94,10 +107,13 @@ export default function Navbar({
   const [searchQuery, setSearchQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [tenantSwitcherOpen, setTenantSwitcherOpen] = useState(false);
+  const [tenantSearch, setTenantSearch] = useState('');
   const [isNepaliCalendarOpen, setIsNepaliCalendarOpen] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState(() => new Date());
   const searchContainerRef = useRef(null);
   const settingsMenuRef = useRef(null);
+  const tenantSwitcherRef = useRef(null);
 
   // Live ticking Nepal Time (updates every second)
   useEffect(() => {
@@ -161,6 +177,9 @@ export default function Navbar({
       if (settingsMenuRef.current && !settingsMenuRef.current.contains(e.target)) {
         setSettingsOpen(false);
       }
+      if (tenantSwitcherRef.current && !tenantSwitcherRef.current.contains(e.target)) {
+        setTenantSwitcherOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -197,7 +216,14 @@ export default function Navbar({
   };
 
   const RoleIcon = roleBadge.icon;
-  const brandInfo = formatClinicHeader(clinicProfile.name);
+  const currentClinicName = clinicProfile?.name || activeTenant?.name || 'Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.';
+  const brandInfo = formatClinicHeader(currentClinicName);
+
+  const filteredAvailableTenants = (availableTenants || []).filter(t => {
+    if (!tenantSearch.trim()) return true;
+    const q = tenantSearch.toLowerCase();
+    return (t.name || '').toLowerCase().includes(q) || (t.slug || '').toLowerCase().includes(q);
+  });
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-50 px-3 sm:px-6 h-14 sm:h-16 flex items-center shadow-2xs no-print">
@@ -230,74 +256,210 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* Clinic Brand & Hierarchy with Fancy Colors */}
-          <div className="min-w-0 flex flex-col justify-center">
-            {/* Line 1: Primary Brand (Royal Indigo-Cyan Gradient) + Secondary & Badges */}
-            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap leading-tight">
-              <h1
-                className="text-xs min-[400px]:text-sm sm:text-base md:text-lg font-black tracking-tight bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 bg-clip-text text-transparent drop-shadow-xs truncate max-w-[130px] min-[400px]:max-w-[180px] sm:max-w-none"
-                title={clinicProfile.name || 'Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.'}
-              >
-                {brandInfo.primary}
-              </h1>
+          {/* Clinic Brand & Hierarchy with Fancy Colors + Tenant Switcher */}
+          <div ref={tenantSwitcherRef} className="relative min-w-0 flex flex-col justify-center">
+            {/* Clickable Header Button to open Clinic Switcher */}
+            <button
+              type="button"
+              onClick={() => availableTenants.length > 0 && setTenantSwitcherOpen(prev => !prev)}
+              className="text-left group/brand flex flex-col justify-center outline-none select-none -m-1 p-1 rounded-xl hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition cursor-pointer"
+              title={availableTenants.length > 1 ? "Click to switch clinic practice" : currentClinicName}
+            >
+              {/* Line 1: Primary Brand + Secondary & Badges + Switcher Chevron */}
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap leading-tight">
+                <h1
+                  className="text-xs min-[400px]:text-sm sm:text-base md:text-lg font-black tracking-tight bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 bg-clip-text text-transparent drop-shadow-xs truncate max-w-[130px] min-[400px]:max-w-[180px] sm:max-w-none group-hover/brand:opacity-90"
+                  title={currentClinicName}
+                >
+                  {brandInfo.primary}
+                </h1>
 
-              {brandInfo.secondary && (
-                <div className="hidden sm:inline-flex items-center gap-1">
-                  <span className="text-amber-500 dark:text-amber-400 font-black text-xs sm:text-sm">
-                    {brandInfo.connector}
+                {brandInfo.secondary && (
+                  <div className="hidden sm:inline-flex items-center gap-1">
+                    {brandInfo.connector && (
+                      <span className="text-amber-500 dark:text-amber-400 font-black text-xs sm:text-sm">
+                        {brandInfo.connector}
+                      </span>
+                    )}
+                    <span className="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 dark:from-teal-400 dark:via-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent tracking-tight">
+                      {brandInfo.secondary}
+                    </span>
+                  </div>
+                )}
+
+                {brandInfo.suffix && (
+                  <span className="hidden md:inline-flex items-center text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-gradient-to-r from-indigo-50 to-blue-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 border border-indigo-200/90 dark:border-indigo-700/60 shadow-2xs">
+                    {brandInfo.suffix}
                   </span>
-                  <span className="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 dark:from-teal-400 dark:via-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent tracking-tight">
-                    {brandInfo.secondary}
+                )}
+
+                {/* Pulsing Emerald Live Status Badge */}
+                <span className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs flex-shrink-0">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span>LIVE</span>
+                </span>
+
+                {/* Multi-Tenant Switcher Indicator */}
+                {availableTenants.length > 1 && (
+                  <span className="hidden sm:inline-flex items-center text-slate-400 group-hover/brand:text-blue-600 transition ml-0.5" title="Click to switch practice">
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${tenantSwitcherOpen ? 'rotate-180 text-blue-600' : ''}`} />
+                  </span>
+                )}
+              </div>
+
+              {/* Line 2: Dental Address & Contact Credentials */}
+              <div className="flex items-center space-x-1.5 mt-0.5 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
+                <MapPin className="w-3 h-3 text-rose-500 flex-shrink-0" />
+                <span
+                  className="truncate max-w-[125px] min-[400px]:max-w-[180px] sm:max-w-[300px] md:max-w-[420px] text-slate-600 dark:text-slate-300 font-medium"
+                  title={clinicProfile?.address || activeTenant?.country || 'Gaushala-12 Mahaottari Nepal'}
+                >
+                  {clinicProfile?.address || activeTenant?.country || 'Gaushala-12 Mahaottari Nepal'}
+                </span>
+
+                {(clinicProfile?.phone || activeTenant?.supportPhone) && (
+                  <>
+                    <span className="hidden lg:inline text-slate-300 dark:text-slate-600">•</span>
+                    <span className="hidden lg:inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold">
+                      <Phone className="w-2.5 h-2.5" />
+                      <span>{clinicProfile?.phone || activeTenant?.supportPhone}</span>
+                    </span>
+                  </>
+                )}
+
+                {(clinicProfile?.regNo || clinicProfile?.panNumber) && (
+                  <>
+                    <span className="hidden xl:inline text-slate-300 dark:text-slate-600">•</span>
+                    <span className="hidden xl:inline-flex items-center gap-1 text-[9px] font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800 px-1.5 py-0.2 rounded-md">
+                      <ShieldCheck className="w-2.5 h-2.5 text-teal-600" />
+                      <span>{clinicProfile?.regNo || clinicProfile?.panNumber}</span>
+                    </span>
+                  </>
+                )}
+              </div>
+            </button>
+
+            {/* TENANT / CLINIC SWITCHER DROPDOWN POPOVER */}
+            {tenantSwitcherOpen && (
+              <div className="absolute left-0 top-full mt-2 w-80 sm:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 animate-fadeIn select-none">
+                <div className="p-3 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Building className="w-4 h-4 text-blue-300" />
+                    <div>
+                      <h4 className="text-xs font-black tracking-tight uppercase">Multi-Tenant Practices</h4>
+                      <p className="text-[10px] text-blue-200 leading-tight">Switch between clinic practices</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-mono font-bold bg-blue-500/40 text-blue-100 px-2 py-0.5 rounded-full">
+                    {availableTenants.length} Clinics
                   </span>
                 </div>
-              )}
 
-              {brandInfo.suffix && (
-                <span className="hidden md:inline-flex items-center text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-gradient-to-r from-indigo-50 to-blue-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 border border-indigo-200/90 dark:border-indigo-700/60 shadow-2xs">
-                  {brandInfo.suffix}
-                </span>
-              )}
+                {/* Filter Search */}
+                {availableTenants.length > 3 && (
+                  <div className="p-2 bg-slate-50 dark:bg-slate-800/50">
+                    <div className="relative">
+                      <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        placeholder="Search clinic name or slug..."
+                        value={tenantSearch}
+                        onChange={(e) => setTenantSearch(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1.5 text-xs bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+                      />
+                    </div>
+                  </div>
+                )}
 
-              {/* Pulsing Emerald Live Status Badge */}
-              <span className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs flex-shrink-0">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span>LIVE</span>
-              </span>
-            </div>
+                {/* Tenant List */}
+                <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800/60 p-1">
+                  {filteredAvailableTenants.map(t => {
+                    const isActive = t.id === activeTenant?.id;
+                    return (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => {
+                          if (!isActive && onSwitchTenant) {
+                            onSwitchTenant(t.id);
+                          }
+                          setTenantSwitcherOpen(false);
+                        }}
+                        className={`w-full text-left p-2.5 rounded-xl transition flex items-center justify-between group ${
+                          isActive
+                            ? 'bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800'
+                            : 'hover:bg-slate-50 dark:hover:bg-slate-800'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-2.5 min-w-0 flex-1 pr-2">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0 ${
+                            isActive
+                              ? 'bg-blue-600 text-white shadow-2xs'
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                          }`}>
+                            🦷
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center space-x-1.5">
+                              <span className={`text-xs font-bold block truncate ${
+                                isActive ? 'text-blue-900 dark:text-blue-200' : 'text-slate-900 dark:text-slate-100 group-hover:text-blue-600'
+                              }`}>
+                                {t.name}
+                              </span>
+                              {t.id === 'tenant-nepal-dental' && (
+                                <span className="text-[9px] uppercase px-1 py-0.2 rounded bg-blue-100 text-blue-700 font-bold">
+                                  Primary
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono flex items-center space-x-2 mt-0.5">
+                              <span>{t.slug}.anacraft.com</span>
+                              <span>•</span>
+                              <span className={t.status === 'Active' ? 'text-emerald-600' : 'text-amber-600'}>
+                                {t.status || 'Active'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
 
-            {/* Line 2: Dental Address & Contact Credentials */}
-            <div className="flex items-center space-x-1.5 mt-0.5 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
-              <MapPin className="w-3 h-3 text-rose-500 flex-shrink-0" />
-              <span
-                className="truncate max-w-[125px] min-[400px]:max-w-[180px] sm:max-w-[300px] md:max-w-[420px] text-slate-600 dark:text-slate-300 font-medium"
-                title={clinicProfile.address || 'Gaushala-12 Mahaottari Nepal'}
-              >
-                {clinicProfile.address || 'Gaushala-12 Mahaottari Nepal'}
-              </span>
+                        {isActive ? (
+                          <div className="flex items-center space-x-1 px-2 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 text-[10px] font-bold flex-shrink-0">
+                            <Check className="w-3 h-3 text-emerald-600" />
+                            <span>Active</span>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] font-bold text-slate-400 group-hover:text-blue-600 flex items-center space-x-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span>Switch</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
 
-              {clinicProfile.phone && (
-                <>
-                  <span className="hidden lg:inline text-slate-300 dark:text-slate-600">•</span>
-                  <span className="hidden lg:inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold">
-                    <Phone className="w-2.5 h-2.5" />
-                    <span>{clinicProfile.phone}</span>
-                  </span>
-                </>
-              )}
-
-              {clinicProfile.regNo && (
-                <>
-                  <span className="hidden xl:inline text-slate-300 dark:text-slate-600">•</span>
-                  <span className="hidden xl:inline-flex items-center gap-1 text-[9px] font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800 px-1.5 py-0.2 rounded-md">
-                    <ShieldCheck className="w-2.5 h-2.5 text-teal-600" />
-                    <span>{clinicProfile.regNo}</span>
-                  </span>
-                </>
-              )}
-            </div>
+                {/* Footer with Platform Admin shortcut */}
+                {isPlatformAdmin && onNavigate && (
+                  <div className="p-2 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <span className="text-[10px] text-slate-500 font-medium">Platform Super Admin</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTenantSwitcherOpen(false);
+                        onNavigate('platform');
+                      }}
+                      className="text-[11px] text-blue-600 hover:text-blue-800 dark:text-blue-400 font-bold flex items-center space-x-1"
+                    >
+                      <Building className="w-3 h-3" />
+                      <span>Manage All Tenants</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -486,6 +648,29 @@ export default function Navbar({
 
                 {/* 2. Settings Menu Links */}
                 <div className="p-1.5 space-y-0.5">
+                  {/* Switch Clinic Practice (Multi-Tenant) */}
+                  {availableTenants.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSettingsOpen(false);
+                        setTenantSwitcherOpen(true);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center justify-between group"
+                    >
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition shadow-2xs">
+                          <ArrowLeftRight className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-xs font-semibold block truncate">Switch Clinic Practice</span>
+                          <span className="text-[10px] text-slate-400 block truncate">{currentClinicName}</span>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    </button>
+                  )}
+
                   {/* Clinic Configuration */}
                   <button
                     type="button"

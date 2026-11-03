@@ -423,6 +423,35 @@ app.post('/api/platform/tenants', authenticate, requireRole('PLATFORM_ADMIN'), (
       enableFinance: enableFinance !== undefined ? Boolean(enableFinance) : true
     });
 
+    if (created && created.tenant) {
+      const cycle = req.body.billingCycle || 'Yearly';
+      const plan = multiTenantDb.getPlanById(created.tenant.planId);
+      const defaultCost = cycle === 'Monthly' ? (plan?.priceMonthly || 3500) : (plan?.priceYearly || 35000);
+
+      created.tenant.subscription = created.tenant.subscription || {};
+      created.tenant.subscription.billingCycle = cycle;
+
+      if (req.body.subscriptionExpiryDate) {
+        created.tenant.subscription.expiryDate = new Date(req.body.subscriptionExpiryDate).toISOString();
+      }
+      if (req.body.totalAmountDue !== undefined && req.body.totalAmountDue !== null && req.body.totalAmountDue !== '') {
+        created.tenant.subscription.totalAmountDue = Number(req.body.totalAmountDue);
+      } else {
+        created.tenant.subscription.totalAmountDue = defaultCost;
+      }
+
+      if (req.body.initialPayment && Number(req.body.initialPayment) > 0) {
+        multiTenantDb.recordTenantPayment(created.tenant.id, {
+          amount: Number(req.body.initialPayment),
+          method: req.body.paymentMethod || 'Bank Transfer',
+          transactionRef: req.body.transactionRef || 'INITIAL_SETUP',
+          notes: 'Initial software payment recorded during clinic creation'
+        });
+      }
+
+      multiTenantDb.savePlatform();
+    }
+
     res.status(201).json({ success: true, ...created });
   } catch (err) {
     res.status(400).json({ error: 'CREATION_FAILED', message: err.message });
@@ -550,6 +579,149 @@ app.delete('/api/platform/tenants/:id', authenticate, requireRole('PLATFORM_ADMI
   } catch (err) {
     console.error('Delete tenant error:', err);
     res.status(500).json({ error: 'SERVER_ERROR', message: err.message || 'Failed to delete clinic.' });
+  }
+});
+
+// -------------------------------------------------------------
+// Tenant Profile Details, User Accounts, Payments & Subscriptions (Super Admin)
+// -------------------------------------------------------------
+
+// Get Full Tenant Profile Details - Super Admin / Platform Admin
+app.get('/api/platform/tenants/:id', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id } = req.params;
+    const allTenants = multiTenantDb.getAllTenants();
+    const tenant = allTenants.find(t => t.id === id);
+    if (!tenant) return res.status(404).json({ error: 'Tenant not found.' });
+
+    const users = multiTenantDb.getTenantUsers(id);
+    const payments = multiTenantDb.getTenantPayments(id);
+
+    res.json({
+      success: true,
+      tenant,
+      users,
+      payments
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'FETCH_FAILED', message: err.message });
+  }
+});
+
+// Get Tenant Users - Super Admin
+app.get('/api/platform/tenants/:id/users', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const users = multiTenantDb.getTenantUsers(req.params.id);
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: 'FETCH_USERS_FAILED', message: err.message });
+  }
+});
+
+// Add User Account for Tenant - Super Admin
+app.post('/api/platform/tenants/:id/users', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, username, password, phone, role } = req.body;
+    if (!name || (!email && !username)) {
+      return res.status(400).json({ error: 'Name and email or username are required.' });
+    }
+    const result = multiTenantDb.addTenantUser(id, { name, email, username, password, phone, role });
+    res.status(201).json({ success: true, ...result });
+  } catch (err) {
+    res.status(400).json({ error: 'CREATE_USER_FAILED', message: err.message });
+  }
+});
+
+// Update Tenant User Account - Super Admin
+app.put('/api/platform/tenants/:id/users/:userId', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id, userId } = req.params;
+    const result = multiTenantDb.updateTenantUser(id, userId, req.body);
+    res.json({ success: true, ...result });
+  } catch (err) {
+    res.status(400).json({ error: 'UPDATE_USER_FAILED', message: err.message });
+  }
+});
+
+// Remove Tenant User Account - Super Admin
+app.delete('/api/platform/tenants/:id/users/:userId', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id, userId } = req.params;
+    multiTenantDb.removeTenantUser(id, userId);
+    res.json({ success: true, message: 'User account removed from tenant.' });
+  } catch (err) {
+    res.status(400).json({ error: 'DELETE_USER_FAILED', message: err.message });
+  }
+});
+
+// Get Tenant Payment History - Super Admin
+app.get('/api/platform/tenants/:id/payments', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const payments = multiTenantDb.getTenantPayments(req.params.id);
+    res.json(payments);
+  } catch (err) {
+    res.status(500).json({ error: 'FETCH_PAYMENTS_FAILED', message: err.message });
+  }
+});
+
+// Record Software Payment for Tenant - Super Admin
+app.post('/api/platform/tenants/:id/payments', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id } = req.params;
+    const { amount, date, method, transactionRef, invoiceNo, notes, receiptUrl, billingPeriod } = req.body;
+    if (!amount || Number(amount) <= 0) {
+      return res.status(400).json({ error: 'Payment amount must be greater than 0.' });
+    }
+    const payment = multiTenantDb.recordTenantPayment(id, {
+      amount,
+      date,
+      method,
+      transactionRef,
+      invoiceNo,
+      notes,
+      receiptUrl,
+      billingPeriod,
+      recordedBy: req.user.name || 'Super Admin'
+    });
+    res.status(201).json({ success: true, payment });
+  } catch (err) {
+    res.status(400).json({ error: 'RECORD_PAYMENT_FAILED', message: err.message });
+  }
+});
+
+// Delete Software Payment Record - Super Admin
+app.delete('/api/platform/tenants/:id/payments/:paymentId', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id, paymentId } = req.params;
+    const deleted = multiTenantDb.deleteTenantPayment(id, paymentId);
+    if (!deleted) return res.status(404).json({ error: 'Payment record not found.' });
+    res.json({ success: true, message: 'Payment record deleted.' });
+  } catch (err) {
+    res.status(500).json({ error: 'DELETE_PAYMENT_FAILED', message: err.message });
+  }
+});
+
+// Renew / Extend Tenant Subscription - Super Admin
+app.post('/api/platform/tenants/:id/subscription/extend', authenticate, requireRole('PLATFORM_ADMIN'), (req, res) => {
+  try {
+    const { id } = req.params;
+    const { months, expiryDate, status, planId, billingCycle, totalAmountDue, paymentAmount, paymentMethod, transactionRef, notes } = req.body;
+    const subscription = multiTenantDb.extendTenantSubscription(id, {
+      months,
+      expiryDate,
+      status,
+      planId,
+      billingCycle,
+      totalAmountDue,
+      paymentAmount,
+      paymentMethod,
+      transactionRef,
+      notes
+    });
+    res.json({ success: true, subscription });
+  } catch (err) {
+    res.status(400).json({ error: 'SUBSCRIPTION_UPDATE_FAILED', message: err.message });
   }
 });
 
@@ -1323,6 +1495,15 @@ app.put('/api/clinic', authenticate, resolveTenant, requirePermission('manage:cl
 
   tData.clinicProfile = { ...tData.clinicProfile, ...req.body };
   multiTenantDb.saveTenantData(req.tenantId, tData);
+
+  // Synchronize tenant name in platform registry if name updated
+  if (req.body.name && req.body.name.trim()) {
+    const tenant = multiTenantDb.getTenantById(req.tenantId);
+    if (tenant) {
+      tenant.name = req.body.name.trim();
+      multiTenantDb.savePlatform();
+    }
+  }
 
   multiTenantDb.logTenantAudit(req.tenantId, {
     userId: req.user.id,

@@ -58,7 +58,20 @@
     "requireApprovalAbovePercent": 10
   },
   "refundRequests": [],
-  "auditLogs": [],
+  "auditLogs": [
+    {
+      "id": "tlog-1793691247221-336",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "TENANT_SWITCHED",
+      "resource": "auth",
+      "details": {
+        "switchedTo": "Himalayan Advanced Dental Care"
+      },
+      "timestamp": "2026-11-03T07:34:07.222Z"
+    }
+  ],
   "pharmacyCatalog": [
     {
       "id": "PHARM-MED-1",

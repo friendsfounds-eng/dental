@@ -1987,17 +1987,64 @@ class MultiTenantDatabase {
       const adminMem = members.find(m => m.role === 'CLINIC_ADMIN');
       const adminUser = adminMem ? this.platform.users.find(u => u.id === adminMem.userId) : null;
       const tData = this.getTenantData(t.id);
+
+      // Aggregate software payment history from renewalRequests and direct payments
+      const approvedRenewals = (this.platform.renewalRequests || [])
+        .filter(r => r.tenantId === t.id && r.status === 'APPROVED')
+        .map(r => ({
+          id: r.id,
+          date: r.reviewedAt ? r.reviewedAt.split('T')[0] : (r.submittedAt ? r.submittedAt.split('T')[0] : '2026-01-01'),
+          amount: Number(r.amount) || 0,
+          currency: r.currency || t.currency || 'Rs.',
+          method: 'Bank / FonePay',
+          transactionRef: r.transactionRef || 'APPROVED_RENEWAL',
+          invoiceNo: `INV-SAAS-${r.id.slice(-6).toUpperCase()}`,
+          billingPeriod: `${r.planName || (sub ? sub.name : 'Subscription')} (${r.billingCycle || 'Yearly'})`,
+          status: 'PAID',
+          notes: r.payerName ? `Paid by ${r.payerName}` : 'Subscription renewal',
+          receiptUrl: r.receiptUrl || null,
+          recordedAt: r.reviewedAt || r.submittedAt || new Date().toISOString()
+        }));
+
+      const directPayments = Array.isArray(t.subscription?.payments) ? t.subscription.payments : [];
+      const allPayments = [...directPayments, ...approvedRenewals].sort((a, b) => new Date(b.date || b.recordedAt) - new Date(a.date || a.recordedAt));
+      const amountPaid = allPayments.reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
+
+      const billingCycle = t.subscription?.billingCycle || 'Yearly';
+      const defaultPlanCost = billingCycle === 'Monthly'
+        ? (Number(sub?.priceMonthly) || 3500)
+        : (Number(sub?.priceYearly) || 35000);
+      const totalAmountDue = t.subscription?.totalAmountDue !== undefined && t.subscription?.totalAmountDue !== null
+        ? Number(t.subscription.totalAmountDue)
+        : defaultPlanCost;
+
+      const remainingBalance = Math.max(0, totalAmountDue - amountPaid);
+      const expiryDate = t.subscription?.expiryDate || '2027-10-31T00:00:00.000Z';
+      const daysRemaining = Math.ceil((new Date(expiryDate) - new Date()) / (1000 * 60 * 60 * 24));
+      const isExpired = daysRemaining < 0;
+
+      const subscription = {
+        planId: t.planId || 'plan-starter',
+        planName: sub ? sub.name : 'Starter Clinic',
+        status: t.status === 'Suspended' ? 'Suspended' : (isExpired ? 'Expired' : (t.subscription?.status || 'Active')),
+        billingCycle,
+        startDate: t.subscription?.startDate || t.createdAt || '2026-01-01T00:00:00.000Z',
+        expiryDate,
+        daysRemaining,
+        isExpired,
+        totalAmountDue,
+        amountPaid,
+        remainingBalance,
+        paymentsCount: allPayments.length,
+        lastPayment: allPayments[0] || null
+      };
+
       return {
         ...t,
         domains,
         plan: sub || { name: 'Starter' },
-        subscription: t.subscription || {
-          planId: t.planId || 'plan-starter',
-          planName: sub ? sub.name : 'Starter Clinic',
-          status: t.status === 'Suspended' ? 'Suspended' : 'Active',
-          billingCycle: 'Yearly',
-          expiryDate: '2026-11-15T00:00:00.000Z'
-        },
+        subscription,
+        payments: allPayments,
         staffCount: members.length,
         adminUser: adminUser ? { id: adminUser.id, name: adminUser.name, username: adminUser.username || (adminUser.email ? adminUser.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : ''), email: adminUser.email } : null,
         clinicProfile: tData ? tData.clinicProfile : null
@@ -2297,6 +2344,350 @@ class MultiTenantDatabase {
     }
 
     return true;
+  }
+
+  // -------------------------------------------------------------
+  // Tenant User Account Management (Platform / Super Admin)
+  // -------------------------------------------------------------
+  getTenantUsers(tenantId) {
+    const memberships = (this.platform.memberships || []).filter(m => m.tenantId === tenantId);
+    return memberships.map(m => {
+      const user = (this.platform.users || []).find(u => u.id === m.userId);
+      return {
+        membershipId: m.id,
+        userId: m.userId,
+        role: m.role || 'DOCTOR',
+        roles: m.roles || [m.role || 'DOCTOR'],
+        isActive: m.isActive !== false,
+        joinedAt: m.joinedAt || user?.createdAt || new Date().toISOString(),
+        name: user?.name || 'Unknown User',
+        email: user?.email || '',
+        username: user?.username || (user?.email ? user.email.split('@')[0] : ''),
+        phone: user?.phone || '',
+        status: user?.status || 'active'
+      };
+    });
+  }
+
+  addTenantUser(tenantId, { name, email, username, password, phone, role = 'DOCTOR' }) {
+    const tenant = this.getTenantById(tenantId);
+    if (!tenant) throw new Error('Tenant not found');
+
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const cleanUsername = (username || (cleanEmail ? cleanEmail.split('@')[0] : ''))
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9_-]/g, '');
+
+    if (!cleanEmail && !cleanUsername) {
+      throw new Error('Email or username is required.');
+    }
+
+    // Check uniqueness
+    const existing = (this.platform.users || []).find(u =>
+      (cleanEmail && u.email && u.email.toLowerCase() === cleanEmail) ||
+      (cleanUsername && u.username && u.username.toLowerCase() === cleanUsername)
+    );
+    if (existing) {
+      throw new Error(`A user with email "${cleanEmail}" or username "${cleanUsername}" already exists.`);
+    }
+
+    const userId = `user-${Date.now().toString().slice(-6)}`;
+    const newUser = {
+      id: userId,
+      email: cleanEmail || `${cleanUsername}@${tenant.slug}.anacraft.com`,
+      username: cleanUsername,
+      passwordHash: hashPassword(password || 'Admin@123'),
+      name: (name || cleanUsername).trim(),
+      phone: phone || '',
+      globalRole: null,
+      status: 'active',
+      tokenVersion: 1,
+      createdAt: new Date().toISOString()
+    };
+
+    const newMembership = {
+      id: `mem-${Date.now().toString().slice(-6)}`,
+      tenantId,
+      userId,
+      role,
+      roles: [role],
+      isActive: true,
+      joinedAt: new Date().toISOString()
+    };
+
+    this.platform.users.push(newUser);
+    this.platform.memberships.push(newMembership);
+
+    // If role is DOCTOR, also record in clinicProfile / doctors
+    const tData = this.getTenantData(tenantId);
+    if (tData) {
+      tData.doctors = tData.doctors || [];
+      if (role === 'DOCTOR' && !tData.doctors.some(d => d.name === newUser.name)) {
+        tData.doctors.push({
+          id: `doc-${Date.now().toString().slice(-4)}`,
+          name: newUser.name,
+          specialty: 'Dental Specialist',
+          qualification: 'BDS',
+          phone: newUser.phone,
+          email: newUser.email,
+          color: '#2563eb'
+        });
+        this.saveTenantData(tenantId, tData);
+      }
+    }
+
+    this.savePlatform();
+    this.logPlatformAudit({
+      tenantId,
+      action: 'TENANT_USER_CREATED',
+      resource: 'user',
+      resourceId: userId,
+      details: { name: newUser.name, role, email: newUser.email }
+    });
+
+    return { user: { ...newUser, role: newMembership.role }, membership: newMembership };
+  }
+
+  updateTenantUser(tenantId, userId, updates = {}) {
+    const user = (this.platform.users || []).find(u => u.id === userId);
+    if (!user) throw new Error('User not found');
+
+    const membership = (this.platform.memberships || []).find(m => m.tenantId === tenantId && m.userId === userId);
+    if (!membership) throw new Error('User does not belong to this tenant.');
+
+    if (updates.name) user.name = updates.name.trim();
+    if (updates.phone !== undefined) user.phone = updates.phone.trim();
+    if (updates.email) {
+      const cleanEmail = updates.email.trim().toLowerCase();
+      const existing = (this.platform.users || []).find(u => u.id !== userId && u.email && u.email.toLowerCase() === cleanEmail);
+      if (existing) throw new Error(`Email "${cleanEmail}" is already in use by another account.`);
+      user.email = cleanEmail;
+    }
+    if (updates.username) {
+      const cleanUsername = updates.username.trim().toLowerCase().replace(/[^a-zA-Z0-9_-]/g, '');
+      const existing = (this.platform.users || []).find(u => u.id !== userId && u.username && u.username.toLowerCase() === cleanUsername);
+      if (existing) throw new Error(`Username "${cleanUsername}" is already taken.`);
+      user.username = cleanUsername;
+    }
+    if (updates.password) {
+      user.passwordHash = hashPassword(updates.password);
+      user.tokenVersion = (user.tokenVersion || 1) + 1;
+    }
+    if (updates.status) {
+      user.status = updates.status;
+      membership.isActive = updates.status === 'active';
+    }
+    if (updates.role) {
+      membership.role = updates.role;
+      membership.roles = [updates.role];
+    }
+
+    this.savePlatform();
+    this.logPlatformAudit({
+      tenantId,
+      action: 'TENANT_USER_UPDATED',
+      resource: 'user',
+      resourceId: userId,
+      details: { name: user.name, role: membership.role }
+    });
+
+    return { user: { ...user, role: membership.role }, membership };
+  }
+
+  removeTenantUser(tenantId, userId) {
+    const memIdx = (this.platform.memberships || []).findIndex(m => m.tenantId === tenantId && m.userId === userId);
+    if (memIdx === -1) throw new Error('User membership not found for this tenant.');
+
+    this.platform.memberships.splice(memIdx, 1);
+
+    const otherMemberships = (this.platform.memberships || []).filter(m => m.userId === userId);
+    const user = (this.platform.users || []).find(u => u.id === userId);
+    if (user && otherMemberships.length === 0 && user.globalRole !== 'PLATFORM_ADMIN') {
+      user.status = 'inactive';
+    }
+
+    this.savePlatform();
+    this.logPlatformAudit({
+      tenantId,
+      action: 'TENANT_USER_REMOVED',
+      resource: 'user',
+      resourceId: userId,
+      details: { tenantId }
+    });
+
+    return true;
+  }
+
+  // -------------------------------------------------------------
+  // Tenant Subscription & Payment Management
+  // -------------------------------------------------------------
+  getTenantPayments(tenantId) {
+    const tenant = this.getTenantById(tenantId);
+    if (!tenant) return [];
+
+    const approvedRenewals = (this.platform.renewalRequests || [])
+      .filter(r => r.tenantId === tenantId && r.status === 'APPROVED')
+      .map(r => ({
+        id: r.id,
+        date: r.reviewedAt ? r.reviewedAt.split('T')[0] : (r.submittedAt ? r.submittedAt.split('T')[0] : '2026-01-01'),
+        amount: Number(r.amount) || 0,
+        currency: r.currency || tenant.currency || 'Rs.',
+        method: 'Bank / FonePay',
+        transactionRef: r.transactionRef || 'APPROVED_RENEWAL',
+        invoiceNo: `INV-SAAS-${r.id.slice(-6).toUpperCase()}`,
+        billingPeriod: `${r.planName || 'Subscription'} (${r.billingCycle || 'Yearly'})`,
+        status: 'PAID',
+        notes: r.payerName ? `Paid by ${r.payerName}` : 'Subscription renewal',
+        receiptUrl: r.receiptUrl || null,
+        recordedAt: r.reviewedAt || r.submittedAt || new Date().toISOString()
+      }));
+
+    const directPayments = Array.isArray(tenant.subscription?.payments) ? tenant.subscription.payments : [];
+
+    return [...directPayments, ...approvedRenewals].sort((a, b) => new Date(b.date || b.recordedAt) - new Date(a.date || a.recordedAt));
+  }
+
+  recordTenantPayment(tenantId, paymentData = {}) {
+    const tenant = this.getTenantById(tenantId);
+    if (!tenant) throw new Error('Tenant not found');
+
+    if (!tenant.subscription) {
+      const plan = this.getPlanById(tenant.planId);
+      tenant.subscription = {
+        planId: tenant.planId || 'plan-starter',
+        planName: plan ? plan.name : 'Starter Clinic',
+        status: 'Active',
+        billingCycle: 'Yearly',
+        startDate: tenant.createdAt || new Date().toISOString(),
+        expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+        payments: []
+      };
+    }
+
+    tenant.subscription.payments = tenant.subscription.payments || [];
+
+    const paymentId = `spay-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const newPayment = {
+      id: paymentId,
+      date: paymentData.date || new Date().toISOString().split('T')[0],
+      amount: Number(paymentData.amount) || 0,
+      currency: paymentData.currency || tenant.currency || 'Rs.',
+      method: paymentData.method || 'Bank Transfer',
+      transactionRef: paymentData.transactionRef || `REF-${Date.now().toString().slice(-6)}`,
+      invoiceNo: paymentData.invoiceNo || `INV-SAAS-${Date.now().toString().slice(-5)}`,
+      billingPeriod: paymentData.billingPeriod || `${tenant.subscription.planName || 'Software'} License`,
+      status: paymentData.status || 'PAID',
+      notes: paymentData.notes || '',
+      receiptUrl: paymentData.receiptUrl || null,
+      recordedBy: paymentData.recordedBy || 'Super Admin',
+      recordedAt: new Date().toISOString()
+    };
+
+    tenant.subscription.payments.unshift(newPayment);
+
+    // If tenant was suspended or expired, activate it on payment
+    if (tenant.status === 'Suspended' || tenant.subscription.status === 'Expired') {
+      tenant.status = 'Active';
+      tenant.subscription.status = 'Active';
+    }
+
+    this.savePlatform();
+    this.logPlatformAudit({
+      tenantId,
+      action: 'TENANT_SOFTWARE_PAYMENT_RECORDED',
+      resource: 'payment',
+      resourceId: paymentId,
+      details: { amount: newPayment.amount, method: newPayment.method, ref: newPayment.transactionRef }
+    });
+
+    return newPayment;
+  }
+
+  deleteTenantPayment(tenantId, paymentId) {
+    const tenant = this.getTenantById(tenantId);
+    if (!tenant || !tenant.subscription) return false;
+
+    tenant.subscription.payments = tenant.subscription.payments || [];
+    const idx = tenant.subscription.payments.findIndex(p => p.id === paymentId);
+    if (idx !== -1) {
+      tenant.subscription.payments.splice(idx, 1);
+      this.savePlatform();
+      return true;
+    }
+    return false;
+  }
+
+  extendTenantSubscription(tenantId, { months, expiryDate, status = 'Active', planId, billingCycle, totalAmountDue, paymentAmount, paymentMethod, transactionRef, notes }) {
+    const tenant = this.getTenantById(tenantId);
+    if (!tenant) throw new Error('Tenant not found');
+
+    if (!tenant.subscription) {
+      const plan = this.getPlanById(tenant.planId);
+      tenant.subscription = {
+        planId: tenant.planId || 'plan-starter',
+        planName: plan ? plan.name : 'Starter Clinic',
+        status: 'Active',
+        billingCycle: 'Yearly',
+        startDate: tenant.createdAt || new Date().toISOString(),
+        expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+        payments: []
+      };
+    }
+
+    if (planId) {
+      tenant.planId = planId;
+      tenant.subscription.planId = planId;
+      const planObj = this.getPlanById(planId);
+      if (planObj) tenant.subscription.planName = planObj.name;
+    }
+
+    if (billingCycle) {
+      tenant.subscription.billingCycle = billingCycle;
+    }
+
+    if (totalAmountDue !== undefined && totalAmountDue !== null && totalAmountDue !== '') {
+      tenant.subscription.totalAmountDue = Number(totalAmountDue);
+    }
+
+    let newExpiry;
+    if (expiryDate) {
+      newExpiry = new Date(expiryDate).toISOString();
+    } else if (months) {
+      const currentExpiry = tenant.subscription.expiryDate ? new Date(tenant.subscription.expiryDate) : new Date();
+      const baseDate = currentExpiry > new Date() ? currentExpiry : new Date();
+      baseDate.setMonth(baseDate.getMonth() + Number(months));
+      newExpiry = baseDate.toISOString();
+    }
+
+    if (newExpiry) {
+      tenant.subscription.expiryDate = newExpiry;
+    }
+
+    tenant.subscription.status = status;
+    if (status === 'Active') {
+      tenant.status = 'Active';
+    }
+
+    if (paymentAmount && Number(paymentAmount) > 0) {
+      this.recordTenantPayment(tenantId, {
+        amount: Number(paymentAmount),
+        method: paymentMethod || 'Bank Transfer',
+        transactionRef: transactionRef || `RENEW-${Date.now().toString().slice(-6)}`,
+        notes: notes || `Subscription extension: ${months ? months + ' months' : 'renewed'}`
+      });
+    }
+
+    this.savePlatform();
+    this.logPlatformAudit({
+      tenantId,
+      action: 'TENANT_SUBSCRIPTION_EXTENDED',
+      resource: 'subscription',
+      resourceId: tenantId,
+      details: { newExpiry: tenant.subscription.expiryDate, status, months }
+    });
+
+    return tenant.subscription;
   }
 
   // -------------------------------------------------------------

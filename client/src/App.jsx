@@ -209,6 +209,12 @@ export default function App() {
     }
   };
 
+  // Dynamic document.title updated to active tenant's clinic name
+  useEffect(() => {
+    const name = clinicProfile?.name || activeTenant?.name || 'Dental Practice';
+    document.title = `${name} | Practice Management System`;
+  }, [clinicProfile?.name, activeTenant?.name]);
+
   // Auth Initialization on Mount
   useEffect(() => {
     const initAuth = async () => {
@@ -569,6 +575,15 @@ export default function App() {
       }
       const updated = await res.json();
       setClinicProfile(updated);
+      if (updated.name) {
+        setActiveTenant(prev => ({ ...prev, name: updated.name }));
+        try {
+          const savedTenant = JSON.parse(localStorage.getItem('dental_tenant') || '{}');
+          savedTenant.name = updated.name;
+          localStorage.setItem('dental_tenant', JSON.stringify(savedTenant));
+        } catch (_) {}
+      }
+      fetchMyTenants();
     } catch (err) {
       console.error('Error updating clinic profile:', err);
     }
@@ -830,6 +845,9 @@ export default function App() {
           onTabChange={setActiveTab}
           currentUser={currentUser}
           activeTenant={activeTenant}
+          availableTenants={availableTenants}
+          onSwitchTenant={handleSwitchTenant}
+          clinicProfile={clinicProfile}
           patientCount={patients.length}
           appointmentCount={appointments.length}
           isOpen={sidebarOpen}
@@ -885,6 +903,10 @@ export default function App() {
           {activeTab === 'platform' && (
             <DeveloperControlPanel
               authToken={authToken}
+              onSwitchTenant={(tenantId) => {
+                handleSwitchTenant(tenantId);
+                setActiveTab('dashboard');
+              }}
               onTenantUpdated={(updatedTenant) => {
                 if (updatedTenant && updatedTenant.id === activeTenant?.id) {
                   setActiveTenant(updatedTenant);
@@ -892,6 +914,7 @@ export default function App() {
                     localStorage.setItem('dental_tenant', JSON.stringify(updatedTenant));
                   } catch (e) {}
                 }
+                fetchMyTenants();
               }}
             />
           )}

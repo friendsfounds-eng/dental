@@ -61,6 +61,24 @@
       "qualification": "BDS",
       "phone": "",
       "color": "#2563eb"
+    },
+    {
+      "id": "doc-1708",
+      "name": "Dr. Test Assistant",
+      "specialty": "Dental Specialist",
+      "qualification": "BDS",
+      "phone": "",
+      "email": "test.assistant@nepaldental.com.np",
+      "color": "#2563eb"
+    },
+    {
+      "id": "doc-6941",
+      "name": "Dr. Test SuperAdmin Created",
+      "specialty": "Dental Specialist",
+      "qualification": "BDS",
+      "phone": "+977 98000 00000",
+      "email": "tempdoc_6940@platform.local",
+      "color": "#2563eb"
     }
   ],
   "chairs": [
@@ -1277,6 +1295,18 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "tlog-1793691247242-354",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "TENANT_SWITCHED",
+      "resource": "auth",
+      "details": {
+        "switchedTo": "Nepal Dental and Healthcare Wellness Centre Pvt. Ltd."
+      },
+      "timestamp": "2026-11-03T07:34:07.242Z"
+    },
     {
       "id": "tlog-1793432530134-651",
       "userId": "user-nepal-admin",
@@ -8866,23 +8896,6 @@
         "reason": "Foil package punctured during shelf inspection"
       },
       "timestamp": "2026-10-21T18:25:12.884Z"
-    },
-    {
-      "id": "tlog-1792607112867-950",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_SALE_PROCESSED",
-      "resource": "pharmacy_sales",
-      "resourceId": "PSALE-1792607112862",
-      "details": {
-        "receiptNumber": "PHARM-INV-112862",
-        "patientName": "Rupendra Sah",
-        "itemsCount": 1,
-        "totalAmount": 216,
-        "paymentMethod": "Fonepay QR"
-      },
-      "timestamp": "2026-10-21T18:25:12.867Z"
     }
   ],
   "pharmacyCatalog": [

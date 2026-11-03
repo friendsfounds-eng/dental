@@ -205,6 +205,30 @@
   "refundRequests": [],
   "auditLogs": [
     {
+      "id": "tlog-1793691247202-918",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "TENANT_SWITCHED",
+      "resource": "auth",
+      "details": {
+        "switchedTo": "Apex Dentocare & Implant Center"
+      },
+      "timestamp": "2026-11-03T07:34:07.202Z"
+    },
+    {
+      "id": "tlog-1793691007198-651",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "TENANT_SWITCHED",
+      "resource": "auth",
+      "details": {
+        "switchedTo": "Apex Dentocare & Implant Center"
+      },
+      "timestamp": "2026-11-03T07:30:07.198Z"
+    },
+    {
       "id": "tlog-1792606376920-428",
       "userId": "user-nepal-admin",
       "userEmail": "admin@nepaldental.com.np",

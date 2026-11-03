@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AnayaCraftLogo, { AnayaCraftEmblem } from '../Common/AnayaCraftLogo';
+import TenantProfileModal from './TenantProfileModal';
 import {
   Building,
   Users,
@@ -11,6 +12,7 @@ import {
   Server,
   Key,
   CreditCard,
+  ArrowLeftRight,
   Activity,
   Search,
   ExternalLink,
@@ -32,7 +34,7 @@ import {
   Trash2
 } from 'lucide-react';
 
-export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
+export default function DeveloperControlPanel({ authToken, onTenantUpdated, onSwitchTenant }) {
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'tenants' | 'domains' | 'plans' | 'audit' | 'support'
   const [overview, setOverview] = useState(null);
   const [tenants, setTenants] = useState([]);
@@ -51,6 +53,9 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [supportModalOpen, setSupportModalOpen] = useState(false);
   const [toast, setToast] = useState(null);
+  const [selectedTenantForProfile, setSelectedTenantForProfile] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
 
   // Form for New Clinic Wizard
   const [newClinic, setNewClinic] = useState({
@@ -60,6 +65,10 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
     currency: 'Rs.',
     timeZone: 'Asia/Kathmandu',
     planId: 'plan-professional',
+    billingCycle: 'Yearly',
+    subscriptionExpiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    totalAmountDue: '',
+    initialPayment: '',
     adminUsername: '',
     adminEmail: '',
     adminName: '',
@@ -126,6 +135,46 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
       advancedAnalytics: false
     }
   });
+
+  // Plan Pricing Auto-calculation helper
+  const getPlanPricing = (planId, cycle) => {
+    const selectedPlan = (plans || []).find(p => p.id === planId);
+    if (!selectedPlan) {
+      if (planId === 'plan-starter') return cycle === 'Monthly' ? 3500 : 35000;
+      if (planId === 'plan-professional') return cycle === 'Monthly' ? 7500 : 75000;
+      if (planId === 'plan-enterprise') return cycle === 'Monthly' ? 18000 : 180000;
+      return cycle === 'Monthly' ? 7500 : 75000;
+    }
+    if (cycle === 'Monthly') {
+      return Number(selectedPlan.priceMonthly) || 3500;
+    }
+    return Number(selectedPlan.priceYearly) || ((Number(selectedPlan.priceMonthly) || 3500) * 10);
+  };
+
+  const handleNewClinicPlanChange = (planId) => {
+    const autoFee = getPlanPricing(planId, newClinic.billingCycle);
+    setNewClinic(prev => ({
+      ...prev,
+      planId,
+      totalAmountDue: autoFee
+    }));
+  };
+
+  const handleNewClinicBillingCycleChange = (billingCycle) => {
+    const autoFee = getPlanPricing(newClinic.planId, billingCycle);
+    const expiry = new Date();
+    if (billingCycle === 'Monthly') {
+      expiry.setMonth(expiry.getMonth() + 1);
+    } else {
+      expiry.setFullYear(expiry.getFullYear() + 1);
+    }
+    setNewClinic(prev => ({
+      ...prev,
+      billingCycle,
+      totalAmountDue: autoFee,
+      subscriptionExpiryDate: expiry.toISOString().split('T')[0]
+    }));
+  };
 
   const headers = {
     'Content-Type': 'application/json',
@@ -213,6 +262,14 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
   useEffect(() => {
     fetchPlatformData();
   }, [authToken]);
+
+  // Auto-populate new clinic totalAmountDue when wizard opens or plans load
+  useEffect(() => {
+    if (createModalOpen && (!newClinic.totalAmountDue || newClinic.totalAmountDue === '')) {
+      const defaultFee = getPlanPricing(newClinic.planId, newClinic.billingCycle);
+      setNewClinic(prev => ({ ...prev, totalAmountDue: defaultFee }));
+    }
+  }, [createModalOpen, plans]);
 
   const handleCreateClinic = async (e) => {
     e.preventDefault();
@@ -531,6 +588,30 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
     }
   };
 
+  // Financial & Tenant Metrics Aggregation
+  const totalTenants = tenants.length;
+  const activeTenantsCount = tenants.filter(t => t.status === 'Active').length;
+  const totalSoftwareDue = tenants.reduce((sum, t) => sum + (Number(t.subscription?.totalAmountDue) || 0), 0);
+  const totalSoftwarePaid = tenants.reduce((sum, t) => sum + (Number(t.subscription?.amountPaid) || 0), 0);
+  const totalRemainingBalance = tenants.reduce((sum, t) => sum + (Number(t.subscription?.remainingBalance) || 0), 0);
+
+  // Filtered tenants for search and status filters
+  const filteredTenants = tenants.filter(t => {
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchName = (t.name || '').toLowerCase().includes(q);
+      const matchSlug = (t.slug || '').toLowerCase().includes(q);
+      const matchId = (t.id || '').toLowerCase().includes(q);
+      if (!matchName && !matchSlug && !matchId) return false;
+    }
+    if (filterStatus === 'active') return t.status === 'Active';
+    if (filterStatus === 'suspended') return t.status === 'Suspended';
+    if (filterStatus === 'balance_due') return (Number(t.subscription?.remainingBalance) || 0) > 0;
+    if (filterStatus === 'expiring_soon') return (Number(t.subscription?.daysRemaining) || 999) <= 30;
+    if (filterStatus === 'expired') return Boolean(t.subscription?.isExpired);
+    return true;
+  });
+
   return (
     <div className="space-y-6">
       {/* Toast */}
@@ -623,35 +704,88 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
       {/* TAB 1: OVERVIEW */}
       {activeTab === 'overview' && (
         <div className="space-y-6">
-          {/* Metrics Grid */}
+          {/* Platform SaaS & Financial Summary KPI Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
               <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Clinics</span>
-              <div className="text-2xl font-black text-slate-900">{overview?.totalTenants || tenants.length}</div>
-              <div className="text-[11px] text-emerald-600 font-bold">{overview?.activeTenants || 2} Active & Isolated</div>
+              <div className="text-2xl font-black text-slate-900">{totalTenants}</div>
+              <div className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                <span>{activeTenantsCount} Active & Operational</span>
+              </div>
             </div>
 
-            <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Registered Patients</span>
-              <div className="text-2xl font-black text-blue-600">{overview?.totalPatients || 0}</div>
-              <div className="text-[11px] text-slate-500 font-medium">Across all clinic stores</div>
+            <div className="p-4 bg-white rounded-2xl border border-blue-200/80 shadow-xs space-y-1 bg-gradient-to-br from-white to-blue-50/30">
+              <span className="text-[11px] font-bold text-blue-700 uppercase tracking-wider">Total Software Fees Due</span>
+              <div className="text-2xl font-black text-blue-900">Rs. {totalSoftwareDue.toLocaleString()}</div>
+              <div className="text-[11px] text-blue-600 font-medium">Cumulative subscription contracts</div>
             </div>
 
-            <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Staff Accounts</span>
-              <div className="text-2xl font-black text-purple-600">{overview?.totalUsers || 7}</div>
-              <div className="text-[11px] text-slate-500 font-medium">Doctors, Admins, Receptionists</div>
+            <div className="p-4 bg-white rounded-2xl border border-emerald-200/80 shadow-xs space-y-1 bg-gradient-to-br from-white to-emerald-50/30">
+              <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">Software Amount Paid</span>
+              <div className="text-2xl font-black text-emerald-800">Rs. {totalSoftwarePaid.toLocaleString()}</div>
+              <div className="text-[11px] text-emerald-600 font-bold">
+                {totalSoftwareDue > 0 ? Math.round((totalSoftwarePaid / totalSoftwareDue) * 100) : 100}% Collected
+              </div>
             </div>
 
-            <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
-              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Infrastructure</span>
-              <div className="text-2xl font-black text-emerald-600">100% OK</div>
-              <div className="text-[11px] text-emerald-700 font-medium">Strict RLS & Data Isolation</div>
+            <div className={`p-4 bg-white rounded-2xl border shadow-xs space-y-1 ${
+              totalRemainingBalance > 0
+                ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
+                : 'border-slate-200'
+            }`}>
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Remaining Balance</span>
+              <div className={`text-2xl font-black ${totalRemainingBalance > 0 ? 'text-amber-700' : 'text-emerald-700'}`}>
+                Rs. {totalRemainingBalance.toLocaleString()}
+              </div>
+              <div className="text-[11px] font-bold">
+                {totalRemainingBalance > 0 ? (
+                  <span className="text-amber-700">Receivables pending settlement</span>
+                ) : (
+                  <span className="text-emerald-600">All tenant accounts settled</span>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Featured First Clinic Highlight */}
-          <div className="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          {/* Secondary System Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Registered Patients</span>
+                <span className="text-xl font-black text-slate-900">{overview?.totalPatients || 0}</span>
+                <span className="text-[11px] text-slate-500 block">Across all clinic databases</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                <Users className="w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Staff User Accounts</span>
+                <span className="text-xl font-black text-slate-900">{overview?.totalUsers || 7}</span>
+                <span className="text-[11px] text-slate-500 block">Doctors, Admins & Front Desk</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                <Shield className="w-5 h-5" />
+              </div>
+            </div>
+
+            <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Data Isolation & Security</span>
+                <span className="text-xl font-black text-emerald-600">100% OK</span>
+                <span className="text-[11px] text-emerald-700 block">Strict RLS & Isolated Stores</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                <Server className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+          {/* Featured Primary Clinic Highlight */}
+          <div className="p-5 bg-gradient-to-r from-blue-50 via-indigo-50 to-slate-50 border-2 border-blue-200 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center space-x-2">
                 <span className="px-2 py-0.5 bg-blue-600 text-white font-mono text-[10px] font-bold rounded-md">
@@ -667,207 +801,330 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
               </p>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-xl border border-emerald-300">
-                Active & Operational
+              <button
+                onClick={() => setSelectedTenantForProfile('tenant-nepal-dental')}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center space-x-1.5"
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span>Open Tenant Profile</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 2: TENANTS LIST & CONSOLE OVERVIEW */}
+      {activeTab === 'tenants' && (
+        <div className="space-y-4">
+          {/* Top SaaS Financial Banner for Tenants */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Clinics Enrolled</span>
+              <span className="text-xl font-black text-slate-900">{totalTenants} Clinics</span>
+              <span className="text-[10px] text-emerald-600 font-semibold block">{activeTenantsCount} Active • {totalTenants - activeTenantsCount} Suspended</span>
+            </div>
+            <div className="p-3.5 bg-blue-50/60 rounded-2xl border border-blue-200/80 shadow-2xs">
+              <span className="text-[10px] font-bold text-blue-700 uppercase tracking-wider block">Total Software Due</span>
+              <span className="text-xl font-black text-blue-900">Rs. {totalSoftwareDue.toLocaleString()}</span>
+              <span className="text-[10px] text-blue-600 font-semibold block">Total software contract fee</span>
+            </div>
+            <div className="p-3.5 bg-emerald-50/60 rounded-2xl border border-emerald-200/80 shadow-2xs">
+              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider block">Amount Paid</span>
+              <span className="text-xl font-black text-emerald-800">Rs. {totalSoftwarePaid.toLocaleString()}</span>
+              <span className="text-[10px] text-emerald-600 font-semibold block">Verified receipts & renewals</span>
+            </div>
+            <div className={`p-3.5 rounded-2xl border shadow-2xs ${
+              totalRemainingBalance > 0
+                ? 'bg-amber-50/60 border-amber-300'
+                : 'bg-emerald-50/30 border-slate-200'
+            }`}>
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Remaining Balance</span>
+              <span className={`text-xl font-black ${totalRemainingBalance > 0 ? 'text-amber-800' : 'text-emerald-700'}`}>
+                Rs. {totalRemainingBalance.toLocaleString()}
+              </span>
+              <span className={`text-[10px] font-semibold block ${totalRemainingBalance > 0 ? 'text-amber-700' : 'text-emerald-600'}`}>
+                {totalRemainingBalance > 0 ? 'Outstanding balance due' : 'All accounts settled'}
               </span>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* TAB 2: TENANTS LIST */}
-      {activeTab === 'tenants' && (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="p-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <Building className="w-4 h-4 text-blue-600" />
-                <span>Tenant Clinics Directory & Subscriptions</span>
-              </h3>
-              <p className="text-[11px] text-slate-500 mt-0.5">
-                Manage clinic accounts, live domain bindings, assign subscription plans, and toggle module allocations.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setActiveTab('plans')}
-                className="text-xs bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 font-bold px-3 py-1.5 rounded-xl transition flex items-center space-x-1.5 shadow-2xs"
-                title="Switch to Subscription Plans & Pricing Tiers editor"
-              >
-                <CreditCard className="w-3.5 h-3.5 text-purple-600" />
-                <span>Manage Plan Tiers</span>
-              </button>
-              <button
-                onClick={() => setCreateModalOpen(true)}
-                className="text-xs bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-1.5 rounded-xl transition flex items-center space-x-1 shadow-2xs"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Add Tenant</span>
-              </button>
-            </div>
-          </div>
+          {/* Directory Box */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            {/* Header Toolbar */}
+            <div className="p-4 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50/60">
+              <div>
+                <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <Building className="w-4 h-4 text-blue-600" />
+                  <span>Tenant Clinics Directory & Software Subscription Ledger</span>
+                </h3>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Click any clinic name or "View Profile" to manage subscriptions, expiry dates, staff user accounts, and payment history.
+                </p>
+              </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 font-bold uppercase text-[11px] tracking-wider border-b border-slate-200 dark:border-slate-700">
-                <tr>
-                  <th className="px-4 py-3 min-w-[220px]">Clinic & Tenant Identity</th>
-                  <th className="px-4 py-3 min-w-[190px]">Subscription Plan</th>
-                  <th className="px-4 py-3 min-w-[160px]">Domains</th>
-                  <th className="px-4 py-3 min-w-[190px]">Modules Allocated</th>
-                  <th className="px-4 py-3 text-right min-w-[130px]">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
-                {tenants.map(t => (
-                  <tr key={t.id} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-3.5 align-middle">
-                      <div className="flex items-center space-x-1.5 flex-wrap gap-y-1 mb-1">
-                        <span className="font-bold text-slate-900 dark:text-slate-100 text-sm leading-tight">{t.name}</span>
-                        {t.id === 'tenant-nepal-dental' && (
-                          <span className="text-[9px] uppercase px-1.5 py-0.5 font-bold tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 rounded-md">
-                            Primary
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center space-x-2 text-[11px] font-mono">
-                        <span className="text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 select-all font-medium">
-                          {t.id}
-                        </span>
-                        <span className="text-indigo-600 dark:text-indigo-400 font-semibold truncate max-w-[170px]" title={`${t.slug}.anacraft.com`}>
-                          {t.slug}.anacraft.com
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3.5 align-middle">
-                      <div className="space-y-1.5">
-                        <div className="relative inline-block w-full">
-                          <select
-                            value={t.planId || t.plan?.id || 'plan-starter'}
-                            onChange={(e) => handleQuickChangeTenantPlan(t.id, e.target.value)}
-                            disabled={actionProcessing}
-                            className="w-full appearance-none bg-purple-50 hover:bg-purple-100/90 dark:bg-purple-950/40 dark:hover:bg-purple-900/50 text-purple-900 dark:text-purple-200 border border-purple-200 dark:border-purple-800 font-semibold text-xs rounded-xl px-2.5 py-1.5 pr-7 outline-none cursor-pointer transition shadow-2xs focus:ring-2 focus:ring-purple-400"
-                            title="Quick switch: Change this clinic's assigned subscription plan"
-                          >
-                            {plans.map(p => (
-                              <option key={p.id} value={p.id} className="text-slate-900 bg-white dark:bg-slate-900 dark:text-slate-100">
-                                {p.name} (Rs. {Number(p.priceMonthly || 0).toLocaleString()}/mo)
-                              </option>
-                            ))}
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-purple-600 dark:text-purple-400">
-                            <ChevronDown className="w-3.5 h-3.5" />
-                          </div>
-                        </div>
-                        <div className="text-[10px] text-slate-500 font-medium flex items-center justify-between px-0.5">
-                          <span>Billing Status:</span>
-                          <span className={`font-semibold px-2 py-0.5 rounded-full text-[10px] ${
-                            (t.subscription?.status || 'Active') === 'Active'
-                              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
-                              : t.subscription?.status === 'Payment Awaiting Verification'
-                              ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
-                              : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
-                          }`}>
-                            {t.subscription?.status || 'Active'}
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3.5 align-middle">
-                      <div className="space-y-1">
-                        {(t.domains && t.domains.length > 0) ? (
-                          t.domains.map((d, i) => (
-                            <div key={i} className="text-[11px] text-slate-700 dark:text-slate-300 font-mono flex items-center space-x-1.5">
-                              <span className="truncate max-w-[170px]" title={d.domain}>{d.domain}</span>
-                              {d.isPrimary && (
-                                <span className="text-amber-500 text-xs flex-shrink-0" title="Primary Domain">★</span>
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  onClick={() => setActiveTab('plans')}
+                  className="text-xs bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 font-bold px-3 py-1.5 rounded-xl transition flex items-center space-x-1.5 shadow-2xs"
+                  title="Switch to Subscription Plans & Pricing Tiers editor"
+                >
+                  <CreditCard className="w-3.5 h-3.5 text-purple-600" />
+                  <span>Manage Plans</span>
+                </button>
+                <button
+                  onClick={() => setCreateModalOpen(true)}
+                  className="text-xs bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-1.5 rounded-xl transition flex items-center space-x-1 shadow-2xs"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Tenant Clinic</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Filters & Search Bar */}
+            <div className="p-3 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-white">
+              <div className="relative flex-1 max-w-md">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search clinic legal name, slug, or tenant ID..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full text-xs pl-8 pr-7 py-1.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1.5 text-xs text-slate-500 font-bold">
+                  <Filter className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Status:</span>
+                </div>
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  className="text-xs px-2.5 py-1.5 rounded-xl border border-slate-300 bg-white font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="all">All Clinics ({tenants.length})</option>
+                  <option value="active">Active Only ({tenants.filter(t => t.status === 'Active').length})</option>
+                  <option value="suspended">Suspended ({tenants.filter(t => t.status === 'Suspended').length})</option>
+                  <option value="balance_due">Has Remaining Balance ({tenants.filter(t => (Number(t.subscription?.remainingBalance) || 0) > 0).length})</option>
+                  <option value="expiring_soon">Expiring Soon (≤30 Days)</option>
+                  <option value="expired">Expired</option>
+                </select>
+                <span className="text-[11px] text-slate-400 font-medium whitespace-nowrap">
+                  Showing {filteredTenants.length} of {tenants.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-600 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200">
+                  <tr>
+                    <th className="px-4 py-3 min-w-[220px]">Clinic & Tenant Identity</th>
+                    <th className="px-4 py-3 min-w-[190px]">Subscription & Expiry</th>
+                    <th className="px-4 py-3 min-w-[200px]">Software Fees & Balance</th>
+                    <th className="px-4 py-3 min-w-[120px]">Staff Accounts</th>
+                    <th className="px-4 py-3 text-right min-w-[180px]">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {filteredTenants.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-8 text-center text-slate-400 font-medium">
+                        No clinics match the current search or filter criteria.
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredTenants.map(t => {
+                      const sub = t.subscription || {};
+                      const totalDue = Number(sub.totalAmountDue || 0);
+                      const amountPaid = Number(sub.amountPaid || 0);
+                      const remaining = Number(sub.remainingBalance ?? Math.max(0, totalDue - amountPaid));
+                      const daysRemaining = sub.daysRemaining;
+                      const isExpired = sub.isExpired;
+
+                      return (
+                        <tr key={t.id} className="hover:bg-blue-50/40 transition-colors">
+                          {/* Clinic & Tenant */}
+                          <td className="px-4 py-3.5 align-middle">
+                            <div className="flex items-center space-x-2 mb-1">
+                              <button
+                                onClick={() => setSelectedTenantForProfile(t.id)}
+                                className="font-bold text-slate-900 text-sm hover:text-blue-600 text-left transition flex items-center space-x-1 group"
+                                title="Click to open tenant profile modal"
+                              >
+                                <span className="group-hover:underline">{t.name}</span>
+                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-blue-600 opacity-70" />
+                              </button>
+                              {t.id === 'tenant-nepal-dental' && (
+                                <span className="text-[9px] uppercase px-1.5 py-0.5 font-bold tracking-wide bg-blue-100 text-blue-700 rounded-md">
+                                  Primary
+                                </span>
+                              )}
+                              <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
+                                t.status === 'Active'
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : 'bg-amber-100 text-amber-800'
+                              }`}>
+                                {t.status || 'Active'}
+                              </span>
+                            </div>
+                            <div className="flex items-center space-x-2 text-[11px] font-mono">
+                              <span className="text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 select-all font-medium">
+                                {t.id}
+                              </span>
+                              <span className="text-indigo-600 font-semibold truncate max-w-[170px]" title={`${t.slug}.anacraft.com`}>
+                                {t.slug}.anacraft.com
+                              </span>
+                            </div>
+                          </td>
+
+                          {/* Subscription & Expiry */}
+                          <td className="px-4 py-3.5 align-middle">
+                            <div className="space-y-1">
+                              <div className="flex items-center space-x-1.5">
+                                <span className="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-[10px]">
+                                  {t.plan?.name || t.planId || 'Starter'}
+                                </span>
+                                <span className="text-[10px] text-slate-500 font-medium">
+                                  ({sub.billingCycle || 'Yearly'})
+                                </span>
+                              </div>
+                              <div className="text-[11px] text-slate-600 flex items-center space-x-1 font-medium">
+                                <span className="text-slate-400">Expires:</span>
+                                <strong>
+                                  {sub.expiryDate ? new Date(sub.expiryDate).toLocaleDateString() : 'Active'}
+                                </strong>
+                              </div>
+                              <div>
+                                {isExpired ? (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800 inline-block">
+                                    Expired ({Math.abs(daysRemaining)}d ago)
+                                  </span>
+                                ) : daysRemaining !== undefined && daysRemaining <= 30 ? (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 inline-block">
+                                    Expiring in {daysRemaining} days
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 inline-block">
+                                    {daysRemaining !== undefined ? `${daysRemaining} days left` : 'Active'}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* Software Fees & Balance */}
+                          <td className="px-4 py-3.5 align-middle">
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-[11px]">
+                                <span className="text-slate-400">Total Due:</span>
+                                <span className="font-bold text-slate-800">Rs. {totalDue.toLocaleString()}</span>
+                              </div>
+                              <div className="flex items-center justify-between text-[11px]">
+                                <span className="text-slate-400">Paid:</span>
+                                <span className="font-bold text-emerald-700">Rs. {amountPaid.toLocaleString()}</span>
+                              </div>
+                              <div className="pt-0.5 border-t border-slate-100 flex items-center justify-between">
+                                <span className="text-[10px] font-bold text-slate-500 uppercase">Balance:</span>
+                                {remaining <= 0 ? (
+                                  <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-black text-[10px]">
+                                    Paid in Full (Rs. 0)
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-black text-[10px]">
+                                    Rs. {remaining.toLocaleString()} Due
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* Staff Accounts */}
+                          <td className="px-4 py-3.5 align-middle">
+                            <button
+                              onClick={() => {
+                                setSelectedTenantForProfile(t.id);
+                              }}
+                              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] transition flex items-center space-x-1.5 border border-slate-200"
+                              title="Click to view and manage user accounts"
+                            >
+                              <Users className="w-3.5 h-3.5 text-blue-600" />
+                              <span>{t.usersCount || 'Staff'}</span>
+                            </button>
+                          </td>
+
+                          {/* Actions */}
+                          <td className="px-4 py-3.5 align-middle text-right whitespace-nowrap">
+                            <div className="inline-flex items-center space-x-1.5 justify-end">
+                              {onSwitchTenant && (
+                                <button
+                                  onClick={() => onSwitchTenant(t.id)}
+                                  className="text-xs font-bold px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition inline-flex items-center space-x-1 shadow-2xs"
+                                  title={`Switch active workspace to ${t.name} and open practice`}
+                                >
+                                  <ArrowLeftRight className="w-3.5 h-3.5 text-emerald-600" />
+                                  <span>Access Clinic</span>
+                                </button>
+                              )}
+                              <button
+                                onClick={() => setSelectedTenantForProfile(t.id)}
+                                className="text-xs font-black px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition inline-flex items-center space-x-1 shadow-2xs"
+                                title="Open full Tenant Profile with overview, subscription renewal, payments, and users"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                                <span>View Profile</span>
+                              </button>
+                              <button
+                                onClick={() => handleOpenEditModal(t)}
+                                className="text-xs font-semibold px-2 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition inline-flex items-center"
+                                title="Quick edit clinic details"
+                              >
+                                <Edit className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => handleToggleTenantStatus(t.id, t.status)}
+                                className={`text-xs font-semibold px-2 py-1.5 rounded-lg border transition inline-flex items-center ${
+                                  t.status === 'Active'
+                                    ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200'
+                                    : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200'
+                                }`}
+                                title={t.status === 'Active' ? 'Suspend clinic operations' : 'Activate clinic operations'}
+                              >
+                                <span>{t.status === 'Active' ? 'Suspend' : 'Activate'}</span>
+                              </button>
+                              {t.id !== 'tenant-nepal-dental' && (
+                                <button
+                                  onClick={() => handleDeleteTenant(t.id, t.name)}
+                                  className="text-xs font-semibold p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition inline-flex items-center"
+                                  title="Permanently remove clinic"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
                               )}
                             </div>
-                          ))
-                        ) : (
-                          <div className="text-[11px] text-slate-400 font-mono italic">Default Subdomain</div>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3.5 align-middle space-y-1.5">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleModule(t.id, 'pharmacy')}
-                        className={`w-full px-2 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
-                          t.modules?.pharmacy !== false
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
-                            : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/40 dark:text-slate-400 dark:border-slate-700'
-                        }`}
-                        title="Developer Admin: Toggle Pharmacy feature allocation for this tenant"
-                      >
-                        <span className="flex items-center space-x-1 truncate">
-                          <span>💊</span>
-                          <span>Pharmacy</span>
-                        </span>
-                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ml-1 flex-shrink-0 ${
-                          t.modules?.pharmacy !== false
-                            ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100'
-                            : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
-                        }`}>
-                          {t.modules?.pharmacy !== false ? 'Allocated' : 'Disabled'}
-                        </span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => handleToggleModule(t.id, 'finance')}
-                        className={`w-full px-2 py-1 rounded-lg text-[11px] font-semibold border transition flex items-center justify-between ${
-                          t.modules?.finance !== false
-                            ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
-                            : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/40 dark:text-slate-400 dark:border-slate-700'
-                        }`}
-                        title="Developer Admin: Toggle Finance & Revenue feature allocation for this tenant"
-                      >
-                        <span className="flex items-center space-x-1 truncate">
-                          <span>💰</span>
-                          <span>Finance & Revenue</span>
-                        </span>
-                        <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ml-1 flex-shrink-0 ${
-                          t.modules?.finance !== false
-                            ? 'bg-emerald-200/80 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100'
-                            : 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
-                        }`}>
-                          {t.modules?.finance !== false ? 'Allocated' : 'Disabled'}
-                        </span>
-                      </button>
-                    </td>
-                    <td className="px-4 py-3.5 align-middle text-right whitespace-nowrap">
-                      <div className="inline-flex items-center space-x-1.5 justify-end">
-                        <button
-                          onClick={() => handleOpenEditModal(t)}
-                          className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition inline-flex items-center space-x-1 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800 shadow-2xs"
-                          title="Edit clinic name, change password, and configure settings"
-                        >
-                          <Edit className="w-3.5 h-3.5" />
-                          <span>Edit</span>
-                        </button>
-                        <button
-                          onClick={() => handleToggleTenantStatus(t.id, t.status)}
-                          className={`text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition inline-flex items-center space-x-1 shadow-2xs ${
-                            t.status === 'Active'
-                              ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
-                              : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
-                          }`}
-                          title={t.status === 'Active' ? 'Suspend clinic operations' : 'Activate clinic operations'}
-                        >
-                          <span>{t.status === 'Active' ? 'Suspend' : 'Activate'}</span>
-                        </button>
-
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
-
       {/* TAB 3: DOMAINS & SSL */}
       {activeTab === 'domains' && (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 space-y-4">
@@ -1320,26 +1577,99 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 uppercase mb-1">Subscription Plan</label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block font-bold text-slate-700 uppercase">Subscription Plan *</label>
+                    <span className="text-[10px] text-purple-700 font-bold bg-purple-100 px-1.5 py-0.5 rounded">
+                      Auto Pricing
+                    </span>
+                  </div>
                   <select
                     value={newClinic.planId}
-                    onChange={(e) => setNewClinic({ ...newClinic, planId: e.target.value })}
-                    className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-medium"
+                    onChange={(e) => handleNewClinicPlanChange(e.target.value)}
+                    className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-medium focus:ring-2 focus:ring-purple-500"
                   >
                     {plans.length > 0 ? (
                       plans.map(p => (
                         <option key={p.id} value={p.id}>
-                          {p.name} (Rs. {Number(p.priceMonthly || 0).toLocaleString()}/mo)
+                          {p.name} (Rs. {Number(p.priceMonthly || 0).toLocaleString()}/mo • Rs. {Number(p.priceYearly || ((p.priceMonthly || 0) * 10)).toLocaleString()}/yr)
                         </option>
                       ))
                     ) : (
                       <>
-                        <option value="plan-starter">Starter Clinic</option>
-                        <option value="plan-professional">Professional Practice</option>
-                        <option value="plan-enterprise">Hospital Enterprise</option>
+                        <option value="plan-starter">Starter Clinic (Rs. 35,000/yr)</option>
+                        <option value="plan-professional">Professional Practice (Rs. 75,000/yr)</option>
+                        <option value="plan-enterprise">Hospital Enterprise (Rs. 180,000/yr)</option>
                       </>
                     )}
                   </select>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block font-bold text-slate-700 uppercase">Billing Cycle</label>
+                    <span className="text-[10px] text-blue-700 font-bold bg-blue-100 px-1.5 py-0.5 rounded">
+                      {newClinic.billingCycle}
+                    </span>
+                  </div>
+                  <select
+                    value={newClinic.billingCycle}
+                    onChange={(e) => handleNewClinicBillingCycleChange(e.target.value)}
+                    className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-medium focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Yearly">Yearly (Annual Plan)</option>
+                    <option value="Monthly">Monthly (1 Month)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Subscription Expiry Date</label>
+                  <input
+                    type="date"
+                    value={newClinic.subscriptionExpiryDate}
+                    onChange={(e) => setNewClinic({ ...newClinic, subscriptionExpiryDate: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-slate-300 font-semibold"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block font-bold text-slate-700 uppercase">Total Software Fee Due (Rs.) *</label>
+                    <span className="text-[10px] text-emerald-800 font-bold bg-emerald-100 px-1.5 py-0.5 rounded flex items-center gap-1">
+                      <span>✓</span> Auto-filled from Plan
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      required
+                      placeholder="e.g. 75000"
+                      value={newClinic.totalAmountDue}
+                      onChange={(e) => setNewClinic({ ...newClinic, totalAmountDue: e.target.value })}
+                      className="w-full p-2.5 pr-20 rounded-xl border-2 border-emerald-400 bg-emerald-50/30 font-black text-emerald-950 focus:ring-2 focus:ring-emerald-500 font-mono text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setNewClinic(prev => ({ ...prev, totalAmountDue: getPlanPricing(prev.planId, prev.billingCycle) }))}
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 px-2 py-1 text-[10px] font-bold bg-white hover:bg-slate-100 text-slate-700 rounded-lg border border-slate-300 shadow-2xs transition"
+                      title="Reset to default standard pricing for selected plan"
+                    >
+                      ↺ Reset
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-0.5">
+                    Standard {newClinic.billingCycle} rate: <strong>Rs. {getPlanPricing(newClinic.planId, newClinic.billingCycle).toLocaleString()}</strong> (You can adjust if needed).
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Initial Payment Paid (Rs.) [Optional]</label>
+                  <input
+                    type="number"
+                    placeholder="e.g. 35000"
+                    value={newClinic.initialPayment}
+                    onChange={(e) => setNewClinic({ ...newClinic, initialPayment: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-slate-300 font-semibold"
+                  />
                 </div>
 
                 <div className="sm:col-span-2 p-3 bg-purple-50 rounded-2xl border border-purple-200">
@@ -2231,6 +2561,19 @@ export default function DeveloperControlPanel({ authToken, onTenantUpdated }) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* TENANT PROFILE & MANAGEMENT MODAL */}
+      {selectedTenantForProfile && (
+        <TenantProfileModal
+          isOpen={Boolean(selectedTenantForProfile)}
+          tenantId={selectedTenantForProfile}
+          onClose={() => setSelectedTenantForProfile(null)}
+          authToken={authToken}
+          plans={plans}
+          onSwitchTenant={onSwitchTenant}
+          onTenantUpdated={fetchPlatformData}
+        />
       )}
     </div>
   );
