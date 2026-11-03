@@ -28,7 +28,8 @@ import {
   Settings,
   UserCog,
   ArrowLeftRight,
-  ChevronRight
+  ChevronRight,
+  Check
 } from 'lucide-react';
 
 function formatClinicHeader(fullName) {

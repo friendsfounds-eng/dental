@@ -820,23 +820,25 @@ export default function App() {
   return (
     <div className="min-h-screen lg:h-screen lg:overflow-hidden flex flex-col bg-slate-100 font-sans overflow-x-hidden">
       {/* Top Navigation */}
-      <Navbar
-        clinicProfile={clinicProfile}
-        patients={patients}
-        selectedPatient={selectedPatient}
-        onSelectPatient={(p) => setSelectedPatientId(p.id)}
-        onQuickBook={() => setActiveTab('appointments')}
-        currentUser={currentUser}
-        activeTenant={activeTenant}
-        availableTenants={availableTenants}
-        onSwitchTenant={handleSwitchTenant}
-        onOpenLoginModal={() => setLoginModalOpen(true)}
-        onLogout={handleLogout}
-        onOpenSubscription={() => setActiveTab('subscription')}
-        onToggleSidebar={() => setSidebarOpen(prev => !prev)}
-        isSidebarOpen={sidebarOpen}
-        onNavigate={setActiveTab}
-      />
+      <ErrorBoundary>
+        <Navbar
+          clinicProfile={clinicProfile}
+          patients={patients}
+          selectedPatient={selectedPatient}
+          onSelectPatient={(p) => setSelectedPatientId(p.id)}
+          onQuickBook={() => setActiveTab('appointments')}
+          currentUser={currentUser}
+          activeTenant={activeTenant}
+          availableTenants={availableTenants}
+          onSwitchTenant={handleSwitchTenant}
+          onOpenLoginModal={() => setLoginModalOpen(true)}
+          onLogout={handleLogout}
+          onOpenSubscription={() => setActiveTab('subscription')}
+          onToggleSidebar={() => setSidebarOpen(prev => !prev)}
+          isSidebarOpen={sidebarOpen}
+          onNavigate={setActiveTab}
+        />
+      </ErrorBoundary>
 
       <div className="flex flex-1 overflow-hidden relative">
         {/* Left Sidebar with Dynamic Role-Based Menu (Responsive Drawer on Mobile/Tablet) */}
