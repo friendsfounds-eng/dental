@@ -115,11 +115,11 @@ export default function Navbar({
   const settingsMenuRef = useRef(null);
   const tenantSwitcherRef = useRef(null);
 
-  // Live ticking Nepal Time (updates every second)
+  // Periodic update for Nepal Date (updates every 30 seconds)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentDateTime(new Date());
-    }, 1000);
+    }, 30000);
     return () => clearInterval(timer);
   }, []);
 
@@ -558,45 +558,27 @@ export default function Navbar({
 
         {/* Right Actions: Nepali Date/Time, Theme Switcher & Settings/Account */}
         <div className="flex items-center space-x-1.5 sm:space-x-2.5 flex-shrink-0">
-          {/* Nepali Date & Live Time Button -> opens Nepali Calendar Modal */}
+          {/* Nepali Date Button -> opens Nepali Calendar Modal */}
           {nepaliDateInfo && (
             <button
               type="button"
               onClick={() => setIsNepaliCalendarOpen(true)}
-              className="group relative flex items-center space-x-1.5 sm:space-x-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-xl border border-blue-200/90 dark:border-slate-700 bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-cyan-50/80 dark:from-slate-800 dark:via-slate-800 dark:to-slate-850 hover:from-blue-100 hover:to-indigo-100 dark:hover:from-slate-700 dark:hover:to-slate-650 transition-all shadow-2xs hover:shadow-xs active:scale-95 text-left select-none cursor-pointer"
+              className="group relative flex items-center space-x-1.5 sm:space-x-2 px-2.5 sm:px-3 py-1.5 rounded-xl border border-blue-200/90 dark:border-slate-700 bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-cyan-50/80 dark:from-slate-800 dark:via-slate-800 dark:to-slate-850 hover:from-blue-100 hover:to-indigo-100 dark:hover:from-slate-700 dark:hover:to-slate-650 transition-all shadow-2xs hover:shadow-xs active:scale-95 text-left select-none cursor-pointer"
               title="नेपाली क्यालेन्डर (वि.सं.) खोल्न यहाँ थिच्नुहोस् | Click to open Nepali Calendar"
-              aria-label="Nepali Calendar and Time"
+              aria-label="Nepali Calendar"
             >
               <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-blue-600 dark:bg-blue-500 text-white flex items-center justify-center flex-shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
                 <Calendar className="w-3.5 h-3.5" />
               </div>
 
-              <div className="flex flex-col justify-center leading-tight">
-                {/* Line 1: Nepali BS Date & Day */}
-                <div className="flex items-center gap-1 sm:gap-1.5 text-slate-800 dark:text-slate-100 font-extrabold text-[11px] sm:text-xs">
-                  <span className="text-blue-700 dark:text-blue-400 font-black">
-                    {nepaliDateInfo.formattedBsNp}
-                  </span>
-                  <span className="hidden md:inline text-slate-300 dark:text-slate-600">•</span>
-                  <span className="hidden md:inline text-slate-600 dark:text-slate-300 font-bold">
-                    {nepaliDateInfo.dayNp}
-                  </span>
-                </div>
-
-                {/* Line 2: Live Nepal Time & Quick Hint */}
-                <div className="flex items-center gap-1 text-[9px] sm:text-[10px] text-slate-500 dark:text-slate-400 font-medium">
-                  <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                  </span>
-                  <span className="font-mono font-bold text-slate-700 dark:text-slate-300">
-                    {nepaliDateInfo.shortTimeStr}
-                  </span>
-                  <span className="hidden lg:inline text-slate-300 dark:text-slate-600">•</span>
-                  <span className="hidden lg:inline text-[9px] text-blue-600 dark:text-blue-400 font-semibold group-hover:underline">
-                    वि.सं. क्यालेन्डर
-                  </span>
-                </div>
+              <div className="flex items-center gap-1 sm:gap-1.5 text-slate-800 dark:text-slate-100 font-extrabold text-[11px] sm:text-xs">
+                <span className="text-blue-700 dark:text-blue-400 font-black">
+                  {nepaliDateInfo.formattedBsNp}
+                </span>
+                <span className="hidden sm:inline text-slate-300 dark:text-slate-600">•</span>
+                <span className="hidden sm:inline text-slate-600 dark:text-slate-300 font-bold">
+                  {nepaliDateInfo.dayNp}
+                </span>
               </div>
             </button>
           )}
