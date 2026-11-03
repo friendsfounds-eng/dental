@@ -257,111 +257,113 @@ export default function Navbar({
             </div>
           </div>
 
-          {/* Clinic Brand & Hierarchy with Fancy Colors + Tenant Switcher */}
-          <div ref={tenantSwitcherRef} className="relative min-w-0 flex flex-col justify-center">
-            {/* Clickable Header Button to open Clinic Switcher */}
-            <button
-              type="button"
-              onClick={() => availableTenants.length > 0 && setTenantSwitcherOpen(prev => !prev)}
-              className="text-left group/brand flex flex-col justify-center outline-none select-none -m-1 p-1 rounded-xl hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition cursor-pointer"
-              title={availableTenants.length > 1 ? "Click to switch clinic practice" : currentClinicName}
-            >
-              {/* Line 1: Primary Brand + Secondary & Badges + Switcher Chevron */}
-              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap leading-tight">
-                <h1
-                  className="text-xs min-[400px]:text-sm sm:text-base md:text-lg font-black tracking-tight bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 bg-clip-text text-transparent drop-shadow-xs truncate max-w-[130px] min-[400px]:max-w-[180px] sm:max-w-none group-hover/brand:opacity-90"
-                  title={currentClinicName}
-                >
-                  {brandInfo.primary}
-                </h1>
+          {/* Clinic Brand & Hierarchy with Fancy Colors (Static Display on User Side) */}
+          <div className="min-w-0 flex flex-col justify-center select-none" title={currentClinicName}>
+            {/* Line 1: Primary Brand + Secondary & Badges */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap leading-tight">
+              <h1
+                className="text-xs min-[400px]:text-sm sm:text-base md:text-lg font-black tracking-tight bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 dark:from-blue-400 dark:via-indigo-300 dark:to-cyan-300 bg-clip-text text-transparent drop-shadow-xs truncate max-w-[130px] min-[400px]:max-w-[180px] sm:max-w-none"
+                title={currentClinicName}
+              >
+                {brandInfo.primary}
+              </h1>
 
-                {brandInfo.secondary && (
-                  <div className="hidden sm:inline-flex items-center gap-1">
-                    {brandInfo.connector && (
-                      <span className="text-amber-500 dark:text-amber-400 font-black text-xs sm:text-sm">
-                        {brandInfo.connector}
-                      </span>
-                    )}
-                    <span className="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 dark:from-teal-400 dark:via-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent tracking-tight">
-                      {brandInfo.secondary}
+              {brandInfo.secondary && (
+                <div className="hidden sm:inline-flex items-center gap-1">
+                  {brandInfo.connector && (
+                    <span className="text-amber-500 dark:text-amber-400 font-black text-xs sm:text-sm">
+                      {brandInfo.connector}
                     </span>
-                  </div>
-                )}
-
-                {brandInfo.suffix && (
-                  <span className="hidden md:inline-flex items-center text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-gradient-to-r from-indigo-50 to-blue-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 border border-indigo-200/90 dark:border-indigo-700/60 shadow-2xs">
-                    {brandInfo.suffix}
+                  )}
+                  <span className="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 dark:from-teal-400 dark:via-emerald-300 dark:to-cyan-300 bg-clip-text text-transparent tracking-tight">
+                    {brandInfo.secondary}
                   </span>
-                )}
+                </div>
+              )}
 
-                {/* Pulsing Emerald Live Status Badge */}
-                <span className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs flex-shrink-0">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  <span>LIVE</span>
+              {brandInfo.suffix && (
+                <span className="hidden md:inline-flex items-center text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-gradient-to-r from-indigo-50 to-blue-50 dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 border border-indigo-200/90 dark:border-indigo-700/60 shadow-2xs">
+                  {brandInfo.suffix}
                 </span>
+              )}
 
-                {/* Multi-Tenant Switcher Indicator */}
-                {availableTenants.length > 1 && (
-                  <span className="hidden sm:inline-flex items-center text-slate-400 group-hover/brand:text-blue-600 transition ml-0.5" title="Click to switch practice">
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${tenantSwitcherOpen ? 'rotate-180 text-blue-600' : ''}`} />
-                  </span>
-                )}
-              </div>
-
-              {/* Line 2: Dental Address & Contact Credentials */}
-              <div className="flex items-center space-x-1.5 mt-0.5 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
-                <MapPin className="w-3 h-3 text-rose-500 flex-shrink-0" />
-                <span
-                  className="truncate max-w-[125px] min-[400px]:max-w-[180px] sm:max-w-[300px] md:max-w-[420px] text-slate-600 dark:text-slate-300 font-medium"
-                  title={clinicProfile?.address || activeTenant?.country || 'Gaushala-12 Mahaottari Nepal'}
-                >
-                  {clinicProfile?.address || activeTenant?.country || 'Gaushala-12 Mahaottari Nepal'}
+              {/* Pulsing Emerald Live Status Badge */}
+              <span className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-300/80 dark:border-emerald-700 px-2 py-0.5 rounded-full text-[10px] font-bold shadow-2xs flex-shrink-0">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
+                <span>LIVE</span>
+              </span>
+            </div>
 
-                {(clinicProfile?.phone || activeTenant?.supportPhone) && (
-                  <>
-                    <span className="hidden lg:inline text-slate-300 dark:text-slate-600">•</span>
-                    <span className="hidden lg:inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold">
-                      <Phone className="w-2.5 h-2.5" />
-                      <span>{clinicProfile?.phone || activeTenant?.supportPhone}</span>
-                    </span>
-                  </>
-                )}
+            {/* Line 2: Dental Address & Contact Credentials */}
+            <div className="flex items-center space-x-1.5 mt-0.5 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
+              <MapPin className="w-3 h-3 text-rose-500 flex-shrink-0" />
+              <span
+                className="truncate max-w-[125px] min-[400px]:max-w-[180px] sm:max-w-[300px] md:max-w-[420px] text-slate-600 dark:text-slate-300 font-medium"
+                title={clinicProfile?.address || activeTenant?.country || 'Gaushala-12 Mahaottari Nepal'}
+              >
+                {clinicProfile?.address || activeTenant?.country || 'Gaushala-12 Mahaottari Nepal'}
+              </span>
 
-                {(clinicProfile?.regNo || clinicProfile?.panNumber) && (
-                  <>
-                    <span className="hidden xl:inline text-slate-300 dark:text-slate-600">•</span>
-                    <span className="hidden xl:inline-flex items-center gap-1 text-[9px] font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800 px-1.5 py-0.2 rounded-md">
-                      <ShieldCheck className="w-2.5 h-2.5 text-teal-600" />
-                      <span>{clinicProfile?.regNo || clinicProfile?.panNumber}</span>
-                    </span>
-                  </>
-                )}
-              </div>
-            </button>
+              {(clinicProfile?.phone || activeTenant?.supportPhone) && (
+                <>
+                  <span className="hidden lg:inline text-slate-300 dark:text-slate-600">•</span>
+                  <span className="hidden lg:inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold">
+                    <Phone className="w-2.5 h-2.5" />
+                    <span>{clinicProfile?.phone || activeTenant?.supportPhone}</span>
+                  </span>
+                </>
+              )}
 
-            {/* TENANT / CLINIC SWITCHER DROPDOWN POPOVER */}
-            {tenantSwitcherOpen && (
-              <div className="absolute left-0 top-full mt-2 w-80 sm:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 animate-fadeIn select-none">
-                <div className="p-3 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Building className="w-4 h-4 text-blue-300" />
+              {(clinicProfile?.regNo || clinicProfile?.panNumber) && (
+                <>
+                  <span className="hidden xl:inline text-slate-300 dark:text-slate-600">•</span>
+                  <span className="hidden xl:inline-flex items-center gap-1 text-[9px] font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800 px-1.5 py-0.2 rounded-md">
+                    <ShieldCheck className="w-2.5 h-2.5 text-teal-600" />
+                    <span>{clinicProfile?.regNo || clinicProfile?.panNumber}</span>
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* TENANT / CLINIC SWITCHER MODAL (Accessible via Settings Menu > Switch Clinic Practice) */}
+          {tenantSwitcherOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fadeIn select-none">
+              <div
+                ref={tenantSwitcherRef}
+                className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden divide-y divide-slate-100 dark:divide-slate-800"
+              >
+                <div className="p-3.5 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white flex items-center justify-between">
+                  <div className="flex items-center space-x-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center">
+                      <Building className="w-4 h-4 text-blue-300" />
+                    </div>
                     <div>
                       <h4 className="text-xs font-black tracking-tight uppercase">Multi-Tenant Practices</h4>
                       <p className="text-[10px] text-blue-200 leading-tight">Switch between clinic practices</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono font-bold bg-blue-500/40 text-blue-100 px-2 py-0.5 rounded-full">
-                    {availableTenants.length} Clinics
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[10px] font-mono font-bold bg-blue-500/40 text-blue-100 px-2 py-0.5 rounded-full">
+                      {availableTenants.length} Clinics
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setTenantSwitcherOpen(false)}
+                      className="text-white/70 hover:text-white p-1 rounded-lg hover:bg-white/10 transition cursor-pointer"
+                      title="Close"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Filter Search */}
                 {availableTenants.length > 3 && (
-                  <div className="p-2 bg-slate-50 dark:bg-slate-800/50">
+                  <div className="p-2.5 bg-slate-50 dark:bg-slate-800/50">
                     <div className="relative">
                       <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
                       <input
@@ -376,7 +378,7 @@ export default function Navbar({
                 )}
 
                 {/* Tenant List */}
-                <div className="max-h-64 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800/60 p-1">
+                <div className="max-h-72 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800/60 p-1.5">
                   {filteredAvailableTenants.map(t => {
                     const isActive = t.id === activeTenant?.id;
                     return (
@@ -389,14 +391,14 @@ export default function Navbar({
                           }
                           setTenantSwitcherOpen(false);
                         }}
-                        className={`w-full text-left p-2.5 rounded-xl transition flex items-center justify-between group ${
+                        className={`w-full text-left p-3 rounded-xl transition flex items-center justify-between group cursor-pointer ${
                           isActive
                             ? 'bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800'
                             : 'hover:bg-slate-50 dark:hover:bg-slate-800'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 min-w-0 flex-1 pr-2">
-                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0 ${
+                          <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0 ${
                             isActive
                               ? 'bg-blue-600 text-white shadow-2xs'
                               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -427,7 +429,7 @@ export default function Navbar({
                         </div>
 
                         {isActive ? (
-                          <div className="flex items-center space-x-1 px-2 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 text-[10px] font-bold flex-shrink-0">
+                          <div className="flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 text-[10px] font-bold flex-shrink-0">
                             <Check className="w-3 h-3 text-emerald-600" />
                             <span>Active</span>
                           </div>
@@ -444,7 +446,7 @@ export default function Navbar({
 
                 {/* Footer with Platform Admin shortcut */}
                 {isPlatformAdmin && onNavigate && (
-                  <div className="p-2 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                     <span className="text-[10px] text-slate-500 font-medium">Platform Super Admin</span>
                     <button
                       type="button"
@@ -452,7 +454,7 @@ export default function Navbar({
                         setTenantSwitcherOpen(false);
                         onNavigate('platform');
                       }}
-                      className="text-[11px] text-blue-600 hover:text-blue-800 dark:text-blue-400 font-bold flex items-center space-x-1"
+                      className="text-[11px] text-blue-600 hover:text-blue-800 dark:text-blue-400 font-bold flex items-center space-x-1 cursor-pointer"
                     >
                       <Building className="w-3 h-3" />
                       <span>Manage All Tenants</span>
@@ -460,8 +462,8 @@ export default function Navbar({
                   </div>
                 )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Middle: Patient Search Bar with Search Button & Active Patient */}
