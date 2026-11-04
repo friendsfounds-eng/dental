@@ -478,6 +478,28 @@ export default function App() {
     }
   };
 
+  // Doctor accepts confirmed appointment from pop-up notification alert
+  const handleAcceptAppointment = async (appointment) => {
+    try {
+      const acceptancePayload = {
+        doctorAcceptanceStatus: 'Accepted',
+        acceptedByDoctor: true,
+        acceptedAt: new Date().toISOString()
+      };
+      const res = await fetch(`/api/appointments/${appointment.id}`, {
+        method: 'PUT',
+        headers: getHeaders(),
+        body: JSON.stringify(acceptancePayload)
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setAppointments(prev => prev.map(a => a.id === appointment.id ? updated : a));
+      }
+    } catch (err) {
+      console.error('Error accepting appointment:', err);
+    }
+  };
+
   // Add Clinical SOAP Note
   const handleSaveSoapNote = async (noteData) => {
     if (!selectedPatient) return;
@@ -1149,6 +1171,7 @@ export default function App() {
               patients={patients}
               doctors={doctors}
               chairs={chairs}
+              currentUser={currentUser}
               onAddAppointment={handleAddAppointment}
               onUpdateStatus={handleUpdateAppointmentStatus}
               onOpenWhatsApp={handleOpenWhatsApp}
@@ -1355,14 +1378,16 @@ export default function App() {
         onLogout={handleLogout}
       />
 
-      {/* Pop-up Message for Allocated Doctor */}
+      {/* Pop-up Notification for Allocated Attending Doctor (30s timer, Skip & Accept) */}
       <DoctorAllocationModal
         isOpen={!!allocatedDoctorModal}
         onClose={() => setAllocatedDoctorModal(null)}
+        onAccept={handleAcceptAppointment}
         appointment={allocatedDoctorModal}
         doctors={doctors}
         patients={patients}
         clinicProfile={clinicProfile}
+        currentUser={currentUser}
         onNavigate={setActiveTab}
         onOpenWhatsApp={handleOpenWhatsApp}
       />

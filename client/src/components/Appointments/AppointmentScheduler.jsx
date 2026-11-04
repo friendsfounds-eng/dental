@@ -22,6 +22,7 @@ export default function AppointmentScheduler({
   patients = [],
   doctors = [],
   chairs = [],
+  currentUser,
   onAddAppointment,
   onUpdateStatus,
   onOpenWhatsApp,
@@ -237,8 +238,13 @@ export default function AppointmentScheduler({
                           </span>
                         )}
                       </span>
-                      <span className="font-semibold text-blue-700">
-                        👨‍⚕️ {apt.doctorName}
+                      <span className="font-semibold text-blue-700 flex items-center gap-1.5 flex-wrap">
+                        <span>👨‍⚕️ {apt.doctorName}</span>
+                        {apt.doctorAcceptanceStatus === 'Accepted' && (
+                          <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded-md border border-emerald-300">
+                            Doctor Accepted ✓
+                          </span>
+                        )}
                       </span>
                       <span className="text-slate-500">
                         💺 {apt.chair}
@@ -616,15 +622,21 @@ export default function AppointmentScheduler({
         </div>
       )}
 
-      {/* Pop-up Message for Allocated Doctor (Fallback if not handled globally) */}
+      {/* Pop-up Notification for Allocated Attending Doctor (Fallback if not handled globally) */}
       {!onViewDoctorAllocation && (
         <DoctorAllocationModal
           isOpen={doctorModalOpen}
           onClose={() => setDoctorModalOpen(false)}
+          onAccept={(apt) => {
+            if (onUpdateStatus) {
+              onUpdateStatus(apt.id, 'Confirmed');
+            }
+          }}
           appointment={allocatedApt}
           doctors={doctors}
           patients={patients}
           clinicProfile={clinicProfile}
+          currentUser={currentUser}
           onNavigate={onNavigate}
           onOpenWhatsApp={onOpenWhatsApp}
         />
