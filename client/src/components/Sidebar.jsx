@@ -19,6 +19,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { isTabAllowed } from '../utils/rbac';
 
 export default function Sidebar({
   activeTab,
@@ -267,17 +268,19 @@ export default function Sidebar({
     ];
   }
 
-  // Filter sections and items if user has custom allowed modules configured
-  if (!isPlatformAdmin && Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.length > 0) {
-    const allowed = new Set(currentUser.allowedModules);
+  // Strictly filter menu sections and items based on role and Super Admin explicit module permissions
+  if (!isPlatformAdmin) {
+    const isSuperAdmin = role === 'CLINIC_ADMIN' || (Array.isArray(currentUser?.roles) && currentUser.roles.includes('CLINIC_ADMIN'));
     menuSections = menuSections
       .map((section) => ({
         ...section,
         items: section.items.filter((item) => {
-          if (item.id === 'dashboard' || item.id === 'doctor-dashboard' || item.id === 'reception-dashboard') {
-            return true; // Keep landing dashboard
-          }
-          return allowed.has(item.id);
+          // Never expose Super Admin Overview to subordinate roles
+          if (item.id === 'dashboard' && !isSuperAdmin) return false;
+          // Platform console is developer admin only
+          if (item.id === 'platform') return false;
+          // Check role-based / explicit module permission
+          return isTabAllowed(item.id, currentUser);
         })
       }))
       .filter((section) => section.items.length > 0);

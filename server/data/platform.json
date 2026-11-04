@@ -481,30 +481,6 @@
       "username": "drmukesh"
     },
     {
-      "id": "user-075297",
-      "email": "dr.anita@nepaldental.com.np",
-      "passwordHash": "3aa73f39f81fdc9a16cc93aa745e5eef0c95932cb6757fa0fd8f185ee59bfe89254f4a5270df647cc2c15f40e42f741c4c18bc80f2ea20d825a21ca3c9bd612f",
-      "name": "Dr. Anita Sharma",
-      "phone": "+977 98511 77889",
-      "globalRole": null,
-      "status": "active",
-      "tokenVersion": 3,
-      "createdAt": "2026-10-23T10:00:00.000Z",
-      "username": "dranita"
-    },
-    {
-      "id": "user-nepal-reception",
-      "email": "reception@nepaldental.com.np",
-      "passwordHash": "3aa73f39f81fdc9a16cc93aa745e5eef0c95932cb6757fa0fd8f185ee59bfe89254f4a5270df647cc2c15f40e42f741c4c18bc80f2ea20d825a21ca3c9bd612f",
-      "name": "Sita Thapa (Front Desk)",
-      "phone": "+977 98099 88776",
-      "globalRole": null,
-      "status": "active",
-      "tokenVersion": 4,
-      "createdAt": "2026-01-15T00:00:00.000Z",
-      "username": "reception"
-    },
-    {
       "id": "user-apex-admin",
       "email": "admin@apexdental.com",
       "passwordHash": "3aa73f39f81fdc9a16cc93aa745e5eef0c95932cb6757fa0fd8f185ee59bfe89254f4a5270df647cc2c15f40e42f741c4c18bc80f2ea20d825a21ca3c9bd612f",
@@ -601,18 +577,6 @@
       "username": "sitaramtest"
     },
     {
-      "id": "user-sitaram-01",
-      "email": "sitaram@nepaldental.com.np",
-      "passwordHash": "37303839ab50294ddb3575adae70ad06578e797249a9fa3f6dd084711b960d976556b5b34b63b63932184601d5ecd1cfcf7b51fc30898a6e13a64e2e90b8c868",
-      "name": "Dr. Sitaram Kushwaha",
-      "phone": "+977 98012 34567",
-      "globalRole": null,
-      "status": "active",
-      "tokenVersion": 2,
-      "createdAt": "2026-10-27T18:17:47.243Z",
-      "username": "sitaram"
-    },
-    {
       "id": "user-164511",
       "email": "admin@himalayandental.com",
       "passwordHash": "97c2d9a51393c5dcde7ff2bcf72a257cf1faa6230881f647bb80068ae27931c10579a6a1b0a65d89aa55369ffe8554e7c4b194456d6aaa1fdc923e1d9744a86f",
@@ -685,16 +649,16 @@
       "createdAt": "2026-11-02T17:31:01.923Z"
     },
     {
-      "id": "user-197696",
-      "username": "suamandr",
-      "email": "suamandr@platform.local",
+      "id": "user-955637",
+      "username": "recepatation",
+      "email": "recepatation@platform.local",
       "passwordHash": "35254863a7f3033e887f7dc871eb69560fe3ea72b22255a5298ea269e127a33a6b1d44a407cc461e89c7a4eae05ca8dc507017fb1fd63c5ebd900d0c214024c7",
-      "name": "Dr Suman Sharma",
+      "name": "Recepatation",
       "phone": "",
       "globalRole": null,
       "status": "active",
       "tokenVersion": 1,
-      "createdAt": "2026-11-04T06:36:37.698Z"
+      "createdAt": "2026-11-04T07:05:55.646Z"
     }
   ],
   "memberships": [
@@ -715,27 +679,6 @@
       "role": "DOCTOR",
       "roles": [
         "DOCTOR"
-      ],
-      "isActive": true
-    },
-    {
-      "id": "mem-3",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-reception",
-      "role": "RECEPTIONIST",
-      "roles": [
-        "RECEPTIONIST"
-      ],
-      "isActive": true
-    },
-    {
-      "id": "mem-anita",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-075297",
-      "role": "CLINIC_ADMIN",
-      "roles": [
-        "DOCTOR",
-        "CLINIC_ADMIN"
       ],
       "isActive": true
     },
@@ -799,25 +742,6 @@
       "id": "mem-1793124256602",
       "tenantId": "tenant-nepal-dental",
       "userId": "user-256601",
-      "role": "DOCTOR",
-      "roles": [
-        "DOCTOR"
-      ],
-      "allowedModules": [
-        "chart",
-        "prescriptions",
-        "patients",
-        "xray",
-        "orders",
-        "appointments",
-        "ai"
-      ],
-      "isActive": true
-    },
-    {
-      "id": "mem-sitaram-1793125067246",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-sitaram-01",
       "role": "DOCTOR",
       "roles": [
         "DOCTOR"
@@ -917,21 +841,18 @@
       "isActive": true
     },
     {
-      "id": "mem-1793774197698",
+      "id": "mem-1793775955646",
       "tenantId": "tenant-nepal-dental",
-      "userId": "user-197696",
-      "role": "DOCTOR",
+      "userId": "user-955637",
+      "role": "RECEPTIONIST",
       "roles": [
-        "DOCTOR"
+        "RECEPTIONIST"
       ],
       "allowedModules": [
-        "chart",
-        "prescriptions",
         "patients",
-        "xray",
         "orders",
         "appointments",
-        "ai"
+        "billing"
       ],
       "isActive": true
     }
@@ -1291,6 +1212,232 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1793779002789-955",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PERMISSION_DENIED",
+      "resource": "delete:patient_order",
+      "resourceId": null,
+      "status": "DENIED",
+      "details": {
+        "requiredPermission": "delete:patient_order",
+        "userRole": "RECEPTIONIST",
+        "userRoles": [
+          "RECEPTIONIST"
+        ]
+      },
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:56:42.789Z"
+    },
+    {
+      "id": "aud-1793779002734-298",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PERMISSION_DENIED",
+      "resource": "create:prescription",
+      "resourceId": null,
+      "status": "DENIED",
+      "details": {
+        "requiredPermission": "create:prescription",
+        "userRole": "RECEPTIONIST",
+        "userRoles": [
+          "RECEPTIONIST"
+        ]
+      },
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:56:42.734Z"
+    },
+    {
+      "id": "aud-1793779002707-718",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PERMISSION_DENIED",
+      "resource": "edit:dental_chart",
+      "resourceId": null,
+      "status": "DENIED",
+      "details": {
+        "requiredPermission": "edit:dental_chart",
+        "userRole": "RECEPTIONIST",
+        "userRoles": [
+          "RECEPTIONIST"
+        ]
+      },
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:56:42.707Z"
+    },
+    {
+      "id": "aud-1793779002674-605",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PERMISSION_DENIED",
+      "resource": "manage:staff",
+      "resourceId": null,
+      "status": "DENIED",
+      "details": {
+        "requiredPermission": "manage:staff",
+        "userRole": "RECEPTIONIST",
+        "userRoles": [
+          "RECEPTIONIST"
+        ]
+      },
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:56:42.674Z"
+    },
+    {
+      "id": "aud-1793779002641-313",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PERMISSION_DENIED",
+      "resource": "manage:clinic_settings",
+      "resourceId": null,
+      "status": "DENIED",
+      "details": {
+        "requiredPermission": "manage:clinic_settings",
+        "userRole": "RECEPTIONIST",
+        "userRoles": [
+          "RECEPTIONIST"
+        ]
+      },
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:56:42.641Z"
+    },
+    {
+      "id": "aud-1793779002594-109",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T07:56:42.594Z"
+    },
+    {
+      "id": "aud-1793776359895-368",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T07:12:39.895Z"
+    },
+    {
+      "id": "aud-1793776343039-393",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGOUT",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:12:23.039Z"
+    },
+    {
+      "id": "aud-1793776315174-50",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T07:11:55.174Z"
+    },
+    {
+      "id": "aud-1793776301496-785",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGOUT",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:11:41.496Z"
+    },
+    {
+      "id": "aud-1793776217996-81",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T07:10:17.996Z"
+    },
+    {
+      "id": "aud-1793776213853-469",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "USER_LOGOUT",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:10:13.853Z"
+    },
+    {
+      "id": "aud-1793775990443-581",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T07:06:30.443Z"
+    },
+    {
+      "id": "aud-1793775978304-663",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGOUT",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-11-04T07:06:18.304Z"
+    },
     {
       "id": "aud-1793771246878-563",
       "tenantId": "tenant-nepal-dental",
@@ -17170,223 +17317,6 @@
       "details": {},
       "ipAddress": "::1",
       "timestamp": "2026-10-22T07:51:15.730Z"
-    },
-    {
-      "id": "aud-1792655475719-198",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:51:15.719Z"
-    },
-    {
-      "id": "aud-1792655475706-198",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-devadmin",
-      "userEmail": "devadmin@anacraft.com",
-      "userRole": "PLATFORM_ADMIN",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:51:15.706Z"
-    },
-    {
-      "id": "aud-1792655464465-731",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:51:04.465Z"
-    },
-    {
-      "id": "aud-1792655464455-179",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:51:04.455Z"
-    },
-    {
-      "id": "aud-1792655464440-893",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:51:04.440Z"
-    },
-    {
-      "id": "aud-1792655454250-496",
-      "tenantId": null,
-      "userId": null,
-      "userEmail": "system",
-      "userRole": "SYSTEM",
-      "action": "PLAN_UPDATED",
-      "resource": "plan",
-      "resourceId": "plan-starter",
-      "status": "SUCCESS",
-      "details": {
-        "name": "Starter Clinic",
-        "priceMonthly": 3500,
-        "priceYearly": 35000,
-        "maxStaff": 5,
-        "maxPatients": 1000
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:50:54.250Z"
-    },
-    {
-      "id": "aud-1792655454219-649",
-      "tenantId": null,
-      "userId": null,
-      "userEmail": "system",
-      "userRole": "SYSTEM",
-      "action": "PLAN_CREATED",
-      "resource": "plan",
-      "resourceId": "plan-gold-4214",
-      "status": "SUCCESS",
-      "details": {
-        "name": "Gold Dental Specialty Tier",
-        "priceMonthly": 12500
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:50:54.219Z"
-    },
-    {
-      "id": "aud-1792655454189-344",
-      "tenantId": null,
-      "userId": null,
-      "userEmail": "system",
-      "userRole": "SYSTEM",
-      "action": "PLAN_UPDATED",
-      "resource": "plan",
-      "resourceId": "plan-starter",
-      "status": "SUCCESS",
-      "details": {
-        "name": "Starter Clinic (Standard)",
-        "priceMonthly": 3900,
-        "priceYearly": 39000,
-        "maxStaff": 5,
-        "maxPatients": 1500
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:50:54.189Z"
-    },
-    {
-      "id": "aud-1792655454163-0",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-devadmin",
-      "userEmail": "devadmin@anacraft.com",
-      "userRole": "PLATFORM_ADMIN",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:50:54.163Z"
-    },
-    {
-      "id": "aud-1792655406865-816",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:50:06.865Z"
-    },
-    {
-      "id": "aud-1792655406857-808",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "USER_LOGIN_SUCCESS",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "::1",
-      "timestamp": "2026-10-22T07:50:06.857Z"
-    },
-    {
-      "id": "aud-1792655383273-378",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-devadmin",
-      "userEmail": "devadmin@anacraft.com",
-      "userRole": "PLATFORM_ADMIN",
-      "action": "USER_LOGOUT",
-      "resource": "auth",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {},
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:49:43.273Z"
-    },
-    {
-      "id": "aud-1792654793399-761",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "PERMISSION_DENIED",
-      "resource": "manage:finance_account",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "manage:finance_account",
-        "userRole": "RECEPTIONIST"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:39:53.399Z"
-    },
-    {
-      "id": "aud-1792654793369-480",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-devadmin",
-      "userEmail": "devadmin@anacraft.com",
-      "userRole": "PLATFORM_ADMIN",
-      "action": "TENANT_MODULE_TOGGLED",
-      "resource": "module",
-      "resourceId": null,
-      "status": "SUCCESS",
-      "details": {
-        "module": "finance",
-        "enabled": true
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T07:39:53.369Z"
     }
   ],
   "paymentConfig": {

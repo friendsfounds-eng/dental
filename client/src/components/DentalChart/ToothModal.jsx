@@ -9,7 +9,8 @@ export default function ToothModal({
   treatmentCatalog = [],
   onClose,
   onSaveTooth,
-  onAddTreatmentPlan
+  onAddTreatmentPlan,
+  readOnly = false
 }) {
   const [condition, setCondition] = useState(data.condition || 'healthy');
   const [surfaces, setSurfaces] = useState(data.surfaces || {
@@ -319,21 +320,38 @@ export default function ToothModal({
 
         {/* Footer */}
         <div className="bg-slate-50 px-6 py-3 border-t border-slate-200 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-xs font-semibold px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-6 py-2.5 rounded-lg shadow-sm flex items-center space-x-1.5 transition"
-          >
-            <Check className="w-4 h-4" />
-            <span>Save Chart & Close</span>
-          </button>
+          {readOnly ? (
+            <>
+              <span className="text-[11px] text-amber-800 font-bold bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg">
+                Read-Only Clinical View (Dentist Authority Required to Edit)
+              </span>
+              <button
+                type="button"
+                onClick={onClose}
+                className="bg-slate-700 hover:bg-slate-800 text-white text-xs font-bold px-5 py-2 rounded-lg transition cursor-pointer"
+              >
+                Close
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-xs font-semibold px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSave}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-6 py-2.5 rounded-lg shadow-sm flex items-center space-x-1.5 transition cursor-pointer"
+              >
+                <Check className="w-4 h-4" />
+                <span>Save Chart & Close</span>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

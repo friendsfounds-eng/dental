@@ -29,8 +29,16 @@ import {
   Activity,
   Users,
   Calendar,
-  Menu
+  Menu,
+  ShieldAlert,
+  ArrowLeft
 } from 'lucide-react';
+import {
+  isTabAllowed,
+  getDefaultLandingTab,
+  getUserAllowedModules,
+  SYSTEM_MODULES
+} from './utils/rbac';
 import { openWhatsAppAutoLink } from './utils/whatsapp';
 import AnayaCraftLogo from './components/Common/AnayaCraftLogo';
 import DoctorAllocationModal from './components/Appointments/DoctorAllocationModal';
@@ -257,16 +265,9 @@ export default function App() {
     setActiveTenant(loginData.activeTenant);
     setLoginModalOpen(false);
 
-    // Switch to role-appropriate initial tab
-    if (loginData.user.globalRole === 'PLATFORM_ADMIN') {
-      setActiveTab('platform');
-    } else if (loginData.user.role === 'CLINIC_ADMIN') {
-      setActiveTab('dashboard');
-    } else if (loginData.user.role === 'DOCTOR') {
-      setActiveTab('doctor-dashboard');
-    } else if (loginData.user.role === 'RECEPTIONIST') {
-      setActiveTab('reception-dashboard');
-    }
+    // Switch to role-appropriate initial permitted tab
+    const landingTab = getDefaultLandingTab(loginData.user);
+    setActiveTab(landingTab);
 
     fetchData(loginData.token, loginData.activeTenant?.id);
     fetchMyTenants(loginData.token);
@@ -861,6 +862,38 @@ export default function App() {
         {/* Main Content Area (Auto-fits Mobile, Tablet & Desktop) */}
         <main className={`flex-1 min-w-0 p-3 sm:p-4 md:p-6 pb-20 lg:pb-6 overflow-y-auto w-full transition-all duration-300 ${sidebarCollapsed ? 'max-w-none' : 'max-w-7xl mx-auto'}`}>
           <ErrorBoundary key={activeTab}>
+          {!isTabAllowed(activeTab, currentUser) ? (
+            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-rose-200 dark:border-rose-900/60 p-8 max-w-lg mx-auto my-12 text-center shadow-lg animate-fadeIn select-none">
+              <div className="w-16 h-16 rounded-2xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto mb-4 border border-rose-200 dark:border-rose-800">
+                <ShieldAlert className="w-8 h-8" />
+              </div>
+              <h2 className="text-lg font-black text-slate-900 dark:text-slate-100 mb-1">Access Restricted by Super Admin</h2>
+              <p className="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                Your staff account <strong>({currentUser?.name})</strong> with role <strong>{currentUser?.role}</strong> does not possess permission from the Clinic Administrator to access the <strong>{activeTab}</strong> feature.
+              </p>
+              <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 mb-5 text-left">
+                <div className="text-[10px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-1.5">Permitted Modules:</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {getUserAllowedModules(currentUser).map(m => {
+                    const modObj = SYSTEM_MODULES.find(sm => sm.id === m);
+                    return (
+                      <span key={m} className="text-[10px] bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800">
+                        {modObj ? modObj.label : m}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+              <button
+                onClick={() => setActiveTab(getDefaultLandingTab(currentUser))}
+                className="inline-flex items-center space-x-2 py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md shadow-blue-500/20 cursor-pointer"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Return to Permitted Home</span>
+              </button>
+            </div>
+          ) : (
+            <>
             {/* Active Patient Notification Pill in Odontogram View */}
           {selectedPatient && activeTab === 'chart' && (
             <div className="mb-4 bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-3.5 sm:px-5 sm:py-3 rounded-2xl shadow-md flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
@@ -1219,63 +1252,86 @@ export default function App() {
               onDeleteTreatment={handleDeleteTreatment}
             />
           )}
+          </>
+          )}
           </ErrorBoundary>
         </main>
       </div>
 
-      {/* Mobile Bottom Quick Navigation Bar (Sticky on Mobile Phones & Small Tablets) */}
+      {/* Mobile Bottom Quick Navigation Bar (Sticky on Mobile Phones & Small Tablets - Strictly Permitted Modules) */}
       <div className="fixed bottom-0 left-0 right-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-200/90 lg:hidden px-2 py-1 flex items-center justify-around shadow-lg no-print">
         <button
-          onClick={() => setActiveTab(currentUser?.role === 'DOCTOR' ? 'doctor-dashboard' : 'dashboard')}
+          onClick={() => setActiveTab(getDefaultLandingTab(currentUser))}
           className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
-            activeTab === 'doctor-dashboard' || activeTab === 'dashboard'
+            activeTab === 'doctor-dashboard' || activeTab === 'reception-dashboard' || activeTab === 'dashboard'
               ? 'text-blue-600 font-bold'
               : 'text-slate-500 hover:text-slate-800'
           }`}
-          title="Clinical Dashboard"
+          title="Home Dashboard"
         >
           <LayoutDashboard className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Dashboard</span>
+          <span className="text-[10px] mt-0.5">Home</span>
         </button>
 
-        <button
-          onClick={() => setActiveTab('chart')}
-          className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
-            activeTab === 'chart'
-              ? 'text-blue-600 font-bold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-          title="Odontogram Chart"
-        >
-          <Activity className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Dental Chart</span>
-        </button>
+        {isTabAllowed('chart', currentUser) && (
+          <button
+            onClick={() => setActiveTab('chart')}
+            className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
+              activeTab === 'chart'
+                ? 'text-blue-600 font-bold'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+            title="Odontogram Chart"
+          >
+            <Activity className="w-5 h-5" />
+            <span className="text-[10px] mt-0.5">Dental Chart</span>
+          </button>
+        )}
 
-        <button
-          onClick={() => setActiveTab('patients')}
-          className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
-            activeTab === 'patients'
-              ? 'text-blue-600 font-bold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-          title="Patient Records"
-        >
-          <Users className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Patients</span>
-        </button>
+        {isTabAllowed('patients', currentUser) && (
+          <button
+            onClick={() => setActiveTab('patients')}
+            className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
+              activeTab === 'patients'
+                ? 'text-blue-600 font-bold'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+            title="Patient Records"
+          >
+            <Users className="w-5 h-5" />
+            <span className="text-[10px] mt-0.5">Patients</span>
+          </button>
+        )}
 
-        <button
-          onClick={() => setActiveTab('appointments')}
-          className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
-            activeTab === 'appointments'
-              ? 'text-blue-600 font-bold'
-              : 'text-slate-500 hover:text-slate-800'
-          }`}
-          title="Appointments & Chairs"
-        >
-          <Calendar className="w-5 h-5" />
-          <span className="text-[10px] mt-0.5">Bookings</span>
-        </button>
+        {isTabAllowed('appointments', currentUser) && (
+          <button
+            onClick={() => setActiveTab('appointments')}
+            className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
+              activeTab === 'appointments'
+                ? 'text-blue-600 font-bold'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+            title="Appointments & Chairs"
+          >
+            <Calendar className="w-5 h-5" />
+            <span className="text-[10px] mt-0.5">Bookings</span>
+          </button>
+        )}
+
+        {isTabAllowed('billing', currentUser) && !isTabAllowed('chart', currentUser) && (
+          <button
+            onClick={() => setActiveTab('billing')}
+            className={`flex flex-col items-center py-1 px-3 rounded-xl transition ${
+              activeTab === 'billing'
+                ? 'text-blue-600 font-bold'
+                : 'text-slate-500 hover:text-slate-800'
+            }`}
+            title="Billing & Invoices"
+          >
+            <Receipt className="w-5 h-5" />
+            <span className="text-[10px] mt-0.5">Billing</span>
+          </button>
+        )}
 
         <button
           onClick={() => setSidebarOpen(prev => !prev)}

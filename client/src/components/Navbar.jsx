@@ -589,22 +589,31 @@ export default function Navbar({
           {/* UI Theme Switcher */}
           <ThemeSwitcher />
 
-          {/* Settings & Account Menu (Replaces standalone Logout button) */}
+          {/* Settings & Account Menu (Role-guarded: Only permitted actions shown) */}
           <div ref={settingsMenuRef} className="relative">
-            <button
-              type="button"
-              onClick={() => setSettingsOpen(prev => !prev)}
-              className={`p-2 rounded-xl transition flex items-center justify-center border ${
-                settingsOpen
-                  ? 'bg-blue-50 text-blue-600 border-blue-300 ring-2 ring-blue-100 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border-slate-200 shadow-2xs'
-              }`}
-              title="Settings & System Menu"
-              aria-expanded={settingsOpen}
-              aria-haspopup="true"
-            >
-              <Settings className={`w-4 h-4 transition-transform duration-200 ${settingsOpen ? 'rotate-90 text-blue-600' : 'text-slate-600'}`} />
-            </button>
+            {(() => {
+              const canAccessClinicSettings = isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'));
+              return (
+                <button
+                  type="button"
+                  onClick={() => setSettingsOpen(prev => !prev)}
+                  className={`p-2 rounded-xl transition flex items-center justify-center border cursor-pointer ${
+                    settingsOpen
+                      ? 'bg-blue-50 text-blue-600 border-blue-300 ring-2 ring-blue-100 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border-slate-200 shadow-2xs'
+                  }`}
+                  title={canAccessClinicSettings ? "Clinic Settings & Account Menu" : "Account & Session Menu"}
+                  aria-expanded={settingsOpen}
+                  aria-haspopup="true"
+                >
+                  {canAccessClinicSettings ? (
+                    <Settings className={`w-4 h-4 transition-transform duration-200 ${settingsOpen ? 'rotate-90 text-blue-600' : 'text-slate-600'}`} />
+                  ) : (
+                    <User className="w-4 h-4 text-slate-600" />
+                  )}
+                </button>
+              );
+            })()}
 
             {/* Dropdown Menu */}
             {settingsOpen && (
@@ -618,7 +627,7 @@ export default function Navbar({
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-1.5">
                         <span className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate block" title={currentUser?.name}>
-                          {currentUser?.name || 'Dr. Mukesh Kushwaha'}
+                          {currentUser?.name || 'Staff User'}
                         </span>
                         <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border flex-shrink-0 ${roleBadge.bg}`}>
                           {roleBadge.label}
@@ -631,17 +640,17 @@ export default function Navbar({
                   </div>
                 </div>
 
-                {/* 2. Settings Menu Links */}
+                {/* 2. Permitted Menu Links */}
                 <div className="p-1.5 space-y-0.5">
-                  {/* Switch Clinic Practice (Multi-Tenant) */}
-                  {availableTenants.length > 1 && (
+                  {/* Switch Clinic Practice (Multi-Tenant - Super Admin / Platform Admin only) */}
+                  {(isSuperAdmin || isPlatformAdmin) && availableTenants.length > 1 && (
                     <button
                       type="button"
                       onClick={() => {
                         setSettingsOpen(false);
                         setTenantSwitcherOpen(true);
                       }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center justify-between group"
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center justify-between group cursor-pointer"
                     >
                       <div className="flex items-center space-x-3 min-w-0">
                         <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition shadow-2xs">
@@ -656,33 +665,35 @@ export default function Navbar({
                     </button>
                   )}
 
-                  {/* Clinic Configuration */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSettingsOpen(false);
-                      if (onNavigate) onNavigate('settings');
-                    }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center justify-between group"
-                  >
-                    <div className="flex items-center space-x-3 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition shadow-2xs">
-                        <Building className="w-4 h-4" />
+                  {/* Clinic Configuration (Super Admin or staff with settings module permission only) */}
+                  {(isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'))) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSettingsOpen(false);
+                        if (onNavigate) onNavigate('settings');
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition flex items-center justify-between group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition shadow-2xs">
+                          <Building className="w-4 h-4" />
+                        </div>
+                        <span className="text-xs font-semibold truncate">Clinic Configuration</span>
                       </div>
-                      <span className="text-xs font-semibold truncate">Clinic Configuration</span>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </button>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    </button>
+                  )}
 
-                  {/* Staff Management (Visible to Super Admin / Platform Admin) */}
-                  {(role === 'CLINIC_ADMIN' || isPlatformAdmin) && (
+                  {/* Staff Management (Strictly Super Admin / Platform Admin only) */}
+                  {isSuperAdmin && (
                     <button
                       type="button"
                       onClick={() => {
                         setSettingsOpen(false);
                         if (onNavigate) onNavigate('staff');
                       }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center justify-between group"
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition flex items-center justify-between group cursor-pointer"
                     >
                       <div className="flex items-center space-x-3 min-w-0">
                         <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition shadow-2xs">
@@ -694,41 +705,45 @@ export default function Navbar({
                     </button>
                   )}
 
-                  {/* WhatsApp Automation */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSettingsOpen(false);
-                      if (onNavigate) onNavigate('whatsapp');
-                    }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 transition flex items-center justify-between group"
-                  >
-                    <div className="flex items-center space-x-3 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 group-hover:bg-[#25D366] group-hover:text-white transition shadow-2xs">
-                        <MessageSquare className="w-4 h-4" />
+                  {/* WhatsApp Automation (Super Admin or staff with settings module permission only) */}
+                  {(isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'))) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSettingsOpen(false);
+                        if (onNavigate) onNavigate('whatsapp');
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 transition flex items-center justify-between group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 group-hover:bg-[#25D366] group-hover:text-white transition shadow-2xs">
+                          <MessageSquare className="w-4 h-4" />
+                        </div>
+                        <span className="text-xs font-semibold truncate">WhatsApp Automation</span>
                       </div>
-                      <span className="text-xs font-semibold truncate">WhatsApp Automation</span>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </button>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    </button>
+                  )}
 
-                  {/* Account & Subscription */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSettingsOpen(false);
-                      if (onNavigate) onNavigate('subscription');
-                    }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-600 dark:hover:text-amber-400 transition flex items-center justify-between group"
-                  >
-                    <div className="flex items-center space-x-3 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-600 group-hover:text-white transition shadow-2xs">
-                        <CreditCard className="w-4 h-4" />
+                  {/* Account & Subscription (Strictly Super Admin / Platform Admin only) */}
+                  {isSuperAdmin && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSettingsOpen(false);
+                        if (onNavigate) onNavigate('subscription');
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-600 dark:hover:text-amber-400 transition flex items-center justify-between group cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-600 group-hover:text-white transition shadow-2xs">
+                          <CreditCard className="w-4 h-4" />
+                        </div>
+                        <span className="text-xs font-semibold truncate">Account & Subscription</span>
                       </div>
-                      <span className="text-xs font-semibold truncate">Account & Subscription</span>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </button>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    </button>
+                  )}
 
                   {/* Switch Account / Switch Profile */}
                   <button
@@ -737,7 +752,7 @@ export default function Navbar({
                       setSettingsOpen(false);
                       if (onOpenLoginModal) onOpenLoginModal();
                     }}
-                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 transition flex items-center justify-between group"
+                    className="w-full text-left px-3 py-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-purple-600 dark:hover:text-purple-400 transition flex items-center justify-between group cursor-pointer"
                   >
                     <div className="flex items-center space-x-3 min-w-0">
                       <div className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-600 group-hover:text-white transition shadow-2xs">
@@ -758,7 +773,7 @@ export default function Navbar({
                         setSettingsOpen(false);
                         onLogout();
                       }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition flex items-center justify-between group"
+                      className="w-full text-left px-3 py-2 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition flex items-center justify-between group cursor-pointer"
                       title="Logout from active session"
                     >
                       <div className="flex items-center space-x-3 min-w-0">

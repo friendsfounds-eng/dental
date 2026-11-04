@@ -29,6 +29,7 @@ import {
   UploadCloud,
   CreditCard
 } from 'lucide-react';
+import { hasActionPermission } from '../../utils/rbac';
 
 const ORDER_TYPES = [
   'Crown',
@@ -127,6 +128,11 @@ export default function PatientOrders({
     notes: ''
   };
   const [formData, setFormData] = useState(initialNewOrderState);
+
+  // RBAC permissions for order operations
+  const canCreateOrder = hasActionPermission('create:order', currentUser);
+  const canEditOrder = hasActionPermission('edit:order', currentUser);
+  const canDeleteOrder = hasActionPermission('delete:order', currentUser);
 
   // Patient Search & Link State
   const [allPatientsList, setAllPatientsList] = useState(patients || []);
@@ -522,30 +528,34 @@ export default function PatientOrders({
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
 
-            <button
-              onClick={() => {
-                setSelectedOrderPatient(currentActivePatient);
-                setPatientSearchOpen(true);
-                setCreateModalOpen(true);
-              }}
-              className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl border border-white/20 flex items-center space-x-1.5 transition"
-              title="Search patient and link custom dental order"
-            >
-              <Search className="w-3.5 h-3.5 text-blue-200" />
-              <span>Link Order with Patient</span>
-            </button>
+            {canCreateOrder && (
+              <>
+                <button
+                  onClick={() => {
+                    setSelectedOrderPatient(currentActivePatient);
+                    setPatientSearchOpen(true);
+                    setCreateModalOpen(true);
+                  }}
+                  className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl border border-white/20 flex items-center space-x-1.5 transition cursor-pointer"
+                  title="Search patient and link custom dental order"
+                >
+                  <Search className="w-3.5 h-3.5 text-blue-200" />
+                  <span>Link Order with Patient</span>
+                </button>
 
-            <button
-              onClick={() => {
-                setSelectedOrderPatient(currentActivePatient);
-                setPatientSearchOpen(false);
-                setCreateModalOpen(true);
-              }}
-              className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 flex items-center space-x-2 transition"
-            >
-              <Plus className="w-4 h-4" />
-              <span>New Lab Order</span>
-            </button>
+                <button
+                  onClick={() => {
+                    setSelectedOrderPatient(currentActivePatient);
+                    setPatientSearchOpen(false);
+                    setCreateModalOpen(true);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 flex items-center space-x-2 transition cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>New Lab Order</span>
+                </button>
+              </>
+            )}
 
             {onClose && (
               <button
@@ -686,16 +696,18 @@ export default function PatientOrders({
               ? `No laboratory or custom treatment orders have been created yet for patient [${currentActivePatient?.id || 'selected'}].`
               : 'No orders match your selected search and filter criteria.'}
           </p>
-          <button
-            onClick={() => {
-              setSelectedOrderPatient(currentActivePatient);
-              setCreateModalOpen(true);
-            }}
-            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow-sm inline-flex items-center space-x-1.5"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>Create First Dental Order</span>
-          </button>
+          {canCreateOrder && (
+            <button
+              onClick={() => {
+                setSelectedOrderPatient(currentActivePatient);
+                setCreateModalOpen(true);
+              }}
+              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow-sm inline-flex items-center space-x-1.5 cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>Create First Dental Order</span>
+            </button>
+          )}
         </div>
       ) : (
         <div className="space-y-4">
@@ -778,23 +790,27 @@ export default function PatientOrders({
                       <Printer className="w-3.5 h-3.5" />
                     </button>
 
-                    <button
-                      type="button"
-                      onClick={() => setEditOrder(JSON.parse(JSON.stringify(order)))}
-                      className="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition border border-slate-200"
-                      title="Edit Order Specifications"
-                    >
-                      <Edit2 className="w-3.5 h-3.5" />
-                    </button>
+                    {canEditOrder && (
+                      <button
+                        type="button"
+                        onClick={() => setEditOrder(JSON.parse(JSON.stringify(order)))}
+                        className="p-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition border border-slate-200 cursor-pointer"
+                        title="Edit Order Specifications"
+                      >
+                        <Edit2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
 
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteOrder(order.id)}
-                      className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition border border-slate-200"
-                      title="Delete Order"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    {canDeleteOrder && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteOrder(order.id)}
+                        className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition border border-slate-200 cursor-pointer"
+                        title="Delete Order (Admin Only)"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
 
                     <button
                       type="button"

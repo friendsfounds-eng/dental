@@ -1304,6 +1304,77 @@
   ],
   "auditLogs": [
     {
+      "id": "tlog-1793776274480-277",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_REMOVED",
+      "resource": "staff",
+      "resourceId": "user-sitaram-01",
+      "details": {
+        "removedUserId": "user-sitaram-01",
+        "previousRole": "DOCTOR"
+      },
+      "timestamp": "2026-11-04T07:11:14.480Z"
+    },
+    {
+      "id": "tlog-1793776264900-978",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_REMOVED",
+      "resource": "staff",
+      "resourceId": "user-075297",
+      "details": {
+        "removedUserId": "user-075297",
+        "previousRole": "CLINIC_ADMIN"
+      },
+      "timestamp": "2026-11-04T07:11:04.900Z"
+    },
+    {
+      "id": "tlog-1793776259611-893",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_REMOVED",
+      "resource": "staff",
+      "resourceId": "user-nepal-reception",
+      "details": {
+        "removedUserId": "user-nepal-reception",
+        "previousRole": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T07:10:59.611Z"
+    },
+    {
+      "id": "tlog-1793776255136-921",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_REMOVED",
+      "resource": "staff",
+      "resourceId": "user-197696",
+      "details": {
+        "removedUserId": "user-197696",
+        "previousRole": "DOCTOR"
+      },
+      "timestamp": "2026-11-04T07:10:55.136Z"
+    },
+    {
+      "id": "tlog-1793775955656-219",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_PROVISIONED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": " Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T07:05:55.656Z"
+    },
+    {
       "id": "tlog-1793774243278-743",
       "userId": "user-nepal-admin",
       "userEmail": "admin@nepaldental.com.np",
@@ -8831,74 +8902,6 @@
         "phone": "+977 98419 87654"
       },
       "timestamp": "2026-10-21T18:32:31.474Z"
-    },
-    {
-      "id": "tlog-1792607551465-295",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "DENTAL_CHART_UPDATED",
-      "resource": "patient",
-      "resourceId": "PT-101",
-      "details": {
-        "tooth": "21",
-        "condition": "healthy"
-      },
-      "timestamp": "2026-10-21T18:32:31.465Z"
-    },
-    {
-      "id": "tlog-1792607551449-419",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
-      "resource": "prescription",
-      "resourceId": "RX-1447",
-      "details": {
-        "patientId": "PT-101",
-        "diagnosis": "Post-op Sensitivity #16",
-        "medicinesCount": 1
-      },
-      "timestamp": "2026-10-21T18:32:31.449Z"
-    },
-    {
-      "id": "tlog-1792607551442-855",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "CLINIC_PROFILE_UPDATED",
-      "resource": "clinicProfile",
-      "details": {
-        "tagline": "Premier Advanced Dental Hospital in Kathmandu"
-      },
-      "timestamp": "2026-10-21T18:32:31.442Z"
-    },
-    {
-      "id": "tlog-1792607542380-535",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_ACCOUNT_REMOVED",
-      "resource": "staff",
-      "resourceId": "user-542334",
-      "details": {
-        "removedUserId": "user-542334",
-        "previousRole": "RECEPTIONIST"
-      },
-      "timestamp": "2026-10-21T18:32:22.380Z"
-    },
-    {
-      "id": "tlog-1792607542365-921",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_STATUS_SUSPENDED",
-      "resource": "staff",
-      "resourceId": "user-542334",
-      "details": {
-        "status": "suspended"
-      },
-      "timestamp": "2026-10-21T18:32:22.365Z"
     }
   ],
   "pharmacyCatalog": [

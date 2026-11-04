@@ -1006,19 +1006,19 @@ function getDefaultModulesForRoles(roles = []) {
   roleList.forEach(r => {
     switch (r) {
       case 'DOCTOR':
-        ['chart', 'prescriptions', 'pharmacy', 'finance', 'patients', 'xray', 'orders', 'appointments', 'ai', 'settings'].forEach(m => set.add(m));
+        ['chart', 'prescriptions', 'patients', 'xray', 'orders', 'appointments', 'ai'].forEach(m => set.add(m));
         break;
       case 'RECEPTIONIST':
-        ['patients', 'appointments', 'billing', 'orders', 'pharmacy', 'finance', 'settings'].forEach(m => set.add(m));
+        ['patients', 'appointments', 'orders', 'billing'].forEach(m => set.add(m));
         break;
       case 'PHARMACIST':
-        ['pharmacy', 'patients', 'billing', 'orders', 'settings'].forEach(m => set.add(m));
+        ['pharmacy', 'patients', 'billing'].forEach(m => set.add(m));
         break;
       case 'NURSE':
-        ['patients', 'appointments', 'chart', 'xray', 'orders', 'settings'].forEach(m => set.add(m));
+        ['patients', 'appointments', 'xray'].forEach(m => set.add(m));
         break;
       case 'ACCOUNTANT':
-        ['finance', 'billing', 'patients', 'orders', 'pharmacy', 'settings'].forEach(m => set.add(m));
+        ['finance', 'billing', 'patients'].forEach(m => set.add(m));
         break;
       default:
         ['patients', 'appointments'].forEach(m => set.add(m));

@@ -118,6 +118,9 @@ export default function DentalChart({
   const chartData = patient?.dentalChart || {};
   const treatmentPlans = patient?.treatmentPlans || [];
 
+  // Clinical permission check
+  const canEditChart = currentUser?.role === 'DOCTOR' || currentUser?.role === 'CLINIC_ADMIN' || currentUser?.globalRole === 'PLATFORM_ADMIN';
+
   const handleSendWhatsAppChart = () => {
     if (!onOpenWhatsApp || !patient?.phone) return;
 
@@ -155,8 +158,9 @@ export default function DentalChart({
     setModalOpen(true);
   };
 
-  // Surface quick toggle directly from the chart
+  // Surface quick toggle directly from the chart (Dentist authority required)
   const handleSurfaceClick = (toothId, surface) => {
+    if (!canEditChart) return;
     const existing = chartData[toothId] || {
       toothId,
       condition: 'healthy',
@@ -528,11 +532,11 @@ export default function DentalChart({
                           </span>
                         </td>
                         <td className="py-2.5 px-3 text-right">
-                          {plan.status !== 'Completed' && (
+                          {canEditChart && plan.status !== 'Completed' && (
                             <button
                               type="button"
                               onClick={() => onUpdateTreatmentPlanStatus && onUpdateTreatmentPlanStatus(plan.id, 'Completed')}
-                              className="text-[11px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded transition"
+                              className="text-[11px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-1 rounded transition cursor-pointer"
                             >
                               Mark Completed
                             </button>
@@ -574,6 +578,7 @@ export default function DentalChart({
           onClose={() => setModalOpen(false)}
           onSaveTooth={onUpdateTooth}
           onAddTreatmentPlan={onAddTreatmentPlan}
+          readOnly={!canEditChart}
         />
       )}
     </div>

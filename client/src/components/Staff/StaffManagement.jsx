@@ -41,123 +41,12 @@ import {
   Edit
 } from 'lucide-react';
 
-export const SYSTEM_MODULES = [
-  {
-    id: 'chart',
-    label: 'Dental Chart (Odontogram)',
-    badgeText: 'Interactive',
-    description: 'Tooth surface charting, restorative procedures & perio diagnosis',
-    icon: Activity,
-    color: 'emerald',
-    defaultRoles: ['DOCTOR', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'prescriptions',
-    label: 'Prescription Pad (Rx)',
-    badgeText: 'Digital Rx',
-    description: 'Medication formulary, dosage calculators & prescription printing',
-    icon: Pill,
-    color: 'blue',
-    defaultRoles: ['DOCTOR', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'pharmacy',
-    label: 'Pharmacy & Stock POS',
-    badgeText: 'Inventory',
-    description: 'Drug inventory, POS dispensing, batch numbers & stock alerts',
-    icon: Boxes,
-    color: 'purple',
-    defaultRoles: ['PHARMACIST', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'finance',
-    label: 'Finance & Ledger',
-    badgeText: 'Accounts',
-    description: 'Financial ledger, revenue analysis, staff payroll & expenses',
-    icon: DollarSign,
-    color: 'emerald',
-    defaultRoles: ['ACCOUNTANT', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'patients',
-    label: 'Patients (EHR)',
-    badgeText: 'Records',
-    description: 'Electronic health records, patient registration & medical tags',
-    icon: Users,
-    color: 'indigo',
-    defaultRoles: ['DOCTOR', 'RECEPTIONIST', 'NURSE', 'ACCOUNTANT', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'xray',
-    label: 'Dental X-Ray & PACS',
-    badgeText: 'DICOM',
-    description: 'Digital radiograph viewer, contrast enhancement & imaging',
-    icon: Scan,
-    color: 'cyan',
-    defaultRoles: ['DOCTOR', 'NURSE', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'orders',
-    label: 'Dental Lab Orders',
-    badgeText: 'Prosthetics',
-    description: 'Crown, bridge & denture orders, shade tracking & delivery',
-    icon: Package,
-    color: 'amber',
-    defaultRoles: ['DOCTOR', 'RECEPTIONIST', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'appointments',
-    label: 'Appointments & Chairs',
-    badgeText: 'Scheduler',
-    description: 'Multi-chair calendar, doctor schedules & patient queue',
-    icon: Calendar,
-    color: 'rose',
-    defaultRoles: ['DOCTOR', 'RECEPTIONIST', 'NURSE', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'billing',
-    label: 'Billing & Invoices',
-    badgeText: 'Invoicing',
-    description: 'Invoice generation, itemized fee billing & payment collection',
-    icon: Receipt,
-    color: 'teal',
-    defaultRoles: ['RECEPTIONIST', 'ACCOUNTANT', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'ai',
-    label: 'AI Clinical Assistant',
-    badgeText: 'AI Diagnostics',
-    description: 'Smart clinical diagnostic insights & radiographic analysis',
-    icon: Sparkles,
-    color: 'violet',
-    defaultRoles: ['DOCTOR', 'CLINIC_ADMIN']
-  },
-  {
-    id: 'settings',
-    label: 'Settings',
-    badgeText: 'Admin Config',
-    description: 'Clinic configuration, staff management, WhatsApp CRM & plan',
-    icon: Settings,
-    color: 'slate',
-    defaultRoles: ['CLINIC_ADMIN']
-  }
-];
+import {
+  SYSTEM_MODULES,
+  getDefaultModulesForRoles
+} from '../../utils/rbac';
 
-export const getDefaultModulesForRoles = (roles = []) => {
-  const roleList = Array.isArray(roles) && roles.length > 0 ? roles : ['DOCTOR'];
-  if (roleList.includes('CLINIC_ADMIN')) {
-    return SYSTEM_MODULES.map(m => m.id);
-  }
-  const set = new Set();
-  roleList.forEach(r => {
-    SYSTEM_MODULES.forEach(mod => {
-      if (mod.defaultRoles.includes(r)) {
-        set.add(mod.id);
-      }
-    });
-  });
-  return Array.from(set);
-};
+export { SYSTEM_MODULES, getDefaultModulesForRoles };
 
 const ROLE_OPTIONS = [
   {

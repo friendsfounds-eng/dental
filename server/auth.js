@@ -210,6 +210,8 @@ export function authenticate(req, res, next) {
         name: user.name,
         globalRole: user.globalRole,
         role: membership ? membership.role : (user.globalRole || 'GUEST'),
+        roles: membership?.roles || (membership?.role ? [membership.role] : []),
+        allowedModules: membership?.allowedModules || null,
         tenantId
       };
       return next();
@@ -235,15 +237,20 @@ export function authenticate(req, res, next) {
   }
 
   const { payload, user } = result;
+  const tenantId = payload.tenantId || req.headers['x-tenant-id'] || 'tenant-nepal-dental';
+  const membership = multiTenantDb.platform.memberships.find(m => m.userId === user.id && m.tenantId === tenantId);
+  const currentAllowedModules = membership?.allowedModules || payload.allowedModules || null;
+
   req.user = {
     id: user.id,
     username: user.username || payload.username || (user.email ? user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '') : user.id),
     email: user.email,
     name: user.name,
     globalRole: user.globalRole,
-    role: payload.role,
-    roles: payload.roles || (payload.role ? [payload.role] : []),
-    tenantId: payload.tenantId
+    role: membership?.role || payload.role,
+    roles: membership?.roles || payload.roles || (payload.role ? [payload.role] : []),
+    allowedModules: currentAllowedModules,
+    tenantId
   };
 
   next();
@@ -372,6 +379,69 @@ export function resolveTenant(req, res, next) {
 }
 
 // ============================================================================
+// PERMISSION TO MODULE MAPPING (Enforces Super Admin explicit module grants)
+// ============================================================================
+export const PERMISSION_MODULE_MAP = {
+  'view:patients': 'patients',
+  'register:patient': 'patients',
+  'edit:patient_demographics': 'patients',
+  'delete:patient': 'patients',
+  'add:soap_note': 'patients',
+
+  'manage:appointments': 'appointments',
+  'patient:checkin': 'appointments',
+  'manage:queue': 'appointments',
+  'send:whatsapp_reminders': 'appointments',
+
+  'edit:dental_chart': 'chart',
+  'create:clinical_record': 'chart',
+  'edit:clinical_record': 'chart',
+  'create:treatment_plan': 'chart',
+
+  'create:prescription': 'prescriptions',
+  'sign:prescription': 'prescriptions',
+
+  'view:patient_orders': 'orders',
+  'create:patient_order': 'orders',
+  'update:patient_order': 'orders',
+  'update:patient_order_status': 'orders',
+  'delete:patient_order': 'orders',
+
+  'create:invoice': 'billing',
+  'collect:payment': 'billing',
+  'request:refund': 'billing',
+  'approve:refund': 'billing',
+  'manage:billing_policy': 'billing',
+
+  'view:pharmacy_catalog': 'pharmacy',
+  'view:pharmacy_stock': 'pharmacy',
+  'manage:pharmacy_catalog': 'pharmacy',
+  'manage:pharmacy_stock': 'pharmacy',
+  'process:pharmacy_sale': 'pharmacy',
+  'manage:pharmacy_purchases': 'pharmacy',
+  'manage:pharmacy_adjustments': 'pharmacy',
+  'view:pharmacy_reports': 'pharmacy',
+
+  'view:finance': 'finance',
+  'view:patient_transactions': 'finance',
+  'manage:finance_account': 'finance',
+  'manage:transactions': 'finance',
+  'manage:patient_transactions': 'finance',
+  'manage:staff_payments': 'finance',
+  'manage:payouts': 'finance',
+  'export:finance_reports': 'finance',
+
+  'manage:clinic_settings': 'settings',
+  'manage:staff': 'settings',
+  'manage:chairs': 'settings',
+  'manage:treatment_catalog': 'settings',
+  'view:audit_logs': 'settings',
+  'view:reports': 'settings',
+  'review:duplicates': 'settings',
+  'revoke:staff_session': 'settings'
+};
+
+// ============================================================================
 // PERMISSION ENFORCEMENT MIDDLEWARE
 // ============================================================================
 export function requirePermission(permission) {
@@ -381,6 +451,36 @@ export function requirePermission(permission) {
     }
 
     const userRoles = Array.isArray(req.user.roles) ? req.user.roles : (req.user.role ? [req.user.role] : []);
+    const isSuperAdmin = req.user.globalRole === 'PLATFORM_ADMIN' || req.user.role === 'CLINIC_ADMIN' || userRoles.includes('CLINIC_ADMIN');
+
+    // 1. Enforce explicit module grants configured by the Super Admin
+    if (!isSuperAdmin) {
+      const requiredModule = PERMISSION_MODULE_MAP[permission];
+      if (requiredModule && Array.isArray(req.user.allowedModules) && !req.user.allowedModules.includes(requiredModule)) {
+        multiTenantDb.logPlatformAudit({
+          tenantId: req.tenantId || null,
+          userId: req.user.id,
+          userEmail: req.user.email,
+          userRole: req.user.role,
+          action: 'MODULE_PERMISSION_DENIED',
+          resource: permission,
+          status: 'DENIED',
+          details: {
+            requiredPermission: permission,
+            requiredModule,
+            userRole: req.user.role,
+            userAllowedModules: req.user.allowedModules
+          }
+        });
+
+        return res.status(403).json({
+          error: 'MODULE_NOT_PERMITTED',
+          message: `Action prohibited: Your staff account has not been granted permission from the Clinic Administrator to access the [${requiredModule}] module.`
+        });
+      }
+    }
+
+    // 2. Enforce RBAC permission matrix
     const authorized = hasPermission(req.user.role, req.user.globalRole, permission, userRoles);
     if (!authorized) {
       multiTenantDb.logPlatformAudit({

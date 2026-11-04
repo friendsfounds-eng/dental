@@ -7,12 +7,15 @@ import {
   CreditCard,
   ChevronRight,
   ShieldCheck,
-  Sparkles
+  ShieldAlert,
+  Sparkles,
+  ArrowLeft
 } from 'lucide-react';
 import ClinicSettings from './ClinicSettings';
 import StaffManagement from './StaffManagement';
 import WhatsAppCRM from './WhatsAppAutomation';
 import AccountAndSubscription from './SubscriptionPlan';
+import { getDefaultLandingTab } from '../../utils/rbac';
 
 export default function SettingsHub({
   activeTab = 'settings',
@@ -41,8 +44,9 @@ export default function SettingsHub({
   const role = currentUser?.role || 'DOCTOR';
   const isPlatformAdmin = currentUser?.globalRole === 'PLATFORM_ADMIN';
   const isSuperAdmin = role === 'CLINIC_ADMIN' || isPlatformAdmin;
+  const hasSettingsModule = isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'));
 
-  // Define setting tabs available based on RBAC
+  // Define setting tabs available based on RBAC (Strictly Super Admin / Approved settings permissions)
   const allTabs = [
     {
       id: 'settings',
@@ -50,7 +54,7 @@ export default function SettingsHub({
       shortLabel: 'Clinic Setup',
       icon: Building,
       description: 'Identity, Doctors, Chairs, Catalog & Ticket Rules',
-      visible: isSuperAdmin || role === 'DOCTOR'
+      visible: isSuperAdmin || hasSettingsModule
     },
     {
       id: 'staff',
@@ -66,7 +70,7 @@ export default function SettingsHub({
       shortLabel: 'WhatsApp CRM',
       icon: MessageSquare,
       description: 'Automated Reminders, CRM Templates & Patient Outreach',
-      visible: isSuperAdmin || role === 'RECEPTIONIST' || role === 'PHARMACIST'
+      visible: isSuperAdmin || hasSettingsModule
     },
     {
       id: 'subscription',
@@ -74,12 +78,35 @@ export default function SettingsHub({
       shortLabel: 'Billing & Plan',
       icon: CreditCard,
       description: 'Clinic License Tier, Module Add-ons & Plan Validity',
-      visible: true // All roles can view clinic account/licensing tier
+      visible: isSuperAdmin // Strictly Super Admin only
     }
   ];
 
   const visibleTabs = allTabs.filter(t => t.visible);
-  const currentTabObj = allTabs.find(t => t.id === activeTab) || visibleTabs[0] || allTabs[0];
+
+  // If user does not have permission for settings hub at all
+  if (!hasSettingsModule && !isSuperAdmin) {
+    return (
+      <div className="bg-white rounded-2xl border border-rose-200 p-8 max-w-lg mx-auto my-12 text-center shadow-lg animate-fadeIn">
+        <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4 border border-rose-200">
+          <ShieldAlert className="w-8 h-8" />
+        </div>
+        <h2 className="text-lg font-black text-slate-900 mb-1">Access Restricted by Super Admin</h2>
+        <p className="text-xs text-slate-600 mb-5 leading-relaxed">
+          Your staff account <strong>({currentUser?.name})</strong> with role <strong>{currentUser?.role}</strong> has not been granted administrative privileges by the Clinic Administrator to configure clinic settings.
+        </p>
+        <button
+          onClick={() => onTabChange && onTabChange(getDefaultLandingTab(currentUser))}
+          className="inline-flex items-center space-x-2 py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md shadow-blue-500/20 cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Return to Permitted Home</span>
+        </button>
+      </div>
+    );
+  }
+
+  const currentTabObj = visibleTabs.find(t => t.id === activeTab) || visibleTabs[0] || allTabs[0];
 
   return (
     <div className="space-y-4">
