@@ -1291,6 +1291,15 @@ app.put('/api/admin/staff/:id/role', authenticate, resolveTenant, requirePermiss
 // Update Staff Member Account Details (Name, Email, Username, Phone, Role, Password)
 app.put('/api/admin/staff/:id', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
   const staffUserId = req.params.id;
+
+  // Security Safeguard: Clinic Admin cannot edit themselves; must be edited from Software Owner side
+  if (req.user.id === staffUserId && req.user.globalRole !== 'PLATFORM_ADMIN') {
+    return res.status(403).json({
+      error: 'CANNOT_EDIT_SELF',
+      message: 'Clinic administrator accounts cannot edit their own credentials. This account can only be edited from the Software Owner side.'
+    });
+  }
+
   const { name, email, username, phone, role, roles, allowedModules, password } = req.body;
 
   const user = multiTenantDb.platform.users.find(u => u.id === staffUserId);

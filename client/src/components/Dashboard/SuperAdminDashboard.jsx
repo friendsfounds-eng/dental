@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 
 export default function SuperAdminDashboard({
+  currentUser,
   clinicProfile = {},
   authToken,
   activeTenant,
@@ -355,90 +356,109 @@ export default function SuperAdminDashboard({
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
-                {staff.map(s => (
-                  <tr key={s.id} className="hover:bg-slate-50/60">
-                    <td className="p-3">
-                      <div className="font-bold text-slate-900">{s.name}</div>
-                      <div className="text-[11px] font-mono text-slate-500">{s.email}</div>
-                    </td>
-                    <td className="p-3">
-                      <div className="flex flex-wrap items-center gap-1">
-                        {((Array.isArray(s.roles) && s.roles.length > 0) ? s.roles : [s.role]).map((r) => (
-                          <span
-                            key={r}
-                            className={`px-2 py-0.5 rounded-lg text-[10px] font-bold uppercase border ${
-                              r === 'DOCTOR'
-                                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-                                : r === 'CLINIC_ADMIN'
-                                ? 'bg-blue-50 text-blue-800 border-blue-200'
-                                : r === 'PHARMACIST'
-                                ? 'bg-purple-50 text-purple-800 border-purple-200'
-                                : r === 'NURSE'
-                                ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
-                                : 'bg-amber-50 text-amber-800 border-amber-200'
-                            }`}
-                          >
-                            {r}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="p-3 font-mono text-slate-600">{s.phone || 'N/A'}</td>
-                    <td className="p-3">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        s.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
-                      }`}>
-                        {s.status}
-                      </span>
-                    </td>
-                    <td className="p-3 text-right">
-                      <div className="flex items-center justify-end space-x-1.5 flex-wrap gap-y-1">
-                        {/* Edit Button */}
-                        <button
-                          onClick={() => handleOpenEditStaff(s)}
-                          className="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition flex items-center space-x-1 cursor-pointer"
-                          title="Edit name, role, email, phone, or password"
-                        >
-                          <Edit3 className="w-3 h-3 text-blue-600" />
-                          <span>Edit</span>
-                        </button>
-
-                        {/* Single Suspend / Reactivate Button */}
-                        <button
-                          onClick={() => handleToggleStaffStatus(s.id, s.status, s.name)}
-                          className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition flex items-center space-x-1 cursor-pointer ${
-                            s.status === 'active'
-                              ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
-                              : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
-                          }`}
-                          title={s.status === 'active' ? 'Suspend user & revoke all active sessions' : 'Reactivate user account'}
-                        >
-                          {s.status === 'active' ? (
-                            <>
-                              <Ban className="w-3 h-3 text-amber-600" />
-                              <span>Suspend</span>
-                            </>
-                          ) : (
-                            <>
-                              <CheckCircle className="w-3 h-3 text-emerald-600" />
-                              <span>Reactivate</span>
-                            </>
+                {staff.map(s => {
+                  const isSelf = currentUser && (currentUser.id === s.id || currentUser.email === s.email || currentUser.username === s.username);
+                  return (
+                    <tr key={s.id} className="hover:bg-slate-50/60">
+                      <td className="p-3">
+                        <div className="font-bold text-slate-900 flex items-center space-x-1.5">
+                          <span>{s.name}</span>
+                          {isSelf && (
+                            <span className="text-[9px] bg-blue-100 text-blue-800 font-bold px-1.5 py-0.2 rounded-full">
+                              You
+                            </span>
                           )}
-                        </button>
+                        </div>
+                        <div className="text-[11px] font-mono text-slate-500">{s.email}</div>
+                      </td>
+                      <td className="p-3">
+                        <div className="flex flex-wrap items-center gap-1">
+                          {((Array.isArray(s.roles) && s.roles.length > 0) ? s.roles : [s.role]).map((r) => (
+                            <span
+                              key={r}
+                              className={`px-2 py-0.5 rounded-lg text-[10px] font-bold uppercase border ${
+                                r === 'DOCTOR'
+                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                  : r === 'CLINIC_ADMIN'
+                                  ? 'bg-blue-50 text-blue-800 border-blue-200'
+                                  : r === 'PHARMACIST'
+                                  ? 'bg-purple-50 text-purple-800 border-purple-200'
+                                  : r === 'NURSE'
+                                  ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
+                                  : 'bg-amber-50 text-amber-800 border-amber-200'
+                              }`}
+                            >
+                              {r}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="p-3 font-mono text-slate-600">{s.phone || 'N/A'}</td>
+                      <td className="p-3">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                          s.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {s.status}
+                        </span>
+                      </td>
+                      <td className="p-3 text-right">
+                        {isSelf ? (
+                          <span
+                            className="text-[10px] text-slate-400 font-semibold italic bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg select-none inline-block"
+                            title="Clinic Administrator account can only be edited by Software Owner"
+                          >
+                            Managed by Software Owner
+                          </span>
+                        ) : (
+                          <div className="flex items-center justify-end space-x-1.5 flex-wrap gap-y-1">
+                            {/* Edit Button */}
+                            <button
+                              onClick={() => handleOpenEditStaff(s)}
+                              className="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition flex items-center space-x-1 cursor-pointer"
+                              title="Edit name, role, email, phone, or password"
+                            >
+                              <Edit3 className="w-3 h-3 text-blue-600" />
+                              <span>Edit</span>
+                            </button>
 
-                        {/* Delete Button */}
-                        <button
-                          onClick={() => handleDeleteStaff(s.id, s.name, s.email)}
-                          className="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition flex items-center space-x-1 cursor-pointer"
-                          title="Permanently delete user account"
-                        >
-                          <Trash2 className="w-3 h-3 text-rose-600" />
-                          <span>Delete</span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                            {/* Single Suspend / Reactivate Button */}
+                            <button
+                              onClick={() => handleToggleStaffStatus(s.id, s.status, s.name)}
+                              className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition flex items-center space-x-1 cursor-pointer ${
+                                s.status === 'active'
+                                  ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
+                                  : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
+                              }`}
+                              title={s.status === 'active' ? 'Suspend user & revoke all active sessions' : 'Reactivate user account'}
+                            >
+                              {s.status === 'active' ? (
+                                <>
+                                  <Ban className="w-3 h-3 text-amber-600" />
+                                  <span>Suspend</span>
+                                </>
+                              ) : (
+                                <>
+                                  <CheckCircle className="w-3 h-3 text-emerald-600" />
+                                  <span>Reactivate</span>
+                                </>
+                              )}
+                            </button>
+
+                            {/* Delete Button */}
+                            <button
+                              onClick={() => handleDeleteStaff(s.id, s.name, s.email)}
+                              className="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition flex items-center space-x-1 cursor-pointer"
+                              title="Permanently delete user account"
+                            >
+                              <Trash2 className="w-3 h-3 text-rose-600" />
+                              <span>Delete</span>
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

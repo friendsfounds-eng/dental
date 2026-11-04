@@ -925,6 +925,7 @@ export default function App() {
           {activeTab === 'dashboard' && (
             currentUser?.role === 'CLINIC_ADMIN' ? (
               <SuperAdminDashboard
+                currentUser={currentUser}
                 clinicProfile={clinicProfile}
                 authToken={authToken}
                 activeTenant={activeTenant}

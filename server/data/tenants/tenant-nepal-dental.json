@@ -79,6 +79,14 @@
       "phone": "+977 98000 00000",
       "email": "tempdoc_6940@platform.local",
       "color": "#2563eb"
+    },
+    {
+      "id": "doc-7698",
+      "name": "Dr Suman Sharma",
+      "email": "suamandr@platform.local",
+      "phone": "",
+      "specialization": "General Dental Surgeon",
+      "status": "Active"
     }
   ],
   "chairs": [
@@ -1295,6 +1303,49 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "tlog-1793774243278-743",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_STATUS_ACTIVE",
+      "resource": "staff",
+      "resourceId": "user-075297",
+      "details": {
+        "status": "active",
+        "sessionsRevoked": false
+      },
+      "timestamp": "2026-11-04T06:37:23.278Z"
+    },
+    {
+      "id": "tlog-1793774240461-286",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_STATUS_SUSPENDED",
+      "resource": "staff",
+      "resourceId": "user-075297",
+      "details": {
+        "status": "suspended",
+        "sessionsRevoked": true
+      },
+      "timestamp": "2026-11-04T06:37:20.461Z"
+    },
+    {
+      "id": "tlog-1793774197720-588",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_PROVISIONED",
+      "resource": "staff",
+      "resourceId": "user-197696",
+      "details": {
+        "name": "Dr Suman Sharma ",
+        "email": "suamandr@platform.local",
+        "role": "DOCTOR"
+      },
+      "timestamp": "2026-11-04T06:36:37.721Z"
+    },
     {
       "id": "tlog-1793691247242-354",
       "userId": "user-devadmin",
@@ -8848,54 +8899,6 @@
         "status": "suspended"
       },
       "timestamp": "2026-10-21T18:32:22.365Z"
-    },
-    {
-      "id": "tlog-1792607542351-650",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_ROLE_UPDATED",
-      "resource": "staff",
-      "resourceId": "user-542334",
-      "details": {
-        "oldRole": "DOCTOR",
-        "newRole": "RECEPTIONIST"
-      },
-      "timestamp": "2026-10-21T18:32:22.351Z"
-    },
-    {
-      "id": "tlog-1792607542337-743",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_ACCOUNT_PROVISIONED",
-      "resource": "staff",
-      "resourceId": "user-542334",
-      "details": {
-        "name": "Dr. Test Dental Surgeon",
-        "email": "dr.test@nepaldental.com.np",
-        "role": "DOCTOR"
-      },
-      "timestamp": "2026-10-21T18:32:22.337Z"
-    },
-    {
-      "id": "tlog-1792607112884-832",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_STOCK_ADJUSTMENT",
-      "resource": "pharmacy_adjustments",
-      "resourceId": "ADJ-1792607112878",
-      "details": {
-        "medicineName": "Cefixime 200mg",
-        "batchNumber": "CFX-26A",
-        "type": "DAMAGED",
-        "changeQty": -2,
-        "previousQty": 90,
-        "newQty": 88,
-        "reason": "Foil package punctured during shelf inspection"
-      },
-      "timestamp": "2026-10-21T18:25:12.884Z"
     }
   ],
   "pharmacyCatalog": [

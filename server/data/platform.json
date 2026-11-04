@@ -488,7 +488,7 @@
       "phone": "+977 98511 77889",
       "globalRole": null,
       "status": "active",
-      "tokenVersion": 1,
+      "tokenVersion": 3,
       "createdAt": "2026-10-23T10:00:00.000Z",
       "username": "dranita"
     },
@@ -683,6 +683,18 @@
       "status": "active",
       "tokenVersion": 1,
       "createdAt": "2026-11-02T17:31:01.923Z"
+    },
+    {
+      "id": "user-197696",
+      "username": "suamandr",
+      "email": "suamandr@platform.local",
+      "passwordHash": "35254863a7f3033e887f7dc871eb69560fe3ea72b22255a5298ea269e127a33a6b1d44a407cc461e89c7a4eae05ca8dc507017fb1fd63c5ebd900d0c214024c7",
+      "name": "Dr Suman Sharma",
+      "phone": "",
+      "globalRole": null,
+      "status": "active",
+      "tokenVersion": 1,
+      "createdAt": "2026-11-04T06:36:37.698Z"
     }
   ],
   "memberships": [
@@ -901,6 +913,25 @@
         "billing",
         "ai",
         "settings"
+      ],
+      "isActive": true
+    },
+    {
+      "id": "mem-1793774197698",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-197696",
+      "role": "DOCTOR",
+      "roles": [
+        "DOCTOR"
+      ],
+      "allowedModules": [
+        "chart",
+        "prescriptions",
+        "patients",
+        "xray",
+        "orders",
+        "appointments",
+        "ai"
       ],
       "isActive": true
     }

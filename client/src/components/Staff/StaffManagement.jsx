@@ -767,23 +767,25 @@ export default function StaffManagement({
                               </span>
                             );
                           })}
-                          <button
-                            onClick={() => {
-                              const existingRoles = Array.isArray(s.roles) && s.roles.length > 0 ? [...s.roles] : [s.role];
-                              const existingModules = Array.isArray(s.allowedModules) && s.allowedModules.length > 0
-                                ? [...s.allowedModules]
-                                : getDefaultModulesForRoles(existingRoles);
-                              setEditingRoleStaff({
-                                ...s,
-                                roles: existingRoles,
-                                allowedModules: existingModules
-                              });
-                            }}
-                            className="text-[10px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg px-2 py-0.5 font-bold transition flex items-center gap-0.5 ml-1"
-                            title="Edit roles & module authorities"
-                          >
-                            <span>Edit</span>
-                          </button>
+                          {!isSelf && (
+                            <button
+                              onClick={() => {
+                                const existingRoles = Array.isArray(s.roles) && s.roles.length > 0 ? [...s.roles] : [s.role];
+                                const existingModules = Array.isArray(s.allowedModules) && s.allowedModules.length > 0
+                                  ? [...s.allowedModules]
+                                  : getDefaultModulesForRoles(existingRoles);
+                                setEditingRoleStaff({
+                                  ...s,
+                                  roles: existingRoles,
+                                  allowedModules: existingModules
+                                });
+                              }}
+                              className="text-[10px] text-blue-700 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg px-2 py-0.5 font-bold transition flex items-center gap-0.5 ml-1 cursor-pointer"
+                              title="Edit roles & module authorities"
+                            >
+                              <span>Edit</span>
+                            </button>
+                          )}
                         </div>
                       </td>
 
@@ -844,18 +846,27 @@ export default function StaffManagement({
 
                       {/* Actions */}
                       <td className="p-3.5 text-right space-x-2">
-                        {/* Edit Button */}
-                        <button
-                          onClick={() => setEditingRoleStaff({
-                            ...s,
-                            roles: Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : [s.role],
-                            allowedModules: Array.isArray(s.allowedModules) ? s.allowedModules : []
-                          })}
-                          className="text-xs font-bold px-2.5 py-1 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition cursor-pointer"
-                          title="Edit user details, credentials & roles"
-                        >
-                          Edit
-                        </button>
+                        {/* Edit Button (Clinic admin cannot edit themselves; managed by Software Owner) */}
+                        {!isSelf ? (
+                          <button
+                            onClick={() => setEditingRoleStaff({
+                              ...s,
+                              roles: Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : [s.role],
+                              allowedModules: Array.isArray(s.allowedModules) ? s.allowedModules : []
+                            })}
+                            className="text-xs font-bold px-2.5 py-1 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition cursor-pointer"
+                            title="Edit user details, credentials & roles"
+                          >
+                            Edit
+                          </button>
+                        ) : (
+                          <span
+                            className="text-[10px] text-slate-400 font-semibold italic bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-lg select-none inline-block"
+                            title="Clinic Administrator account can only be edited by Software Owner"
+                          >
+                            Managed by Software Owner
+                          </span>
+                        )}
 
                         {/* Suspend / Reactivate (Automatic session revocation) */}
                         {!isSelf && (
