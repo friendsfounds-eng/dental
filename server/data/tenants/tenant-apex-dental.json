@@ -205,6 +205,18 @@
   "refundRequests": [],
   "auditLogs": [
     {
+      "id": "tlog-1793700795396-540",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "TENANT_SWITCHED",
+      "resource": "auth",
+      "details": {
+        "switchedTo": "Apex Dentocare & Implant Center"
+      },
+      "timestamp": "2026-11-03T10:13:15.397Z"
+    },
+    {
       "id": "tlog-1793691247202-918",
       "userId": "user-devadmin",
       "userEmail": "devadmin@anacraft.com",
