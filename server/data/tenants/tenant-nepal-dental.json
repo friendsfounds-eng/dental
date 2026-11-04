@@ -236,6 +236,108 @@
   ],
   "patients": [
     {
+      "dentalChart": {},
+      "treatmentPlans": [],
+      "notes": [],
+      "prescriptions": [],
+      "invoices": [
+        {
+          "id": "INV-1393",
+          "invoiceNumber": "INV-2026-1361",
+          "date": "2026-11-04",
+          "time": "02:57 PM",
+          "createdAt": "2026-11-04T11:57:51.393Z",
+          "isFinalized": true,
+          "items": [
+            {
+              "description": "Registration & OPD Consultation Fee",
+              "tooth": "General Consultation",
+              "qty": 1,
+              "unitPrice": 200,
+              "total": 200,
+              "isTicket": true,
+              "ticketStatus": "FIRST_VISIT"
+            }
+          ],
+          "subtotal": 200,
+          "discount": 0,
+          "taxPercent": 0,
+          "taxAmount": 0,
+          "total": 200,
+          "paid": 200,
+          "balance": 0,
+          "status": "Paid",
+          "paymentMethod": "Fonepay QR",
+          "doctorName": "Dr. Mukesh Kushwaha, BDS,  (Dental Surgon)",
+          "doctorId": ""
+        }
+      ],
+      "createdAt": "2026-11-04T11:57:51.393Z",
+      "name": "Ramesh Shah",
+      "age": 28,
+      "gender": "Male",
+      "phone": "9841223344",
+      "address": "Kathmandu-10, Baneshwor",
+      "bloodGroup": "B+",
+      "allergies": [],
+      "medicalHistory": "None",
+      "id": "RS-1005",
+      "lastTicketDate": "2026-11-04",
+      "ticketValidUntil": "2026-11-11",
+      "ticketStatus": "ACTIVE"
+    },
+    {
+      "dentalChart": {},
+      "treatmentPlans": [],
+      "notes": [],
+      "prescriptions": [],
+      "invoices": [
+        {
+          "id": "INV-2545",
+          "invoiceNumber": "INV-2026-3633",
+          "date": "2026-11-04",
+          "time": "02:50 PM",
+          "createdAt": "2026-11-04T11:50:22.545Z",
+          "isFinalized": true,
+          "items": [
+            {
+              "description": "Registration & OPD Consultation Fee",
+              "tooth": "General Consultation",
+              "qty": 1,
+              "unitPrice": 200,
+              "total": 200,
+              "isTicket": true,
+              "ticketStatus": "FIRST_VISIT"
+            }
+          ],
+          "subtotal": 200,
+          "discount": 0,
+          "taxPercent": 0,
+          "taxAmount": 0,
+          "total": 200,
+          "paid": 200,
+          "balance": 0,
+          "status": "Paid",
+          "paymentMethod": "Fonepay QR",
+          "doctorName": "Dr. Mukesh Kushwaha, BDS,  (Dental Surgon)",
+          "doctorId": ""
+        }
+      ],
+      "createdAt": "2026-11-04T11:50:22.545Z",
+      "name": "Anil Gautam",
+      "age": 34,
+      "gender": "Male",
+      "phone": "9841999888",
+      "address": "Janakpurdham-4, Dhanusha",
+      "bloodGroup": "O+",
+      "allergies": [],
+      "medicalHistory": "None",
+      "id": "AG-1004",
+      "lastTicketDate": "2026-11-04",
+      "ticketValidUntil": "2026-11-11",
+      "ticketStatus": "ACTIVE"
+    },
+    {
       "id": "PT-2001",
       "name": "Bikram Thapa",
       "phone": "9841556677",
@@ -286,7 +388,7 @@
         {
           "id": "PLAN-2001",
           "title": "Root Canal Therapy & Monolithic Zirconia Crown #16",
-          "status": "In Progress",
+          "status": "Completed",
           "estimatedCost": 14000,
           "paidAmount": 14000,
           "notes": "Full endodontic therapy with post, core build-up and monolithic zirconia crown.",
@@ -946,6 +1048,46 @@
   ],
   "appointments": [
     {
+      "id": "APT-8618",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T11:57:58.618Z",
+      "patientId": "RS-1005",
+      "doctorName": "Dr. Sitaram Kushwaha",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-11-04",
+      "time": "04:15 PM",
+      "durationMinutes": 45,
+      "treatmentType": "Consultation & Examination",
+      "chiefComplaint": "Consultation & Examination",
+      "painScale": 0,
+      "notes": "",
+      "patientName": "Ramesh Shah",
+      "patientPhone": "9841223344",
+      "doctorAcceptanceStatus": "Accepted",
+      "acceptedByDoctor": true,
+      "acceptedAt": "2026-11-04T11:58:07.068Z"
+    },
+    {
+      "id": "APT-0785",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T11:50:30.785Z",
+      "patientId": "AG-1004",
+      "doctorName": "Dr. Sitaram Kushwaha",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-11-04",
+      "time": "03:00 PM",
+      "durationMinutes": 45,
+      "treatmentType": "Consultation & Examination",
+      "chiefComplaint": "Consultation & Examination",
+      "painScale": 0,
+      "notes": "",
+      "patientName": "Anil Gautam",
+      "patientPhone": "9841999888",
+      "doctorAcceptanceStatus": "Accepted",
+      "acceptedByDoctor": true,
+      "acceptedAt": "2026-11-04T11:50:53.792Z"
+    },
+    {
       "id": "APT-1370",
       "status": "Confirmed",
       "createdAt": "2026-11-04T11:25:11.370Z",
@@ -1080,6 +1222,34 @@
   },
   "refundRequests": [],
   "auditLogs": [
+    {
+      "id": "tlog-1793793471397-140",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PATIENT_REGISTERED",
+      "resource": "patient",
+      "resourceId": "RS-1005",
+      "details": {
+        "name": "Ramesh Shah",
+        "phone": "9841223344"
+      },
+      "timestamp": "2026-11-04T11:57:51.397Z"
+    },
+    {
+      "id": "tlog-1793793022619-138",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "PATIENT_REGISTERED",
+      "resource": "patient",
+      "resourceId": "AG-1004",
+      "details": {
+        "name": "Anil Gautam",
+        "phone": "9841999888"
+      },
+      "timestamp": "2026-11-04T11:50:22.619Z"
+    },
     {
       "id": "tlog-1793791145149-569",
       "userId": "user-nepal-admin",
@@ -8659,33 +8829,6 @@
         "condition": "healthy"
       },
       "timestamp": "2026-10-22T05:46:14.270Z"
-    },
-    {
-      "id": "tlog-1792647974231-650",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
-      "resource": "prescription",
-      "resourceId": "RX-4224",
-      "details": {
-        "patientId": "PT-101",
-        "diagnosis": "Post-op Sensitivity #16",
-        "medicinesCount": 1
-      },
-      "timestamp": "2026-10-22T05:46:14.231Z"
-    },
-    {
-      "id": "tlog-1792647974209-619",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "CLINIC_PROFILE_UPDATED",
-      "resource": "clinicProfile",
-      "details": {
-        "tagline": "Premier Advanced Dental Hospital in Kathmandu"
-      },
-      "timestamp": "2026-10-22T05:46:14.209Z"
     }
   ],
   "pharmacyCatalog": [

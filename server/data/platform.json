@@ -1263,6 +1263,62 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1793793471374-279",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-256601",
+      "userEmail": "sitaram.test@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T11:57:51.374Z"
+    },
+    {
+      "id": "aud-1793793471365-770",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T11:57:51.365Z"
+    },
+    {
+      "id": "aud-1793793022500-401",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-256601",
+      "userEmail": "sitaram.test@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T11:50:22.500Z"
+    },
+    {
+      "id": "aud-1793793022478-875",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::1",
+      "timestamp": "2026-11-04T11:50:22.478Z"
+    },
+    {
       "id": "aud-1793791991008-812",
       "tenantId": "tenant-nepal-dental",
       "userId": "user-955637",
@@ -17429,74 +17485,6 @@
       },
       "ipAddress": "127.0.0.1",
       "timestamp": "2026-10-22T19:31:07.228Z"
-    },
-    {
-      "id": "aud-1792697467165-948",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "view:finance",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "view:finance",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T19:31:07.165Z"
-    },
-    {
-      "id": "aud-1792697467120-221",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "view:finance",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "view:finance",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T19:31:07.120Z"
-    },
-    {
-      "id": "aud-1792697467102-273",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "view:finance",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "view:finance",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T19:31:07.102Z"
-    },
-    {
-      "id": "aud-1792697464512-623",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "manage:pharmacy_purchases",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "manage:pharmacy_purchases",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-22T19:31:04.512Z"
     }
   ],
   "paymentConfig": {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import DentalChart from './components/DentalChart/DentalChart';
@@ -38,7 +38,8 @@ import {
   isTabAllowed,
   getDefaultLandingTab,
   getUserAllowedModules,
-  SYSTEM_MODULES
+  SYSTEM_MODULES,
+  isCurrentUserAssignedDoctor
 } from './utils/rbac';
 import { openWhatsAppAutoLink } from './utils/whatsapp';
 import AnayaCraftLogo from './components/Common/AnayaCraftLogo';
@@ -68,6 +69,7 @@ export default function App() {
   }, []);
 
   const [allocatedDoctorModal, setAllocatedDoctorModal] = useState(null);
+  const dismissedAlertIds = useRef(new Set());
 
   // Authentication & Tenant State
   const [currentUser, setCurrentUser] = useState(() => {
@@ -161,7 +163,7 @@ export default function App() {
   });
 
   // Fetch initial data for the active clinic tenant
-  const fetchData = async (overrideToken, overrideTenantId) => {
+  const fetchData = async (overrideToken, overrideTenantId, overrideUser) => {
     try {
       setLoading(true);
       const token = overrideToken !== undefined ? overrideToken : authToken;
@@ -195,7 +197,8 @@ export default function App() {
       ]);
 
       setClinicProfile(resClinic || {});
-      setDoctors(Array.isArray(resDocs) ? resDocs : []);
+      const validDocs = Array.isArray(resDocs) ? resDocs : [];
+      setDoctors(validDocs);
       setChairs(Array.isArray(resChairs) ? resChairs : []);
       setTreatmentCatalog(Array.isArray(resTrt) ? resTrt : []);
       setMedicineFormulary(Array.isArray(resMeds) ? resMeds : []);
@@ -210,7 +213,27 @@ export default function App() {
         setSelectedPatientId(null);
       }
 
-      setAppointments(Array.isArray(resApts) ? resApts : []);
+      const validApts = Array.isArray(resApts) ? resApts : [];
+      setAppointments(validApts);
+
+      // Check if logged-in user is an attending doctor with pending confirmed appointments
+      const activeUser = overrideUser || currentUser;
+      if (activeUser && !allocatedDoctorModal) {
+        const userRoles = Array.isArray(activeUser.roles) ? activeUser.roles : [activeUser.role];
+        const isDoctorOrAdmin = userRoles.includes('DOCTOR') || userRoles.includes('CLINIC_ADMIN');
+        if (isDoctorOrAdmin) {
+          const pending = validApts.find(apt =>
+            apt.status === 'Confirmed' &&
+            apt.doctorAcceptanceStatus !== 'Accepted' &&
+            !apt.acceptedByDoctor &&
+            !dismissedAlertIds.current.has(apt.id) &&
+            isCurrentUserAssignedDoctor(apt, activeUser, validDocs)
+          );
+          if (pending) {
+            setAllocatedDoctorModal(pending);
+          }
+        }
+      }
     } catch (err) {
       console.error('Error loading data from API:', err);
     } finally {
@@ -243,7 +266,7 @@ export default function App() {
             const landingTab = getDefaultLandingTab(data.user);
             setActiveTab(prev => (prev === 'doctor-dashboard' || !isTabAllowed(prev, data.user) ? landingTab : prev));
 
-            fetchData(savedToken, data.activeTenant?.id);
+            fetchData(savedToken, data.activeTenant?.id, data.user);
             fetchMyTenants(savedToken);
             setLoading(false);
             return;
@@ -265,6 +288,46 @@ export default function App() {
     initAuth();
   }, []);
 
+  // Real-time synchronization for appointments and live attending doctor alert dispatch
+  useEffect(() => {
+    if (!authToken || !currentUser) return;
+
+    const syncInterval = setInterval(async () => {
+      try {
+        const res = await fetch('/api/appointments', {
+          headers: getHeaders(authToken, activeTenant?.id)
+        });
+        if (!res.ok) return;
+        const freshApts = await res.json();
+        if (Array.isArray(freshApts)) {
+          setAppointments(freshApts);
+
+          // Only trigger popup on the screen of the assigned attending doctor
+          const userRoles = Array.isArray(currentUser.roles) ? currentUser.roles : [currentUser.role];
+          const isDoctorOrAdmin = userRoles.includes('DOCTOR') || userRoles.includes('CLINIC_ADMIN');
+
+          if (isDoctorOrAdmin && !allocatedDoctorModal) {
+            const pendingApt = freshApts.find(apt =>
+              apt.status === 'Confirmed' &&
+              apt.doctorAcceptanceStatus !== 'Accepted' &&
+              !apt.acceptedByDoctor &&
+              !dismissedAlertIds.current.has(apt.id) &&
+              isCurrentUserAssignedDoctor(apt, currentUser, doctors)
+            );
+
+            if (pendingApt) {
+              setAllocatedDoctorModal(pendingApt);
+            }
+          }
+        }
+      } catch (err) {
+        // Background sync
+      }
+    }, 4000);
+
+    return () => clearInterval(syncInterval);
+  }, [authToken, currentUser?.id, currentUser?.name, currentUser?.role, activeTenant?.id, allocatedDoctorModal, doctors]);
+
   const handleLoginSuccess = (loginData) => {
     setAuthToken(loginData.token);
     setCurrentUser(loginData.user);
@@ -275,7 +338,7 @@ export default function App() {
     const landingTab = getDefaultLandingTab(loginData.user);
     setActiveTab(landingTab);
 
-    fetchData(loginData.token, loginData.activeTenant?.id);
+    fetchData(loginData.token, loginData.activeTenant?.id, loginData.user);
     fetchMyTenants(loginData.token);
   };
 
@@ -446,8 +509,8 @@ export default function App() {
       const created = await res.json();
       setAppointments(prev => [created, ...prev]);
 
-      // Pop-up message for allocated doctor when appointment is confirmed
-      if (created.status === 'Confirmed') {
+      // Pop-up notification only if current user is the doctor assigned to the appointment
+      if (created.status === 'Confirmed' && isCurrentUserAssignedDoctor(created, currentUser, doctors)) {
         setAllocatedDoctorModal(created);
       }
       return created;
@@ -473,8 +536,8 @@ export default function App() {
       const updated = await res.json();
       setAppointments(prev => prev.map(a => a.id === id ? updated : a));
 
-      // Pop-up message for allocated doctor when status is updated to Confirmed
-      if (status === 'Confirmed') {
+      // Pop-up notification only if current user is the doctor assigned to the appointment
+      if (status === 'Confirmed' && isCurrentUserAssignedDoctor(updated, currentUser, doctors)) {
         setAllocatedDoctorModal(updated);
       }
       return updated;
@@ -1192,7 +1255,7 @@ export default function App() {
               clinicProfile={clinicProfile}
               onSelectPatient={(p) => setSelectedPatientId(p?.id || p)}
               onNavigate={setActiveTab}
-              onViewDoctorAllocation={(apt) => setAllocatedDoctorModal(apt)}
+              onViewDoctorAllocation={(apt) => setAllocatedDoctorModal({ ...apt, isManualPreview: true })}
             />
           )}
 
@@ -1395,7 +1458,12 @@ export default function App() {
       {/* Pop-up Notification for Allocated Attending Doctor (30s timer, Skip & Accept) */}
       <DoctorAllocationModal
         isOpen={!!allocatedDoctorModal}
-        onClose={() => setAllocatedDoctorModal(null)}
+        onClose={() => {
+          if (allocatedDoctorModal?.id) {
+            dismissedAlertIds.current.add(allocatedDoctorModal.id);
+          }
+          setAllocatedDoctorModal(null);
+        }}
         onAccept={handleAcceptAppointment}
         appointment={allocatedDoctorModal}
         doctors={doctors}

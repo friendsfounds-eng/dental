@@ -323,3 +323,65 @@ export function hasActionPermission(action, user) {
       return false;
   }
 }
+
+/**
+ * Checks whether the currently logged-in user is the assigned attending doctor for an appointment.
+ * Only the assigned attending doctor should receive real-time doctor allocation popup alerts.
+ */
+export function isCurrentUserAssignedDoctor(appointment, currentUser, doctors = []) {
+  if (!currentUser || !appointment) return false;
+
+  const nonDoctorRoles = ['RECEPTIONIST', 'PHARMACIST', 'ACCOUNTANT', 'NURSE'];
+  const userRole = currentUser.role || '';
+  const userRoles = Array.isArray(currentUser.roles) ? currentUser.roles : [userRole];
+
+  // If user does not have DOCTOR or CLINIC_ADMIN role, they are never the attending doctor
+  const isDoctorOrAdmin = userRoles.includes('DOCTOR') || userRoles.includes('CLINIC_ADMIN');
+  if (!isDoctorOrAdmin && nonDoctorRoles.includes(userRole)) {
+    return false;
+  }
+
+  const appointmentDoctorName = appointment.doctorName || '';
+  if (!appointmentDoctorName) return false;
+
+  const normalizeName = (name) => {
+    if (!name) return '';
+    return name
+      .toLowerCase()
+      .replace(/^dr\.?\s+/i, '')
+      .replace(/\s*\([^)]*\)/g, '')
+      .replace(/[^a-z0-9]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
+  const docNorm = normalizeName(appointmentDoctorName);
+  const userNorm = normalizeName(currentUser.name);
+
+  // Match normalized name
+  if (docNorm && userNorm && (docNorm === userNorm || docNorm.includes(userNorm) || userNorm.includes(docNorm))) {
+    return true;
+  }
+
+  // Match email or phone via clinic doctors directory
+  const docObj = (doctors || []).find(d => {
+    const dNorm = normalizeName(d.name);
+    return (dNorm && dNorm === docNorm) || (d.name && d.name.toLowerCase() === appointmentDoctorName.toLowerCase());
+  });
+
+  if (docObj) {
+    if (docObj.email && currentUser.email && docObj.email.toLowerCase() === currentUser.email.toLowerCase()) {
+      return true;
+    }
+    if (docObj.phone && currentUser.phone && docObj.phone.replace(/[^0-9]/g, '') === currentUser.phone.replace(/[^0-9]/g, '')) {
+      return true;
+    }
+  }
+
+  // Match username / email directly if present
+  if (currentUser.email && appointment.doctorEmail && currentUser.email.toLowerCase() === appointment.doctorEmail.toLowerCase()) {
+    return true;
+  }
+
+  return false;
+}

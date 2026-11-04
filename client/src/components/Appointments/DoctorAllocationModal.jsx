@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { isCurrentUserAssignedDoctor } from '../../utils/rbac';
 import {
   Stethoscope,
   Calendar,
@@ -92,6 +93,11 @@ export default function DoctorAllocationModal({
   }, [isOpen, appointment]);
 
   if (!isOpen || !appointment) return null;
+
+  // Strict Enforce: Only show this alert on the screen of the doctor assigned to the appointment
+  if (!appointment.isManualPreview && currentUser && !isCurrentUserAssignedDoctor(appointment, currentUser, doctors)) {
+    return null;
+  }
 
   // Look up doctor in clinic doctors catalog
   const assignedDoctor = doctors.find(

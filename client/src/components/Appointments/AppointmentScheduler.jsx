@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { assessTicketValidity } from '../../utils/ticketValidity';
+import { isCurrentUserAssignedDoctor } from '../../utils/rbac';
 import DoctorAllocationModal from './DoctorAllocationModal';
 import {
   Calendar as CalendarIcon,
@@ -76,6 +77,7 @@ export default function AppointmentScheduler({
   const [allocatedApt, setAllocatedApt] = useState(null);
   const [doctorModalOpen, setDoctorModalOpen] = useState(false);
   const [customTimeMode, setCustomTimeMode] = useState(false);
+  const [confirmationToast, setConfirmationToast] = useState(null);
 
   const [formData, setFormData] = useState({
     patientId: patients[0]?.id || '',
@@ -114,13 +116,21 @@ export default function AppointmentScheduler({
 
     if (onAddAppointment) {
       const created = await onAddAppointment(newApt);
-      // If confirmed, trigger popup message for allocated doctor
+      // Trigger pop-up alert strictly on the assigned doctor's screen
       if (newApt.status === 'Confirmed') {
-        if (onViewDoctorAllocation) {
-          onViewDoctorAllocation(created || newApt);
+        if (isCurrentUserAssignedDoctor(created || newApt, currentUser, doctors)) {
+          if (onViewDoctorAllocation) {
+            onViewDoctorAllocation(created || newApt);
+          } else {
+            setAllocatedApt(created || newApt);
+            setDoctorModalOpen(true);
+          }
         } else {
-          setAllocatedApt(created || newApt);
-          setDoctorModalOpen(true);
+          setConfirmationToast({
+            doctor: newApt.doctorName,
+            patient: newApt.patientName
+          });
+          setTimeout(() => setConfirmationToast(null), 4500);
         }
       }
     }
@@ -130,14 +140,22 @@ export default function AppointmentScheduler({
     if (onUpdateStatus) {
       onUpdateStatus(apt.id, newStatus);
     }
-    // If status is changed to Confirmed, trigger popup message for allocated doctor
+    // If status is changed to Confirmed, alert only if current user is the assigned doctor
     if (newStatus === 'Confirmed') {
       const updated = { ...apt, status: 'Confirmed' };
-      if (onViewDoctorAllocation) {
-        onViewDoctorAllocation(updated);
+      if (isCurrentUserAssignedDoctor(updated, currentUser, doctors)) {
+        if (onViewDoctorAllocation) {
+          onViewDoctorAllocation(updated);
+        } else {
+          setAllocatedApt(updated);
+          setDoctorModalOpen(true);
+        }
       } else {
-        setAllocatedApt(updated);
-        setDoctorModalOpen(true);
+        setConfirmationToast({
+          doctor: apt.doctorName,
+          patient: apt.patientName
+        });
+        setTimeout(() => setConfirmationToast(null), 4500);
       }
     }
   };
@@ -722,6 +740,27 @@ export default function AppointmentScheduler({
           onNavigate={onNavigate}
           onOpenWhatsApp={onOpenWhatsApp}
         />
+      )}
+
+      {/* Confirmation Toast for Staff / Receptionist */}
+      {confirmationToast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-emerald-500/40 flex items-center space-x-3 animate-fadeIn">
+          <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+            <CheckCircle className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="font-bold text-xs text-white">Appointment Confirmed</div>
+            <div className="text-[11px] text-slate-300">
+              Alert dispatched to <strong>{confirmationToast.doctor}</strong>'s screen for patient {confirmationToast.patient}.
+            </div>
+          </div>
+          <button
+            onClick={() => setConfirmationToast(null)}
+            className="text-slate-400 hover:text-white text-xs font-bold ml-2 cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
       )}
     </div>
   );
