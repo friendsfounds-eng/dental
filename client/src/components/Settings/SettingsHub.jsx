@@ -43,8 +43,11 @@ export default function SettingsHub({
 }) {
   const role = currentUser?.role || 'DOCTOR';
   const isPlatformAdmin = currentUser?.globalRole === 'PLATFORM_ADMIN';
-  const isSuperAdmin = role === 'CLINIC_ADMIN' || isPlatformAdmin;
-  const hasSettingsModule = isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'));
+  const isClinicOwner = role === 'CLINIC_ADMIN' || (Array.isArray(currentUser?.roles) && currentUser.roles.includes('CLINIC_ADMIN'));
+  const isSoftwareOwner = isPlatformAdmin;
+  const isOwnerOrPlatformAdmin = isClinicOwner || isSoftwareOwner;
+  const isSuperAdmin = isOwnerOrPlatformAdmin;
+  const hasSettingsModule = isOwnerOrPlatformAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'));
 
   // Define setting tabs available based on RBAC (Strictly Super Admin / Approved settings permissions)
   const allTabs = [
@@ -54,7 +57,7 @@ export default function SettingsHub({
       shortLabel: 'Clinic Setup',
       icon: Building,
       description: 'Identity, Doctors, Chairs, Catalog & Ticket Rules',
-      visible: isSuperAdmin || hasSettingsModule
+      visible: isOwnerOrPlatformAdmin // STRICTLY Clinic Owner and Software Owner only
     },
     {
       id: 'staff',
@@ -83,6 +86,28 @@ export default function SettingsHub({
   ];
 
   const visibleTabs = allTabs.filter(t => t.visible);
+
+  // If user attempts to view Clinic Configuration without Clinic Owner or Software Owner privileges
+  if (activeTab === 'settings' && !isOwnerOrPlatformAdmin) {
+    return (
+      <div className="bg-white rounded-2xl border border-rose-200 p-8 max-w-lg mx-auto my-12 text-center shadow-lg animate-fadeIn select-none">
+        <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4 border border-rose-200">
+          <ShieldAlert className="w-8 h-8" />
+        </div>
+        <h2 className="text-lg font-black text-slate-900 mb-1">Clinic Configuration Restricted</h2>
+        <p className="text-xs text-slate-600 mb-5 leading-relaxed">
+          Clinic Configuration is strictly available only to the <strong>Clinic Owner</strong> and <strong>Software Owner</strong>. Other users are not permitted to view or change these settings.
+        </p>
+        <button
+          onClick={() => onTabChange && onTabChange(getDefaultLandingTab(currentUser))}
+          className="inline-flex items-center space-x-2 py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition shadow-md shadow-blue-500/20 cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Return to Permitted Home</span>
+        </button>
+      </div>
+    );
+  }
 
   // If user does not have permission for settings hub at all
   if (!hasSettingsModule && !isSuperAdmin) {
@@ -171,7 +196,7 @@ export default function SettingsHub({
 
       {/* Render Selected View */}
       <div className="settings-content-wrapper">
-        {activeTab === 'settings' && (
+        {activeTab === 'settings' && isOwnerOrPlatformAdmin && (
           <ClinicSettings
             clinicProfile={clinicProfile}
             doctors={doctors}

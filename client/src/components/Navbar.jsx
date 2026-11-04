@@ -196,6 +196,10 @@ export default function Navbar({
 
   const role = currentUser?.role || 'DOCTOR';
   const isPlatformAdmin = currentUser?.globalRole === 'PLATFORM_ADMIN';
+  const isClinicOwner = role === 'CLINIC_ADMIN' || (Array.isArray(currentUser?.roles) && currentUser.roles.includes('CLINIC_ADMIN'));
+  const isSoftwareOwner = isPlatformAdmin;
+  const isOwnerOrPlatformAdmin = isClinicOwner || isSoftwareOwner;
+  const isSuperAdmin = isOwnerOrPlatformAdmin;
 
   // Role Badge Styling
   const roleBadge = isPlatformAdmin ? {
@@ -592,7 +596,7 @@ export default function Navbar({
           {/* Settings & Account Menu (Role-guarded: Only permitted actions shown) */}
           <div ref={settingsMenuRef} className="relative">
             {(() => {
-              const canAccessClinicSettings = isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'));
+              const canAccessClinicSettings = isOwnerOrPlatformAdmin;
               return (
                 <button
                   type="button"
@@ -665,8 +669,8 @@ export default function Navbar({
                     </button>
                   )}
 
-                  {/* Clinic Configuration (Super Admin or staff with settings module permission only) */}
-                  {(isSuperAdmin || (Array.isArray(currentUser?.allowedModules) && currentUser.allowedModules.includes('settings'))) && (
+                  {/* Clinic Configuration (Strictly Clinic Owner & Software Owner only) */}
+                  {isOwnerOrPlatformAdmin && (
                     <button
                       type="button"
                       onClick={() => {

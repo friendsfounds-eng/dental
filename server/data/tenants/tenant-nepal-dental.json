@@ -1337,6 +1337,105 @@
   ],
   "auditLogs": [
     {
+      "id": "tlog-1793785225114-615",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "phone": "+977 98012 34567"
+      },
+      "timestamp": "2026-11-04T09:40:25.114Z"
+    },
+    {
+      "id": "tlog-1793785225078-325",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "phone": "+977 98012 34567"
+      },
+      "timestamp": "2026-11-04T09:40:25.078Z"
+    },
+    {
+      "id": "tlog-1793782930967-645",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T09:02:10.967Z"
+    },
+    {
+      "id": "tlog-1793782865975-707",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T09:01:05.975Z"
+    },
+    {
+      "id": "tlog-1793782701232-779",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T08:58:21.232Z"
+    },
+    {
+      "id": "tlog-1793782596047-594",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T08:56:36.047Z"
+    },
+    {
+      "id": "tlog-1793782476165-892",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T08:54:36.165Z"
+    },
+    {
       "id": "tlog-1793776274480-277",
       "userId": "user-nepal-admin",
       "userEmail": "admin@nepaldental.com.np",
@@ -8828,113 +8927,6 @@
         "tagline": "Premier Advanced Dental Hospital in Kathmandu"
       },
       "timestamp": "2026-10-21T18:39:48.594Z"
-    },
-    {
-      "id": "tlog-1792607566302-372",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_STOCK_ADJUSTMENT",
-      "resource": "pharmacy_adjustments",
-      "resourceId": "ADJ-1792607566295",
-      "details": {
-        "medicineName": "Cefixime 200mg",
-        "batchNumber": "CFX-26A",
-        "type": "DAMAGED",
-        "changeQty": -2,
-        "previousQty": 90,
-        "newQty": 88,
-        "reason": "Foil package punctured during shelf inspection"
-      },
-      "timestamp": "2026-10-21T18:32:46.302Z"
-    },
-    {
-      "id": "tlog-1792607566282-614",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_SALE_PROCESSED",
-      "resource": "pharmacy_sales",
-      "resourceId": "PSALE-1792607566280",
-      "details": {
-        "receiptNumber": "PHARM-INV-566280",
-        "patientName": "Rupendra Sah",
-        "itemsCount": 1,
-        "totalAmount": 216,
-        "paymentMethod": "Fonepay QR"
-      },
-      "timestamp": "2026-10-21T18:32:46.282Z"
-    },
-    {
-      "id": "tlog-1792607566270-356",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_STOCK_RECEIVED",
-      "resource": "pharmacy_purchases",
-      "resourceId": "PO-1792607566268",
-      "details": {
-        "supplier": "Omni Healthcare Logistics",
-        "invoice": "INV-TEST-9988",
-        "totalCost": 1450,
-        "itemsCount": 1
-      },
-      "timestamp": "2026-10-21T18:32:46.270Z"
-    },
-    {
-      "id": "tlog-1792607566264-682",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_MEDICINE_CREATED",
-      "resource": "pharmacy_catalog",
-      "resourceId": "PHARM-MED-566263",
-      "details": {
-        "name": "Cefixime 200mg",
-        "brand": "Taxim-O (Alkem)",
-        "sellingPrice": 24
-      },
-      "timestamp": "2026-10-21T18:32:46.264Z"
-    },
-    {
-      "id": "tlog-1792607551546-862",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_STATUS_ACTIVE",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "details": {
-        "status": "active"
-      },
-      "timestamp": "2026-10-21T18:32:31.546Z"
-    },
-    {
-      "id": "tlog-1792607551536-569",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_STATUS_SUSPENDED",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "details": {
-        "status": "suspended"
-      },
-      "timestamp": "2026-10-21T18:32:31.536Z"
-    },
-    {
-      "id": "tlog-1792607551474-893",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "PATIENT_REGISTERED",
-      "resource": "patient",
-      "resourceId": "PT-1469",
-      "details": {
-        "name": "Pradeep Poudel",
-        "phone": "+977 98419 87654"
-      },
-      "timestamp": "2026-10-21T18:32:31.474Z"
     }
   ],
   "pharmacyCatalog": [

@@ -105,9 +105,9 @@ export const SYSTEM_MODULES = [
   },
   {
     id: 'settings',
-    label: 'Settings',
-    badgeText: 'Admin Config',
-    description: 'Clinic configuration, staff management, WhatsApp CRM & plan',
+    label: 'Clinic Settings',
+    badgeText: 'Owner Only',
+    description: 'Clinic configuration & governance (Owner & Software Owner only)',
     icon: Settings,
     color: 'slate',
     defaultRoles: ['CLINIC_ADMIN']
@@ -204,11 +204,16 @@ export function isTabAllowed(tabId, user) {
   }
 
   // Settings subtabs
-  if (tabId === 'staff' || tabId === 'subscription') {
-    return user.role === 'CLINIC_ADMIN';
+  const isClinicOwner = user.role === 'CLINIC_ADMIN' || (Array.isArray(user.roles) && user.roles.includes('CLINIC_ADMIN'));
+  const isSoftwareOwner = user.globalRole === 'PLATFORM_ADMIN';
+  const isOwnerOrPlatformAdmin = isClinicOwner || isSoftwareOwner;
+
+  // Clinic Configuration, Staff Management & Subscription are strictly for Clinic Owner and Software Owner only!
+  if (tabId === 'settings' || tabId === 'staff' || tabId === 'subscription') {
+    return isOwnerOrPlatformAdmin;
   }
-  if (tabId === 'settings' || tabId === 'whatsapp') {
-    return user.role === 'CLINIC_ADMIN' || isModuleAllowed('settings', user);
+  if (tabId === 'whatsapp') {
+    return isOwnerOrPlatformAdmin || isModuleAllowed('settings', user);
   }
 
   // Direct modules

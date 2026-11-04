@@ -1628,6 +1628,16 @@ app.get('/api/clinic', optionalAuth, resolveTenant, (req, res) => {
 });
 
 app.put('/api/clinic', authenticate, resolveTenant, requirePermission('manage:clinic_settings'), (req, res) => {
+  const userRoles = Array.isArray(req.user.roles) ? req.user.roles : (req.user.role ? [req.user.role] : []);
+  const isClinicOwner = req.user.role === 'CLINIC_ADMIN' || userRoles.includes('CLINIC_ADMIN');
+  const isSoftwareOwner = req.user.globalRole === 'PLATFORM_ADMIN';
+  if (!isClinicOwner && !isSoftwareOwner) {
+    return res.status(403).json({
+      error: 'FORBIDDEN',
+      message: 'Clinic Configuration is available only to the Clinic Owner and Software Owner. Other users are not permitted to change these settings.'
+    });
+  }
+
   const tData = multiTenantDb.getTenantData(req.tenantId);
   if (!tData) return res.status(404).json({ error: 'Tenant data not found.' });
 

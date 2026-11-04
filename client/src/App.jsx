@@ -585,6 +585,12 @@ export default function App() {
 
   // Update Clinic Profile
   const handleUpdateClinicProfile = async (newProfile) => {
+    const isClinicOwner = currentUser?.role === 'CLINIC_ADMIN' || (Array.isArray(currentUser?.roles) && currentUser.roles.includes('CLINIC_ADMIN'));
+    const isSoftwareOwner = currentUser?.globalRole === 'PLATFORM_ADMIN';
+    if (!isClinicOwner && !isSoftwareOwner) {
+      alert('[RBAC Notice] Clinic Configuration is available only to the Clinic Owner and Software Owner.');
+      return;
+    }
     try {
       const res = await fetch('/api/clinic', {
         method: 'PUT',
