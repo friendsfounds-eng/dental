@@ -513,8 +513,13 @@ export function requireRole(...allowedRoles) {
 
     const userRoles = Array.isArray(req.user.roles) ? req.user.roles : (req.user.role ? [req.user.role] : []);
 
-    // Platform Admins and Clinic Owners (CLINIC_ADMIN) have full access to all operations
-    if (req.user.globalRole === 'PLATFORM_ADMIN' || userRoles.includes('CLINIC_ADMIN') || req.user.role === 'CLINIC_ADMIN') {
+    // Platform Admins have full access to all platform and clinic operations
+    if (req.user.globalRole === 'PLATFORM_ADMIN') {
+      return next();
+    }
+
+    // Clinic Owners (CLINIC_ADMIN) have access to clinic operations, but NOT platform-only developer operations
+    if (!allowedRoles.includes('PLATFORM_ADMIN') && (userRoles.includes('CLINIC_ADMIN') || req.user.role === 'CLINIC_ADMIN')) {
       return next();
     }
 

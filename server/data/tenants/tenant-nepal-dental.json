@@ -2,7 +2,7 @@
   "tenantId": "tenant-nepal-dental",
   "clinicProfile": {
     "name": "Nepal Dental and Healthcare Wellness Centre Pvt. Ltd.",
-    "tagline": "Premier Advanced Dental Hospital in Kathmandu",
+    "tagline": "Excellence in Dental Healthcare & Diagnostics",
     "doctorInCharge": "Dr. Mukesh Kushwaha, BDS,  (Dental Surgon)",
     "regNo": "NMC-67890",
     "phone": "+977 98012 34567",
@@ -220,124 +220,135 @@
   ],
   "patients": [
     {
-      "id": "PT-1001",
-      "name": "Aarav Sharma",
-      "phone": "9841234567",
-      "email": "aarav.sharma@gmail.com",
-      "age": 32,
+      "id": "PT-2001",
+      "name": "Bikram Thapa",
+      "phone": "9841556677",
+      "email": "bikram.thapa@gmail.com",
+      "age": 38,
       "gender": "Male",
-      "bloodGroup": "O+",
+      "bloodGroup": "A+",
       "province": "Bagmati Province",
-      "district": "Kathmandu",
-      "municipality": "Kathmandu Metropolitan City",
-      "ward": "Ward 10",
-      "tole": "New Baneshwor",
-      "address": "Ward 10, New Baneshwor, Kathmandu Metropolitan City, Kathmandu, Bagmati Province",
-      "emergencyContact": "9801987654",
-      "allergies": [
-        "Penicillin (Urticaria/Rash)"
-      ],
+      "district": "Lalitpur",
+      "municipality": "Lalitpur Metropolitan City",
+      "ward": "Ward 4",
+      "tole": "Jawalakhel",
+      "address": "Ward 4, Jawalakhel, Lalitpur Metropolitan City, Lalitpur, Bagmati Province",
+      "emergencyContact": "9801223344",
+      "allergies": [],
       "medicalHistory": [
-        "Mild Bronchial Asthma",
-        "Occasional Acid Reflux (GERD)"
+        "Mild Hypertension (Controlled on Amlodipine 5mg OD)"
       ],
       "advanceCreditBalance": 0,
-      "lastTicketDate": "2026-10-29",
-      "ticketValidUntil": "2026-11-05",
+      "lastTicketDate": "2026-11-04",
+      "ticketValidUntil": "2026-11-11",
       "ticketStatus": "ACTIVE",
       "revisitsLeft": 1,
       "dentalChart": {
         "16": {
           "condition": "root_canal",
-          "surfaces": {
-            "occlusal": "cavity_deep",
-            "mesial": "healthy",
-            "distal": "healthy",
-            "buccal": "healthy",
-            "lingual": "healthy"
-          },
-          "pocketDepth": {
-            "b": 3,
-            "l": 3,
-            "m": 3,
-            "d": 3
-          },
-          "mobility": 0,
-          "notes": "Working length determined: MB 21mm, DB 20.5mm, Palatal 22mm. Biomechanical prep completed."
+          "notes": "Obturation verified. Tooth asymptomatic on percussion."
         },
         "26": {
           "condition": "composite_restoration",
           "surfaces": {
             "occlusal": "filling_sound"
           },
-          "notes": "Class I aesthetic composite restoration placed."
+          "notes": "Class I aesthetic composite restoration intact."
         },
-        "36": {
+        "46": {
           "condition": "caries",
           "surfaces": {
             "occlusal": "cavity_moderate"
           },
-          "notes": "Deep dentinal caries on occlusal surface. Restorative therapy advised."
-        },
-        "46": {
-          "condition": "healthy",
-          "notes": "Sound tooth structure, no intervention needed."
+          "notes": "Moderate occlusal pit caries on dentin. Restorative composite scheduled."
         }
       },
       "treatmentPlans": [
         {
-          "id": "PLAN-101",
-          "title": "Root Canal Treatment & Ceramic Crown #16",
+          "id": "PLAN-2001",
+          "title": "Root Canal Therapy & Monolithic Zirconia Crown #16",
           "status": "In Progress",
-          "estimatedCost": 12000,
-          "paidAmount": 12000,
-          "notes": "Complete endodontic therapy with fiber post, core build-up and monolithic zirconia crown.",
-          "createdAt": "2026-10-29T09:30:00.000Z"
+          "estimatedCost": 14000,
+          "paidAmount": 14000,
+          "notes": "Full endodontic therapy with post, core build-up and monolithic zirconia crown.",
+          "createdAt": "2026-11-04T09:30:00.000Z"
         }
       ],
       "notes": [
         {
-          "id": "NOTE-101",
-          "date": "2026-10-29",
+          "id": "NOTE-2001",
+          "date": "2026-11-04",
           "time": "10:00 AM",
           "author": "Dr. S. K. Shrestha",
-          "authorRole": "Lead Dental Surgeon",
-          "text": "Chief Complaint: Severe nocturnal throbbing pain in upper right molar. Clinical exam reveals deep occlusal pulp exposure on tooth #16 with severe lingering thermal sensitivity. Diagnosis: Acute Irreversible Pulpitis #16."
+          "authorRole": "Senior Dental Surgeon",
+          "text": "Chief Complaint: Severe nocturnal throbbing pain in upper right tooth #16 on mastication. Diagnosis: Acute Irreversible Pulpitis #16. Emergency pulpectomy performed."
         }
       ],
       "prescriptions": [
         {
-          "id": "RX-101",
-          "date": "2026-10-29",
+          "id": "RX-2932",
+          "date": "2026-11-04",
+          "doctor": "Dr. Mukesh Kushwaha (Lead Dental Surgeon)",
+          "isFinalized": true,
+          "diagnosis": "Routine Post-Endodontic Follow-up",
+          "instructions": "Maintain good oral hygiene",
+          "medicines": [
+            {
+              "name": "Ibuprofen 400mg",
+              "dosage": "400mg",
+              "frequency": "PRN",
+              "duration": "2 days"
+            }
+          ]
+        },
+        {
+          "id": "RX-4599",
+          "date": "2026-11-04",
+          "doctor": "Dr. Mukesh Kushwaha (Lead Dental Surgeon)",
+          "isFinalized": true,
+          "diagnosis": "Routine Post-Endodontic Follow-up",
+          "instructions": "Maintain good oral hygiene",
+          "medicines": [
+            {
+              "name": "Ibuprofen 400mg",
+              "dosage": "400mg",
+              "frequency": "PRN",
+              "duration": "2 days"
+            }
+          ]
+        },
+        {
+          "id": "RX-2001",
+          "date": "2026-11-04",
           "time": "10:15 AM",
           "doctor": "Dr. S. K. Shrestha",
           "diagnosis": "Acute Irreversible Pulpitis #16 - Post-Op Obturation Pain Management",
-          "instructions": "Take medications strictly after meals. Rinse with warm salt water.",
+          "instructions": "Take medications strictly after meals. Avoid chewing hard foods on upper right quadrant.",
           "reviewTimeline": "3 days",
           "medicines": [
             {
-              "name": "Ketorolac 10mg (Ketorol-DT)",
-              "genericName": "Ketorolac Tromethamine",
-              "dosage": "10 mg",
-              "frequency": "1 tablet PRN for severe pain (max 3/day)",
-              "duration": "2 days",
-              "instructions": "Dissolve in half glass water"
-            },
-            {
-              "name": "Cefixime 200mg (Cef-O)",
-              "genericName": "Cefixime",
-              "dosage": "200 mg",
-              "frequency": "1 tablet BD",
+              "name": "Amoxicillin 500mg",
+              "genericName": "Amoxicillin Trihydrate",
+              "dosage": "500 mg",
+              "frequency": "1 capsule TID",
               "duration": "5 days",
-              "instructions": "Take after meals"
+              "instructions": "Take after food"
             },
             {
-              "name": "Pantoprazole 40mg (Pantocid)",
-              "genericName": "Pantoprazole",
+              "name": "Ibuprofen 400mg",
+              "genericName": "Ibuprofen",
+              "dosage": "400 mg",
+              "frequency": "1 tablet TID PRN",
+              "duration": "3 days",
+              "instructions": "Take strictly after meals"
+            },
+            {
+              "name": "Pantoprazole 40mg",
+              "genericName": "Pantoprazole Sodium",
               "dosage": "40 mg",
               "frequency": "1 tablet OD",
               "duration": "5 days",
-              "instructions": "Take before breakfast"
+              "instructions": "Take 30 minutes before breakfast"
             }
           ],
           "isFinalized": true
@@ -345,17 +356,38 @@
       ],
       "invoices": [
         {
-          "id": "INV-1001",
-          "invoiceNumber": "INV-2026-1231",
-          "date": "2026-10-29",
-          "time": "10:15 AM",
-          "createdAt": "2026-10-29T10:15:00.000Z",
-          "total": 2000,
-          "paid": 1000,
-          "balance": 1000,
-          "status": "Partial",
+          "id": "INV-2989",
+          "invoiceNumber": "INV-2026-2060",
+          "date": "2026-11-04",
+          "time": "01:27 PM",
+          "createdAt": "2026-11-04T10:27:22.989Z",
+          "isFinalized": true,
+          "total": 200,
+          "paid": 200,
+          "status": "Paid",
+          "paymentMethod": "Cash",
+          "items": [
+            {
+              "description": "OPD Follow-up Consultation Ticket",
+              "qty": 1,
+              "unitPrice": 200,
+              "total": 200
+            }
+          ],
+          "receiptNumber": "RCP-2026-52277"
+        },
+        {
+          "id": "INV-2001",
+          "invoiceNumber": "INV-2026-2001",
+          "date": "2026-11-04",
+          "time": "10:20 AM",
+          "createdAt": "2026-11-04T10:20:00.000Z",
+          "total": 3500,
+          "paid": 3500,
+          "balance": 0,
+          "status": "Paid",
           "paymentMethod": "Fonepay QR",
-          "receiptNumber": "RCP-2026-10011",
+          "receiptNumber": "RCP-2026-2001",
           "doctorName": "Dr. S. K. Shrestha",
           "items": [
             {
@@ -370,545 +402,8 @@
               "ticketStatus": "FIRST_VISIT"
             },
             {
-              "description": "Root Canal Therapy Sitting 1 (Access Opening & Canal Prep)",
+              "description": "Root Canal Therapy Sitting 1 (Access, Cleaning & Shaping)",
               "tooth": "Tooth #16",
-              "qty": 1,
-              "unitPrice": 1800,
-              "total": 1800,
-              "paidAmount": 800,
-              "remainingAmount": 1000
-            }
-          ]
-        }
-      ],
-      "orders": [
-        {
-          "id": "ORD-2026-001",
-          "orderNumber": "ORD-2026-001",
-          "patientId": "PT-1001",
-          "patientName": "Aarav Sharma",
-          "orderType": "Crown",
-          "toothOrImplantDetails": "Tooth #16",
-          "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
-          "labName": "Kathmandu Dental Milling Lab",
-          "clinicalSpecifications": "Solid Zirconia Monolithic Crown with anatomic contours",
-          "materials": "Solid Zirconia Monolithic",
-          "shade": "A2",
-          "expectedCompletionDate": "2026-11-03T12:00:00.000Z",
-          "cost": 3500,
-          "paidAmount": 3500,
-          "balanceDue": 0,
-          "paymentStatus": "Paid",
-          "progressStatus": "In Progress",
-          "status": "In Progress",
-          "orderDate": "2026-10-29",
-          "expectedDate": "2026-11-03"
-        },
-        {
-          "id": "ORD-2026-006",
-          "orderNumber": "ORD-2026-006",
-          "patientId": "PT-1001",
-          "patientName": "Aarav Sharma",
-          "orderType": "Custom Night Guard",
-          "toothOrImplantDetails": "Maxillary Arch",
-          "clinicalSpecifications": "Dual laminate hard/soft occlusal splint for nocturnal bruxism",
-          "materials": "Dual Laminate Polymer",
-          "assignedStaffOrLab": "DentCraft Nepal Labs",
-          "labName": "DentCraft Nepal Labs",
-          "expectedCompletionDate": "2026-11-02T12:00:00.000Z",
-          "cost": 2500,
-          "paidAmount": 2500,
-          "balanceDue": 0,
-          "paymentStatus": "Paid",
-          "progressStatus": "Delivered",
-          "status": "Delivered",
-          "orderDate": "2026-10-29",
-          "expectedDate": "2026-11-02"
-        }
-      ],
-      "imaging": [
-        {
-          "id": "XRAY-2026-001",
-          "title": "Digital IOPA Radiograph #16 (Pre-Op)",
-          "radiographType": "Periapical (IOPA)",
-          "toothNumber": "16",
-          "date": "2026-10-29",
-          "clinicalNotes": "Diagnostic Intraoral Periapical (IOPA) #16 & #17",
-          "findings": "Periapical periodontitis",
-          "url": "/images/iopa_default.png",
-          "uploadedAt": "2026-10-29T10:05:00.000Z"
-        }
-      ]
-    },
-    {
-      "id": "PT-1002",
-      "name": "Sunita Adhikari",
-      "phone": "9851122334",
-      "email": "sunita.adhikari@outlook.com",
-      "age": 45,
-      "gender": "Female",
-      "bloodGroup": "A+",
-      "province": "Bagmati Province",
-      "district": "Lalitpur",
-      "municipality": "Lalitpur Metropolitan City",
-      "ward": "Ward 3",
-      "tole": "Pulchowk",
-      "address": "Ward 3, Pulchowk, Lalitpur Metropolitan City, Lalitpur, Bagmati Province",
-      "emergencyContact": "9841998877",
-      "allergies": [],
-      "medicalHistory": [
-        "Hypertension (on Losartan 50mg OD)",
-        "Hypothyroidism (on Thyronorm 50mcg OD)"
-      ],
-      "advanceCreditBalance": 0,
-      "lastTicketDate": "2026-10-29",
-      "ticketValidUntil": "2026-11-05",
-      "ticketStatus": "ACTIVE",
-      "revisitsLeft": 1,
-      "dentalChart": {
-        "24": {
-          "condition": "cervical_abrasion",
-          "surfaces": {
-            "buccal": "cervical_defect"
-          },
-          "notes": "Wedge-shaped cervical defect with dentin sensitivity to cold stimuli."
-        },
-        "31": {
-          "condition": "periodontal_pocket",
-          "pocketDepth": {
-            "b": 4,
-            "l": 4,
-            "m": 4,
-            "d": 4
-          },
-          "notes": "4mm pocket depth with bleeding on probing."
-        },
-        "41": {
-          "condition": "periodontal_pocket",
-          "pocketDepth": {
-            "b": 4.5,
-            "l": 4,
-            "m": 4.5,
-            "d": 4
-          },
-          "notes": "4.5mm pocket depth with moderate subgingival calculus."
-        }
-      },
-      "treatmentPlans": [
-        {
-          "id": "PLAN-102",
-          "title": "Periodontal Therapy & Scaling",
-          "status": "Completed",
-          "estimatedCost": 3300,
-          "paidAmount": 3300,
-          "notes": "Full mouth ultrasonic subgingival debridement and plaque control.",
-          "createdAt": "2026-10-29T10:00:00.000Z"
-        }
-      ],
-      "notes": [
-        {
-          "id": "NOTE-102",
-          "date": "2026-10-29",
-          "time": "11:00 AM",
-          "author": "Dr. S. K. Shrestha",
-          "authorRole": "Lead Dental Surgeon",
-          "text": "Chief Complaint: Bleeding gums while brushing and mobility of lower front teeth. Generalized subgingival and supragingival calculus present. Stage II Periodontitis."
-        }
-      ],
-      "prescriptions": [
-        {
-          "id": "RX-102",
-          "date": "2026-10-29",
-          "time": "11:30 AM",
-          "doctor": "Dr. S. K. Shrestha",
-          "diagnosis": "Chronic Generalized Periodontitis & Cervical Caries #24",
-          "instructions": "Rinse twice daily for 2 weeks. Do not eat or drink for 30 minutes after rinsing.",
-          "reviewTimeline": "14 days",
-          "medicines": [
-            {
-              "name": "Amoxicillin 500mg",
-              "dosage": "500 mg",
-              "frequency": "1 capsule TID",
-              "duration": "5 days",
-              "instructions": "Take after meals"
-            },
-            {
-              "name": "Metronidazole 400mg",
-              "dosage": "400 mg",
-              "frequency": "1 tablet TID",
-              "duration": "5 days",
-              "instructions": "Avoid alcohol completely"
-            },
-            {
-              "name": "Chlorhexidine 0.2% Mouthwash",
-              "dosage": "10 ml",
-              "frequency": "Rinse BD",
-              "duration": "14 days",
-              "instructions": "Rinse for 1 minute"
-            }
-          ],
-          "isFinalized": true
-        }
-      ],
-      "invoices": [
-        {
-          "id": "INV-1002",
-          "invoiceNumber": "INV-2026-002",
-          "date": "2026-10-29",
-          "time": "11:30 AM",
-          "createdAt": "2026-10-29T11:30:00.000Z",
-          "total": 3300,
-          "paid": 3300,
-          "balance": 0,
-          "status": "Paid",
-          "paymentMethod": "Fonepay QR",
-          "receiptNumber": "RCP-2026-10012",
-          "doctorName": "Dr. S. K. Shrestha",
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "paidAmount": 200,
-              "remainingAmount": 0,
-              "isTicket": true
-            },
-            {
-              "description": "Full Mouth Ultrasonic Scaling & Polish",
-              "tooth": "Full Mouth",
-              "qty": 1,
-              "unitPrice": 2000,
-              "total": 2000,
-              "paidAmount": 2000,
-              "remainingAmount": 0
-            },
-            {
-              "description": "Glass Ionomer Cervical Restoration #24",
-              "tooth": "Tooth #24",
-              "qty": 1,
-              "unitPrice": 1100,
-              "total": 1100,
-              "paidAmount": 1100,
-              "remainingAmount": 0
-            }
-          ]
-        }
-      ],
-      "orders": [
-        {
-          "id": "ORD-2026-002",
-          "orderNumber": "ORD-2026-002",
-          "patientId": "PT-1002",
-          "patientName": "Sunita Adhikari",
-          "orderType": "Crown",
-          "toothOrImplantDetails": "Tooth #24",
-          "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
-          "labName": "Kathmandu Dental Milling Lab",
-          "clinicalSpecifications": "E-Max Ceramic Inlay/Onlay with natural translucency",
-          "materials": "E-Max Ceramic Inlay/Onlay",
-          "shade": "A3",
-          "expectedCompletionDate": "2026-11-02T12:00:00.000Z",
-          "cost": 3000,
-          "paidAmount": 3000,
-          "balanceDue": 0,
-          "paymentStatus": "Paid",
-          "progressStatus": "Completed",
-          "status": "Completed",
-          "orderDate": "2026-10-29",
-          "expectedDate": "2026-11-02"
-        }
-      ],
-      "imaging": [
-        {
-          "id": "XRAY-2026-002",
-          "title": "Full Arch Digital Panoramic OPG (Periodontal Survey)",
-          "radiographType": "Panoramic (OPG)",
-          "toothNumber": "Full Arch",
-          "date": "2026-10-29",
-          "clinicalNotes": "Periodontal Survey showing generalized horizontal alveolar crest reduction.",
-          "findings": "Moderate chronic periodontitis",
-          "url": "/images/opg_default.png",
-          "uploadedAt": "2026-10-29T11:10:00.000Z"
-        }
-      ]
-    },
-    {
-      "id": "PT-1003",
-      "name": "Rohan Shrestha",
-      "phone": "9812345678",
-      "email": "rohan.shrestha@gmail.com",
-      "age": 24,
-      "gender": "Male",
-      "bloodGroup": "B+",
-      "province": "Bagmati Province",
-      "district": "Bhaktapur",
-      "municipality": "Bhaktapur Municipality",
-      "ward": "Ward 5",
-      "tole": "Suryabinayak",
-      "address": "Ward 5, Suryabinayak, Bhaktapur Municipality, Bhaktapur, Bagmati Province",
-      "emergencyContact": "9803344556",
-      "allergies": [
-        "Sulfa Drugs (Bactrim/Cotrimoxazole)"
-      ],
-      "medicalHistory": [
-        "No systemic medical conditions"
-      ],
-      "advanceCreditBalance": 0,
-      "lastTicketDate": "2026-10-29",
-      "ticketValidUntil": "2026-11-05",
-      "ticketStatus": "ACTIVE",
-      "revisitsLeft": 1,
-      "dentalChart": {
-        "38": {
-          "condition": "impacted",
-          "notes": "Mesioangular impaction with inflamed operculum."
-        },
-        "48": {
-          "condition": "impacted",
-          "notes": "Vertical impaction, asymptomatic."
-        }
-      },
-      "treatmentPlans": [
-        {
-          "id": "PLAN-103",
-          "title": "Surgical Disimpaction #38",
-          "status": "Planned",
-          "estimatedCost": 2200,
-          "paidAmount": 2200,
-          "notes": "Surgical transalveolar extraction of impacted lower left third molar.",
-          "createdAt": "2026-10-29T11:00:00.000Z"
-        }
-      ],
-      "notes": [
-        {
-          "id": "NOTE-103",
-          "date": "2026-10-29",
-          "time": "01:00 PM",
-          "author": "Dr. S. K. Shrestha",
-          "authorRole": "Oral Surgeon",
-          "text": "Severe pain, trismus, and swelling over lower left jaw. Erythematous operculum over partially erupted #38. Diagnosis: Acute Pericoronitis #38."
-        }
-      ],
-      "prescriptions": [
-        {
-          "id": "RX-103",
-          "date": "2026-10-29",
-          "time": "01:15 PM",
-          "doctor": "Dr. S. K. Shrestha",
-          "diagnosis": "Acute Pericoronitis #38 (Mesioangular Impacted)",
-          "instructions": "Take medications with food. Apply cold compress externally for 20 minutes every hour.",
-          "reviewTimeline": "5 days",
-          "medicines": [
-            {
-              "name": "Augmentin 625mg",
-              "dosage": "625 mg",
-              "frequency": "1 tablet BD",
-              "duration": "5 days",
-              "instructions": "Take after meals"
-            },
-            {
-              "name": "Aceclofenac + Paracetamol (Zerodol-P)",
-              "dosage": "100mg/325mg",
-              "frequency": "1 tablet BD",
-              "duration": "3 days",
-              "instructions": "Take after food"
-            },
-            {
-              "name": "Povidone Iodine 1% Oral Gargle",
-              "dosage": "15 ml",
-              "frequency": "Gargle TID",
-              "duration": "5 days",
-              "instructions": "Do not swallow"
-            }
-          ],
-          "isFinalized": true
-        }
-      ],
-      "invoices": [
-        {
-          "id": "INV-1003",
-          "invoiceNumber": "INV-2026-003",
-          "date": "2026-10-29",
-          "time": "01:15 PM",
-          "createdAt": "2026-10-29T13:15:00.000Z",
-          "total": 2200,
-          "paid": 2200,
-          "balance": 0,
-          "status": "Paid",
-          "paymentMethod": "Cash",
-          "receiptNumber": "RCP-2026-10013",
-          "doctorName": "Dr. S. K. Shrestha",
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "paidAmount": 200,
-              "remainingAmount": 0,
-              "isTicket": true
-            },
-            {
-              "description": "Emergency Operculectomy & Antiseptic Irrigation #38",
-              "tooth": "Tooth #38",
-              "qty": 1,
-              "unitPrice": 2000,
-              "total": 2000,
-              "paidAmount": 2000,
-              "remainingAmount": 0
-            }
-          ]
-        }
-      ],
-      "orders": [
-        {
-          "id": "ORD-2026-003",
-          "orderNumber": "ORD-2026-003",
-          "patientId": "PT-1003",
-          "patientName": "Rohan Shrestha",
-          "orderType": "Splint",
-          "toothOrImplantDetails": "Full Arch",
-          "assignedStaffOrLab": "DentCraft Nepal Labs",
-          "labName": "DentCraft Nepal Labs",
-          "clinicalSpecifications": "Hard/Soft Dual Laminate Night Guard for bruxism prevention",
-          "materials": "Hard/Soft Dual Laminate Night Guard",
-          "shade": "Clear",
-          "expectedCompletionDate": "2026-11-01T12:00:00.000Z",
-          "cost": 2200,
-          "paidAmount": 2200,
-          "balanceDue": 0,
-          "paymentStatus": "Paid",
-          "progressStatus": "Delivered",
-          "status": "Delivered",
-          "orderDate": "2026-10-29",
-          "expectedDate": "2026-11-01"
-        }
-      ],
-      "imaging": [
-        {
-          "id": "XRAY-2026-003",
-          "title": "Panoramic Radiograph (OPG) - Mesioangular Impaction #38",
-          "radiographType": "Panoramic (OPG)",
-          "toothNumber": "Full Arch",
-          "date": "2026-10-29",
-          "clinicalNotes": "Tooth #38 mesioangularly impacted against distal contour of #37.",
-          "findings": "Mesioangular impaction #38",
-          "url": "/images/opg_default.png",
-          "uploadedAt": "2026-10-29T13:05:00.000Z"
-        }
-      ]
-    },
-    {
-      "id": "PT-1004",
-      "name": "Pooja Thapa",
-      "phone": "9860123456",
-      "email": "pooja.thapa@gmail.com",
-      "age": 28,
-      "gender": "Female",
-      "bloodGroup": "AB+",
-      "province": "Bagmati Province",
-      "district": "Lalitpur",
-      "municipality": "Lalitpur Metropolitan City",
-      "ward": "Ward 2",
-      "tole": "Jhamsikhel",
-      "address": "Ward 2, Jhamsikhel, Lalitpur Metropolitan City, Lalitpur, Bagmati Province",
-      "emergencyContact": "9841001122",
-      "allergies": [],
-      "medicalHistory": [],
-      "advanceCreditBalance": 0,
-      "lastTicketDate": "2026-10-29",
-      "ticketValidUntil": "2026-11-05",
-      "ticketStatus": "ACTIVE",
-      "revisitsLeft": 1,
-      "dentalChart": {
-        "11": {
-          "condition": "composite_veneer",
-          "surfaces": {
-            "facial": "restoration_sound"
-          },
-          "notes": "Aesthetic direct composite veneer placed after incisal fracture."
-        },
-        "21": {
-          "condition": "composite_veneer",
-          "surfaces": {
-            "facial": "restoration_sound"
-          },
-          "notes": "Matching aesthetic composite veneer placed."
-        }
-      },
-      "treatmentPlans": [
-        {
-          "id": "PLAN-104",
-          "title": "Direct Aesthetic Composite Veneer #11",
-          "status": "Completed",
-          "estimatedCost": 3500,
-          "paidAmount": 3500,
-          "notes": "Direct aesthetic composite veneer and incisal reconstruction #11.",
-          "createdAt": "2026-10-29T12:00:00.000Z"
-        }
-      ],
-      "notes": [
-        {
-          "id": "NOTE-104",
-          "date": "2026-10-29",
-          "time": "02:00 PM",
-          "author": "Dr. S. K. Shrestha",
-          "authorRole": "Cosmetic Dentist",
-          "text": "Chipped upper front tooth (#11) after sports trauma. EPT test positive and vital. Direct composite layering with multi-shade nanofill composite completed."
-        }
-      ],
-      "prescriptions": [
-        {
-          "id": "RX-104",
-          "date": "2026-10-29",
-          "time": "02:30 PM",
-          "doctor": "Dr. S. K. Shrestha",
-          "diagnosis": "Ellis Class II Crown Fracture #11",
-          "instructions": "Avoid biting hard food on front teeth for 48 hours. Maintain gentle brushing.",
-          "reviewTimeline": "7 days",
-          "medicines": [
-            {
-              "name": "Ibuprofen 400mg",
-              "dosage": "400 mg",
-              "frequency": "1 tablet PRN",
-              "duration": "2 days",
-              "instructions": "Take after meals if sensitive"
-            }
-          ],
-          "isFinalized": true
-        }
-      ],
-      "invoices": [
-        {
-          "id": "INV-1004",
-          "invoiceNumber": "INV-2026-004",
-          "date": "2026-10-29",
-          "time": "02:30 PM",
-          "createdAt": "2026-10-29T14:30:00.000Z",
-          "total": 3500,
-          "paid": 3500,
-          "balance": 0,
-          "status": "Paid",
-          "paymentMethod": "Fonepay QR",
-          "receiptNumber": "RCP-2026-10014",
-          "doctorName": "Dr. S. K. Shrestha",
-          "items": [
-            {
-              "description": "Registration & OPD Consultation Fee",
-              "tooth": "General Consultation",
-              "qty": 1,
-              "unitPrice": 200,
-              "total": 200,
-              "paidAmount": 200,
-              "remainingAmount": 0,
-              "isTicket": true
-            },
-            {
-              "description": "Direct Aesthetic Composite Veneer #11",
-              "tooth": "Tooth #11",
               "qty": 1,
               "unitPrice": 3300,
               "total": 3300,
@@ -920,133 +415,142 @@
       ],
       "orders": [
         {
-          "id": "ORD-2026-004",
-          "orderNumber": "ORD-2026-004",
-          "patientId": "PT-1004",
-          "patientName": "Pooja Thapa",
+          "id": "ORD-2001",
+          "orderNumber": "ORD-2026-2001",
+          "patientId": "PT-2001",
+          "patientName": "Bikram Thapa",
           "orderType": "Crown",
-          "toothOrImplantDetails": "Tooth #11",
+          "toothOrImplantDetails": "Tooth #16",
           "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
           "labName": "Kathmandu Dental Milling Lab",
-          "clinicalSpecifications": "Lithium Disilicate Anterior Aesthetic Veneer #11",
-          "materials": "Lithium Disilicate Veneer",
-          "shade": "B1",
-          "expectedCompletionDate": "2026-11-04T12:00:00.000Z",
-          "cost": 3000,
-          "paidAmount": 3000,
+          "clinicalSpecifications": "Solid Zirconia Monolithic Crown with natural occlusal anatomy",
+          "materials": "Solid Zirconia Monolithic",
+          "shade": "A2",
+          "expectedCompletionDate": "2026-11-08T12:00:00.000Z",
+          "cost": 4000,
+          "paidAmount": 4000,
           "balanceDue": 0,
           "paymentStatus": "Paid",
-          "progressStatus": "Requested",
-          "status": "Requested",
-          "orderDate": "2026-10-29",
-          "expectedDate": "2026-11-04"
+          "progressStatus": "In Progress",
+          "status": "In Progress",
+          "orderDate": "2026-11-04",
+          "expectedDate": "2026-11-08"
         }
       ],
       "imaging": [
         {
-          "id": "XRAY-2026-004",
-          "title": "Digital IOPA Radiograph #11 (Trauma Assessment)",
+          "id": "XRAY-2001",
+          "title": "Digital IOPA Radiograph #16 (Post-Obturation)",
           "radiographType": "Periapical (IOPA)",
-          "toothNumber": "11",
-          "date": "2026-10-29",
-          "clinicalNotes": "Trauma Assessment: Intact lamina dura and PDL space.",
-          "findings": "Ellis Class II Fracture",
+          "toothNumber": "16",
+          "date": "2026-11-04",
+          "clinicalNotes": "Endodontic master cone & post-obturation verification film",
+          "findings": "Homogeneous hermetic root canal obturation to radiographic terminus without extrusion.",
           "url": "/images/iopa_default.png",
-          "uploadedAt": "2026-10-29T14:15:00.000Z"
+          "uploadedAt": "2026-11-04T10:10:00.000Z"
         }
       ]
     },
     {
-      "id": "PT-1005",
-      "name": "Bikash Karki",
-      "phone": "9841887766",
-      "email": "bikash.karki@yahoo.com",
-      "age": 52,
-      "gender": "Male",
+      "id": "PT-2002",
+      "name": "Priya Adhikari",
+      "phone": "9851234890",
+      "email": "priya.adhikari@outlook.com",
+      "age": 27,
+      "gender": "Female",
       "bloodGroup": "B+",
       "province": "Bagmati Province",
       "district": "Kathmandu",
       "municipality": "Kathmandu Metropolitan City",
-      "ward": "Ward 3",
-      "tole": "Maharajgunj",
-      "address": "Ward 3, Maharajgunj, Kathmandu Metropolitan City, Kathmandu, Bagmati Province",
-      "emergencyContact": "9801443322",
+      "ward": "Ward 10",
+      "tole": "New Baneshwor",
+      "address": "Ward 10, New Baneshwor, Kathmandu Metropolitan City, Kathmandu, Bagmati Province",
+      "emergencyContact": "9841998877",
       "allergies": [
-        "Aspirin, NSAIDs (Severe Gastric Irritation)"
+        "Penicillin (Urticaria/Severe Skin Rash)"
       ],
-      "medicalHistory": [
-        "Type 2 Diabetes Mellitus (on Metformin 500mg BD)",
-        "Mild Osteoarthritis"
-      ],
+      "medicalHistory": [],
       "advanceCreditBalance": 0,
-      "lastTicketDate": "2026-10-29",
-      "ticketValidUntil": "2026-11-05",
+      "lastTicketDate": "2026-11-04",
+      "ticketValidUntil": "2026-11-11",
       "ticketStatus": "ACTIVE",
       "revisitsLeft": 1,
       "dentalChart": {
-        "46": {
-          "condition": "root_canal",
+        "11": {
+          "condition": "composite_restoration",
           "surfaces": {
-            "occlusal": "cavity_deep"
+            "facial": "filling_sound",
+            "incisal": "filling_sound"
           },
-          "notes": "Necrotic pulp obturated. Distal canal 20mm, mesial canals 19.5mm. Ready for permanent zirconia crown."
+          "notes": "Class IV aesthetic composite restoration and diastema contouring."
         },
-        "47": {
-          "condition": "crown",
-          "notes": "Full contour zirconia crown on second molar, functioning well."
+        "21": {
+          "condition": "composite_restoration",
+          "surfaces": {
+            "facial": "filling_sound",
+            "incisal": "filling_sound"
+          },
+          "notes": "Midline diastema aesthetic resin veneer."
+        },
+        "38": {
+          "condition": "impacted",
+          "notes": "Mesioangular partially impacted mandibular third molar with inflamed operculum."
         }
       },
       "treatmentPlans": [
         {
-          "id": "PLAN-105",
-          "title": "Molar Endodontic Therapy & Solid Zirconia Crown #46",
-          "status": "In Progress",
-          "estimatedCost": 6600,
-          "paidAmount": 6600,
-          "notes": "Root canal therapy and monolithic zirconia crown placement #46.",
-          "createdAt": "2026-10-29T14:00:00.000Z"
+          "id": "PLAN-2002",
+          "title": "Aesthetic Smile Bonding #11, #21 & Surgical Disimpaction #38",
+          "status": "Planned",
+          "estimatedCost": 18500,
+          "paidAmount": 5200,
+          "notes": "Direct nanohybrid aesthetic composite bonding followed by elective surgical disimpaction #38.",
+          "createdAt": "2026-11-04T11:00:00.000Z"
         }
       ],
       "notes": [
         {
-          "id": "NOTE-105",
-          "date": "2026-10-29",
-          "time": "04:00 PM",
-          "author": "Dr. S. K. Shrestha",
-          "authorRole": "Lead Dental Surgeon",
-          "text": "Food lodgement and dull ache in lower right molar (#46). Diabetic patient under glycemic control (HbA1c: 6.8%). Biomechanical prep completed."
+          "id": "NOTE-2002",
+          "date": "2026-11-04",
+          "time": "11:00 AM",
+          "author": "Dr. Anita Sharma",
+          "authorRole": "Consultant Orthodontist & Cosmetic Dentist",
+          "text": "Chief Complaint: Aesthetic spacing between upper central incisors and periodic gum pain in lower left back tooth. Diagnosis: Maxillary Midline Diastema (2.5mm) & Acute Pericoronitis #38."
         }
       ],
       "prescriptions": [
         {
-          "id": "RX-105",
-          "date": "2026-10-29",
-          "time": "04:15 PM",
-          "doctor": "Dr. S. K. Shrestha",
-          "diagnosis": "Chronic Apical Periodontitis with Pulp Necrosis #46",
-          "instructions": "Take medicines on time. Maintain good oral hygiene.",
-          "reviewTimeline": "7 days",
+          "id": "RX-2002",
+          "date": "2026-11-04",
+          "time": "11:20 AM",
+          "doctor": "Dr. Anita Sharma",
+          "diagnosis": "Acute Pericoronitis #38 - Penicillin-Allergic Management",
+          "instructions": "Take medications on time. Use antiseptic mouthwash twice daily after brushing.",
+          "reviewTimeline": "4 days",
           "medicines": [
             {
-              "name": "Cefixime 200mg",
-              "dosage": "200 mg",
-              "frequency": "1 tablet BD",
+              "name": "Clindamycin 300mg",
+              "genericName": "Clindamycin Hydrochloride",
+              "dosage": "300 mg",
+              "frequency": "1 capsule TID",
               "duration": "5 days",
+              "instructions": "Take with a full glass of water [Safe alternative for penicillin allergy]"
+            },
+            {
+              "name": "Aceclofenac 100mg + Paracetamol 325mg (Zerodol-P)",
+              "genericName": "Aceclofenac + Paracetamol",
+              "dosage": "100mg + 325mg",
+              "frequency": "1 tablet BD",
+              "duration": "3 days",
               "instructions": "Take after meals"
             },
             {
-              "name": "Paracetamol 650mg",
-              "dosage": "650 mg",
-              "frequency": "1 tablet TID",
-              "duration": "3 days",
-              "instructions": "For pain relief"
-            },
-            {
-              "name": "Pantoprazole 40mg",
-              "dosage": "40 mg",
-              "frequency": "1 tablet OD",
-              "duration": "5 days",
-              "instructions": "Take before breakfast"
+              "name": "Chlorhexidine 0.2% Mouthwash",
+              "genericName": "Chlorhexidine Gluconate 0.2%",
+              "dosage": "10 ml",
+              "frequency": "Rinse BD for 60 seconds",
+              "duration": "7 days",
+              "instructions": "Do not swallow; do not eat/drink for 30 minutes after rinse"
             }
           ],
           "isFinalized": true
@@ -1054,17 +558,236 @@
       ],
       "invoices": [
         {
-          "id": "INV-1005",
-          "invoiceNumber": "INV-2026-005",
-          "date": "2026-10-29",
-          "time": "04:15 PM",
-          "createdAt": "2026-10-29T16:15:00.000Z",
-          "total": 6600,
-          "paid": 6600,
+          "id": "INV-2002",
+          "invoiceNumber": "INV-2026-2002",
+          "date": "2026-11-04",
+          "time": "11:30 AM",
+          "createdAt": "2026-11-04T11:30:00.000Z",
+          "total": 5200,
+          "paid": 5200,
+          "balance": 0,
+          "status": "Paid",
+          "paymentMethod": "Cash",
+          "receiptNumber": "RCP-2026-2002",
+          "doctorName": "Dr. Anita Sharma",
+          "items": [
+            {
+              "description": "Registration & Specialist Consultation Ticket",
+              "tooth": "General Consultation",
+              "qty": 1,
+              "unitPrice": 200,
+              "total": 200,
+              "paidAmount": 200,
+              "remainingAmount": 0,
+              "isTicket": true,
+              "ticketStatus": "FIRST_VISIT"
+            },
+            {
+              "description": "Direct Aesthetic Composite Veneering #11 & #21",
+              "tooth": "Tooth #11, #21",
+              "qty": 1,
+              "unitPrice": 5000,
+              "total": 5000,
+              "paidAmount": 5000,
+              "remainingAmount": 0
+            }
+          ]
+        }
+      ],
+      "orders": [
+        {
+          "id": "ORD-2002",
+          "orderNumber": "ORD-2026-2002",
+          "patientId": "PT-2002",
+          "patientName": "Priya Adhikari",
+          "orderType": "Custom Night Guard / Retainer",
+          "toothOrImplantDetails": "Maxillary Arch",
+          "assignedStaffOrLab": "DentCraft Nepal Labs",
+          "labName": "DentCraft Nepal Labs",
+          "clinicalSpecifications": "Clear thermoplastic aesthetic retainer for post-composite stabilization",
+          "materials": "Biocryl Clear Polymer",
+          "shade": "Clear",
+          "expectedCompletionDate": "2026-11-07T12:00:00.000Z",
+          "cost": 3000,
+          "paidAmount": 3000,
+          "balanceDue": 0,
+          "paymentStatus": "Paid",
+          "progressStatus": "In Progress",
+          "status": "In Progress",
+          "orderDate": "2026-11-04",
+          "expectedDate": "2026-11-07"
+        }
+      ],
+      "imaging": [
+        {
+          "id": "XRAY-2002",
+          "title": "Digital OPG & Periapical Radiograph #38",
+          "radiographType": "Periapical (IOPA)",
+          "toothNumber": "38",
+          "date": "2026-11-04",
+          "clinicalNotes": "Impacted third molar radiographic evaluation",
+          "findings": "Mesioangular impaction tooth #38 with root apices in close proximity to the inferior alveolar nerve canal.",
+          "url": "/images/iopa_default.png",
+          "uploadedAt": "2026-11-04T11:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "PT-2003",
+      "name": "Suresh Manandhar",
+      "phone": "9818776655",
+      "email": "suresh.manandhar@yahoo.com",
+      "age": 52,
+      "gender": "Male",
+      "bloodGroup": "O-",
+      "province": "Bagmati Province",
+      "district": "Lalitpur",
+      "municipality": "Lalitpur Metropolitan City",
+      "ward": "Ward 2",
+      "tole": "Sanepa",
+      "address": "Ward 2, Sanepa, Lalitpur Metropolitan City, Lalitpur, Bagmati Province",
+      "emergencyContact": "9841665544",
+      "allergies": [
+        "Sulfa drugs"
+      ],
+      "medicalHistory": [
+        "Type 2 Diabetes Mellitus (HbA1c 6.8%, well-managed on Metformin 500mg BD)"
+      ],
+      "advanceCreditBalance": 0,
+      "lastTicketDate": "2026-11-04",
+      "ticketValidUntil": "2026-11-11",
+      "ticketStatus": "ACTIVE",
+      "revisitsLeft": 1,
+      "dentalChart": {
+        "31": {
+          "condition": "scaling_periodontal",
+          "pocketDepth": {
+            "b": 4,
+            "l": 4,
+            "m": 4,
+            "d": 4
+          },
+          "mobility": 1,
+          "notes": "Subgingival calculus, bleeding on probing. Ultrasonic scaling completed."
+        },
+        "32": {
+          "condition": "scaling_periodontal",
+          "pocketDepth": {
+            "b": 4,
+            "l": 4,
+            "m": 4,
+            "d": 4
+          },
+          "mobility": 1,
+          "notes": "Periodontal pocket 4mm with supra/subgingival deposits."
+        },
+        "41": {
+          "condition": "scaling_periodontal",
+          "pocketDepth": {
+            "b": 4,
+            "l": 4,
+            "m": 4,
+            "d": 4
+          },
+          "mobility": 1,
+          "notes": "Periodontal scaling and root planing performed."
+        },
+        "42": {
+          "condition": "scaling_periodontal",
+          "pocketDepth": {
+            "b": 4,
+            "l": 4,
+            "m": 4,
+            "d": 4
+          },
+          "mobility": 1,
+          "notes": "Subgingival debridement performed."
+        },
+        "46": {
+          "condition": "healthy",
+          "notes": "Mesial abutment tooth for planned 3-unit fixed bridge."
+        },
+        "47": {
+          "condition": "missing",
+          "notes": "Extracted 2 years ago; edentulous space planned for fixed bridge pontic."
+        },
+        "48": {
+          "condition": "healthy",
+          "notes": "Distal abutment tooth for planned 3-unit fixed bridge."
+        }
+      },
+      "treatmentPlans": [
+        {
+          "id": "PLAN-2003",
+          "title": "Full-Mouth Ultrasonic Scaling & 3-Unit PFM Bridge #46-#48",
+          "status": "In Progress",
+          "estimatedCost": 16000,
+          "paidAmount": 8000,
+          "notes": "Periodontal therapy followed by 3-unit porcelain-fused-to-metal fixed prosthodontic bridge.",
+          "createdAt": "2026-11-04T14:00:00.000Z"
+        }
+      ],
+      "notes": [
+        {
+          "id": "NOTE-2003",
+          "date": "2026-11-04",
+          "time": "02:00 PM",
+          "author": "Dr. S. K. Shrestha",
+          "authorRole": "Senior Dental Surgeon",
+          "text": "Chief Complaint: Spontaneous gum bleeding while brushing and difficulty chewing on lower right quadrant due to missing molar #47. Clinical diagnosis: Generalized Moderate Chronic Periodontitis & Kennedy Class III Edentulous Span #47."
+        }
+      ],
+      "prescriptions": [
+        {
+          "id": "RX-2003",
+          "date": "2026-11-04",
+          "time": "02:25 PM",
+          "doctor": "Dr. S. K. Shrestha",
+          "diagnosis": "Generalized Moderate Chronic Periodontitis - Deep Debridement Regimen",
+          "instructions": "Maintain strict oral hygiene. Brush twice daily using soft bristled brush with modified Bass technique.",
+          "reviewTimeline": "7 days",
+          "medicines": [
+            {
+              "name": "Metronidazole 400mg",
+              "genericName": "Metronidazole",
+              "dosage": "400 mg",
+              "frequency": "1 tablet TID",
+              "duration": "5 days",
+              "instructions": "Take strictly with or after meals. Avoid alcohol completely."
+            },
+            {
+              "name": "Chlorhexidine Gluconate 0.2% Mouthwash",
+              "genericName": "Chlorhexidine Gluconate 0.2%",
+              "dosage": "15 ml",
+              "frequency": "Rinse BD for 60 seconds",
+              "duration": "10 days",
+              "instructions": "Rinse 30 minutes after brushing"
+            },
+            {
+              "name": "Vitamin C 500mg Chewable (Celin)",
+              "genericName": "Ascorbic Acid",
+              "dosage": "500 mg",
+              "frequency": "1 tablet OD chewable",
+              "duration": "15 days",
+              "instructions": "Chew tablet after breakfast for gingival tissue healing"
+            }
+          ],
+          "isFinalized": true
+        }
+      ],
+      "invoices": [
+        {
+          "id": "INV-2003",
+          "invoiceNumber": "INV-2026-2003",
+          "date": "2026-11-04",
+          "time": "02:30 PM",
+          "createdAt": "2026-11-04T14:30:00.000Z",
+          "total": 3200,
+          "paid": 3200,
           "balance": 0,
           "status": "Paid",
           "paymentMethod": "Fonepay QR",
-          "receiptNumber": "RCP-2026-10015",
+          "receiptNumber": "RCP-2026-2003",
           "doctorName": "Dr. S. K. Shrestha",
           "items": [
             {
@@ -1075,24 +798,16 @@
               "total": 200,
               "paidAmount": 200,
               "remainingAmount": 0,
-              "isTicket": true
+              "isTicket": true,
+              "ticketStatus": "FIRST_VISIT"
             },
             {
-              "description": "Molar Endodontic Therapy #46",
-              "tooth": "Tooth #46",
+              "description": "Full Mouth Ultrasonic Scaling & Periodontal Debridement",
+              "tooth": "Full Mouth",
               "qty": 1,
-              "unitPrice": 4000,
-              "total": 4000,
-              "paidAmount": 4000,
-              "remainingAmount": 0
-            },
-            {
-              "description": "Core Build-up & Fiber Post #46",
-              "tooth": "Tooth #46",
-              "qty": 1,
-              "unitPrice": 2400,
-              "total": 2400,
-              "paidAmount": 2400,
+              "unitPrice": 3000,
+              "total": 3000,
+              "paidAmount": 3000,
               "remainingAmount": 0
             }
           ]
@@ -1100,136 +815,113 @@
       ],
       "orders": [
         {
-          "id": "ORD-2026-005",
-          "orderNumber": "ORD-2026-005",
-          "patientId": "PT-1005",
-          "patientName": "Bikash Karki",
-          "orderType": "Crown",
-          "toothOrImplantDetails": "Tooth #46",
-          "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
-          "labName": "Kathmandu Dental Milling Lab",
-          "clinicalSpecifications": "Monolithic Solid Zirconia Full Contour Crown #46",
-          "materials": "Monolithic Solid Zirconia",
-          "shade": "A3.5",
-          "expectedCompletionDate": "2026-11-05T12:00:00.000Z",
-          "cost": 4000,
-          "paidAmount": 4000,
+          "id": "ORD-2003",
+          "orderNumber": "ORD-2026-2003",
+          "patientId": "PT-2003",
+          "patientName": "Suresh Manandhar",
+          "orderType": "3-Unit PFM Bridge",
+          "toothOrImplantDetails": "Teeth #46 (Abutment) - #47 (Pontic) - #48 (Abutment)",
+          "assignedStaffOrLab": "Everest Dental Ceramics",
+          "labName": "Everest Dental Ceramics",
+          "clinicalSpecifications": "Porcelain-Fused-to-Metal 3-Unit posterior bridge with subgingival margins and hygienic pontic #47",
+          "materials": "Porcelain Fused to Cobalt-Chromium Alloy",
+          "shade": "A3",
+          "expectedCompletionDate": "2026-11-09T12:00:00.000Z",
+          "cost": 6000,
+          "paidAmount": 6000,
           "balanceDue": 0,
           "paymentStatus": "Paid",
-          "progressStatus": "Pending",
-          "status": "Pending",
-          "orderDate": "2026-10-29",
-          "expectedDate": "2026-11-05"
+          "progressStatus": "In Progress",
+          "status": "In Progress",
+          "orderDate": "2026-11-04",
+          "expectedDate": "2026-11-09"
         }
       ],
       "imaging": [
         {
-          "id": "XRAY-2026-005",
-          "title": "Digital IOPA Radiograph #46 (Working Length)",
+          "id": "XRAY-2003",
+          "title": "Digital Bitewing & Anterior Periapical Radiographs",
           "radiographType": "Periapical (IOPA)",
-          "toothNumber": "46",
-          "date": "2026-10-29",
-          "clinicalNotes": "Digital IOPA Radiograph #46 (Working Length) for Bikash Karki",
-          "findings": "Periapical radiolucency on distal root",
+          "toothNumber": "47",
+          "date": "2026-11-04",
+          "clinicalNotes": "Periodontal bone level and abutment evaluation for bridge #46-#48",
+          "findings": "Horizontal alveolar bone loss in mandibular incisors (Grade II periodontitis). Favorable crown-to-root ratio on abutments #46 and #48.",
           "url": "/images/iopa_default.png",
-          "uploadedAt": "2026-10-29T16:00:00.000Z"
+          "uploadedAt": "2026-11-04T14:15:00.000Z"
         }
       ]
     }
   ],
   "appointments": [
     {
-      "id": "APT-8054",
-      "status": "Confirmed",
-      "createdAt": "2026-11-04T08:15:18.054Z",
-      "patientId": "PT-1003",
-      "patientName": "Rohan Shrestha",
-      "patientPhone": "9812345678",
+      "id": "APT-2984",
+      "status": "Scheduled",
+      "createdAt": "2026-11-04T10:27:22.984Z",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
+      "patientPhone": "9841556677",
       "doctorName": "Dr. S. K. Shrestha",
+      "chair": "Chair 1",
+      "date": "2026-11-09",
+      "time": "11:00 AM",
+      "durationMinutes": 30,
+      "chiefComplaint": "Post-Op Follow-up"
+    },
+    {
+      "id": "APT-4686",
+      "status": "Scheduled",
+      "createdAt": "2026-11-04T10:23:54.686Z",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
+      "patientPhone": "9841556677",
+      "doctorName": "Dr. S. K. Shrestha",
+      "chair": "Chair 1",
+      "date": "2026-11-09",
+      "time": "11:00 AM",
+      "durationMinutes": 30,
+      "chiefComplaint": "Post-Op Follow-up"
+    },
+    {
+      "id": "APT-2001",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T10:00:00.000Z",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
+      "patientPhone": "9841556677",
+      "doctorName": "Dr. S. K. Shrestha",
+      "chair": "Chair 1",
+      "date": "2026-11-05",
+      "time": "10:00 AM",
+      "durationMinutes": 30,
+      "chiefComplaint": "Crown Try-in & Occlusal Evaluation #16"
+    },
+    {
+      "id": "APT-2002",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T11:00:00.000Z",
+      "patientId": "PT-2002",
+      "patientName": "Priya Adhikari",
+      "patientPhone": "9851234890",
+      "doctorName": "Dr. Anita Sharma",
       "chair": "Chair 2",
       "date": "2026-11-06",
-      "time": "02:00 PM",
-      "durationMinutes": 30,
-      "chiefComplaint": "Routine Checkup"
-    },
-    {
-      "id": "APT-8030",
-      "status": "Confirmed",
-      "createdAt": "2026-11-04T08:15:18.030Z",
-      "patientId": "PT-1002",
-      "patientName": "Sunita Adhikari",
-      "patientPhone": "9851122334",
-      "doctorName": "Dr. Anita Sharma",
-      "chair": "Chair 1 (Main Operatory)",
-      "date": "2026-11-05",
-      "time": "11:00 AM",
-      "durationMinutes": 45,
-      "chiefComplaint": "Toothache & Sensitivity",
-      "painScale": 6,
-      "notes": "Patient allergic to penicillin. Prefers morning appointments.",
-      "doctorAcceptanceStatus": "Accepted",
-      "acceptedByDoctor": true,
-      "acceptedAt": "2026-11-04T08:15:18.043Z"
-    },
-    {
-      "id": "APT-1001",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Sharma",
-      "patientPhone": "9841234567",
-      "date": "2026-10-28",
-      "time": "10:00 AM",
-      "chair": "Chair 1 (Main Operatory)",
-      "treatmentType": "Root Canal Therapy (RCT Sitting 1) #16",
-      "doctorName": "Dr. S. K. Shrestha",
-      "status": "Confirmed"
-    },
-    {
-      "id": "APT-1002",
-      "patientId": "PT-1002",
-      "patientName": "Sunita Adhikari",
-      "patientPhone": "9851122334",
-      "date": "2026-10-28",
       "time": "11:30 AM",
-      "chair": "Chair 2 (Orthodontic & Hygiene)",
-      "treatmentType": "Root Planing Re-Evaluation & Polish",
-      "doctorName": "Dr. S. K. Shrestha",
-      "status": "Confirmed"
+      "durationMinutes": 45,
+      "chiefComplaint": "Aesthetic Composite Polish & Retainer Check"
     },
     {
-      "id": "APT-1003",
-      "patientId": "PT-1003",
-      "patientName": "Rohan Shrestha",
-      "patientPhone": "9812345678",
-      "date": "2026-10-28",
-      "time": "02:00 PM",
-      "chair": "Chair 1 (Main Operatory)",
-      "treatmentType": "Surgical Disimpaction #38",
+      "id": "APT-2003",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T14:00:00.000Z",
+      "patientId": "PT-2003",
+      "patientName": "Suresh Manandhar",
+      "patientPhone": "9818776655",
       "doctorName": "Dr. S. K. Shrestha",
-      "status": "Confirmed"
-    },
-    {
-      "id": "APT-1004",
-      "patientId": "PT-1004",
-      "patientName": "Pooja Thapa",
-      "patientPhone": "9860123456",
-      "date": "2026-10-29",
-      "time": "09:30 AM",
-      "chair": "Chair 2 (Orthodontic & Hygiene)",
-      "treatmentType": "Aesthetic Polish & Vitality Follow-Up #11",
-      "doctorName": "Dr. S. K. Shrestha",
-      "status": "Confirmed"
-    },
-    {
-      "id": "APT-1005",
-      "patientId": "PT-1005",
-      "patientName": "Bikash Karki",
-      "patientPhone": "9841887766",
-      "date": "2026-10-29",
-      "time": "11:00 AM",
-      "chair": "Chair 1 (Main Operatory)",
-      "treatmentType": "Canal Obturation & Temp Seal #46",
-      "doctorName": "Dr. S. K. Shrestha",
-      "status": "Confirmed"
+      "chair": "Chair 1",
+      "date": "2026-11-07",
+      "time": "03:00 PM",
+      "durationMinutes": 45,
+      "chiefComplaint": "Tooth Preparation & Precision Impression for 3-Unit Bridge #46-#48"
     }
   ],
   "billingPolicy": {
@@ -1237,105 +929,183 @@
     "requireApprovalAbovePercent": 10,
     "allowReceptionistRefunds": false
   },
-  "refundRequests": [
-    {
-      "id": "rfd-1793296424335",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Sharma",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-424335",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-29T17:53:44.335Z"
-    },
-    {
-      "id": "rfd-1792655855527",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-855527",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:57:35.527Z"
-    },
-    {
-      "id": "rfd-1792655475921",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-475921",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:51:15.921Z"
-    },
-    {
-      "id": "rfd-1792654793439",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-793439",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:39:53.439Z"
-    },
-    {
-      "id": "rfd-1792654035962",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-035962",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:27:15.962Z"
-    },
-    {
-      "id": "rfd-1792653747023",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-747023",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:22:27.023Z"
-    },
-    {
-      "id": "rfd-1792653397128",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-397128",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:16:37.128Z"
-    },
-    {
-      "id": "rfd-1792652929248",
-      "patientId": "PT-101",
-      "patientName": "Rupendra Sah",
-      "amount": 1200,
-      "reason": "Duplicate payment adjustment for digital periapical X-Ray",
-      "paymentMethod": "FonePay / QR",
-      "refNumber": "REF-RFD-929248",
-      "status": "APPROVED",
-      "approvedBy": "Dr. Mukesh Kushwaha (Nepal Dental Owner)",
-      "approvedAt": "2026-10-22T07:08:49.248Z"
-    }
-  ],
+  "refundRequests": [],
   "auditLogs": [
+    {
+      "id": "tlog-1793788043028-200",
+      "userId": "user-nepal-reception",
+      "userEmail": "reception@nepaldental.com.np",
+      "userRole": "RECEPTIONIST",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-2989",
+      "details": {
+        "invoiceNumber": "INV-2026-2060",
+        "total": 200,
+        "paid": 200,
+        "receiptNumber": "RCP-2026-52277"
+      },
+      "timestamp": "2026-11-04T10:27:23.028Z"
+    },
+    {
+      "id": "tlog-1793788042994-361",
+      "userId": "user-nepal-reception",
+      "userEmail": "reception@nepaldental.com.np",
+      "userRole": "RECEPTIONIST",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-042994",
+      "details": {
+        "type": "INCOME",
+        "amount": 200,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-52277"
+      },
+      "timestamp": "2026-11-04T10:27:22.994Z"
+    },
+    {
+      "id": "tlog-1793788042937-436",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-2932",
+      "details": {
+        "patientId": "PT-2001",
+        "diagnosis": "Routine Post-Endodontic Follow-up",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-11-04T10:27:22.937Z"
+    },
+    {
+      "id": "tlog-1793788042923-10",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-2001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-11-04T10:27:22.923Z"
+    },
+    {
+      "id": "tlog-1793788042881-877",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "phone": "+977 98012 34567"
+      },
+      "timestamp": "2026-11-04T10:27:22.881Z"
+    },
+    {
+      "id": "tlog-1793788042858-886",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "tagline": "Excellence in Dental Healthcare & Diagnostics"
+      },
+      "timestamp": "2026-11-04T10:27:22.858Z"
+    },
+    {
+      "id": "tlog-1793787834608-283",
+      "userId": "user-nepal-dr-mukesh",
+      "userEmail": "dr.mukesh@nepaldental.com.np",
+      "userRole": "DOCTOR",
+      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
+      "resource": "prescription",
+      "resourceId": "RX-4599",
+      "details": {
+        "patientId": "PT-2001",
+        "diagnosis": "Routine Post-Endodontic Follow-up",
+        "medicinesCount": 1
+      },
+      "timestamp": "2026-11-04T10:23:54.608Z"
+    },
+    {
+      "id": "tlog-1793787834535-861",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "phone": "+977 98012 34567"
+      },
+      "timestamp": "2026-11-04T10:23:54.535Z"
+    },
+    {
+      "id": "tlog-1793787834489-284",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "tagline": "Excellence in Dental Healthcare & Diagnostics"
+      },
+      "timestamp": "2026-11-04T10:23:54.489Z"
+    },
+    {
+      "id": "tlog-1793787552577-705",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "tagline": "Excellence in Dental Healthcare & Diagnostics"
+      },
+      "timestamp": "2026-11-04T10:19:12.577Z"
+    },
+    {
+      "id": "tlog-1793787380467-242",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "tagline": "Excellence in Dental Healthcare & Diagnostics"
+      },
+      "timestamp": "2026-11-04T10:16:20.467Z"
+    },
+    {
+      "id": "tlog-1793787220599-817",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "CLINIC_PROFILE_UPDATED",
+      "resource": "clinicProfile",
+      "details": {
+        "tagline": "Excellence in Dental Healthcare & Diagnostics"
+      },
+      "timestamp": "2026-11-04T10:13:40.599Z"
+    },
+    {
+      "id": "tlog-1793786092796-433",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T09:54:52.797Z"
+    },
     {
       "id": "tlog-1793785225114-615",
       "userId": "user-devadmin",
@@ -8749,184 +8519,6 @@
       "resource": "staff",
       "resourceId": "user-nepal-reception",
       "timestamp": "2026-10-22T05:37:16.713Z"
-    },
-    {
-      "id": "tlog-1792647433827-510",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_SESSIONS_REVOKED",
-      "resource": "staff",
-      "resourceId": "user-nepal-dr-mukesh",
-      "timestamp": "2026-10-22T05:37:13.827Z"
-    },
-    {
-      "id": "tlog-1792647431979-382",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_SESSIONS_REVOKED",
-      "resource": "staff",
-      "resourceId": "user-nepal-dr-mukesh",
-      "timestamp": "2026-10-22T05:37:11.979Z"
-    },
-    {
-      "id": "tlog-1792647429818-377",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_SESSIONS_REVOKED",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "timestamp": "2026-10-22T05:37:09.818Z"
-    },
-    {
-      "id": "tlog-1792608012219-907",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_STOCK_ADJUSTMENT",
-      "resource": "pharmacy_adjustments",
-      "resourceId": "ADJ-1792608012215",
-      "details": {
-        "medicineName": "Cefixime 200mg",
-        "batchNumber": "CFX-26A",
-        "type": "DAMAGED",
-        "changeQty": -2,
-        "previousQty": 90,
-        "newQty": 88,
-        "reason": "Foil package punctured during shelf inspection"
-      },
-      "timestamp": "2026-10-21T18:40:12.219Z"
-    },
-    {
-      "id": "tlog-1792608012202-128",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_SALE_PROCESSED",
-      "resource": "pharmacy_sales",
-      "resourceId": "PSALE-1792608012200",
-      "details": {
-        "receiptNumber": "PHARM-INV-012200",
-        "patientName": "Rupendra Sah",
-        "itemsCount": 1,
-        "totalAmount": 216,
-        "paymentMethod": "Fonepay QR"
-      },
-      "timestamp": "2026-10-21T18:40:12.202Z"
-    },
-    {
-      "id": "tlog-1792608012182-76",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_STOCK_RECEIVED",
-      "resource": "pharmacy_purchases",
-      "resourceId": "PO-1792608012174",
-      "details": {
-        "supplier": "Omni Healthcare Logistics",
-        "invoice": "INV-TEST-9988",
-        "totalCost": 1450,
-        "itemsCount": 1
-      },
-      "timestamp": "2026-10-21T18:40:12.182Z"
-    },
-    {
-      "id": "tlog-1792608012163-743",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "PHARMACY_MEDICINE_CREATED",
-      "resource": "pharmacy_catalog",
-      "resourceId": "PHARM-MED-012161",
-      "details": {
-        "name": "Cefixime 200mg",
-        "brand": "Taxim-O (Alkem)",
-        "sellingPrice": 24
-      },
-      "timestamp": "2026-10-21T18:40:12.163Z"
-    },
-    {
-      "id": "tlog-1792607988726-880",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_STATUS_ACTIVE",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "details": {
-        "status": "active"
-      },
-      "timestamp": "2026-10-21T18:39:48.726Z"
-    },
-    {
-      "id": "tlog-1792607988719-336",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_STATUS_SUSPENDED",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "details": {
-        "status": "suspended"
-      },
-      "timestamp": "2026-10-21T18:39:48.720Z"
-    },
-    {
-      "id": "tlog-1792607988660-467",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "PATIENT_REGISTERED",
-      "resource": "patient",
-      "resourceId": "PT-8640",
-      "details": {
-        "name": "Pradeep Poudel",
-        "phone": "+977 98419 87654"
-      },
-      "timestamp": "2026-10-21T18:39:48.660Z"
-    },
-    {
-      "id": "tlog-1792607988629-270",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "DENTAL_CHART_UPDATED",
-      "resource": "patient",
-      "resourceId": "PT-101",
-      "details": {
-        "tooth": "21",
-        "condition": "healthy"
-      },
-      "timestamp": "2026-10-21T18:39:48.629Z"
-    },
-    {
-      "id": "tlog-1792607988613-994",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
-      "resource": "prescription",
-      "resourceId": "RX-8610",
-      "details": {
-        "patientId": "PT-101",
-        "diagnosis": "Post-op Sensitivity #16",
-        "medicinesCount": 1
-      },
-      "timestamp": "2026-10-21T18:39:48.613Z"
-    },
-    {
-      "id": "tlog-1792607988594-209",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "CLINIC_PROFILE_UPDATED",
-      "resource": "clinicProfile",
-      "details": {
-        "tagline": "Premier Advanced Dental Hospital in Kathmandu"
-      },
-      "timestamp": "2026-10-21T18:39:48.594Z"
     }
   ],
   "pharmacyCatalog": [
@@ -10960,6 +10552,22 @@
   },
   "financeTransactions": [
     {
+      "id": "TXN-042994",
+      "date": "2026-11-04",
+      "refNumber": "RCP-2026-52277",
+      "payerOrRecipient": "Bikram Thapa",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 200,
+      "paymentMethod": "Cash",
+      "status": "Completed",
+      "relatedPatientId": "PT-2001",
+      "relatedStaffId": null,
+      "notes": "Invoice payment for #INV-2026-2060",
+      "createdBy": "Sita Thapa (Front Desk Receptionist)",
+      "createdAt": "2026-11-04T10:27:22.994Z"
+    },
+    {
       "id": "TXN-1000",
       "date": "2026-10-29",
       "refNumber": "RCP-2026-10011",
@@ -11423,7 +11031,7 @@
       "category": "Current Assets",
       "normalBalance": "DEBIT",
       "description": "Physical cash received and kept at clinic reception counter drawer",
-      "balance": 26500,
+      "balance": 26700,
       "isActive": true
     },
     {
@@ -11553,7 +11161,7 @@
       "category": "Operating Revenue",
       "normalBalance": "CREDIT",
       "description": "Gross billings for restorations, root canals, dental implants, crowns, and extractions",
-      "balance": 305160,
+      "balance": 305360,
       "isActive": true
     },
     {
@@ -11678,6 +11286,62 @@
     }
   ],
   "journalEntries": [
+    {
+      "id": "JE-2026-5576",
+      "date": "2026-11-04",
+      "reference": "RCP-2026-52277",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Bikram Thapa for invoice #INV-2026-2060",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1010",
+          "accountName": "Cash in Drawer / Register",
+          "debit": 200,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 200
+        }
+      ],
+      "totalDebit": 200,
+      "totalCredit": 200,
+      "createdBy": "Sita Thapa (Front Desk Receptionist)",
+      "createdAt": "2026-11-04T10:27:23.015Z"
+    },
+    {
+      "id": "JE-2026-2443",
+      "date": "2026-11-04",
+      "reference": "INV-2026-2060",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Bikram Thapa (Inv #INV-2026-2060)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 200,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 200
+        }
+      ],
+      "totalDebit": 200,
+      "totalCredit": 200,
+      "createdBy": "Sita Thapa (Front Desk Receptionist)",
+      "createdAt": "2026-11-04T10:27:23.008Z"
+    },
     {
       "id": "JE-2026-6186",
       "date": "2026-10-31",
@@ -13637,6 +13301,22 @@
   ],
   "receipts": [
     {
+      "id": "RCP-2026-52277",
+      "receiptNumber": "RCP-2026-52277",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
+      "invoiceId": "INV-2026-2060",
+      "depositId": null,
+      "date": "2026-11-04",
+      "amount": 200,
+      "paymentMethod": "Cash",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-INV-2026-2060",
+      "notes": "Payment collected for invoice #INV-2026-2060",
+      "issuedBy": "Sita Thapa (Front Desk Receptionist)",
+      "createdAt": "2026-11-04T10:27:22.989Z"
+    },
+    {
       "receiptNumber": "RCP-2026-10011",
       "patientId": "PT-1001",
       "patientName": "Aarav Sharma",
@@ -13731,74 +13411,46 @@
   },
   "xrays": [
     {
-      "id": "XRAY-2026-001",
-      "title": "Digital IOPA Radiograph #16 (Pre-Op)",
+      "id": "XRAY-2001",
+      "title": "Digital IOPA Radiograph #16 (Post-Obturation)",
       "radiographType": "Periapical (IOPA)",
       "toothNumber": "16",
-      "date": "2026-10-29",
-      "clinicalNotes": "Diagnostic Intraoral Periapical (IOPA) #16 & #17",
-      "findings": "Periapical periodontitis",
+      "date": "2026-11-04",
+      "clinicalNotes": "Endodontic master cone & post-obturation verification film",
+      "findings": "Homogeneous hermetic root canal obturation to radiographic terminus without extrusion.",
       "url": "/images/iopa_default.png",
-      "uploadedAt": "2026-10-29T10:05:00.000Z",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Sharma",
-      "patientPhone": "9841234567"
+      "uploadedAt": "2026-11-04T10:10:00.000Z",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
+      "patientPhone": "9841556677"
     },
     {
-      "id": "XRAY-2026-002",
-      "title": "Full Arch Digital Panoramic OPG (Periodontal Survey)",
-      "radiographType": "Panoramic (OPG)",
-      "toothNumber": "Full Arch",
-      "date": "2026-10-29",
-      "clinicalNotes": "Periodontal Survey showing generalized horizontal alveolar crest reduction.",
-      "findings": "Moderate chronic periodontitis",
-      "url": "/images/opg_default.png",
-      "uploadedAt": "2026-10-29T11:10:00.000Z",
-      "patientId": "PT-1002",
-      "patientName": "Sunita Adhikari",
-      "patientPhone": "9851122334"
-    },
-    {
-      "id": "XRAY-2026-003",
-      "title": "Panoramic Radiograph (OPG) - Mesioangular Impaction #38",
-      "radiographType": "Panoramic (OPG)",
-      "toothNumber": "Full Arch",
-      "date": "2026-10-29",
-      "clinicalNotes": "Tooth #38 mesioangularly impacted against distal contour of #37.",
-      "findings": "Mesioangular impaction #38",
-      "url": "/images/opg_default.png",
-      "uploadedAt": "2026-10-29T13:05:00.000Z",
-      "patientId": "PT-1003",
-      "patientName": "Rohan Shrestha",
-      "patientPhone": "9812345678"
-    },
-    {
-      "id": "XRAY-2026-004",
-      "title": "Digital IOPA Radiograph #11 (Trauma Assessment)",
+      "id": "XRAY-2002",
+      "title": "Digital OPG & Periapical Radiograph #38",
       "radiographType": "Periapical (IOPA)",
-      "toothNumber": "11",
-      "date": "2026-10-29",
-      "clinicalNotes": "Trauma Assessment: Intact lamina dura and PDL space.",
-      "findings": "Ellis Class II Fracture",
+      "toothNumber": "38",
+      "date": "2026-11-04",
+      "clinicalNotes": "Impacted third molar radiographic evaluation",
+      "findings": "Mesioangular impaction tooth #38 with root apices in close proximity to the inferior alveolar nerve canal.",
       "url": "/images/iopa_default.png",
-      "uploadedAt": "2026-10-29T14:15:00.000Z",
-      "patientId": "PT-1004",
-      "patientName": "Pooja Thapa",
-      "patientPhone": "9860123456"
+      "uploadedAt": "2026-11-04T11:15:00.000Z",
+      "patientId": "PT-2002",
+      "patientName": "Priya Adhikari",
+      "patientPhone": "9851234890"
     },
     {
-      "id": "XRAY-2026-005",
-      "title": "Digital IOPA Radiograph #46 (Working Length)",
+      "id": "XRAY-2003",
+      "title": "Digital Bitewing & Anterior Periapical Radiographs",
       "radiographType": "Periapical (IOPA)",
-      "toothNumber": "46",
-      "date": "2026-10-29",
-      "clinicalNotes": "Digital IOPA Radiograph #46 (Working Length) for Bikash Karki",
-      "findings": "Periapical radiolucency on distal root",
+      "toothNumber": "47",
+      "date": "2026-11-04",
+      "clinicalNotes": "Periodontal bone level and abutment evaluation for bridge #46-#48",
+      "findings": "Horizontal alveolar bone loss in mandibular incisors (Grade II periodontitis). Favorable crown-to-root ratio on abutments #46 and #48.",
       "url": "/images/iopa_default.png",
-      "uploadedAt": "2026-10-29T16:00:00.000Z",
-      "patientId": "PT-1005",
-      "patientName": "Bikash Karki",
-      "patientPhone": "9841887766"
+      "uploadedAt": "2026-11-04T14:15:00.000Z",
+      "patientId": "PT-2003",
+      "patientName": "Suresh Manandhar",
+      "patientPhone": "9818776655"
     }
   ],
   "financeStaffAdvances": [
@@ -13946,135 +13598,70 @@
   ],
   "orders": [
     {
-      "id": "ORD-2026-001",
-      "orderNumber": "ORD-2026-001",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Sharma",
+      "id": "ORD-2001",
+      "orderNumber": "ORD-2026-2001",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
       "orderType": "Crown",
       "toothOrImplantDetails": "Tooth #16",
       "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
       "labName": "Kathmandu Dental Milling Lab",
-      "clinicalSpecifications": "Solid Zirconia Monolithic Crown with anatomic contours",
+      "clinicalSpecifications": "Solid Zirconia Monolithic Crown with natural occlusal anatomy",
       "materials": "Solid Zirconia Monolithic",
       "shade": "A2",
-      "expectedCompletionDate": "2026-11-03T12:00:00.000Z",
-      "cost": 3500,
-      "paidAmount": 3500,
-      "balanceDue": 0,
-      "paymentStatus": "Paid",
-      "progressStatus": "In Progress",
-      "status": "In Progress",
-      "orderDate": "2026-10-29",
-      "expectedDate": "2026-11-03"
-    },
-    {
-      "id": "ORD-2026-006",
-      "orderNumber": "ORD-2026-006",
-      "patientId": "PT-1001",
-      "patientName": "Aarav Sharma",
-      "orderType": "Custom Night Guard",
-      "toothOrImplantDetails": "Maxillary Arch",
-      "clinicalSpecifications": "Dual laminate hard/soft occlusal splint for nocturnal bruxism",
-      "materials": "Dual Laminate Polymer",
-      "assignedStaffOrLab": "DentCraft Nepal Labs",
-      "labName": "DentCraft Nepal Labs",
-      "expectedCompletionDate": "2026-11-02T12:00:00.000Z",
-      "cost": 2500,
-      "paidAmount": 2500,
-      "balanceDue": 0,
-      "paymentStatus": "Paid",
-      "progressStatus": "Delivered",
-      "status": "Delivered",
-      "orderDate": "2026-10-29",
-      "expectedDate": "2026-11-02"
-    },
-    {
-      "id": "ORD-2026-002",
-      "orderNumber": "ORD-2026-002",
-      "patientId": "PT-1002",
-      "patientName": "Sunita Adhikari",
-      "orderType": "Crown",
-      "toothOrImplantDetails": "Tooth #24",
-      "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
-      "labName": "Kathmandu Dental Milling Lab",
-      "clinicalSpecifications": "E-Max Ceramic Inlay/Onlay with natural translucency",
-      "materials": "E-Max Ceramic Inlay/Onlay",
-      "shade": "A3",
-      "expectedCompletionDate": "2026-11-02T12:00:00.000Z",
-      "cost": 3000,
-      "paidAmount": 3000,
-      "balanceDue": 0,
-      "paymentStatus": "Paid",
-      "progressStatus": "Completed",
-      "status": "Completed",
-      "orderDate": "2026-10-29",
-      "expectedDate": "2026-11-02"
-    },
-    {
-      "id": "ORD-2026-003",
-      "orderNumber": "ORD-2026-003",
-      "patientId": "PT-1003",
-      "patientName": "Rohan Shrestha",
-      "orderType": "Splint",
-      "toothOrImplantDetails": "Full Arch",
-      "assignedStaffOrLab": "DentCraft Nepal Labs",
-      "labName": "DentCraft Nepal Labs",
-      "clinicalSpecifications": "Hard/Soft Dual Laminate Night Guard for bruxism prevention",
-      "materials": "Hard/Soft Dual Laminate Night Guard",
-      "shade": "Clear",
-      "expectedCompletionDate": "2026-11-01T12:00:00.000Z",
-      "cost": 2200,
-      "paidAmount": 2200,
-      "balanceDue": 0,
-      "paymentStatus": "Paid",
-      "progressStatus": "Delivered",
-      "status": "Delivered",
-      "orderDate": "2026-10-29",
-      "expectedDate": "2026-11-01"
-    },
-    {
-      "id": "ORD-2026-004",
-      "orderNumber": "ORD-2026-004",
-      "patientId": "PT-1004",
-      "patientName": "Pooja Thapa",
-      "orderType": "Crown",
-      "toothOrImplantDetails": "Tooth #11",
-      "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
-      "labName": "Kathmandu Dental Milling Lab",
-      "clinicalSpecifications": "Lithium Disilicate Anterior Aesthetic Veneer #11",
-      "materials": "Lithium Disilicate Veneer",
-      "shade": "B1",
-      "expectedCompletionDate": "2026-11-04T12:00:00.000Z",
-      "cost": 3000,
-      "paidAmount": 3000,
-      "balanceDue": 0,
-      "paymentStatus": "Paid",
-      "progressStatus": "Requested",
-      "status": "Requested",
-      "orderDate": "2026-10-29",
-      "expectedDate": "2026-11-04"
-    },
-    {
-      "id": "ORD-2026-005",
-      "orderNumber": "ORD-2026-005",
-      "patientId": "PT-1005",
-      "patientName": "Bikash Karki",
-      "orderType": "Crown",
-      "toothOrImplantDetails": "Tooth #46",
-      "assignedStaffOrLab": "Kathmandu Dental Milling Lab",
-      "labName": "Kathmandu Dental Milling Lab",
-      "clinicalSpecifications": "Monolithic Solid Zirconia Full Contour Crown #46",
-      "materials": "Monolithic Solid Zirconia",
-      "shade": "A3.5",
-      "expectedCompletionDate": "2026-11-05T12:00:00.000Z",
+      "expectedCompletionDate": "2026-11-08T12:00:00.000Z",
       "cost": 4000,
       "paidAmount": 4000,
       "balanceDue": 0,
       "paymentStatus": "Paid",
-      "progressStatus": "Pending",
-      "status": "Pending",
-      "orderDate": "2026-10-29",
-      "expectedDate": "2026-11-05"
+      "progressStatus": "In Progress",
+      "status": "In Progress",
+      "orderDate": "2026-11-04",
+      "expectedDate": "2026-11-08"
+    },
+    {
+      "id": "ORD-2002",
+      "orderNumber": "ORD-2026-2002",
+      "patientId": "PT-2002",
+      "patientName": "Priya Adhikari",
+      "orderType": "Custom Night Guard / Retainer",
+      "toothOrImplantDetails": "Maxillary Arch",
+      "assignedStaffOrLab": "DentCraft Nepal Labs",
+      "labName": "DentCraft Nepal Labs",
+      "clinicalSpecifications": "Clear thermoplastic aesthetic retainer for post-composite stabilization",
+      "materials": "Biocryl Clear Polymer",
+      "shade": "Clear",
+      "expectedCompletionDate": "2026-11-07T12:00:00.000Z",
+      "cost": 3000,
+      "paidAmount": 3000,
+      "balanceDue": 0,
+      "paymentStatus": "Paid",
+      "progressStatus": "In Progress",
+      "status": "In Progress",
+      "orderDate": "2026-11-04",
+      "expectedDate": "2026-11-07"
+    },
+    {
+      "id": "ORD-2003",
+      "orderNumber": "ORD-2026-2003",
+      "patientId": "PT-2003",
+      "patientName": "Suresh Manandhar",
+      "orderType": "3-Unit PFM Bridge",
+      "toothOrImplantDetails": "Teeth #46 (Abutment) - #47 (Pontic) - #48 (Abutment)",
+      "assignedStaffOrLab": "Everest Dental Ceramics",
+      "labName": "Everest Dental Ceramics",
+      "clinicalSpecifications": "Porcelain-Fused-to-Metal 3-Unit posterior bridge with subgingival margins and hygienic pontic #47",
+      "materials": "Porcelain Fused to Cobalt-Chromium Alloy",
+      "shade": "A3",
+      "expectedCompletionDate": "2026-11-09T12:00:00.000Z",
+      "cost": 6000,
+      "paidAmount": 6000,
+      "balanceDue": 0,
+      "paymentStatus": "Paid",
+      "progressStatus": "In Progress",
+      "status": "In Progress",
+      "orderDate": "2026-11-04",
+      "expectedDate": "2026-11-09"
     }
   ]
 }
