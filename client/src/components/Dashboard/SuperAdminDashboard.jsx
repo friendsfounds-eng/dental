@@ -15,9 +15,9 @@ import {
   RefreshCw,
   Slash,
   Building,
-  Edit,
+  Edit3,
   Trash2,
-  Plus
+  Ban
 } from 'lucide-react';
 
 export default function SuperAdminDashboard({
@@ -36,29 +36,25 @@ export default function SuperAdminDashboard({
   const [auditLogs, setAuditLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addStaffModal, setAddStaffModal] = useState(false);
-  const [toast, setToast] = useState(null);
-
   const [editStaffModal, setEditStaffModal] = useState(false);
-  const [editStaffForm, setEditStaffForm] = useState({
-    id: '',
-    name: '',
-    username: '',
-    email: '',
-    phone: '',
-    role: 'DOCTOR',
-    roles: ['DOCTOR'],
-    password: '',
-    status: 'active'
-  });
-  const [deleteConfirmStaff, setDeleteConfirmStaff] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [editingStaff, setEditingStaff] = useState(null);
+  const [toast, setToast] = useState(null);
 
   const [newStaff, setNewStaff] = useState({
     name: '',
     email: '',
     phone: '',
     role: 'DOCTOR',
+    password: ''
+  });
+
+  const [editStaffForm, setEditStaffForm] = useState({
+    name: '',
+    username: '',
+    email: '',
+    phone: '',
+    role: 'DOCTOR',
+    roles: ['DOCTOR'],
     password: ''
   });
 
@@ -124,8 +120,89 @@ export default function SuperAdminDashboard({
     }
   };
 
-  const handleToggleStaffStatus = async (userId, currentStatus) => {
-    const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
+  const handleOpenEditStaff = (s) => {
+    const roles = Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : [s.role || 'DOCTOR'];
+    setEditingStaff(s);
+    setEditStaffForm({
+      name: s.name || '',
+      username: s.username || '',
+      email: s.email || '',
+      phone: s.phone || '',
+      role: s.role || roles[0],
+      roles,
+      password: ''
+    });
+    setEditStaffModal(true);
+  };
+
+  const handleSaveEditStaff = async (e) => {
+    e.preventDefault();
+    if (!editingStaff) return;
+    try {
+      const assignedRoles = Array.isArray(editStaffForm.roles) && editStaffForm.roles.length > 0
+        ? editStaffForm.roles
+        : [editStaffForm.role || 'DOCTOR'];
+
+      const payload = {
+        name: editStaffForm.name.trim(),
+        email: editStaffForm.email.trim(),
+        username: editStaffForm.username.trim(),
+        phone: editStaffForm.phone.trim(),
+        role: assignedRoles.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : assignedRoles[0],
+        roles: assignedRoles
+      };
+      if (editStaffForm.password && editStaffForm.password.trim()) {
+        payload.password = editStaffForm.password.trim();
+      }
+
+      const res = await fetch(`/api/admin/staff/${editingStaff.id}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || data.error || 'Failed to update user account');
+
+      setToast(`✅ Staff account for "${payload.name}" updated successfully!`);
+      setTimeout(() => setToast(null), 4000);
+      setEditStaffModal(false);
+      setEditingStaff(null);
+      fetchAdminData();
+    } catch (err) {
+      alert(`[Update Error] ${err.message}`);
+    }
+  };
+
+  const handleDeleteStaff = async (userId, userName, userEmail) => {
+    if (!window.confirm(`Are you sure you want to permanently delete the staff account for "${userName}" (${userEmail})?\n\nThis will remove their account and clinic access permanently.`)) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/admin/staff/${userId}`, {
+        method: 'DELETE',
+        headers
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || data.error || 'Failed to delete staff member');
+
+      setToast(`🗑️ Staff account for "${userName}" deleted permanently.`);
+      setTimeout(() => setToast(null), 4000);
+      fetchAdminData();
+    } catch (err) {
+      alert(`[Delete Error] ${err.message}`);
+    }
+  };
+
+  const handleToggleStaffStatus = async (userId, currentStatus, userName = 'this user') => {
+    const isSuspending = currentStatus === 'active';
+    const newStatus = isSuspending ? 'suspended' : 'active';
+
+    if (isSuspending) {
+      if (!window.confirm(`Are you sure you want to suspend "${userName}"?\n\nSuspending will prevent them from signing in and revoke all active sessions immediately.`)) {
+        return;
+      }
+    }
+
     try {
       const res = await fetch(`/api/admin/staff/${userId}/status`, {
         method: 'PUT',
@@ -133,89 +210,15 @@ export default function SuperAdminDashboard({
         body: JSON.stringify({ status: newStatus })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Status update failed');
-      setToast(newStatus === 'suspended' ? '⚠️ Staff account suspended and active sessions revoked.' : '✅ Staff account reactivated.');
-      setTimeout(() => setToast(null), 3500);
+      if (!res.ok) throw new Error(data.message || data.error || 'Status update failed');
+
+      setToast(isSuspending ? `⛔ Staff account "${userName}" suspended & sessions revoked.` : `✅ Staff account "${userName}" reactivated.`);
+      setTimeout(() => setToast(null), 3000);
       fetchAdminData();
     } catch (err) {
       alert(err.message);
     }
   };
-
-  const handleEditStaffClick = (s) => {
-    const assignedRoles = Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : (s.role ? [s.role] : ['DOCTOR']);
-    const primaryRole = assignedRoles.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : assignedRoles[0];
-    setEditStaffForm({
-      id: s.id,
-      name: s.name || '',
-      username: s.username || (s.email ? s.email.split('@')[0] : ''),
-      email: s.email || '',
-      phone: s.phone || '',
-      role: primaryRole,
-      roles: assignedRoles,
-      password: '',
-      status: s.status || 'active'
-    });
-    setEditStaffModal(true);
-  };
-
-  const handleUpdateStaff = async (e) => {
-    e.preventDefault();
-    setIsUpdating(true);
-    try {
-      const assignedRoles = Array.isArray(editStaffForm.roles) && editStaffForm.roles.length > 0
-        ? editStaffForm.roles
-        : [editStaffForm.role || 'DOCTOR'];
-      const res = await fetch(`/api/admin/staff/${editStaffForm.id}`, {
-        method: 'PUT',
-        headers,
-        body: JSON.stringify({
-          name: editStaffForm.name,
-          username: editStaffForm.username,
-          email: editStaffForm.email,
-          phone: editStaffForm.phone,
-          roles: assignedRoles,
-          role: assignedRoles.includes('CLINIC_ADMIN') ? 'CLINIC_ADMIN' : assignedRoles[0],
-          password: editStaffForm.password ? editStaffForm.password : undefined,
-          status: editStaffForm.status
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || data.error);
-
-      setToast(`✅ Account for "${editStaffForm.name}" updated successfully!`);
-      setTimeout(() => setToast(null), 4000);
-      setEditStaffModal(false);
-      fetchAdminData();
-    } catch (err) {
-      alert(`[Update Error] ${err.message}`);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  const handleDeleteStaff = async (staffMember) => {
-    if (!staffMember) return;
-    setIsDeleting(true);
-    try {
-      const res = await fetch(`/api/admin/staff/${staffMember.id}`, {
-        method: 'DELETE',
-        headers
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || data.error);
-
-      setToast(`🗑️ User account "${staffMember.name}" has been permanently deleted.`);
-      setTimeout(() => setToast(null), 4000);
-      setDeleteConfirmStaff(null);
-      fetchAdminData();
-    } catch (err) {
-      alert(`[Delete Error] ${err.message}`);
-    } finally {
-      setIsDeleting(false);
-    }
-  };
-
   const handleSavePolicy = async () => {
     try {
       const res = await fetch('/api/admin/billing-policy', {
@@ -262,7 +265,8 @@ export default function SuperAdminDashboard({
           </p>
         </div>
 
-        </div>
+        
+      </div>
 
       {/* Sub Tabs */}
       <div className="flex items-center space-x-2 border-b border-slate-200 pb-2 text-xs font-bold overflow-x-auto">
@@ -387,36 +391,48 @@ export default function SuperAdminDashboard({
                         {s.status}
                       </span>
                     </td>
-                    <td className="p-3 text-right whitespace-nowrap">
-                      <div className="inline-flex items-center space-x-1.5">
+                    <td className="p-3 text-right">
+                      <div className="flex items-center justify-end space-x-1.5 flex-wrap gap-y-1">
+                        {/* Edit Button */}
                         <button
-                          type="button"
-                          onClick={() => handleEditStaffClick(s)}
+                          onClick={() => handleOpenEditStaff(s)}
                           className="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition flex items-center space-x-1 cursor-pointer"
-                          title="Edit user details or reset password"
+                          title="Edit name, role, email, phone, or password"
                         >
-                          <Edit className="w-3.5 h-3.5" />
+                          <Edit3 className="w-3 h-3 text-blue-600" />
                           <span>Edit</span>
                         </button>
+
+                        {/* Single Suspend / Reactivate Button */}
                         <button
-                          type="button"
-                          onClick={() => handleToggleStaffStatus(s.id, s.status)}
+                          onClick={() => handleToggleStaffStatus(s.id, s.status, s.name)}
                           className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition flex items-center space-x-1 cursor-pointer ${
                             s.status === 'active'
                               ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
                               : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
                           }`}
-                          title={s.status === 'active' ? 'Suspend account & revoke active sessions' : 'Reactivate account'}
+                          title={s.status === 'active' ? 'Suspend user & revoke all active sessions' : 'Reactivate user account'}
                         >
-                          <span>{s.status === 'active' ? 'Suspend' : 'Activate'}</span>
+                          {s.status === 'active' ? (
+                            <>
+                              <Ban className="w-3 h-3 text-amber-600" />
+                              <span>Suspend</span>
+                            </>
+                          ) : (
+                            <>
+                              <CheckCircle className="w-3 h-3 text-emerald-600" />
+                              <span>Reactivate</span>
+                            </>
+                          )}
                         </button>
+
+                        {/* Delete Button */}
                         <button
-                          type="button"
-                          onClick={() => setDeleteConfirmStaff(s)}
+                          onClick={() => handleDeleteStaff(s.id, s.name, s.email)}
                           className="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition flex items-center space-x-1 cursor-pointer"
                           title="Permanently delete user account"
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
+                          <Trash2 className="w-3 h-3 text-rose-600" />
                           <span>Delete</span>
                         </button>
                       </div>
@@ -598,6 +614,155 @@ export default function SuperAdminDashboard({
         </div>
       )}
 
+
+      {/* EDIT STAFF ACCOUNT MODAL */}
+      {editStaffModal && editingStaff && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden flex flex-col">
+            <div className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-5 flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-black tracking-tight flex items-center gap-1.5">
+                  <Edit3 className="w-4 h-4 text-blue-200" />
+                  <span>Edit Staff Account</span>
+                </h3>
+                <p className="text-xs text-blue-100">
+                  Update credentials & roles for {editingStaff.name}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setEditStaffModal(false);
+                  setEditingStaff(null);
+                }}
+                className="text-white/80 hover:text-white text-lg font-bold p-1 rounded-lg hover:bg-white/10 transition cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEditStaff} className="p-5 space-y-3.5 text-xs overflow-y-auto max-h-[80vh]">
+              <div>
+                <label className="block font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={editStaffForm.name}
+                  onChange={(e) => setEditStaffForm({ ...editStaffForm, name: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-slate-300 font-semibold focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 uppercase mb-1">Role & Authority Assignment *</label>
+                <select
+                  value={
+                    editStaffForm.roles?.includes('DOCTOR') && editStaffForm.roles?.includes('CLINIC_ADMIN')
+                      ? 'DOCTOR_ADMIN'
+                      : editStaffForm.roles?.includes('DOCTOR') && editStaffForm.roles?.includes('PHARMACIST')
+                      ? 'DOCTOR_PHARM'
+                      : editStaffForm.roles?.length >= 4
+                      ? 'ALL_ACCESS'
+                      : editStaffForm.role
+                  }
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === 'DOCTOR_ADMIN') {
+                      setEditStaffForm({ ...editStaffForm, role: 'CLINIC_ADMIN', roles: ['DOCTOR', 'CLINIC_ADMIN'] });
+                    } else if (val === 'DOCTOR_PHARM') {
+                      setEditStaffForm({ ...editStaffForm, role: 'DOCTOR', roles: ['DOCTOR', 'PHARMACIST'] });
+                    } else if (val === 'ALL_ACCESS') {
+                      setEditStaffForm({ ...editStaffForm, role: 'CLINIC_ADMIN', roles: ['DOCTOR', 'CLINIC_ADMIN', 'RECEPTIONIST', 'PHARMACIST', 'NURSE'] });
+                    } else {
+                      setEditStaffForm({ ...editStaffForm, role: val, roles: [val] });
+                    }
+                  }}
+                  className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-blue-900 focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="DOCTOR">🩺 Doctor (Clinical Chart, Prescriptions, Diagnosis)</option>
+                  <option value="RECEPTIONIST">📋 Receptionist (Front Desk, Appointments, Billing)</option>
+                  <option value="PHARMACIST">💊 Pharmacist (Medicine Stock & POS Sales)</option>
+                  <option value="NURSE">👩‍⚕️ Nurse / Dental Assistant (Queue & Vitals)</option>
+                  <option value="CLINIC_ADMIN">🛡️ Clinic Super Admin (Practice Governance)</option>
+                  <option value="DOCTOR_ADMIN">✨ Combo: Doctor + Clinic Admin</option>
+                  <option value="DOCTOR_PHARM">✨ Combo: Doctor + Pharmacist</option>
+                  <option value="ALL_ACCESS">🌟 Combo: Full Access (All Roles)</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                  <input
+                    type="email"
+                    required
+                    value={editStaffForm.email}
+                    onChange={(e) => setEditStaffForm({ ...editStaffForm, email: e.target.value })}
+                    className="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 uppercase mb-1">Username</label>
+                  <input
+                    type="text"
+                    value={editStaffForm.username}
+                    onChange={(e) => setEditStaffForm({ ...editStaffForm, username: e.target.value })}
+                    placeholder="e.g. mukesh123"
+                    className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 uppercase mb-1">Mobile Phone (WhatsApp)</label>
+                <input
+                  type="tel"
+                  placeholder="+977 98012 34567"
+                  value={editStaffForm.phone}
+                  onChange={(e) => setEditStaffForm({ ...editStaffForm, phone: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="p-3 bg-amber-50/70 rounded-xl border border-amber-200">
+                <label className="block font-bold text-amber-900 uppercase mb-1 flex items-center justify-between">
+                  <span>Reset / Change Password</span>
+                  <span className="text-[10px] font-normal text-amber-700 lowercase">(leave blank to keep current)</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="Enter new password (optional)"
+                  value={editStaffForm.password}
+                  onChange={(e) => setEditStaffForm({ ...editStaffForm, password: e.target.value })}
+                  className="w-full p-2.5 rounded-xl border border-amber-300 bg-white focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div className="pt-3 flex justify-end space-x-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditStaffModal(false);
+                    setEditingStaff(null);
+                  }}
+                  className="px-4 py-2 rounded-xl border border-slate-300 font-bold hover:bg-slate-100 transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-md transition cursor-pointer flex items-center space-x-1"
+                >
+                  <CheckCircle className="w-3.5 h-3.5" />
+                  <span>Update Account</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* ADD STAFF ACCOUNT MODAL */}
       {addStaffModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
@@ -703,185 +868,6 @@ export default function SuperAdminDashboard({
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* EDIT STAFF ACCOUNT MODAL */}
-      {editStaffModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-md overflow-hidden flex flex-col max-h-[92vh]">
-            <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white p-5 flex items-center justify-between flex-shrink-0">
-              <div>
-                <h3 className="text-base font-black tracking-tight">Edit Staff Account</h3>
-                <p className="text-xs text-blue-100">Update account details, role, or password</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setEditStaffModal(false)}
-                className="text-white/80 hover:text-white text-lg font-bold p-1 cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleUpdateStaff} className="p-5 space-y-3.5 text-xs overflow-y-auto flex-1">
-              <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Full Name *</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Dr. Rajesh Sharma"
-                  value={editStaffForm.name}
-                  onChange={(e) => setEditStaffForm({ ...editStaffForm, name: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-semibold focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Username (Login Handle)</label>
-                <input
-                  type="text"
-                  placeholder="e.g. rajesh"
-                  value={editStaffForm.username}
-                  onChange={(e) => setEditStaffForm({ ...editStaffForm, username: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Email Address *</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="doctor@nepaldental.com.np"
-                  value={editStaffForm.email}
-                  onChange={(e) => setEditStaffForm({ ...editStaffForm, email: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Mobile Phone (WhatsApp)</label>
-                <input
-                  type="tel"
-                  placeholder="+977 98012 34567"
-                  value={editStaffForm.phone}
-                  onChange={(e) => setEditStaffForm({ ...editStaffForm, phone: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Role & Authority Assignment *</label>
-                <select
-                  value={editStaffForm.role}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === 'DOCTOR_ADMIN') {
-                      setEditStaffForm({ ...editStaffForm, role: 'CLINIC_ADMIN', roles: ['DOCTOR', 'CLINIC_ADMIN'] });
-                    } else if (val === 'DOCTOR_PHARM') {
-                      setEditStaffForm({ ...editStaffForm, role: 'DOCTOR', roles: ['DOCTOR', 'PHARMACIST'] });
-                    } else if (val === 'ALL_ACCESS') {
-                      setEditStaffForm({ ...editStaffForm, role: 'CLINIC_ADMIN', roles: ['DOCTOR', 'CLINIC_ADMIN', 'RECEPTIONIST', 'PHARMACIST', 'NURSE'] });
-                    } else {
-                      setEditStaffForm({ ...editStaffForm, role: val, roles: [val] });
-                    }
-                  }}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-blue-900 focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="DOCTOR">🩺 Doctor (Clinical Chart, Prescriptions, Diagnosis)</option>
-                  <option value="RECEPTIONIST">📋 Receptionist (Front Desk, Appointments, Billing)</option>
-                  <option value="PHARMACIST">💊 Pharmacist (Medicine Stock & POS Sales)</option>
-                  <option value="NURSE">👩‍⚕️ Nurse / Dental Assistant (Queue & Vitals)</option>
-                  <option value="CLINIC_ADMIN">🛡️ Clinic Super Admin (Practice Governance)</option>
-                  <option value="DOCTOR_ADMIN">✨ Combo: Doctor + Clinic Admin</option>
-                  <option value="DOCTOR_PHARM">✨ Combo: Doctor + Pharmacist</option>
-                  <option value="ALL_ACCESS">🌟 Combo: Full Access (All Roles)</option>
-                </select>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block font-bold text-slate-700 uppercase">Account Password</label>
-                  <span className="text-[10px] text-slate-400 font-medium">Leave blank to keep current</span>
-                </div>
-                <input
-                  type="password"
-                  placeholder="•••••••• (leave blank to keep current)"
-                  value={editStaffForm.password}
-                  onChange={(e) => setEditStaffForm({ ...editStaffForm, password: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 font-mono focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 uppercase mb-1">Account Status</label>
-                <select
-                  value={editStaffForm.status}
-                  onChange={(e) => setEditStaffForm({ ...editStaffForm, status: e.target.value })}
-                  className="w-full p-2.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-800"
-                >
-                  <option value="active">Active (Can log in & access practice)</option>
-                  <option value="suspended">Suspended (Access blocked & sessions revoked)</option>
-                </select>
-              </div>
-
-              <div className="pt-3 border-t border-slate-200 flex justify-end space-x-2">
-                <button
-                  type="button"
-                  onClick={() => setEditStaffModal(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 font-bold hover:bg-slate-50 transition cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isUpdating}
-                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-md transition disabled:opacity-50 cursor-pointer"
-                >
-                  {isUpdating ? 'Saving...' : 'Save Changes'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* DELETE STAFF CONFIRMATION MODAL */}
-      {deleteConfirmStaff && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-md p-6 text-center">
-            <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-3">
-              <Trash2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-black text-slate-900">
-              Permanently Delete User Account?
-            </h3>
-            <p className="text-xs text-slate-600 mt-2">
-              Are you sure you want to permanently delete user account <strong className="text-slate-900">{deleteConfirmStaff.name}</strong> ({deleteConfirmStaff.email})?
-            </p>
-            <p className="text-[11px] text-rose-600 font-medium mt-1">
-              All active sessions will be terminated immediately and this account will be permanently removed. This action cannot be undone.
-            </p>
-
-            <div className="flex items-center justify-center space-x-3 mt-6">
-              <button
-                type="button"
-                onClick={() => setDeleteConfirmStaff(null)}
-                className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold hover:bg-slate-50 transition cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                disabled={isDeleting}
-                onClick={() => handleDeleteStaff(deleteConfirmStaff)}
-                className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-black shadow-md transition cursor-pointer disabled:opacity-50"
-              >
-                {isDeleting ? 'Deleting...' : 'Yes, Delete Permanently'}
-              </button>
-            </div>
           </div>
         </div>
       )}

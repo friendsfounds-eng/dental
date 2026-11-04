@@ -1288,6 +1288,120 @@ app.put('/api/admin/staff/:id/role', authenticate, resolveTenant, requirePermiss
   });
 });
 
+// Update Staff Member Account Details (Name, Email, Username, Phone, Role, Password)
+app.put('/api/admin/staff/:id', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
+  const staffUserId = req.params.id;
+  const { name, email, username, phone, role, roles, allowedModules, password } = req.body;
+
+  const user = multiTenantDb.platform.users.find(u => u.id === staffUserId);
+  if (!user) {
+    return res.status(404).json({ error: 'STAFF_NOT_FOUND', message: 'Staff user account not found.' });
+  }
+
+  const membership = multiTenantDb.platform.memberships.find(
+    m => m.tenantId === req.tenantId && m.userId === staffUserId
+  );
+  if (!membership) {
+    return res.status(404).json({ error: 'MEMBERSHIP_NOT_FOUND', message: 'Staff membership not found in this clinic.' });
+  }
+
+  // Update profile fields
+  if (name && name.trim()) user.name = name.trim();
+  if (phone !== undefined) user.phone = phone.trim();
+  if (username && username.trim()) {
+    const cleanUsername = username.trim().toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+    if (cleanUsername) user.username = cleanUsername;
+  }
+  if (email && email.includes('@')) {
+    user.email = email.trim().toLowerCase();
+  }
+
+  // Update password if provided
+  if (password && password.trim()) {
+    user.passwordHash = hashPassword(password.trim());
+    user.tokenVersion = (user.tokenVersion || 1) + 1;
+    multiTenantDb.revokeUserSessions(staffUserId);
+  }
+
+  // Update roles if provided
+  if (role || (Array.isArray(roles) && roles.length > 0)) {
+    const selectedRoles = Array.isArray(roles) && roles.length > 0
+      ? roles
+      : (role ? (Array.isArray(role) ? role : [role]) : [membership.role]);
+
+    // Clinic Admin cannot grant PLATFORM_ADMIN
+    if (selectedRoles.includes('PLATFORM_ADMIN') && req.user.role !== 'PLATFORM_ADMIN') {
+      return res.status(403).json({ error: 'FORBIDDEN', message: 'Cannot grant Platform Admin privileges.' });
+    }
+
+    const primaryRole = selectedRoles.includes('CLINIC_ADMIN')
+      ? 'CLINIC_ADMIN'
+      : selectedRoles.includes('DOCTOR')
+      ? 'DOCTOR'
+      : selectedRoles[0];
+
+    membership.role = primaryRole;
+    membership.roles = selectedRoles;
+
+    if (Array.isArray(allowedModules)) {
+      membership.allowedModules = allowedModules;
+    } else {
+      membership.allowedModules = getDefaultModulesForRoles(selectedRoles);
+    }
+
+    // Sync doctor record in clinic roster if DOCTOR role
+    if (selectedRoles.includes('DOCTOR')) {
+      const tData = multiTenantDb.getTenantData(req.tenantId);
+      if (tData) {
+        tData.doctors = tData.doctors || [];
+        const existingDoc = tData.doctors.find(d => d.email?.toLowerCase() === user.email?.toLowerCase());
+        if (!existingDoc) {
+          tData.doctors.push({
+            id: `doc-${Date.now().toString().slice(-4)}`,
+            name: user.name,
+            email: user.email,
+            phone: user.phone || '',
+            specialization: 'Dental Surgeon',
+            status: 'Active'
+          });
+          multiTenantDb.saveTenantData(req.tenantId, tData);
+        } else {
+          existingDoc.name = user.name;
+          existingDoc.phone = user.phone || existingDoc.phone;
+          multiTenantDb.saveTenantData(req.tenantId, tData);
+        }
+      }
+    }
+  }
+
+  multiTenantDb.savePlatform();
+
+  multiTenantDb.logTenantAudit(req.tenantId, {
+    userId: req.user.id,
+    userEmail: req.user.email,
+    userRole: req.user.role,
+    action: 'STAFF_ACCOUNT_UPDATED',
+    resource: 'staff',
+    resourceId: staffUserId,
+    details: { name: user.name, email: user.email, role: membership.role }
+  });
+
+  res.json({
+    success: true,
+    message: `Staff account "${user.name}" updated successfully.`,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      phone: user.phone,
+      role: membership.role,
+      roles: membership.roles,
+      status: user.status
+    }
+  });
+});
+
 // Remove / Delete Staff Member from Clinic
 app.delete('/api/admin/staff/:id', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
   const staffUserId = req.params.id;
@@ -1307,16 +1421,17 @@ app.delete('/api/admin/staff/:id', authenticate, resolveTenant, requirePermissio
   }
 
   const removedMem = multiTenantDb.platform.memberships.splice(memIndex, 1)[0];
-  multiTenantDb.savePlatform();
 
-  // If user has no other memberships in any tenant, also remove from platform users
-  const remainingMems = multiTenantDb.platform.memberships.filter(m => m.userId === staffUserId);
-  if (remainingMems.length === 0) {
-    const uIdx = multiTenantDb.platform.users.findIndex(u => u.id === staffUserId);
-    if (uIdx !== -1) {
-      multiTenantDb.platform.users.splice(uIdx, 1);
+  // If user has no other memberships across any tenant, remove from users permanently
+  const remainingMemberships = multiTenantDb.platform.memberships.filter(m => m.userId === staffUserId);
+  if (remainingMemberships.length === 0) {
+    const userIndex = multiTenantDb.platform.users.findIndex(u => u.id === staffUserId);
+    if (userIndex !== -1) {
+      multiTenantDb.platform.users.splice(userIndex, 1);
     }
   }
+
+  multiTenantDb.savePlatform();
 
   // If Doctor, also remove from tenant doctors list if present
   const tData = multiTenantDb.getTenantData(req.tenantId);
@@ -1345,109 +1460,7 @@ app.delete('/api/admin/staff/:id', authenticate, resolveTenant, requirePermissio
   res.json({ success: true, message: 'Staff account successfully removed from clinic.' });
 });
 
-// Update Staff Account Details (Name, Username, Email, Phone, Role, Password, Status)
-app.put('/api/admin/staff/:id', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
-  const staffUserId = req.params.id;
-  const { name, email, username, phone, role, roles, allowedModules, password, status } = req.body;
-
-  const membership = multiTenantDb.platform.memberships.find(
-    m => m.tenantId === req.tenantId && m.userId === staffUserId
-  );
-  if (!membership) {
-    return res.status(404).json({ error: 'STAFF_NOT_FOUND', message: 'Staff member not found in this clinic.' });
-  }
-
-  const user = multiTenantDb.platform.users.find(u => u.id === staffUserId);
-  if (!user) {
-    return res.status(404).json({ error: 'USER_NOT_FOUND', message: 'User record not found.' });
-  }
-
-  if (name && name.trim()) user.name = name.trim();
-  if (email && email.trim()) user.email = email.trim().toLowerCase();
-  if (username && username.trim()) {
-    const cleanU = username.trim().toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-    if (cleanU) user.username = cleanU;
-  }
-  if (phone !== undefined) user.phone = phone ? phone.trim() : '';
-
-  // If password provided, update hash and revoke old tokens
-  if (password && password.trim()) {
-    user.passwordHash = hashPassword(password.trim());
-    user.tokenVersion = (user.tokenVersion || 1) + 1;
-  }
-
-  // Update roles if provided
-  const selectedRoles = Array.isArray(roles) && roles.length > 0
-    ? roles
-    : (role ? (Array.isArray(role) ? role : [role]) : null);
-
-  if (selectedRoles && selectedRoles.length > 0) {
-    if (selectedRoles.includes('PLATFORM_ADMIN')) {
-      return res.status(403).json({ error: 'FORBIDDEN', message: 'Cannot assign PLATFORM_ADMIN role.' });
-    }
-    const primaryRole = selectedRoles.includes('CLINIC_ADMIN')
-      ? 'CLINIC_ADMIN'
-      : selectedRoles.includes('DOCTOR')
-      ? 'DOCTOR'
-      : selectedRoles[0];
-
-    membership.role = primaryRole;
-    membership.roles = selectedRoles;
-    if (Array.isArray(allowedModules)) {
-      membership.allowedModules = allowedModules;
-    } else {
-      membership.allowedModules = getDefaultModulesForRoles(selectedRoles);
-    }
-  }
-
-  if (status && ['active', 'suspended'].includes(status)) {
-    user.status = status;
-    if (status === 'suspended') {
-      multiTenantDb.revokeUserSessions(staffUserId);
-    }
-  }
-
-  // Sync doctor profile in tenant if user is a doctor
-  const tData = multiTenantDb.getTenantData(req.tenantId);
-  if (tData && Array.isArray(tData.doctors)) {
-    const doc = tData.doctors.find(d => d.email?.toLowerCase() === user.email?.toLowerCase() || d.id === staffUserId);
-    if (doc) {
-      if (user.name) doc.name = user.name;
-      if (user.phone) doc.phone = user.phone;
-      if (user.email) doc.email = user.email;
-    }
-    multiTenantDb.saveTenantData(req.tenantId, tData);
-  }
-
-  multiTenantDb.savePlatform();
-
-  multiTenantDb.logTenantAudit(req.tenantId, {
-    userId: req.user.id,
-    userEmail: req.user.email,
-    userRole: req.user.role,
-    action: 'STAFF_ACCOUNT_UPDATED',
-    resource: 'staff',
-    resourceId: staffUserId,
-    details: { name: user.name, email: user.email, roles: membership.roles }
-  });
-
-  res.json({
-    success: true,
-    message: `Staff account for "${user.name}" updated successfully.`,
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      phone: user.phone,
-      roles: membership.roles,
-      role: membership.role,
-      status: user.status
-    }
-  });
-});
-
-// Suspend / Reactivate Staff Account (Automatically revokes sessions on suspension)
+// Suspend / Reactivate Staff Account (Suspending automatically revokes all sessions)
 app.put('/api/admin/staff/:id/status', authenticate, resolveTenant, requirePermission('manage:staff'), (req, res) => {
   const { status } = req.body;
   if (!['active', 'suspended'].includes(status)) {
@@ -1457,7 +1470,7 @@ app.put('/api/admin/staff/:id/status', authenticate, resolveTenant, requirePermi
   const success = multiTenantDb.setUserStatus(req.params.id, status);
   if (!success) return res.status(404).json({ error: 'Staff user not found.' });
 
-  // If suspending, automatically revoke all active sessions
+  // When suspending, immediately revoke all active sessions
   if (status === 'suspended') {
     multiTenantDb.revokeUserSessions(req.params.id);
   }
@@ -1472,13 +1485,7 @@ app.put('/api/admin/staff/:id/status', authenticate, resolveTenant, requirePermi
     details: { status, sessionsRevoked: status === 'suspended' }
   });
 
-  res.json({
-    success: true,
-    status,
-    message: status === 'suspended'
-      ? 'Staff account suspended and all active sessions revoked.'
-      : 'Staff account reactivated.'
-  });
+  res.json({ success: true, status, message: status === 'suspended' ? 'User suspended and all active sessions revoked.' : 'User account reactivated.' });
 });
 
 // Revoke Staff Sessions

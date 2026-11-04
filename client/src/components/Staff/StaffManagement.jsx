@@ -384,6 +384,11 @@ export default function StaffManagement({
   // Handle Toggle Status (Active / Suspended)
   const handleToggleStatus = async (staffMember) => {
     const nextStatus = staffMember.status === 'active' ? 'suspended' : 'active';
+    if (nextStatus === 'suspended') {
+      if (!window.confirm(`Are you sure you want to suspend "${staffMember.name}"?\n\nSuspending will prevent them from signing in and revoke all active sessions immediately.`)) {
+        return;
+      }
+    }
     try {
       const res = await fetch(`/api/admin/staff/${staffMember.id}/status`, {
         method: 'PUT',
@@ -393,7 +398,7 @@ export default function StaffManagement({
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to update staff status.');
 
-      showToast(`Account for "${staffMember.name}" is now ${nextStatus.toUpperCase()}.`);
+      showToast(nextStatus === 'suspended' ? `⛔ "${staffMember.name}" suspended & sessions revoked.` : `✅ "${staffMember.name}" is now active.`);
       fetchStaff();
     } catch (err) {
       alert(`[Status Update Error] ${err.message}`);
@@ -838,59 +843,46 @@ export default function StaffManagement({
                       </td>
 
                       {/* Actions */}
-                      <td className="p-3.5 text-right whitespace-nowrap">
-                        <div className="inline-flex items-center space-x-1.5">
-                          {/* Edit User Details & Roles */}
+                      <td className="p-3.5 text-right space-x-2">
+                        {/* Edit Button */}
+                        <button
+                          onClick={() => setEditingRoleStaff({
+                            ...s,
+                            roles: Array.isArray(s.roles) && s.roles.length > 0 ? s.roles : [s.role],
+                            allowedModules: Array.isArray(s.allowedModules) ? s.allowedModules : []
+                          })}
+                          className="text-xs font-bold px-2.5 py-1 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition cursor-pointer"
+                          title="Edit user details, credentials & roles"
+                        >
+                          Edit
+                        </button>
+
+                        {/* Suspend / Reactivate (Automatic session revocation) */}
+                        {!isSelf && (
                           <button
-                            type="button"
-                            onClick={() => {
-                              const existingRoles = Array.isArray(s.roles) && s.roles.length > 0 ? [...s.roles] : [s.role];
-                              const existingModules = Array.isArray(s.allowedModules) && s.allowedModules.length > 0
-                                ? [...s.allowedModules]
-                                : getDefaultModulesForRoles(existingRoles);
-                              setEditingRoleStaff({
-                                ...s,
-                                roles: existingRoles,
-                                allowedModules: existingModules,
-                                password: ''
-                              });
-                            }}
-                            className="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition flex items-center space-x-1 cursor-pointer"
-                            title="Edit user details, reset password, or change roles"
+                            onClick={() => handleToggleStatus(s)}
+                            className={`text-xs font-bold px-2.5 py-1 rounded-xl border transition cursor-pointer ${
+                              s.status === 'active'
+                                ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
+                                : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
+                            }`}
+                            title={s.status === 'active' ? 'Suspend user & revoke all active sessions' : 'Reactivate account'}
                           >
-                            <Edit className="w-3.5 h-3.5" />
-                            <span>Edit</span>
+                            {s.status === 'active' ? 'Suspend' : 'Activate'}
                           </button>
+                        )}
 
-                          {/* Suspend / Reactivate (unified: revokes sessions on suspend) */}
-                          {!isSelf && (
-                            <button
-                              type="button"
-                              onClick={() => handleToggleStatus(s)}
-                              className={`text-xs font-bold px-2.5 py-1 rounded-lg border transition flex items-center space-x-1 cursor-pointer ${
-                                s.status === 'active'
-                                  ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
-                                  : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
-                              }`}
-                              title={s.status === 'active' ? 'Suspend account & revoke active sessions' : 'Reactivate account'}
-                            >
-                              <span>{s.status === 'active' ? 'Suspend' : 'Activate'}</span>
-                            </button>
-                          )}
-
-                          {/* Delete Account */}
-                          {!isSelf && (
-                            <button
-                              type="button"
-                              onClick={() => setDeleteModalStaff(s)}
-                              className="text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition flex items-center space-x-1 cursor-pointer"
-                              title="Permanently delete user account"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                              <span>Delete</span>
-                            </button>
-                          )}
-                        </div>
+                        {/* Remove / Delete Staff */}
+                        {!isSelf && (
+                          <button
+                            onClick={() => setDeleteModalStaff(s)}
+                            className="text-xs font-bold px-2.5 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition cursor-pointer"
+                            title="Permanently delete user account from clinic"
+                          >
+                            <Trash2 className="w-3.5 h-3.5 inline mr-1" />
+                            <span>Delete</span>
+                          </button>
+                        )}
                       </td>
                     </tr>
                   );
@@ -1230,49 +1222,49 @@ export default function StaffManagement({
               <Trash2 className="w-6 h-6" />
             </div>
             <h3 className="text-base font-black text-slate-900">
-              Permanently Delete User Account?
+              Remove Staff Member?
             </h3>
             <p className="text-xs text-slate-600 mt-2">
-              Are you sure you want to permanently delete user account <strong className="text-slate-900">{deleteModalStaff.name}</strong> ({deleteModalStaff.email || deleteModalStaff.role})?
+              Are you sure you want to remove <strong className="text-slate-900">{deleteModalStaff.name}</strong> ({deleteModalStaff.role}) from this clinic?
             </p>
             <p className="text-[11px] text-rose-600 font-medium mt-1">
-              All active sessions will be terminated immediately and this account will be permanently removed. This action cannot be undone.
+              All active sessions will be terminated immediately and their account will be unlinked from {activeTenant?.name || 'this clinic'}.
             </p>
 
             <div className="flex items-center justify-center space-x-3 mt-6">
               <button
                 type="button"
                 onClick={() => setDeleteModalStaff(null)}
-                className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold hover:bg-slate-50 transition cursor-pointer"
+                className="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold hover:bg-slate-50 transition"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDelete}
-                className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-black shadow-md transition cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-black shadow-md transition"
               >
-                Yes, Delete Permanently
+                Yes, Remove Staff
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* MODAL: EDIT USER ACCOUNT & PERMISSIONS */}
+      {/* MODAL: EDIT ROLES & AUTHORITIES FOR EXISTING STAFF */}
       {editingRoleStaff && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
           <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col max-h-[92vh]">
             <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-900 text-white p-5 flex items-center justify-between">
               <div>
-                <h3 className="text-base font-black tracking-tight">Edit User Account & Permissions</h3>
+                <h3 className="text-base font-black tracking-tight">Edit Staff Roles & Authorities</h3>
                 <p className="text-xs text-blue-100 mt-0.5">
                   Updating: <strong className="text-white">{editingRoleStaff.name}</strong> ({editingRoleStaff.email})
                 </p>
               </div>
               <button
                 onClick={() => setEditingRoleStaff(null)}
-                className="text-white/80 hover:text-white text-lg font-bold p-1 cursor-pointer"
+                className="text-white/80 hover:text-white text-lg font-bold p-1"
               >
                 ✕
               </button>
@@ -1581,9 +1573,9 @@ export default function StaffManagement({
                 <button
                   type="button"
                   onClick={() => handleSaveEditedStaff(editingRoleStaff)}
-                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-md transition cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black shadow-md transition"
                 >
-                  Save Account Changes
+                  Save Role & Permissions
                 </button>
               </div>
             </div>
