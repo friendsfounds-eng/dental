@@ -31,7 +31,8 @@ import {
   Calendar,
   Menu,
   ShieldAlert,
-  ArrowLeft
+  ArrowLeft,
+  Receipt
 } from 'lucide-react';
 import {
   isTabAllowed,
@@ -237,6 +238,11 @@ export default function App() {
             setCurrentUser(data.user);
             if (data.activeTenant) setActiveTenant(data.activeTenant);
             setAuthToken(savedToken);
+
+            // Set role-appropriate landing tab on session restore
+            const landingTab = getDefaultLandingTab(data.user);
+            setActiveTab(prev => (prev === 'doctor-dashboard' || !isTabAllowed(prev, data.user) ? landingTab : prev));
+
             fetchData(savedToken, data.activeTenant?.id);
             fetchMyTenants(savedToken);
             setLoading(false);
@@ -871,21 +877,23 @@ export default function App() {
 
       <div className="flex flex-1 overflow-hidden relative">
         {/* Left Sidebar with Dynamic Role-Based Menu (Responsive Drawer on Mobile/Tablet) */}
-        <Sidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          currentUser={currentUser}
-          activeTenant={activeTenant}
-          availableTenants={availableTenants}
-          onSwitchTenant={handleSwitchTenant}
-          clinicProfile={clinicProfile}
-          patientCount={patients.length}
-          appointmentCount={appointments.length}
-          isOpen={sidebarOpen}
-          onClose={() => setSidebarOpen(false)}
-          isCollapsed={sidebarCollapsed}
-          onToggleCollapse={handleToggleSidebarCollapse}
-        />
+        <ErrorBoundary>
+          <Sidebar
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            currentUser={currentUser}
+            activeTenant={activeTenant}
+            availableTenants={availableTenants}
+            onSwitchTenant={handleSwitchTenant}
+            clinicProfile={clinicProfile}
+            patientCount={patients.length}
+            appointmentCount={appointments.length}
+            isOpen={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+            isCollapsed={sidebarCollapsed}
+            onToggleCollapse={handleToggleSidebarCollapse}
+          />
+        </ErrorBoundary>
 
         {/* Main Content Area (Auto-fits Mobile, Tablet & Desktop) */}
         <main className={`flex-1 min-w-0 p-3 sm:p-4 md:p-6 pb-20 lg:pb-6 overflow-y-auto w-full transition-all duration-300 ${sidebarCollapsed ? 'max-w-none' : 'max-w-7xl mx-auto'}`}>

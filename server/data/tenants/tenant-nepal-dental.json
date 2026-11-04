@@ -87,6 +87,14 @@
       "phone": "",
       "specialization": "General Dental Surgeon",
       "status": "Active"
+    },
+    {
+      "id": "doc-9052",
+      "name": "Sitaram Kushwaha",
+      "email": "sitaram.test@nepaldental.com.np",
+      "phone": "",
+      "specialization": "Dental Surgeon",
+      "status": "Active"
     }
   ],
   "chairs": [
@@ -246,7 +254,10 @@
       "dentalChart": {
         "16": {
           "condition": "root_canal",
-          "notes": "Obturation verified. Tooth asymptomatic on percussion."
+          "notes": "Obturation verified. Tooth asymptomatic on percussion.",
+          "surfaces": {
+            "occlusal": "decay"
+          }
         },
         "26": {
           "condition": "composite_restoration",
@@ -931,6 +942,50 @@
   },
   "refundRequests": [],
   "auditLogs": [
+    {
+      "id": "tlog-1793790119995-387",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "DENTAL_CHART_UPDATED",
+      "resource": "patient",
+      "resourceId": "PT-2001",
+      "details": {
+        "tooth": "16",
+        "condition": "root_canal"
+      },
+      "timestamp": "2026-11-04T11:01:59.995Z"
+    },
+    {
+      "id": "tlog-1793788919082-966",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-256601",
+      "details": {
+        "name": "Sitaram Kushwaha",
+        "email": "sitaram.test@nepaldental.com.np",
+        "role": "DOCTOR"
+      },
+      "timestamp": "2026-11-04T10:41:59.082Z"
+    },
+    {
+      "id": "tlog-1793788523364-20",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T10:35:23.364Z"
+    },
     {
       "id": "tlog-1793788043028-200",
       "userId": "user-nepal-reception",
@@ -8485,40 +8540,6 @@
         "previousRole": "DOCTOR"
       },
       "timestamp": "2026-10-22T05:37:38.986Z"
-    },
-    {
-      "id": "tlog-1792647454071-108",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_ACCOUNT_REMOVED",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "details": {
-        "removedUserId": "user-nepal-reception",
-        "previousRole": "RECEPTIONIST"
-      },
-      "timestamp": "2026-10-22T05:37:34.071Z"
-    },
-    {
-      "id": "tlog-1792647439695-721",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_SESSIONS_REVOKED",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "timestamp": "2026-10-22T05:37:19.695Z"
-    },
-    {
-      "id": "tlog-1792647436713-626",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_SESSIONS_REVOKED",
-      "resource": "staff",
-      "resourceId": "user-nepal-reception",
-      "timestamp": "2026-10-22T05:37:16.713Z"
     }
   ],
   "pharmacyCatalog": [
