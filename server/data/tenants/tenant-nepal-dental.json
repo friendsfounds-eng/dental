@@ -95,6 +95,14 @@
       "phone": "",
       "specialization": "Dental Surgeon",
       "status": "Active"
+    },
+    {
+      "id": "doc-7860",
+      "name": "Dr. Mukesh Kushwaha (Lead Dental Surgeon)",
+      "email": "dr.mukesh@nepaldental.com.np",
+      "phone": "+977 98012 34567",
+      "specialization": "Dental Surgeon",
+      "status": "Active"
     }
   ],
   "chairs": [
@@ -367,6 +375,78 @@
       ],
       "invoices": [
         {
+          "id": "INV-9455",
+          "invoiceNumber": "INV-2026-1060",
+          "date": "2026-11-04",
+          "time": "02:14 PM",
+          "createdAt": "2026-11-04T11:14:49.436Z",
+          "isFinalized": true,
+          "items": [
+            {
+              "description": "Registration & OPD Consultation Fee (Free Revisit - Waived)",
+              "tooth": "General Consultation",
+              "qty": 1,
+              "unitPrice": 0,
+              "total": 0,
+              "isTicket": true,
+              "isWaived": true,
+              "ticketStatus": "VALID_REVISIT",
+              "itemType": "TICKET",
+              "paidAmount": 0,
+              "remainingAmount": 0
+            },
+            {
+              "description": "Comprehensive Dental Examination",
+              "tooth": "General",
+              "qty": 1,
+              "unitPrice": 500,
+              "total": 500,
+              "paidAmount": 500,
+              "remainingAmount": 0,
+              "itemType": "PROCEDURE"
+            },
+            {
+              "description": "Dental Lab Order: Crown (Fully Settled)",
+              "tooth": "Tooth #16",
+              "qty": 1,
+              "unitPrice": 4000,
+              "total": 4000,
+              "paidAmount": 4000,
+              "remainingAmount": 0,
+              "itemType": "ORDER",
+              "sourceId": "ORD-2001",
+              "orderId": "ORD-2001"
+            },
+            {
+              "description": "Treatment Plan: Root Canal Therapy & Monolithic Zirconia Crown #16",
+              "tooth": "General",
+              "qty": 1,
+              "unitPrice": 14000,
+              "total": 14000,
+              "paidAmount": 14000,
+              "remainingAmount": 0,
+              "itemType": "PLAN",
+              "sourceId": "PLAN-2001"
+            }
+          ],
+          "subtotal": 18500,
+          "discount": 0,
+          "taxPercent": 0,
+          "taxAmount": 0,
+          "total": 18500,
+          "paid": 18500,
+          "balance": 0,
+          "status": "Paid",
+          "paymentMethod": "Fonepay QR",
+          "doctorId": "DOC-NEPAL-2",
+          "doctorName": "Dr. S. K. Shrestha",
+          "doctorQualification": "BDS, MDS",
+          "doctorSpecialty": "Endodontics & Conservative Dentistry",
+          "doctorReg": "NMC-55443",
+          "doctorPhone": "+977 98411 22334",
+          "receiptNumber": "RCP-2026-52430"
+        },
+        {
           "id": "INV-2989",
           "invoiceNumber": "INV-2026-2060",
           "date": "2026-11-04",
@@ -460,7 +540,8 @@
           "url": "/images/iopa_default.png",
           "uploadedAt": "2026-11-04T10:10:00.000Z"
         }
-      ]
+      ],
+      "lastRevisitDate": "2026-11-04"
     },
     {
       "id": "PT-2002",
@@ -865,6 +946,63 @@
   ],
   "appointments": [
     {
+      "id": "APT-1370",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T11:25:11.370Z",
+      "patientId": "PT-2002",
+      "doctorName": "Dr. Sitaram Kushwaha",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-11-04",
+      "time": "02:35 PM",
+      "durationMinutes": 45,
+      "treatmentType": "Sensitivity",
+      "chiefComplaint": "Sensitivity",
+      "painScale": 5,
+      "notes": "",
+      "patientName": "Priya Adhikari",
+      "patientPhone": "9851234890"
+    },
+    {
+      "id": "APT-5157",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T11:24:15.157Z",
+      "patientId": "PT-2003",
+      "doctorName": "Dr. Sitaram Kushwaha",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-11-04",
+      "time": "02:55 PM",
+      "durationMinutes": 45,
+      "treatmentType": "Sensitivity",
+      "chiefComplaint": "Sensitivity",
+      "painScale": 2,
+      "notes": "",
+      "patientName": "Suresh Manandhar",
+      "patientPhone": "9818776655",
+      "doctorAcceptanceStatus": "Accepted",
+      "acceptedByDoctor": true,
+      "acceptedAt": "2026-11-04T11:24:17.055Z"
+    },
+    {
+      "id": "APT-9820",
+      "status": "Confirmed",
+      "createdAt": "2026-11-04T11:20:59.820Z",
+      "patientId": "PT-2002",
+      "doctorName": "Dr. Sitaram Kushwaha",
+      "chair": "Chair 1 (Main Operatory)",
+      "date": "2026-11-04",
+      "time": "02:40 PM",
+      "durationMinutes": 45,
+      "treatmentType": "Sensitivity",
+      "chiefComplaint": "Sensitivity",
+      "painScale": 2,
+      "notes": "",
+      "patientName": "Priya Adhikari",
+      "patientPhone": "9851234890",
+      "doctorAcceptanceStatus": "Accepted",
+      "acceptedByDoctor": true,
+      "acceptedAt": "2026-11-04T11:22:44.724Z"
+    },
+    {
       "id": "APT-2984",
       "status": "Scheduled",
       "createdAt": "2026-11-04T10:27:22.984Z",
@@ -942,6 +1080,83 @@
   },
   "refundRequests": [],
   "auditLogs": [
+    {
+      "id": "tlog-1793791145149-569",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-256601",
+      "details": {
+        "name": "Sitaram Kushwaha",
+        "email": "sitaram.test@nepaldental.com.np",
+        "role": "DOCTOR"
+      },
+      "timestamp": "2026-11-04T11:19:05.149Z"
+    },
+    {
+      "id": "tlog-1793790997885-681",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-nepal-dr-mukesh",
+      "details": {
+        "name": "Dr. Mukesh Kushwaha (Lead Dental Surgeon)",
+        "email": "dr.mukesh@nepaldental.com.np",
+        "role": "DOCTOR"
+      },
+      "timestamp": "2026-11-04T11:16:37.885Z"
+    },
+    {
+      "id": "tlog-1793790889532-783",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "INVOICE_GENERATED",
+      "resource": "invoice",
+      "resourceId": "INV-9455",
+      "details": {
+        "invoiceNumber": "INV-2026-1060",
+        "total": 18500,
+        "paid": 18500,
+        "receiptNumber": "RCP-2026-52430"
+      },
+      "timestamp": "2026-11-04T11:14:49.532Z"
+    },
+    {
+      "id": "tlog-1793790889469-475",
+      "userId": "user-955637",
+      "userEmail": "recepatation@platform.local",
+      "userRole": "RECEPTIONIST",
+      "action": "FINANCE_TRANSACTION_RECORDED",
+      "resource": "finance_transaction",
+      "resourceId": "TXN-889469",
+      "details": {
+        "type": "INCOME",
+        "amount": 18500,
+        "category": "Patient Treatment",
+        "refNumber": "RCP-2026-52430"
+      },
+      "timestamp": "2026-11-04T11:14:49.469Z"
+    },
+    {
+      "id": "tlog-1793790807335-761",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "STAFF_ACCOUNT_UPDATED",
+      "resource": "staff",
+      "resourceId": "user-955637",
+      "details": {
+        "name": "Recepatation",
+        "email": "recepatation@platform.local",
+        "role": "RECEPTIONIST"
+      },
+      "timestamp": "2026-11-04T11:13:27.335Z"
+    },
     {
       "id": "tlog-1793790119995-387",
       "userId": "user-nepal-admin",
@@ -8471,75 +8686,6 @@
         "tagline": "Premier Advanced Dental Hospital in Kathmandu"
       },
       "timestamp": "2026-10-22T05:46:14.209Z"
-    },
-    {
-      "id": "tlog-1792647864687-457",
-      "userId": "user-nepal-reception",
-      "userEmail": "reception@nepaldental.com.np",
-      "userRole": "RECEPTIONIST",
-      "action": "PATIENT_REGISTERED",
-      "resource": "patient",
-      "resourceId": "PT-4680",
-      "details": {
-        "name": "Pradeep Poudel",
-        "phone": "+977 98419 87654"
-      },
-      "timestamp": "2026-10-22T05:44:24.687Z"
-    },
-    {
-      "id": "tlog-1792647864666-674",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "DENTAL_CHART_UPDATED",
-      "resource": "patient",
-      "resourceId": "PT-101",
-      "details": {
-        "tooth": "21",
-        "condition": "healthy"
-      },
-      "timestamp": "2026-10-22T05:44:24.666Z"
-    },
-    {
-      "id": "tlog-1792647864644-963",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PRESCRIPTION_FINALIZED_AND_SIGNED",
-      "resource": "prescription",
-      "resourceId": "RX-4633",
-      "details": {
-        "patientId": "PT-101",
-        "diagnosis": "Post-op Sensitivity #16",
-        "medicinesCount": 1
-      },
-      "timestamp": "2026-10-22T05:44:24.644Z"
-    },
-    {
-      "id": "tlog-1792647864608-655",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "CLINIC_PROFILE_UPDATED",
-      "resource": "clinicProfile",
-      "details": {
-        "tagline": "Premier Advanced Dental Hospital in Kathmandu"
-      },
-      "timestamp": "2026-10-22T05:44:24.609Z"
-    },
-    {
-      "id": "tlog-1792647458986-367",
-      "userId": "user-nepal-admin",
-      "userEmail": "admin@nepaldental.com.np",
-      "userRole": "CLINIC_ADMIN",
-      "action": "STAFF_ACCOUNT_REMOVED",
-      "resource": "staff",
-      "resourceId": "user-nepal-dr-mukesh",
-      "details": {
-        "removedUserId": "user-nepal-dr-mukesh",
-        "previousRole": "DOCTOR"
-      },
-      "timestamp": "2026-10-22T05:37:38.986Z"
     }
   ],
   "pharmacyCatalog": [
@@ -10573,6 +10719,22 @@
   },
   "financeTransactions": [
     {
+      "id": "TXN-889469",
+      "date": "2026-11-04",
+      "refNumber": "RCP-2026-52430",
+      "payerOrRecipient": "Bikram Thapa",
+      "type": "INCOME",
+      "category": "Patient Treatment",
+      "amount": 18500,
+      "paymentMethod": "Fonepay QR",
+      "status": "Completed",
+      "relatedPatientId": "PT-2001",
+      "relatedStaffId": null,
+      "notes": "Invoice payment for #INV-2026-1060",
+      "createdBy": "Recepatation",
+      "createdAt": "2026-11-04T11:14:49.469Z"
+    },
+    {
       "id": "TXN-042994",
       "date": "2026-11-04",
       "refNumber": "RCP-2026-52277",
@@ -11072,7 +11234,7 @@
       "category": "Current Assets",
       "normalBalance": "DEBIT",
       "description": "Clearing account for FonePay QR, Cards POS, eSewa and digital settlements",
-      "balance": 141000,
+      "balance": 159500,
       "isActive": true
     },
     {
@@ -11182,7 +11344,7 @@
       "category": "Operating Revenue",
       "normalBalance": "CREDIT",
       "description": "Gross billings for restorations, root canals, dental implants, crowns, and extractions",
-      "balance": 305360,
+      "balance": 323860,
       "isActive": true
     },
     {
@@ -11307,6 +11469,62 @@
     }
   ],
   "journalEntries": [
+    {
+      "id": "JE-2026-3507",
+      "date": "2026-11-04",
+      "reference": "RCP-2026-52430",
+      "source": "RECEIPT",
+      "memo": "Payment collection from Bikram Thapa for invoice #INV-2026-1060",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1030",
+          "accountName": "Digital Payments Clearing (FonePay/POS/Wallets)",
+          "debit": 18500,
+          "credit": 0
+        },
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 0,
+          "credit": 18500
+        }
+      ],
+      "totalDebit": 18500,
+      "totalCredit": 18500,
+      "createdBy": "Recepatation",
+      "createdAt": "2026-11-04T11:14:49.496Z"
+    },
+    {
+      "id": "JE-2026-6243",
+      "date": "2026-11-04",
+      "reference": "INV-2026-1060",
+      "source": "INVOICE",
+      "memo": "Treatment billing for Bikram Thapa (Inv #INV-2026-1060)",
+      "status": "POSTED",
+      "reversalOf": null,
+      "reversedBy": null,
+      "lines": [
+        {
+          "accountCode": "1100",
+          "accountName": "Accounts Receivable (AR) - Patients",
+          "debit": 18500,
+          "credit": 0
+        },
+        {
+          "accountCode": "4010",
+          "accountName": "Dental Treatment & Procedure Revenue",
+          "debit": 0,
+          "credit": 18500
+        }
+      ],
+      "totalDebit": 18500,
+      "totalCredit": 18500,
+      "createdBy": "Recepatation",
+      "createdAt": "2026-11-04T11:14:49.488Z"
+    },
     {
       "id": "JE-2026-5576",
       "date": "2026-11-04",
@@ -13321,6 +13539,22 @@
     }
   ],
   "receipts": [
+    {
+      "id": "RCP-2026-52430",
+      "receiptNumber": "RCP-2026-52430",
+      "patientId": "PT-2001",
+      "patientName": "Bikram Thapa",
+      "invoiceId": "INV-2026-1060",
+      "depositId": null,
+      "date": "2026-11-04",
+      "amount": 18500,
+      "paymentMethod": "Fonepay QR",
+      "paymentType": "INVOICE_PAYMENT",
+      "refNumber": "REC-INV-2026-1060",
+      "notes": "Payment collected for invoice #INV-2026-1060",
+      "issuedBy": "Recepatation",
+      "createdAt": "2026-11-04T11:14:49.456Z"
+    },
     {
       "id": "RCP-2026-52277",
       "receiptNumber": "RCP-2026-52277",

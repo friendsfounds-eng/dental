@@ -17,6 +17,42 @@ import {
   Ticket
 } from 'lucide-react';
 
+// Pre-defined clinic time slots in 15-minute intervals grouped by time of day
+const TIME_SLOT_GROUPS = [
+  {
+    label: '🌅 Morning (07:00 AM - 11:45 AM)',
+    slots: [
+      '07:00 AM', '07:15 AM', '07:30 AM', '07:45 AM',
+      '08:00 AM', '08:15 AM', '08:30 AM', '08:45 AM',
+      '09:00 AM', '09:15 AM', '09:30 AM', '09:45 AM',
+      '10:00 AM', '10:15 AM', '10:30 AM', '10:45 AM',
+      '11:00 AM', '11:15 AM', '11:30 AM', '11:45 AM'
+    ]
+  },
+  {
+    label: '☀️ Afternoon (12:00 PM - 04:45 PM)',
+    slots: [
+      '12:00 PM', '12:15 PM', '12:30 PM', '12:45 PM',
+      '01:00 PM', '01:15 PM', '01:30 PM', '01:45 PM',
+      '02:00 PM', '02:15 PM', '02:30 PM', '02:45 PM',
+      '03:00 PM', '03:15 PM', '03:30 PM', '03:45 PM',
+      '04:00 PM', '04:15 PM', '04:30 PM', '04:45 PM'
+    ]
+  },
+  {
+    label: '🌙 Evening (05:00 PM - 09:00 PM)',
+    slots: [
+      '05:00 PM', '05:15 PM', '05:30 PM', '05:45 PM',
+      '06:00 PM', '06:15 PM', '06:30 PM', '06:45 PM',
+      '07:00 PM', '07:15 PM', '07:30 PM', '07:45 PM',
+      '08:00 PM', '08:15 PM', '08:30 PM', '08:45 PM',
+      '09:00 PM'
+    ]
+  }
+];
+
+const ALL_TIME_SLOTS = TIME_SLOT_GROUPS.flatMap(g => g.slots);
+
 export default function AppointmentScheduler({
   appointments = [],
   patients = [],
@@ -39,6 +75,7 @@ export default function AppointmentScheduler({
   // Doctor Allocation Popup Modal State
   const [allocatedApt, setAllocatedApt] = useState(null);
   const [doctorModalOpen, setDoctorModalOpen] = useState(false);
+  const [customTimeMode, setCustomTimeMode] = useState(false);
 
   const [formData, setFormData] = useState({
     patientId: patients[0]?.id || '',
@@ -439,15 +476,60 @@ export default function AppointmentScheduler({
                   </div>
 
                   <div>
-                    <label className="block font-bold text-slate-700 uppercase mb-1">Time</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.time}
-                      onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                      placeholder="e.g. 10:30 AM"
-                      className="w-full p-2.5 rounded-lg border border-slate-300"
-                    />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block font-bold text-slate-700 uppercase">Time *</label>
+                      <button
+                        type="button"
+                        onClick={() => setCustomTimeMode(prev => !prev)}
+                        className="text-[10px] text-blue-600 hover:text-blue-800 font-semibold cursor-pointer"
+                        title={customTimeMode ? 'Switch back to standard time slot dropdown' : 'Enter a custom exact minute'}
+                      >
+                        {customTimeMode ? '← Pick from dropdown' : '+ Custom Time'}
+                      </button>
+                    </div>
+
+                    {customTimeMode ? (
+                      <div className="relative">
+                        <input
+                          type="text"
+                          required
+                          value={formData.time}
+                          onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                          placeholder="e.g. 02:55 PM"
+                          autoFocus
+                          className="w-full p-2.5 rounded-lg border border-blue-400 focus:ring-2 focus:ring-blue-500 font-medium text-slate-800"
+                        />
+                      </div>
+                    ) : (
+                      <select
+                        required
+                        value={formData.time}
+                        onChange={(e) => {
+                          if (e.target.value === '__custom__') {
+                            setCustomTimeMode(true);
+                          } else {
+                            setFormData({ ...formData, time: e.target.value });
+                          }
+                        }}
+                        className="w-full p-2.5 rounded-lg border border-slate-300 bg-white font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                      >
+                        {formData.time && !ALL_TIME_SLOTS.includes(formData.time) && (
+                          <option value={formData.time}>
+                            🕒 {formData.time} (Selected Time)
+                          </option>
+                        )}
+                        {TIME_SLOT_GROUPS.map((group) => (
+                          <optgroup key={group.label} label={group.label}>
+                            {group.slots.map((slot) => (
+                              <option key={slot} value={slot}>
+                                {slot}
+                              </option>
+                            ))}
+                          </optgroup>
+                        ))}
+                        <option value="__custom__">✏️ Custom Time...</option>
+                      </select>
+                    )}
                   </div>
                 </div>
 
