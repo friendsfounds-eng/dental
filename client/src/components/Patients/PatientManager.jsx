@@ -32,7 +32,8 @@ import {
   NEPAL_PROVINCES,
   NEPAL_DISTRICTS,
   NEPAL_MUNICIPALITIES,
-  NEPAL_WARDS
+  NEPAL_WARDS,
+  getWardsForMunicipality
 } from '../../data/nepalLocationData';
 import PatientOrders from './PatientOrders';
 import PatientViewModal from './PatientViewModal';
@@ -202,6 +203,11 @@ export default function PatientManager({
   const availableMunicipalities = formData.district
     ? (NEPAL_MUNICIPALITIES[formData.district] || [])
     : [];
+
+  // Available wards based on selected municipality (dynamic 753 local level hierarchy)
+  const availableWards = (formData.province && formData.district && formData.municipality)
+    ? getWardsForMunicipality(formData.province, formData.district, formData.municipality)
+    : (formData.municipality ? getWardsForMunicipality('', formData.district, formData.municipality) : []);
 
   const countAllergies = patients.filter(p => p.allergies && (Array.isArray(p.allergies) ? p.allergies.length > 0 : String(p.allergies).trim().length > 0)).length;
   const countMedical = patients.filter(p => p.medicalHistory && (Array.isArray(p.medicalHistory) ? p.medicalHistory.length > 0 : String(p.medicalHistory).trim().length > 0)).length;
@@ -1489,20 +1495,25 @@ export default function PatientManager({
                         </div>
                       )}
 
-                      {/* TIER 4: WARD NO. (Revealed ONLY after Municipality selected) */}
+                      {/* TIER 4: WARD NO. (Revealed ONLY after Municipality selected - Shows ONLY valid wards) */}
                       {formData.municipality && (
                         <div className="col-span-1 sm:col-span-2 animate-fadeIn">
-                          <label className="block font-bold text-slate-700 uppercase text-[11px] mb-1">
-                            4. Select Ward No. *
-                          </label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block font-bold text-slate-700 uppercase text-[11px]">
+                              4. Select Ward No. *
+                            </label>
+                            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                              {availableWards.length} Wards Available
+                            </span>
+                          </div>
                           <select
                             required
                             value={formData.ward}
                             onChange={handleWardChange}
                             className="w-full px-2.5 py-2 rounded-xl border border-blue-300 bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition text-xs shadow-2xs"
                           >
-                            <option value="">-- Select Ward in {formData.municipality} --</option>
-                            {NEPAL_WARDS.map(w => (
+                            <option value="">-- Select Ward (1 to {availableWards.length}) in {formData.municipality} --</option>
+                            {availableWards.map(w => (
                               <option key={w} value={w}>{w}</option>
                             ))}
                           </select>
