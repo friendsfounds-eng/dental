@@ -1263,6 +1263,34 @@
   ],
   "auditLogs": [
     {
+      "id": "aud-1794758931077-486",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-devadmin",
+      "userEmail": "devadmin@anacraft.com",
+      "userRole": "PLATFORM_ADMIN",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::ffff:127.0.0.1",
+      "timestamp": "2026-11-15T16:08:51.077Z"
+    },
+    {
+      "id": "aud-1794758675361-874",
+      "tenantId": "tenant-nepal-dental",
+      "userId": "user-nepal-admin",
+      "userEmail": "admin@nepaldental.com.np",
+      "userRole": "CLINIC_ADMIN",
+      "action": "USER_LOGIN_SUCCESS",
+      "resource": "auth",
+      "resourceId": null,
+      "status": "SUCCESS",
+      "details": {},
+      "ipAddress": "::ffff:127.0.0.1",
+      "timestamp": "2026-11-15T16:04:35.361Z"
+    },
+    {
       "id": "aud-1794639939801-88",
       "tenantId": "tenant-nepal-dental",
       "userId": "user-devadmin",
@@ -17586,40 +17614,6 @@
       },
       "ipAddress": "127.0.0.1",
       "timestamp": "2026-10-23T03:25:03.841Z"
-    },
-    {
-      "id": "aud-1792725903830-394",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "view:finance",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "view:finance",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-23T03:25:03.830Z"
-    },
-    {
-      "id": "aud-1792725902995-696",
-      "tenantId": "tenant-nepal-dental",
-      "userId": "user-nepal-dr-mukesh",
-      "userEmail": "dr.mukesh@nepaldental.com.np",
-      "userRole": "DOCTOR",
-      "action": "PERMISSION_DENIED",
-      "resource": "manage:pharmacy_purchases",
-      "resourceId": null,
-      "status": "DENIED",
-      "details": {
-        "requiredPermission": "manage:pharmacy_purchases",
-        "userRole": "DOCTOR"
-      },
-      "ipAddress": "127.0.0.1",
-      "timestamp": "2026-10-23T03:25:02.995Z"
     }
   ],
   "paymentConfig": {

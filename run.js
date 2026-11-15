@@ -1,6 +1,7 @@
-import { spawn, exec } from 'child_process';
+import { spawn } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import net from 'net';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,54 +19,86 @@ let isShuttingDown = false;
 let serverProcess = null;
 let clientProcess = null;
 
-function startBackend() {
-  if (isShuttingDown) return;
-  console.log('[1/2] Starting Backend Server (Port 5000)...');
-  serverProcess = spawn(nodeCmd, ['server.js'], {
-    cwd: path.join(__dirname, 'server'),
-    stdio: 'inherit',
-    shell: true
-  });
-
-  serverProcess.on('exit', (code, signal) => {
-    if (!isShuttingDown) {
-      console.warn(`[Backend] Server exited (code ${code}). Auto-restarting in 1.5s...`);
-      setTimeout(startBackend, 1500);
-    }
+function isPortAvailable(port) {
+  return new Promise((resolve) => {
+    const server = net.createServer();
+    server.once('error', () => resolve(false));
+    server.once('listening', () => {
+      server.close(() => resolve(true));
+    });
+    server.listen(port);
   });
 }
 
-function startFrontend() {
-  if (isShuttingDown) return;
-  console.log('[2/2] Starting Frontend Web Application (Port 3000)...');
-  clientProcess = spawn(npmCmd, ['run', 'dev'], {
-    cwd: path.join(__dirname, 'client'),
-    stdio: 'inherit',
-    shell: true
-  });
-
-  clientProcess.on('exit', (code, signal) => {
-    if (!isShuttingDown) {
-      console.warn(`[Frontend] Client exited (code ${code}). Auto-restarting in 2s...`);
-      setTimeout(startFrontend, 2000);
-    }
-  });
+async function findAvailablePort(startPort) {
+  let port = startPort;
+  while (!(await isPortAvailable(port))) {
+    port++;
+  }
+  return port;
 }
 
-// Start both services
-startBackend();
-startFrontend();
+async function main() {
+  const backendPort = await findAvailablePort(parseInt(process.env.PORT || '5000', 10));
+  const frontendPort = await findAvailablePort(parseInt(process.env.CLIENT_PORT || '3000', 10));
 
-// Automatically open browser after 3 seconds
-setTimeout(() => {
-  const url = 'http://localhost:3000';
-  console.log(`\n🚀 Dental ERP ready at: ${url}`);
-}, 3000);
+  function startBackend() {
+    if (isShuttingDown) return;
+    console.log(`[1/2] Starting Backend Server (Port ${backendPort})...`);
+    serverProcess = spawn(nodeCmd, ['server.js'], {
+      cwd: path.join(__dirname, 'server'),
+      stdio: 'inherit',
+      shell: true,
+      env: {
+        ...process.env,
+        PORT: String(backendPort)
+      }
+    });
 
-console.log('\n[SUCCESS] Local servers initialized.');
-console.log('-> Web App: http://localhost:3000');
-console.log('-> API & Production App: http://localhost:5000');
-console.log('Press Ctrl + C in this terminal to terminate.\n');
+    serverProcess.on('exit', (code, signal) => {
+      if (!isShuttingDown) {
+        console.warn(`[Backend] Server exited (code ${code}). Auto-restarting in 1.5s...`);
+        setTimeout(startBackend, 1500);
+      }
+    });
+  }
+
+  function startFrontend() {
+    if (isShuttingDown) return;
+    console.log(`[2/2] Starting Frontend Web Application (Port ${frontendPort})...`);
+    clientProcess = spawn(npmCmd, ['run', 'dev'], {
+      cwd: path.join(__dirname, 'client'),
+      stdio: 'inherit',
+      shell: true,
+      env: {
+        ...process.env,
+        PORT: String(frontendPort),
+        VITE_BACKEND_PORT: String(backendPort)
+      }
+    });
+
+    clientProcess.on('exit', (code, signal) => {
+      if (!isShuttingDown) {
+        console.warn(`[Frontend] Client exited (code ${code}). Auto-restarting in 2s...`);
+        setTimeout(startFrontend, 2000);
+      }
+    });
+  }
+
+  // Start both services
+  startBackend();
+  startFrontend();
+
+  setTimeout(() => {
+    console.log('\n================================================================');
+    console.log(' [SUCCESS] Local servers initialized and ready!');
+    console.log(` -> Web Application: http://localhost:${frontendPort}`);
+    console.log(` -> Backend API:     http://localhost:${backendPort}`);
+    console.log('================================================================\n');
+  }, 3000);
+}
+
+main().catch(console.error);
 
 const cleanExit = () => {
   isShuttingDown = true;
